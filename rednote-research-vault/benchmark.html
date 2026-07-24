@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>RedNote Research Vault — Benchmark</title>
+<style>
+:root {
+  color-scheme: light;
+  --page-bg: #f3f5f8;
+  --page-fg: #151820;
+  --panel: #ffffff;
+  --line: #d5dbe6;
+  --muted: #5d6675;
+  --rose: #d61f69;
+  --mint: #0f8a5f;
+  --amber: #b7791f;
+}
+* { box-sizing: border-box; }
+html { background: var(--page-bg); }
+body {
+  margin: 0; min-width: 0; overflow-x: hidden;
+  background: var(--page-bg); color: var(--page-fg);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  line-height: 1.5;
+}
+.finchip-page {
+  min-height: 100%; overflow-x: hidden;
+  background: linear-gradient(180deg, #f8f9fc 0%, var(--page-bg) 40%);
+  color: var(--page-fg);
+}
+.wrap { width: 100%; max-width: 100%; margin: 0 auto; padding: 0 18px; min-width: 0; }
+.nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 0; border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 800; letter-spacing: -.03em; }
+.meta {
+  font: 750 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--rose);
+}
+.hero { padding: 34px 0 22px; }
+.hero h1 {
+  margin: 8px 0 0; font-size: clamp(32px, 7vw, 52px);
+  line-height: .98; letter-spacing: -.045em;
+}
+.lede { margin: 12px 0 0; color: var(--muted); max-width: 40em; }
+.dash {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px;
+}
+.tile {
+  background: var(--panel); border: 1px solid var(--line); padding: 14px; min-width: 0;
+}
+.tile b { display: block; font-size: 22px; letter-spacing: -.03em; }
+.tile span { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); }
+.tile.pass b { color: var(--mint); }
+.section { padding: 30px 0; border-top: 1px solid var(--line); }
+.section h2 {
+  margin: 0 0 8px; font-size: clamp(24px, 4.5vw, 36px); letter-spacing: -.04em;
+}
+.section p { margin: 0 0 14px; color: var(--muted); }
+table {
+  width: 100%; border-collapse: collapse; background: var(--panel);
+  border: 1px solid var(--line); font-size: 13px;
+}
+th, td {
+  text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line);
+  vertical-align: top; min-width: 0;
+}
+th {
+  font: 750 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  background: #eef1f6;
+}
+.badge {
+  display: inline-block; padding: 3px 7px;
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  border: 1px solid currentColor;
+}
+.badge.ok { color: var(--mint); }
+.badge.warn { color: var(--amber); }
+.badge.fail { color: var(--rose); }
+.badge.pending { color: var(--muted); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); padding: 16px; }
+.card h3 { margin: 0 0 8px; font-size: 17px; }
+.card ul { margin: 0; padding-left: 18px; color: var(--muted); }
+.card li + li { margin-top: 5px; }
+.footer {
+  padding: 22px 0 34px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 11px;
+  display: flex; justify-content: space-between; gap: 12px;
+}
+@media (max-width: 700px) {
+  .dash { grid-template-columns: 1fr 1fr; }
+  .grid2 { grid-template-columns: 1fr; }
+  table, thead, tbody, th, td, tr { display: block; }
+  thead { display: none; }
+  tr { border-bottom: 1px solid var(--line); padding: 10px 0; }
+  td { border: 0; padding: 4px 12px; }
+  td:before {
+    content: attr(data-label);
+    display: block;
+    font: 750 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 3px;
+  }
+}
+@media (max-width: 500px) {
+  .wrap { padding: 0 14px; }
+  .dash { grid-template-columns: 1fr; }
+  .footer { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="finchip-page">
+<header class="wrap nav">
+  <div class="brand">RedNote Research Vault</div>
+  <span class="meta">Benchmark · parser 1.0.1</span>
+</header>
+<main>
+  <section class="wrap hero">
+    <span class="meta">Measured locally · 2026-07-24</span>
+    <h1>Capability claims tied to executable gates.</h1>
+    <p class="lede">This page maps product claims to unit tests, a live share-link archive, and validator evidence. Items not executed are labeled pending—not passed.</p>
+    <div class="dash">
+      <div class="tile pass"><b>7 / 7</b><span>Unit tests passed</span></div>
+      <div class="tile pass"><b>Live archive</b><span>Public image note with media</span></div>
+      <div class="tile pass"><b>Validator</b><span>passed · media_archive complete</span></div>
+      <div class="tile"><b>Base sync</b><span>Dry-run / commit pending credentials</span></div>
+    </div>
+  </section>
+
+  <section class="section"><div class="wrap">
+    <h2>Scope</h2>
+    <p>Version under test: local <code>skill-github/rednote-research-vault</code>, parser <code>1.0.1</code>. Environment: macOS arm64, Python 3.9, standard library only. Live sample: Xiaohongshu image note “刚刚，ChatGPT Voice 桌面版全球上线！”.</p>
+    <div class="grid2">
+      <article class="card">
+        <h3>In scope</h3>
+        <ul>
+          <li>Anonymous share-URL capture via <code>__INITIAL_STATE__</code></li>
+          <li>Token redaction and immutable bundle layout</li>
+          <li>HTTP→HTTPS CDN upgrade for allowlisted hosts</li>
+          <li>Media SHA-256 validation and archive completeness gate</li>
+          <li>Approximate metric preservation (<code>10+</code> stays raw)</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>Out of scope / pending</h3>
+        <ul>
+          <li>Cookie / HTML-snapshot recovery against a challenged page</li>
+          <li>Live video-note media archive</li>
+          <li>Feishu Base <code>--commit</code> against a real table</li>
+          <li>Claude host replay (Codex live run only)</li>
+          <li>Platform ToS or copyright clearance</li>
+        </ul>
+      </article>
+    </div>
+  </div></section>
+
+  <section class="section"><div class="wrap">
+    <h2>Claim → test matrix</h2>
+    <p>Each claim either has an automated check, a live run artifact, or an explicit pending label.</p>
+    <table>
+      <thead>
+        <tr><th>Claim</th><th>Gate</th><th>Evidence</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Claim">Parse image notes and keep approximate metrics raw</td>
+          <td data-label="Gate">Unit: <code>test_image_note_preserves_approximate_metric</code></td>
+          <td data-label="Evidence"><code>likes=None</code>, <code>metrics_raw.likes=10+</code></td>
+          <td data-label="Status"><span class="badge ok">PASSED</span></td>
+        </tr>
+        <tr>
+          <td data-label="Claim">Normalize video stream metadata from fixtures</td>
+          <td data-label="Gate">Unit: <code>test_video_note_normalizes_stream</code></td>
+          <td data-label="Evidence">codec h264, duration 8000ms</td>
+          <td data-label="Status"><span class="badge ok">PASSED</span></td>
+        </tr>
+        <tr>
+          <td data-label="Claim">Reject off-allowlist media hosts; upgrade CDN http→https</td>
+          <td data-label="Gate">Unit: <code>test_media_host_allowlist</code></td>
+          <td data-label="Evidence">http CDN upgraded; localhost/example rejected</td>
+          <td data-label="Status"><span class="badge ok">PASSED</span></td>
+        </tr>
+        <tr>
+          <td data-label="Claim">Redact share tokens from stored source URL</td>
+          <td data-label="Gate">Unit: bundle round-trip</td>
+          <td data-label="Evidence"><code>xsec_token</code> absent from <code>record.json</code></td>
+          <td data-label="Status"><span class="badge ok">PASSED</span></td>
+        </tr>
+        <tr>
+          <td data-label="Claim">Incomplete media archive fails validation</td>
+          <td data-label="Gate">Unit: requested media failure</td>
+          <td data-label="Evidence"><code>media_archive: incomplete</code>, passed=false</td>
+          <td data-label="Status"><span class="badge ok">PASSED</span></td>
+        </tr>
+        <tr>
+          <td data-label="Claim">Live public share link archives with media</td>
+          <td data-label="Gate">Live Codex capture + validator</td>
+          <td data-label="Evidence">2 images downloaded, validator passed</td>
+          <td data-label="Status"><span class="badge ok">PASSED</span></td>
+        </tr>
+        <tr>
+          <td data-label="Claim">Feishu upsert dry-run / commit</td>
+          <td data-label="Gate">Requires runtime credentials</td>
+          <td data-label="Evidence">Script present; live commit not executed</td>
+          <td data-label="Status"><span class="badge pending">PENDING</span></td>
+        </tr>
+        <tr>
+          <td data-label="Claim">Challenged-page cookie / HTML snapshot recovery</td>
+          <td data-label="Gate">Manual recovery path</td>
+          <td data-label="Evidence">Documented; not forced in this run</td>
+          <td data-label="Status"><span class="badge pending">PENDING</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div></section>
+
+  <section class="section"><div class="wrap">
+    <h2>Live run scorecard</h2>
+    <p>Bundle <code>6a62a41d000000000f016283-20260724T113147Z</code>. Access mode: anonymous. Media download requested.</p>
+    <table>
+      <thead><tr><th>Check</th><th>Result</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Check">Title / author</td><td data-label="Result"><span class="badge ok">OK</span></td><td data-label="Detail">刚刚，ChatGPT Voice 桌面版全球上线！ / AI圈刚刚</td></tr>
+        <tr><td data-label="Check">Note type</td><td data-label="Result"><span class="badge ok">OK</span></td><td data-label="Detail">image</td></tr>
+        <tr><td data-label="Check">Exact metrics</td><td data-label="Result"><span class="badge ok">OK</span></td><td data-label="Detail">likes 166 · collects 74 · comments 48 · shares 206</td></tr>
+        <tr><td data-label="Check">source.html hash</td><td data-label="Result"><span class="badge ok">OK</span></td><td data-label="Detail">SHA-256 matched declared bytes</td></tr>
+        <tr><td data-label="Check">Local media</td><td data-label="Result"><span class="badge ok">OK</span></td><td data-label="Detail">image-01.jpg + image-02.jpg, hashes matched</td></tr>
+        <tr><td data-label="Check">media_archive</td><td data-label="Result"><span class="badge ok">COMPLETE</span></td><td data-label="Detail">downloaded=2 discovered=2 failed=0</td></tr>
+      </tbody>
+    </table>
+  </div></section>
+
+  <section class="section"><div class="wrap grid2">
+    <article class="card">
+      <h3>Risks</h3>
+      <ul>
+        <li>Public page HTML can change; parser depends on embedded state.</li>
+        <li>Fresh share tokens or authorized sessions may be required.</li>
+        <li>CDN hosts and media URL schemes may drift.</li>
+        <li>Base sync quality depends on existing table field names.</li>
+      </ul>
+    </article>
+    <article class="card">
+      <h3>Recomputable conclusion</h3>
+      <ul>
+        <li>Core capture + validation path is verified on a live image note.</li>
+        <li>Deterministic unit suite: 7/7 passed after CDN http upgrade fix.</li>
+        <li>No overall composite score is invented for pending Base/video gates.</li>
+        <li>Ready for FinChip demo of local archive; cloud sync remains optional.</li>
+      </ul>
+    </article>
+  </div></section>
+</main>
+<footer class="wrap footer">
+  <span>RedNote Research Vault · Benchmark</span>
+  <span>Claims without evidence are marked pending</span>
+</footer>
+</div>
+</body>
+</html>

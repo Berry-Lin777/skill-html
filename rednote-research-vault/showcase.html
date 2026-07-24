@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>RedNote Research Vault — Showcase</title>
+<style>
+:root {
+  color-scheme: light;
+  --page-bg: #f3f5f8;
+  --page-fg: #151820;
+  --panel: #ffffff;
+  --line: #d5dbe6;
+  --muted: #5d6675;
+  --rose: #d61f69;
+  --mint: #0f8a5f;
+  --ink: #151820;
+}
+* { box-sizing: border-box; }
+html { background: var(--page-bg); }
+body {
+  margin: 0; min-width: 0; overflow-x: hidden;
+  background: var(--page-bg); color: var(--page-fg);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  line-height: 1.5;
+}
+.finchip-page {
+  min-height: 100%; overflow-x: hidden;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(214,31,105,.08), transparent 26%),
+    var(--page-bg);
+  color: var(--page-fg);
+}
+img { display: block; max-width: 100%; height: auto; }
+.wrap { width: 100%; max-width: 100%; margin: 0 auto; padding: 0 18px; min-width: 0; }
+.nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 0; border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 800; letter-spacing: -.03em; }
+.index {
+  font: 750 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--rose);
+}
+.hero { padding: 34px 0 18px; }
+.hero h1 {
+  margin: 8px 0 0; font-size: clamp(32px, 7vw, 56px);
+  line-height: .96; letter-spacing: -.05em;
+}
+.sub { margin: 12px 0 0; color: var(--muted); max-width: 40em; }
+.hero-shot {
+  margin-top: 18px; background: var(--panel); border: 1px solid var(--line);
+  padding: 10px; box-shadow: 8px 8px 0 rgba(21,24,32,.08);
+}
+.hero-shot img { width: 100%; aspect-ratio: 1400 / 900; object-fit: cover; }
+.hero-shot figcaption { margin-top: 10px; font-size: 12px; color: var(--muted); }
+.story { padding: 30px 0; border-top: 1px solid var(--line); }
+.story-head { display: grid; grid-template-columns: 64px 1fr; gap: 14px; margin-bottom: 14px; }
+.story-no {
+  font-size: 42px; font-weight: 800; line-height: 1; letter-spacing: -.06em; color: var(--rose);
+}
+.story h2 {
+  margin: 0 0 6px; font-size: clamp(24px, 4.5vw, 36px); letter-spacing: -.04em;
+}
+.story-head p { margin: 0; color: var(--muted); }
+.transform { display: grid; grid-template-columns: .9fr 1.1fr; gap: 12px; }
+.input {
+  background: var(--ink); color: #f3f5f8; padding: 18px; min-width: 0;
+}
+.input small {
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .1em; text-transform: uppercase; color: #ff8fb5;
+}
+.input blockquote {
+  margin: 14px 0 0; font-size: 18px; line-height: 1.35; letter-spacing: -.02em;
+}
+.plan {
+  background: var(--panel); border: 1px solid var(--line); padding: 16px; min-width: 0;
+}
+.plan small {
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--rose);
+}
+.plan h3 { margin: 10px 0 8px; font-size: 20px; letter-spacing: -.03em; }
+.plan p { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+.row { display: grid; grid-template-columns: 120px 1fr; gap: 8px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 13px; }
+.row b { font-weight: 700; }
+.row span { color: var(--muted); }
+.pass {
+  display: inline-block; margin-top: 12px; padding: 5px 8px;
+  background: rgba(15,138,95,.12); color: var(--mint);
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.media-grid figure {
+  margin: 0; background: var(--panel); border: 1px solid var(--line); padding: 8px;
+}
+.media-grid img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.media-grid figcaption { margin-top: 8px; font-size: 12px; color: var(--muted); }
+.evidence { padding: 34px 0; background: var(--ink); color: #f3f5f8; }
+.evidence .index { color: #ff8fb5; }
+.evidence h2 {
+  margin: 8px 0 10px; font-size: clamp(28px, 5vw, 44px); letter-spacing: -.045em;
+}
+.evidence .lede { color: #aeb6c3; margin: 0 0 16px; max-width: 42em; }
+.browser-proof {
+  margin: 0 0 14px; background: #1c212b; border: 1px solid #323846; padding: 10px;
+}
+.browser-proof img { width: 100%; aspect-ratio: 1400 / 920; object-fit: cover; }
+.browser-proof figcaption { margin-top: 10px; color: #aeb6c3; font-size: 12px; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.card {
+  background: #1c212b; border: 1px solid #323846; padding: 14px; min-width: 0;
+}
+.card h3 { margin: 0 0 6px; font-size: 16px; }
+.card p { margin: 0; color: #aeb6c3; font-size: 13px; }
+.badge {
+  display: inline-block; margin-bottom: 8px; padding: 3px 7px;
+  border: 1px solid var(--mint); color: var(--mint);
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.note {
+  margin-top: 14px; padding: 12px 14px; border-left: 3px solid #ff8fb5;
+  background: rgba(255,143,181,.08); color: #d5dbe6; font-size: 13px;
+}
+.footer {
+  padding: 22px 0 34px; border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; gap: 12px;
+  color: var(--muted); font-size: 11px;
+}
+@media (max-width: 700px) {
+  .transform, .media-grid, .cards { grid-template-columns: 1fr; }
+  .story-head { grid-template-columns: 1fr; }
+}
+@media (max-width: 500px) {
+  .wrap { padding: 0 14px; }
+  .row { grid-template-columns: 1fr; }
+  .footer { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="finchip-page">
+<header class="wrap nav">
+  <div class="brand">RedNote Research Vault</div>
+  <span class="index">Showcase · live Codex run</span>
+</header>
+<main>
+  <section class="wrap hero">
+    <span class="index">Input → evidence pack</span>
+    <h1>One public RedNote link became a validated research bundle.</h1>
+    <p class="sub">This showcase uses the real share link provided during testing. No Claude replay is claimed. Feishu commit was not requested.</p>
+    <figure class="hero-shot">
+      <img width="1400" height="900" alt="Captured RedNote note media collage with validator pass banner" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/rednote-research-vault/showcase/final.jpg">
+      <figcaption>Final local archive preview: cover + body image from the live note, with validator complete.</figcaption>
+    </figure>
+  </section>
+
+  <section class="story"><div class="wrap">
+    <div class="story-head">
+      <div class="story-no">01</div>
+      <div>
+        <h2>Representative input</h2>
+        <p>A complete Xiaohongshu share URL for a public image note about ChatGPT Voice desktop launch.</p>
+      </div>
+    </div>
+    <div class="transform">
+      <article class="input">
+        <small>User prompt</small>
+        <blockquote>“抓取这个小红书笔记，落成本地证据包并做校验：刚刚，ChatGPT Voice 桌面版全球上线！ — AI圈刚刚”</blockquote>
+      </article>
+      <article class="plan">
+        <small>Agent plan extracted</small>
+        <h3>Anonymous capture · download media · validate</h3>
+        <p>Route selected: archive locally. No Base sync. Prefer share URL with <code>xsec_token</code>; redact token from stored <code>source_url</code>.</p>
+        <div class="row"><b>Note ID</b><span>6a62a41d000000000f016283</span></div>
+        <div class="row"><b>Access</b><span>anonymous (no cookie needed for this public share)</span></div>
+        <div class="row"><b>Bundle</b><span>6a62a41d000000000f016283-20260724T113147Z</span></div>
+        <span class="pass">CAPTURE OK · VALIDATOR PASSED</span>
+      </article>
+    </div>
+  </div></section>
+
+  <section class="story"><div class="wrap">
+    <div class="story-head">
+      <div class="story-no">02</div>
+      <div>
+        <h2>Normalized record + real media</h2>
+        <p>The skill wrote an immutable snapshot, a fingerprintable <code>record.json</code>, and two checksummed images.</p>
+      </div>
+    </div>
+    <article class="plan">
+      <small>Key fields from record.json</small>
+      <div class="row"><b>Title</b><span>刚刚，ChatGPT Voice 桌面版全球上线！</span></div>
+      <div class="row"><b>Author</b><span>AI圈刚刚</span></div>
+      <div class="row"><b>Type</b><span>image</span></div>
+      <div class="row"><b>Metrics</b><span>likes 166 · collects 74 · comments 48 · shares 206</span></div>
+      <div class="row"><b>Media</b><span>2 images downloaded · 0 failed · media_archive complete</span></div>
+    </article>
+    <div class="media-grid">
+      <figure>
+        <img width="720" height="960" alt="Downloaded RedNote cover image" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/rednote-research-vault/showcase/note-cover.jpg">
+        <figcaption>media/image-01.jpg — cover asset from allowlisted CDN</figcaption>
+      </figure>
+      <figure>
+        <img width="720" height="960" alt="Downloaded RedNote body infographic" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/rednote-research-vault/showcase/note-body.jpg">
+        <figcaption>media/image-02.jpg — body asset retained with SHA-256</figcaption>
+      </figure>
+    </div>
+  </div></section>
+
+  <section class="evidence">
+    <div class="wrap">
+      <span class="index">Run evidence</span>
+      <h2>Codex live run, retained end to end.</h2>
+      <p class="lede">Executed with the repository capture and validator scripts. Only the Codex / local Python environment was run for this evidence pack.</p>
+      <figure class="browser-proof">
+        <img width="1400" height="920" alt="Run evidence panel showing capture JSON, validator pass, and bundle contents" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/rednote-research-vault/run-evidence/codex.jpg">
+        <figcaption>Real command outputs composed with the resulting bundle inventory and cover preview. Not a mock chat transcript.</figcaption>
+      </figure>
+      <div class="cards">
+        <article class="card">
+          <span class="badge">PASSED</span>
+          <h3>Capture</h3>
+          <p><code>media_downloaded: 2</code>, <code>warnings: []</code>, note type image, title matched the share card.</p>
+        </article>
+        <article class="card">
+          <span class="badge">PASSED</span>
+          <h3>Validator</h3>
+          <p><code>passed: true</code>, source + both images size/hash matched, <code>media_archive: complete</code>.</p>
+        </article>
+        <article class="card">
+          <span class="badge">NOT RUN</span>
+          <h3>Feishu commit</h3>
+          <p>Dry-run/commit path exists in the skill; credentials and user confirmation were not supplied for this showcase.</p>
+        </article>
+        <article class="card">
+          <span class="badge">CODEX ONLY</span>
+          <h3>Host coverage</h3>
+          <p>This evidence is from one local Codex/Python run. No Claude end-to-end pass is claimed here.</p>
+        </article>
+      </div>
+      <div class="note"><strong>Integrity note:</strong> source HTML, record.json, media files, and validator JSON remain in the private output directory used for this run. Showcase images are derived from those real artifacts and hosted on the workspace R2 bucket.</div>
+    </div>
+  </section>
+</main>
+<footer class="wrap footer">
+  <span>RedNote Research Vault · Showcase</span>
+  <span>Share link → immutable bundle → validator evidence</span>
+</footer>
+</div>
+</body>
+</html>
