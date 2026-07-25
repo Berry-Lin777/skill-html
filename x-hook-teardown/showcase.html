@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>X Hook Teardown — Showcase</title>
+<style>
+:root {
+  color-scheme: dark;
+  --page-bg: #070b10;
+  --page-fg: #eef3f7;
+  --panel: #101820;
+  --line: #273341;
+  --muted: #9aabba;
+  --sky: #1d9bf0;
+  --mint: #3dd68c;
+  --sand: #f4c15d;
+}
+* { box-sizing: border-box; }
+html { background: var(--page-bg); }
+body {
+  margin: 0; min-width: 0; overflow-x: hidden;
+  background: var(--page-bg); color: var(--page-fg);
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+}
+.finchip-page {
+  min-height: 100%; overflow-x: hidden;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(29,155,240,.16), transparent 30%),
+    var(--page-bg);
+  color: var(--page-fg);
+}
+img { display: block; max-width: 100%; height: auto; }
+.wrap { width: 100%; max-width: 100%; margin: 0 auto; padding: 0 18px; min-width: 0; }
+.nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 0; border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 800; letter-spacing: -.03em; }
+.index {
+  font: 750 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--sky);
+}
+.hero { padding: 34px 0 16px; }
+.hero h1 {
+  margin: 8px 0 0; font-size: clamp(32px, 7vw, 54px);
+  line-height: .96; letter-spacing: -.05em;
+}
+.sub { margin: 12px 0 0; color: var(--muted); max-width: 42em; }
+.hero-shot {
+  margin-top: 16px; background: var(--panel); border: 1px solid var(--line);
+  padding: 10px;
+}
+.hero-shot img { width: 100%; aspect-ratio: 1280 / 1600; object-fit: cover; object-position: top; }
+.hero-shot figcaption { margin-top: 10px; font-size: 12px; color: var(--muted); }
+.story { padding: 30px 0; border-top: 1px solid var(--line); }
+.story-head { display: grid; grid-template-columns: 56px 1fr; gap: 12px; margin-bottom: 14px; }
+.story-no {
+  font-size: 40px; font-weight: 800; line-height: 1; letter-spacing: -.06em; color: var(--sky);
+}
+.story h2 {
+  margin: 0 0 6px; font-size: clamp(24px, 4.5vw, 34px); letter-spacing: -.04em;
+}
+.story-head p { margin: 0; color: var(--muted); }
+.transform { display: grid; grid-template-columns: .95fr 1.05fr; gap: 12px; }
+.input {
+  background: #0b1219; border: 1px solid var(--line); padding: 16px; min-width: 0;
+}
+.input small {
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--sand);
+}
+.input blockquote {
+  margin: 12px 0 0; font-size: 17px; line-height: 1.35; letter-spacing: -.02em;
+}
+.plan {
+  background: var(--panel); border: 1px solid var(--line); padding: 16px; min-width: 0;
+}
+.plan small {
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--sky);
+}
+.plan h3 { margin: 10px 0 8px; font-size: 18px; letter-spacing: -.03em; }
+.row {
+  display: grid; grid-template-columns: 110px 1fr; gap: 8px;
+  padding: 8px 0; border-top: 1px solid var(--line); font-size: 13px;
+}
+.row b { font-weight: 700; }
+.row span { color: var(--muted); }
+.pass {
+  display: inline-block; margin-top: 12px; padding: 5px 8px;
+  background: rgba(61,214,140,.12); color: var(--mint);
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.why { padding: 28px 0; border-top: 1px solid var(--line); }
+.why h2 {
+  margin: 0 0 10px; font-size: clamp(24px, 4.5vw, 34px); letter-spacing: -.04em;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1px solid var(--line); padding: 8px 10px;
+  font: 750 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .04em; color: var(--muted);
+}
+.evidence { padding: 34px 0; background: #05080c; border-top: 1px solid var(--line); }
+.evidence .index { color: var(--sand); }
+.evidence h2 {
+  margin: 8px 0 10px; font-size: clamp(28px, 5vw, 42px); letter-spacing: -.045em;
+}
+.evidence .lede { color: var(--muted); margin: 0 0 16px; max-width: 44em; }
+.browser-proof {
+  margin: 0 0 14px; background: var(--panel); border: 1px solid var(--line); padding: 10px;
+}
+.browser-proof img { width: 100%; object-fit: cover; object-position: top; }
+.browser-proof.terminal img { aspect-ratio: 1200 / 1100; }
+.browser-proof.package img { aspect-ratio: 1600 / 1500; }
+.browser-proof.tearsheet img { aspect-ratio: 1280 / 1600; }
+.browser-proof figcaption { margin-top: 10px; color: var(--muted); font-size: 12px; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.card {
+  background: var(--panel); border: 1px solid var(--line); padding: 14px; min-width: 0;
+}
+.card h3 { margin: 0 0 6px; font-size: 16px; }
+.card p { margin: 0; color: var(--muted); font-size: 13px; }
+.badge {
+  display: inline-block; margin-bottom: 8px; padding: 3px 7px;
+  border: 1px solid var(--mint); color: var(--mint);
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.footer {
+  padding: 22px 0 36px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 11px;
+  display: flex; justify-content: space-between; gap: 12px;
+}
+@media (max-width: 700px) {
+  .transform { grid-template-columns: 1fr 1fr; }
+  .cards { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 500px) {
+  .transform, .cards { grid-template-columns: 1fr; }
+  .story-head { grid-template-columns: 40px 1fr; }
+  .row { grid-template-columns: 1fr; }
+  .footer { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="finchip-page">
+  <header class="wrap nav">
+    <div class="brand">X Hook Teardown</div>
+    <span class="index">Showcase · Live paste run</span>
+  </header>
+  <main>
+    <section class="wrap hero">
+      <h1>From pasted thread to tearsheet.</h1>
+      <p class="sub">One real Codex run on a Tesla earnings analysis thread. No mock terminal. Validator passed. Tearsheet opened as a real HTML file.</p>
+      <figure class="hero-shot">
+        <img width="1280" height="1600" alt="Final tearsheet.html from the Tesla earnings hook teardown" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/x-hook-teardown/run-evidence/tearsheet-en-web.png">
+        <figcaption>Final deliverable: tearsheet.html — H9 Curiosity-Gap Opener, goal bookmarks, confidence 0.87.</figcaption>
+      </figure>
+    </section>
+
+    <section class="wrap story">
+      <div class="story-head">
+        <div class="story-no">01</div>
+        <div>
+          <h2>Input → judgment</h2>
+          <p>User pasted long-form Chinese thread text (no URL). Skill auto-detected `thread_text`.</p>
+        </div>
+      </div>
+      <div class="transform">
+        <article class="input">
+          <small>Representative input</small>
+          <blockquote>Why Tesla’s profit fell — and why this report still matters more than the market thinks. … The market trades next quarter’s EPS. Musk is investing in the next decade.</blockquote>
+        </article>
+        <article class="plan">
+          <small>Extracted structure</small>
+          <h3>H9 + secondary H1</h3>
+          <div class="row"><b>Mode</b><span>thread</span></div>
+          <div class="row"><b>Hook</b><span>Paradox question opens the loop</span></div>
+          <div class="row"><b>Payoff</b><span>Not can’t earn — choosing to reinvest</span></div>
+          <div class="row"><b>Mechanism</b><span>CapEx → Robotaxi / Optimus / Dojo / AI infra</span></div>
+          <div class="row"><b>Closer</b><span>Next-quarter EPS vs next-decade bet</span></div>
+          <span class="pass">VALIDATOR PASSED · 0 ERRORS</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap why">
+      <h2>What this proves</h2>
+      <div class="chips">
+        <span class="chip">PASTE-FIRST · 0 API</span>
+        <span class="chip">THREAD AUTO-DETECT</span>
+        <span class="chip">BLANK SLOT TEMPLATE</span>
+        <span class="chip">AUDIT FLAGS</span>
+        <span class="chip">NO PUBLISH ACTION</span>
+      </div>
+    </section>
+
+    <section class="evidence">
+      <div class="wrap">
+        <div class="index">Run evidence</div>
+        <h2>Real Codex run · 2026-07-25</h2>
+        <p class="lede">Screenshots below come from the same package directory after `detect_input.py`, classification, `render_tearsheet.py`, and `validate_teardown.py`. Environment: Codex / local macOS. Apify not used.</p>
+
+        <figure class="browser-proof terminal">
+          <img width="1200" height="1100" alt="Terminal screenshot of detect_input and validate_teardown passing on Tesla thread" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/x-hook-teardown/run-evidence/run-terminal-en-web.png">
+          <figcaption>Run log: detect_input → thread_text · validate_teardown → passed · primary formula H9 / Curiosity-Gap Opener / 0.87. Body truncated in the screenshot for readability; full source remains in source.txt.</figcaption>
+        </figure>
+
+        <figure class="browser-proof package">
+          <img width="1600" height="1500" alt="Package evidence JSON with classification and validation passed" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/x-hook-teardown/run-evidence/package-en-web.png">
+          <figcaption>Package evidence: teardown.json summary with secondary H1, 6 tweets, audit flags, and validation.passed=true.</figcaption>
+        </figure>
+
+        <figure class="browser-proof tearsheet">
+          <img width="1280" height="1600" alt="Opened tearsheet.html preview for the Tesla run" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/x-hook-teardown/run-evidence/tearsheet-en-web.png">
+          <figcaption>Opened preview of tearsheet.html from the same English run — classification badges, source excerpt, structure map, and blank template.</figcaption>
+        </figure>
+
+        <div class="cards">
+          <article class="card">
+            <span class="badge">CODEX · LOCAL</span>
+            <h3>What was generated</h3>
+            <p>source.txt · teardown.json · tearsheet.html · validation.json for the Tesla earnings thread paste.</p>
+          </article>
+          <article class="card">
+            <span class="badge">NOT RUN HERE</span>
+            <h3>Claude / Apify</h3>
+            <p>This showcase documents one Codex paste-first run. Apify URL fetch and a separate Claude pass were not claimed as completed.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap footer">
+    <span>X Hook Teardown · Showcase</span>
+    <span>Real run evidence · no mock terminal</span>
+  </footer>
+</div>
+</body>
+</html>

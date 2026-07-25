@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>X Hook Teardown — Instruction</title>
+<style>
+:root {
+  color-scheme: dark;
+  --page-bg: #0a0f14;
+  --page-fg: #eef3f7;
+  --panel: #121a22;
+  --line: #2a3642;
+  --muted: #9aabba;
+  --sky: #1d9bf0;
+  --mint: #3dd68c;
+  --sand: #f4c15d;
+  --ink: #071018;
+}
+* { box-sizing: border-box; }
+html { background: var(--page-bg); }
+body {
+  margin: 0; min-width: 0; overflow-x: hidden;
+  background: var(--page-bg); color: var(--page-fg);
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+}
+.finchip-page {
+  min-height: 100%; overflow-x: hidden;
+  background:
+    radial-gradient(circle at 92% 0%, rgba(29,155,240,.18), transparent 28%),
+    radial-gradient(circle at 0% 18%, rgba(61,214,140,.08), transparent 22%),
+    var(--page-bg);
+  color: var(--page-fg);
+}
+img { display: block; max-width: 100%; height: auto; }
+.wrap { width: 100%; max-width: 100%; margin: 0 auto; padding: 0 18px; min-width: 0; }
+.nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 0; border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 800; letter-spacing: -.03em; }
+.nav-note {
+  font: 750 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--sky);
+}
+.hero { padding: 40px 0 28px; }
+.kicker {
+  margin: 0 0 10px; color: var(--sky);
+  font: 800 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .14em; text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0; font-size: clamp(32px, 7vw, 58px);
+  line-height: .98; letter-spacing: -.045em;
+}
+.hero h1 em { font-style: normal; color: var(--sky); }
+.lede { margin: 14px 0 0; color: var(--muted); max-width: 40em; font-size: 16px; }
+.hero-shot {
+  margin-top: 18px; background: var(--panel); border: 1px solid var(--line);
+  padding: 10px; min-width: 0;
+}
+.hero-shot img { width: 100%; aspect-ratio: 1280 / 1600; object-fit: cover; object-position: top; }
+.hero-shot figcaption { margin-top: 10px; font-size: 12px; color: var(--muted); }
+.strip {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--line); margin: 8px 0 8px;
+}
+.stat { padding: 16px; border-right: 1px solid var(--line); min-width: 0; }
+.stat:last-child { border-right: 0; }
+.stat b { display: block; font-size: 22px; letter-spacing: -.03em; color: var(--mint); }
+.stat span { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); }
+.section { padding: 36px 0; border-top: 1px solid var(--line); }
+.section h2 {
+  margin: 0 0 8px; font-size: clamp(26px, 5vw, 40px); letter-spacing: -.04em;
+}
+.section-intro { margin: 0 0 16px; color: var(--muted); max-width: 42em; }
+.fit { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.card {
+  background: var(--panel); border: 1px solid var(--line); padding: 18px; min-width: 0;
+}
+.card.good { border-top: 3px solid var(--mint); }
+.card.bad { border-top: 3px solid #f07178; }
+.card h3 { margin: 0 0 10px; font-size: 18px; }
+.card ul { margin: 0; padding-left: 18px; color: var(--muted); }
+.card li + li { margin-top: 6px; }
+.flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.step {
+  background: var(--panel); border: 1px solid var(--line); padding: 16px; min-width: 0;
+}
+.step .num {
+  color: var(--sky);
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .1em;
+}
+.step h3 { margin: 12px 0 8px; font-size: 17px; letter-spacing: -.02em; }
+.step p { margin: 0; color: var(--muted); font-size: 13px; }
+.inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.input {
+  background: #0e1620; border: 1px solid var(--line); padding: 16px; min-width: 0;
+}
+.input .label {
+  color: var(--sand);
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .1em;
+}
+.input h3 { margin: 10px 0 6px; font-size: 17px; }
+.input p { margin: 0; color: var(--muted); font-size: 13px; }
+.prompt {
+  background: var(--ink); border: 1px solid var(--line); padding: 18px; position: relative;
+}
+.prompt:before {
+  content: "RECOMMENDED PROMPT";
+  position: absolute; top: 0; right: 0;
+  background: var(--sky); color: #041018;
+  padding: 6px 8px;
+  font: 800 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .08em;
+}
+.prompt pre {
+  margin: 18px 0 0; white-space: pre-wrap; overflow-wrap: anywhere;
+  color: #dbe7f0; font: 13px/1.65 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.outputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.out {
+  background: var(--panel); border: 1px solid var(--line); padding: 16px; min-width: 0;
+}
+.out span {
+  color: var(--mint);
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.out h3 { margin: 10px 0 6px; font-size: 16px; }
+.out p { margin: 0; color: var(--muted); font-size: 13px; }
+.fine { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.note {
+  background: #13202b; border-left: 3px solid var(--sand); padding: 16px; min-width: 0;
+}
+.note h3 { margin: 0 0 8px; font-size: 16px; }
+.note p { margin: 0; color: var(--muted); font-size: 13px; }
+.footer {
+  padding: 24px 0 40px; border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; gap: 12px;
+  color: var(--muted); font-size: 11px;
+}
+@media (max-width: 700px) {
+  .strip { grid-template-columns: 1fr 1fr; }
+  .stat:nth-child(2) { border-right: 0; }
+  .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .fit, .flow, .inputs, .outputs, .fine { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 500px) {
+  .nav-note { display: none; }
+  .strip, .fit, .flow, .inputs, .outputs, .fine { grid-template-columns: 1fr; }
+  .stat { border-right: 0; border-bottom: 1px solid var(--line); }
+  .stat:last-child { border-bottom: 0; }
+  .footer { display: block; }
+  .footer span { display: block; margin-top: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="finchip-page">
+  <header class="wrap nav">
+    <div class="brand">X Hook Teardown</div>
+    <span class="nav-note">Detect → Classify → Package</span>
+  </header>
+  <main>
+    <section class="wrap hero">
+      <p class="kicker">Study the hook. Keep the receipts.</p>
+      <h1>Turn one X post into a <em>reusable</em> teardown pack.</h1>
+      <p class="lede">Paste a tweet or thread (or drop a status URL) and get formula classification, structure map, blank template, audit flags, JSON ledger, and a single-file HTML tearsheet — without posting anything.</p>
+      <figure class="hero-shot">
+        <img width="1280" height="1600" alt="Real tearsheet from a Tesla earnings thread teardown showing H9 Curiosity-Gap Opener" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/x-hook-teardown/run-evidence/tearsheet-en-web.png">
+        <figcaption>Real package preview: English Tesla earnings thread paste → H9 Curiosity-Gap Opener (0.87) → tearsheet.html</figcaption>
+      </figure>
+    </section>
+
+    <section class="wrap">
+      <div class="strip">
+        <div class="stat"><b>0 API</b><span>Paste-first by default</span></div>
+        <div class="stat"><b>H1–H11</b><span>Hook formula library</span></div>
+        <div class="stat"><b>4 files</b><span>Source, JSON, HTML, QA</span></div>
+        <div class="stat"><b>No post</b><span>Study only, never publish</span></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Who it is for</h2>
+        <p class="section-intro">Creators, ghostwriters, and growth operators who want to reverse-engineer why a post works — and leave with a template they can reuse.</p>
+        <div class="fit">
+          <article class="card good">
+            <h3>Strong fit</h3>
+            <ul>
+              <li>Viral tweet / thread teardowns for learning</li>
+              <li>Hook formula identification with confidence</li>
+              <li>Blank templates with named slots</li>
+              <li>Paste-only workflows (no X login)</li>
+              <li>Optional URL fetch when an Apify token exists</li>
+            </ul>
+          </article>
+          <article class="card bad">
+            <h3>Not the right tool</h3>
+            <ul>
+              <li>Auto-posting, liking, or scheduling on X</li>
+              <li>Guaranteeing virality or engagement</li>
+              <li>Full campaign packs across many channels</li>
+              <li>Scraping accounts at scale</li>
+              <li>Inventing metrics the post does not show</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>How it works</h2>
+        <p class="section-intro">Input is auto-detected. Pasted text always wins over fetched text.</p>
+        <div class="flow">
+          <article class="step">
+            <div class="num">01 · DETECT</div>
+            <h3>Read the input shape</h3>
+            <p>URL-only, text-only, URL+text, or thread paste. Ask for paste only when needed.</p>
+          </article>
+          <article class="step">
+            <div class="num">02 · CLASSIFY</div>
+            <h3>Pick the formula</h3>
+            <p>Map to H1–H11, score confidence, infer the likely engagement goal.</p>
+          </article>
+          <article class="step">
+            <div class="num">03 · STRUCTURE</div>
+            <h3>Label the beats</h3>
+            <p>Hook line, body beats, closer, reaction devices, per-tweet roles for threads.</p>
+          </article>
+          <article class="step">
+            <div class="num">04 · PACKAGE</div>
+            <h3>Validate delivery</h3>
+            <p>Write source.txt, teardown.json, tearsheet.html, then run the validator.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>What to provide</h2>
+        <p class="section-intro">The Skill auto-routes from whatever you paste. No key is required for the default path.</p>
+        <div class="inputs">
+          <article class="input">
+            <div class="label">DEFAULT</div>
+            <h3>Tweet or thread text</h3>
+            <p>Paste the post body. For threads, keep numbering or --- separators if you have them.</p>
+          </article>
+          <article class="input">
+            <div class="label">OPTIONAL</div>
+            <h3>Status URL</h3>
+            <p>Works alone if APIFY_TOKEN is set. Otherwise the Skill asks you to paste the text.</p>
+          </article>
+          <article class="input">
+            <div class="label">OPTIONAL</div>
+            <h3>Topic for slots</h3>
+            <p>If you want the blank template framed around your product or niche, say so.</p>
+          </article>
+          <article class="input">
+            <div class="label">OPTIONAL</div>
+            <h3>Derivative draft</h3>
+            <p>Only if you explicitly ask. Marked for human review; never auto-published.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Recommended prompt</h2>
+        <p class="section-intro">Be explicit that you want a package, not a chat-only opinion.</p>
+        <div class="prompt"><pre>Use $x-hook-teardown on the pasted thread below.
+
+Auto-detect input kind. Prefer my pasted text over any fetch.
+Produce teardown.json, tearsheet.html, source.txt, and validation.json.
+Classify the hook formula with confidence, build a blank {slot} template,
+list audit flags, and run the validator. Do not post anything to X.</pre></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>What you get</h2>
+        <p class="section-intro">A folder your editor can open without reconstructing the chat.</p>
+        <div class="outputs">
+          <article class="out"><span>TXT</span><h3>source.txt</h3><p>Exact text used for analysis.</p></article>
+          <article class="out"><span>JSON</span><h3>teardown.json</h3><p>Formula, structure, template slots, audit flags.</p></article>
+          <article class="out"><span>HTML</span><h3>tearsheet.html</h3><p>Single-file visual readout for review or sharing.</p></article>
+          <article class="out"><span>JSON</span><h3>validation.json</h3><p>Deterministic pass/fail from the package validator.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap fine">
+        <article class="note">
+          <h3>Dependencies</h3>
+          <p>Python 3 standard library for detect / validate / render. Optional APIFY_TOKEN only for URL-only auto fetch. No Publora. No X API required.</p>
+        </article>
+        <article class="note">
+          <h3>Limits</h3>
+          <p>A passing report proves package structure, not that the formula is uniquely correct or that a rewritten post will perform. Metrics stay unknown unless fetched.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap footer">
+    <span>X Hook Teardown · Instruction</span>
+    <span>Paste → classify → tearsheet → validate</span>
+  </footer>
+</div>
+</body>
+</html>

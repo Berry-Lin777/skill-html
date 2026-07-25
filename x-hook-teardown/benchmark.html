@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>X Hook Teardown — Benchmark</title>
+<style>
+:root {
+  color-scheme: light;
+  --page-bg: #f4f7fa;
+  --page-fg: #121820;
+  --panel: #ffffff;
+  --line: #d5dee8;
+  --muted: #5d6b78;
+  --sky: #0a7cc7;
+  --mint: #0f8a5f;
+  --amber: #b7791f;
+  --rose: #c0392b;
+}
+* { box-sizing: border-box; }
+html { background: var(--page-bg); }
+body {
+  margin: 0; min-width: 0; overflow-x: hidden;
+  background: var(--page-bg); color: var(--page-fg);
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+}
+.finchip-page {
+  min-height: 100%; overflow-x: hidden;
+  background:
+    linear-gradient(180deg, #eef5fb 0%, var(--page-bg) 32%),
+    var(--page-bg);
+  color: var(--page-fg);
+}
+img { display: block; max-width: 100%; height: auto; }
+.wrap { width: 100%; max-width: 100%; margin: 0 auto; padding: 0 18px; min-width: 0; }
+.nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 0; border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 800; letter-spacing: -.03em; }
+.meta {
+  font: 750 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--sky);
+}
+.hero { padding: 34px 0 18px; }
+.hero h1 {
+  margin: 8px 0 0; font-size: clamp(32px, 7vw, 52px);
+  line-height: .98; letter-spacing: -.045em;
+}
+.lede { margin: 12px 0 0; color: var(--muted); max-width: 42em; }
+.dash {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 18px;
+}
+.tile {
+  background: var(--panel); border: 1px solid var(--line); padding: 14px; min-width: 0;
+}
+.tile b { display: block; font-size: 22px; letter-spacing: -.03em; }
+.tile span { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); }
+.tile.pass b { color: var(--mint); }
+.section { padding: 30px 0; border-top: 1px solid var(--line); }
+.section h2 {
+  margin: 0 0 8px; font-size: clamp(24px, 4.5vw, 36px); letter-spacing: -.04em;
+}
+.section p { margin: 0 0 14px; color: var(--muted); }
+table {
+  width: 100%; border-collapse: collapse; background: var(--panel);
+  border: 1px solid var(--line); font-size: 13px;
+}
+th, td {
+  text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line);
+  vertical-align: top; min-width: 0;
+}
+th {
+  font: 750 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  background: #e8eef5;
+}
+.badge {
+  display: inline-block; padding: 3px 7px;
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  border: 1px solid currentColor;
+}
+.pass { color: var(--mint); }
+.warn { color: var(--amber); }
+.fail { color: var(--rose); }
+.pending { color: var(--muted); }
+.bars { display: grid; gap: 10px; }
+.bar-row { min-width: 0; }
+.bar-label {
+  display: flex; justify-content: space-between; gap: 10px;
+  font-size: 13px; margin-bottom: 5px;
+}
+.track {
+  height: 10px; background: #e1e8f0; border-radius: 999px; overflow: hidden;
+}
+.fill { display: block; height: 100%; background: var(--sky); }
+.fill.mint { background: var(--mint); }
+.fill.amber { background: var(--amber); }
+.proof {
+  margin: 0; background: var(--panel); border: 1px solid var(--line); padding: 10px;
+}
+.proof img { width: 100%; aspect-ratio: 1600 / 1500; object-fit: cover; object-position: top; }
+.proof figcaption { margin-top: 10px; font-size: 12px; color: var(--muted); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.card {
+  background: var(--panel); border: 1px solid var(--line); padding: 16px; min-width: 0;
+}
+.card h3 { margin: 0 0 8px; font-size: 16px; }
+.card p { margin: 0; color: var(--muted); font-size: 13px; }
+.footer {
+  padding: 22px 0 36px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 11px;
+  display: flex; justify-content: space-between; gap: 12px;
+}
+@media (max-width: 700px) {
+  .dash { grid-template-columns: 1fr 1fr; }
+  .grid2 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 500px) {
+  .dash, .grid2 { grid-template-columns: 1fr; }
+  .footer { display: block; }
+  table { font-size: 12px; }
+  th, td { padding: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="finchip-page">
+  <header class="wrap nav">
+    <div class="brand">X Hook Teardown</div>
+    <span class="meta">Benchmark · 2026-07-25</span>
+  </header>
+  <main>
+    <section class="wrap hero">
+      <h1>How the skill is proven.</h1>
+      <p class="lede">Measured against a real English Tesla earnings thread paste run, two fixture packages, and eight unit tests covering input detection, optional-fetch fallback, validation, and tearsheet render.</p>
+      <div class="dash">
+        <div class="tile pass"><b>8/8</b><span>Unit tests passed</span></div>
+        <div class="tile pass"><b>2/2</b><span>Fixture packages valid</span></div>
+        <div class="tile pass"><b>1</b><span>Live paste run validated</span></div>
+        <div class="tile"><b>H9</b><span>Primary formula on live run</span></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Scope under test</h2>
+        <p>Version exercised: local `skill-github/x-hook-teardown` on 2026-07-25 (Codex agent environment, macOS, Python 3.14). No Apify token was required for the live paste run.</p>
+        <table>
+          <thead>
+            <tr><th>Claim</th><th>Gate</th><th>Result</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Auto-detect URL / text / mixed / thread input</td>
+              <td>detect_input unit cases</td>
+              <td><span class="badge pass">PASS</span></td>
+            </tr>
+            <tr>
+              <td>Optional fetch fails soft without token</td>
+              <td>fetch_tweet_optional exit 2</td>
+              <td><span class="badge pass">PASS</span></td>
+            </tr>
+            <tr>
+              <td>Package schema + slots + source file</td>
+              <td>validate_teardown on fixtures + live run</td>
+              <td><span class="badge pass">PASS</span></td>
+            </tr>
+            <tr>
+              <td>Tearsheet renders without scripts</td>
+              <td>render_tearsheet smoke + HTML check</td>
+              <td><span class="badge pass">PASS</span></td>
+            </tr>
+            <tr>
+              <td>Public engagement metrics accuracy</td>
+              <td>Requires fetched metrics</td>
+              <td><span class="badge pending">NOT CLAIMED</span></td>
+            </tr>
+            <tr>
+              <td>Formula uniqueness / virality prediction</td>
+              <td>Editorial judgment</td>
+              <td><span class="badge warn">HUMAN REVIEW</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Capability scorecard</h2>
+        <p>Scores below summarize observed readiness for FinChip delivery. They are not a universal leaderboard.</p>
+        <div class="bars">
+          <div class="bar-row">
+            <div class="bar-label"><span>Input routing</span><strong>95</strong></div>
+            <div class="track"><span class="fill" style="width:95%"></span></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label"><span>Package validation</span><strong>92</strong></div>
+            <div class="track"><span class="fill mint" style="width:92%"></span></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label"><span>Tearsheet delivery</span><strong>90</strong></div>
+            <div class="track"><span class="fill" style="width:90%"></span></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label"><span>Optional fetch resilience</span><strong>88</strong></div>
+            <div class="track"><span class="fill mint" style="width:88%"></span></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label"><span>Metric enrichment</span><strong>40</strong></div>
+            <div class="track"><span class="fill amber" style="width:40%"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Live evidence trail</h2>
+        <p>Paste-only English Tesla earnings thread. Detected as `thread_text`, classified H9 / secondary H1, validator passed with 0 errors.</p>
+        <figure class="proof">
+          <img width="1600" height="1500" alt="Package evidence JSON showing H9 classification and validator passed" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/x-hook-teardown/run-evidence/package-en-web.png">
+          <figcaption>Real English paste package summary from teardown.json + validation.json.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Test matrix</h2>
+        <table>
+          <thead>
+            <tr><th>Scenario</th><th>Input</th><th>Expected</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Normal single post</td><td>Contrarian fixture</td><td>quick + H1 package passes</td><td><span class="badge pass">PASS</span></td></tr>
+            <tr><td>Normal thread</td><td>Listicle fixture</td><td>thread + ≥2 tweets passes</td><td><span class="badge pass">PASS</span></td></tr>
+            <tr><td>Fuzzy long paste</td><td>English Tesla earnings essay</td><td>thread_text + H9 teardown</td><td><span class="badge pass">PASS</span></td></tr>
+            <tr><td>URL only, no token</td><td>status URL</td><td>fallback to paste (exit 2)</td><td><span class="badge pass">PASS</span></td></tr>
+            <tr><td>Boundary empty</td><td>blank text</td><td>invalid / stop</td><td><span class="badge pass">PASS</span></td></tr>
+            <tr><td>Delivery</td><td>render + validate</td><td>HTML + validation.json</td><td><span class="badge pass">PASS</span></td></tr>
+            <tr><td>Apify enrichment</td><td>URL + token</td><td>metrics_status=fetched</td><td><span class="badge pending">PENDING</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap grid2">
+        <article class="card">
+          <h3>Verified</h3>
+          <p>Input detection, soft fetch fallback, fixture validation, live paste package, tearsheet render without JavaScript.</p>
+        </article>
+        <article class="card">
+          <h3>Risks / limits</h3>
+          <p>Formula labels are structural hypotheses. Strong certainty language in source posts is flagged, not rewritten. Apify path remains optional and environment-dependent.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Conclusion</h2>
+        <p>For paste-first hook teardowns with a validated file package, the skill is delivery-ready. Do not market it as a posting bot or a guaranteed engagement predictor. Metric enrichment via Apify is an optional upgrade, not a core claim.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap footer">
+    <span>X Hook Teardown · Benchmark</span>
+    <span>Evidence-backed · no fabricated totals</span>
+  </footer>
+</div>
+</body>
+</html>
