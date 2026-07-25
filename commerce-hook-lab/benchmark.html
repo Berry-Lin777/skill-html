@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Commerce Hook Lab — Benchmark</title>
+<style>
+:root{color-scheme:light;--page-bg:#ecebe5;--page-fg:#111;--ink:#111;--paper:#faf9f4;--green:#bfff52;--purple:#7757ff;--red:#ff5c3d;--yellow:#ffd64d;--muted:#66635b;--line:#111}
+*{box-sizing:border-box}html{min-width:0;background:var(--page-bg);color:var(--page-fg)}body{margin:0;min-width:0;overflow-x:hidden;background:var(--page-bg);color:var(--page-fg);font-family:Arial,Helvetica,sans-serif;line-height:1.45}.finchip-page{width:100%;max-width:100%;min-width:0;min-height:100%;overflow-x:hidden;background:var(--page-bg);color:var(--page-fg)}.wrap{width:min(1100px,calc(100% - 32px));max-width:100%;min-width:0;margin:auto}.topbar{min-height:58px;display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--ink);font:800 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase}.brand{display:flex;gap:9px;align-items:center}.mark{width:24px;height:24px;border-radius:50%;background:var(--green);border:2px solid var(--ink);box-shadow:3px 0 0 var(--purple)}.hero{padding:36px 0 48px}.kicker{font:850 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--purple)}h1{font-size:clamp(45px,8.5vw,90px);line-height:.86;letter-spacing:-.07em;margin:17px 0 24px;max-width:980px}h1 span{color:var(--purple)}.intro{max-width:750px;color:var(--muted);font-size:17px;margin:0}.dashboard{margin-top:30px;display:grid;grid-template-columns:1.1fr .9fr;border:2px solid var(--ink);background:var(--paper)}.verdict{padding:24px;border-right:2px solid var(--ink);background:var(--green)}.verdict small,.mono{font:800 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase}.verdict strong{display:block;font-size:clamp(64px,10vw,108px);line-height:.8;letter-spacing:-.07em;margin:42px 0 18px}.verdict p{font-size:13px;max-width:450px;margin:0}.metrics{display:grid;grid-template-columns:1fr 1fr}.metric{padding:19px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink)}.metric:nth-child(even){border-right:0}.metric:nth-last-child(-n+2){border-bottom:0}.metric b{display:block;font-size:37px;line-height:1;letter-spacing:-.04em}.metric span{display:block;margin-top:7px;color:var(--muted);font:750 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase}.section{padding:54px 0;border-top:1px solid var(--ink)}.head{display:grid;grid-template-columns:.78fr 1.22fr;gap:32px;align-items:end;margin-bottom:27px}.head h2{font-size:clamp(31px,5.2vw,57px);line-height:.92;letter-spacing:-.055em;margin:0}.head p{margin:0;color:var(--muted)}.run-meta{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--ink);background:var(--paper)}.meta{padding:18px;border-right:1px solid var(--ink)}.meta:last-child{border-right:0}.meta b{display:block;font-size:13px;margin-top:8px}.meta span{color:var(--purple);font:800 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase}.claims{display:grid;grid-template-columns:1fr 1fr;gap:10px}.claim{display:grid;grid-template-columns:55px 1fr;border:2px solid var(--ink);background:var(--paper)}.claim-id{display:grid;place-items:center;background:var(--purple);color:white;font:850 11px ui-monospace,SFMono-Regular,Menlo,monospace}.claim-body{padding:16px}.claim-body h3{font-size:16px;margin:0 0 7px}.claim-body p{font-size:11px;color:var(--muted);margin:0}.claim .pass{display:inline-block;margin-top:10px;padding:3px 6px;background:var(--green);border:1px solid var(--ink);font:800 9px ui-monospace,SFMono-Regular,Menlo,monospace}.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.gate{border:2px solid var(--ink);background:var(--paper);padding:19px;min-height:175px}.gate:nth-child(2),.gate:nth-child(6){background:var(--green)}.gate:nth-child(4){background:#ece7ff}.gate h3{font-size:18px;margin:27px 0 8px}.gate p{font-size:11px;color:#4f4c45;margin:0}.test-matrix{border:2px solid var(--ink);background:var(--paper);overflow:hidden}.row{display:grid;grid-template-columns:.72fr 1.3fr .78fr .55fr;min-width:0}.row>div{padding:13px 14px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);font-size:11px;min-width:0;overflow-wrap:anywhere}.row>div:last-child{border-right:0}.row:last-child>div{border-bottom:0}.row.header{background:var(--ink);color:white;font:800 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase}.status-pass{color:#245700;font-weight:850}.status-human{color:#9b310e;font-weight:850}.evidence{display:grid;grid-template-columns:1.2fr .8fr;gap:12px}.shot{margin:0;border:2px solid var(--ink);background:#090909}.shot img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:1229/768;object-fit:contain}.shot figcaption{background:var(--paper);padding:11px 13px;font-size:10px;border-top:2px solid var(--ink)}.evidence-notes{display:grid;gap:10px}.note{padding:18px;border:2px solid var(--ink);background:var(--paper)}.note.pass{background:var(--green)}.note.warn{background:var(--yellow)}.note h3{font-size:17px;margin:0 0 8px}.note p{font-size:11px;margin:0;color:#48453e}.truth{display:grid;grid-template-columns:1fr 1fr;gap:12px}.truth-card{border:2px solid var(--ink);background:var(--paper);padding:21px}.truth-card h3{margin:0 0 15px;font-size:20px}.truth-card ul{margin:0;padding-left:18px}.truth-card li{font-size:12px;margin:8px 0}.truth-card.no{background:#ffddd2}.conclusion{padding:64px 0 75px;text-align:center}.conclusion h2{font-size:clamp(43px,8vw,83px);line-height:.87;letter-spacing:-.065em;margin:0}.conclusion p{max-width:700px;margin:24px auto 0;color:var(--muted)}.footer{padding:22px 0 36px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:16px;font:750 10px ui-monospace,SFMono-Regular,Menlo,monospace}
+@media(max-width:820px){.dashboard{grid-template-columns:1fr 1fr}.run-meta{grid-template-columns:repeat(4,1fr)}.gates{grid-template-columns:repeat(3,1fr)}}@media(max-width:700px){.head{grid-template-columns:1fr 1fr}.evidence{grid-template-columns:1fr}.claims{grid-template-columns:1fr 1fr}.row{grid-template-columns:.8fr 1.2fr .75fr .55fr}.row>div{padding:11px 9px}}@media(max-width:500px){.wrap{width:calc(100% - 24px)}.topbar>span:last-child{display:none}.hero{padding:30px 0 40px}.dashboard,.head,.truth{grid-template-columns:1fr}.verdict{border-right:0;border-bottom:2px solid var(--ink)}.run-meta{grid-template-columns:1fr 1fr}.meta{border-bottom:1px solid var(--ink)}.meta:nth-child(even){border-right:0}.meta:nth-last-child(-n+2){border-bottom:0}.claims,.gates{grid-template-columns:1fr}.section{padding:43px 0}.test-matrix{overflow:visible;border:0;background:transparent}.row{display:block;border:2px solid var(--ink);margin-bottom:9px;background:var(--paper)}.row.header{display:none}.row>div{border-right:0;border-bottom:1px solid var(--ink);padding:10px 12px}.row>div::before{content:attr(data-label);display:block;color:var(--purple);font:800 8px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;margin-bottom:3px}.row>div:last-child{border-bottom:0}.footer{display:block}.footer span{display:block;margin-top:5px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;transform:none!important}}
+</style>
+</head>
+<body><div class="finchip-page">
+<header class="wrap topbar"><div class="brand"><span class="mark"></span><span>Commerce Hook Lab</span></div><span>Benchmark · observed evidence</span></header>
+<main>
+<section class="wrap hero">
+  <span class="kicker">Capability verification · 2026-07-25</span>
+  <h1>Can it turn product truth into a <span>testable hook system?</span></h1>
+  <p class="intro">We evaluated structure, traceability, creative separation, production continuity, package parity, and explicit safety limits. Performance prediction was deliberately excluded.</p>
+  <div class="dashboard">
+    <article class="verdict"><small>Deterministic result</small><strong>PASS</strong><p>Independent SnapSeal Mini lab run. The validator reopened the package and returned zero structural or traceability issues.</p></article>
+    <div class="metrics">
+      <div class="metric"><b>0</b><span>Errors</span></div><div class="metric"><b>0</b><span>Warnings</span></div>
+      <div class="metric"><b>17</b><span>Facts + restrictions</span></div><div class="metric"><b>12</b><span>Hooks</span></div>
+      <div class="metric"><b>3</b><span>Production packs</span></div><div class="metric"><b>5</b><span>Human review items</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section"><div class="wrap">
+  <div class="head"><h2>Tested version and scope.</h2><p>The evaluation used the committed Skill source plus a new product brief that was not part of the bundled example.</p></div>
+  <div class="run-meta">
+    <div class="meta"><span>Skill commit</span><b>9682b9a</b></div>
+    <div class="meta"><span>Run environment</span><b>Codex CLI · macOS</b></div>
+    <div class="meta"><span>Mode</span><b>Lab · 15 sec · 9:16</b></div>
+    <div class="meta"><span>Validator</span><b>Python 3 · schema v1.0</b></div>
+  </div>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <div class="head"><h2>Claims mapped to checks.</h2><p>Each product claim is paired with observable evidence. “Makes better ads” is not accepted as a testable claim.</p></div>
+  <div class="claims">
+    <article class="claim"><div class="claim-id">C01</div><div class="claim-body"><h3>Traceable product truth</h3><p>Every hook points to known F/Q/R IDs; prohibited facts cannot support creative.</p><span class="pass">PASS · 17 IDs</span></div></article>
+    <article class="claim"><div class="claim-id">C02</div><div class="claim-body"><h3>Required hook volume</h3><p>Lab mode returns exactly 12 hooks and expands exactly three.</p><span class="pass">PASS · 12 / 3</span></div></article>
+    <article class="claim"><div class="claim-id">C03</div><div class="claim-body"><h3>Three-channel openings</h3><p>Spoken line, first-frame action, and overlay remain non-empty and non-repetitive.</p><span class="pass">PASS · observed</span></div></article>
+    <article class="claim"><div class="claim-id">C04</div><div class="claim-body"><h3>Production continuity</h3><p>Every winning pack starts at 0, ends at 15, and contains no timeline gaps or overlaps.</p><span class="pass">PASS · 3 packs</span></div></article>
+    <article class="claim"><div class="claim-id">C05</div><div class="claim-body"><h3>Controlled hook test</h3><p>The opening changes while the 3–15 second body master and CTA remain fixed.</p><span class="pass">PASS · 1 variable</span></div></article>
+    <article class="claim"><div class="claim-id">C06</div><div class="claim-body"><h3>Honest delivery</h3><p>The report preserves human decisions and states what machine validation cannot establish.</p><span class="pass">PASS · 5 review items</span></div></article>
+  </div>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <div class="head"><h2>Six machine gates.</h2><p>A run fails when structure and evidence disagree. Creative taste and legal approval remain deliberately outside the pass result.</p></div>
+  <div class="gates">
+    <article class="gate"><span class="mono">G01 · trace</span><h3>Fact support</h3><p>Known IDs, companion restrictions, prohibited-fact exclusion, grounded numbers.</p></article>
+    <article class="gate"><span class="mono">G02 · count</span><h3>Mode contract</h3><p>Lab 12/3, quick 6/1, valid identifiers, unique facts, hooks, and packs.</p></article>
+    <article class="gate"><span class="mono">G03 · channel</span><h3>Opening integrity</h3><p>Spoken, visual, and overlay content present without simple three-channel repetition.</p></article>
+    <article class="gate"><span class="mono">G04 · score</span><h3>Decision logic</h3><p>Eight scores, correct readiness average, and minimum gates for advanced hooks.</p></article>
+    <article class="gate"><span class="mono">G05 · time</span><h3>Production parity</h3><p>Continuous timelines, correct duration, valid source hook, content file present.</p></article>
+    <article class="gate"><span class="mono">G06 · package</span><h3>Delivery parity</h3><p>Required files exist; truth, audience, test, and hook IDs agree with the manifest.</p></article>
+  </div>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <div class="head"><h2>Evaluation matrix.</h2><p>Normal, boundary, malformed, and delivery scenarios were exercised across the representative run and bundled validator tests.</p></div>
+  <div class="test-matrix">
+    <div class="row header"><div>Scenario</div><div>Evidence</div><div>Expected</div><div>Result</div></div>
+    <div class="row"><div data-label="Scenario">New commerce brief</div><div data-label="Evidence">SnapSeal Mini · owned footage · price + safety restrictions</div><div data-label="Expected">12 hooks / 3 packs</div><div data-label="Result" class="status-pass">PASS</div></div>
+    <div class="row"><div data-label="Scenario">Companion rule</div><div data-label="Evidence">Compatible-bag claim requires material limitation</div><div data-label="Expected">Restriction travels</div><div data-label="Result" class="status-pass">PASS</div></div>
+    <div class="row"><div data-label="Scenario">Unsupported claim</div><div data-label="Evidence">Unit fixture removes required fact support</div><div data-label="Expected">Fail the pack</div><div data-label="Result" class="status-pass">PASS</div></div>
+    <div class="row"><div data-label="Scenario">Timeline gap</div><div data-label="Evidence">Unit fixture breaks production continuity</div><div data-label="Expected">Fail the pack</div><div data-label="Result" class="status-pass">PASS</div></div>
+    <div class="row"><div data-label="Scenario">Hook duplication</div><div data-label="Evidence">Similarity gate compares combined opening channels</div><div data-label="Expected">Reject high overlap</div><div data-label="Result" class="status-pass">PASS</div></div>
+    <div class="row"><div data-label="Scenario">Editorial approval</div><div data-label="Evidence">Safety, price, platform fit, authenticity, and legal copy</div><div data-label="Expected">Human review</div><div data-label="Result" class="status-human">OPEN</div></div>
+  </div>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <div class="head"><h2>Evidence from the live run.</h2><p>This is the real local workspace after an independent Codex run. The validator was executed again during root review; no terminal or report was mocked.</p></div>
+  <div class="evidence">
+    <figure class="shot"><img width="1229" height="768" alt="Real Cursor terminal showing Commerce Hook Lab validator PASS with 0 errors, 0 warnings, 17 facts, 12 hooks and 3 production packs" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/commerce-hook-lab/run-evidence/real-validation-run.png"><figcaption>Real validation window · package tree visible · PASS · 0 errors · 0 warnings</figcaption></figure>
+    <div class="evidence-notes">
+      <article class="note pass"><h3>Observed</h3><p>17 fact and restriction records, 12 hooks, 3 production packs, required Markdown files, source manifest, and two QA reports.</p></article>
+      <article class="note"><h3>Recalculated</h3><p>The root review reopened the final manifest and reran the bundled deterministic validator after the independent Agent finished.</p></article>
+      <article class="note warn"><h3>Not claimed</h3><p>No CTR, CVR, ROAS, virality, sales lift, legal approval, or platform approval was inferred from this pass.</p></article>
+    </div>
+  </div>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <div class="head"><h2>What passed—and what still needs a person.</h2><p>A strong benchmark separates machine-verifiable delivery from decisions that require judgment, authorization, or live performance data.</p></div>
+  <div class="truth">
+    <article class="truth-card"><h3>Verified</h3><ul><li>Required package structure and exact lab counts.</li><li>Fact and restriction traceability for every hook.</li><li>Complete, gap-free 15-second production timelines.</li><li>Seedance prompt tokens, reference labels, and aspect ratio.</li><li>Controlled test variable and shared post-hook master.</li><li>Zero unsupported claims reported by the generated review block.</li></ul></article>
+    <article class="truth-card no"><h3>Human review remains</h3><ul><li>Safe hand placement and no child usage.</li><li>Real footage for the physical product result.</li><li>Current USD 19.90 price before use.</li><li>Material-comparison wording and exact product fidelity.</li><li>Legal, brand, authenticity, and current platform policy.</li><li>Test sample, spend, duration, and interpretation in market.</li></ul></article>
+  </div>
+</div></section>
+
+<section class="wrap conclusion"><span class="kicker">Final conclusion</span><h2>Delivery integrity: proven.<br>Market performance: not predicted.</h2><p>Commerce Hook Lab passed every deterministic gate in the representative run. The evidence supports a claim of structured, traceable, production-ready hook planning—not guaranteed advertising outcomes.</p></section>
+</main>
+<footer class="wrap footer"><span>Commerce Hook Lab · Benchmark</span><span>Commit 9682b9a · Run 2026-07-25 · Evidence preserved</span></footer>
+</div></body></html>

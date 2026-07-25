@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Commerce Hook Lab — Instructions</title>
+<style>
+:root{
+  color-scheme:light;
+  --page-bg:#f4f0e6;
+  --page-fg:#141414;
+  --ink:#141414;
+  --paper:#fffdf6;
+  --acid:#d9ff3f;
+  --violet:#7b55ff;
+  --orange:#ff6b35;
+  --blue:#3977ff;
+  --line:#141414;
+  --muted:#625f57;
+}
+*{box-sizing:border-box}
+html{min-width:0;background:var(--page-bg);color:var(--page-fg)}
+body{
+  margin:0;min-width:0;overflow-x:hidden;background:var(--page-bg);color:var(--page-fg);
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45
+}
+.finchip-page{
+  width:100%;max-width:100%;min-width:0;min-height:100%;overflow-x:hidden;
+  background:
+    linear-gradient(rgba(20,20,20,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(20,20,20,.045) 1px,transparent 1px),
+    var(--page-bg);
+  background-size:24px 24px;color:var(--page-fg)
+}
+.wrap{width:min(1100px,calc(100% - 32px));max-width:100%;min-width:0;margin:auto}
+.topbar{
+  min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  border-bottom:2px solid var(--line);font-size:12px;font-weight:850;letter-spacing:.08em;text-transform:uppercase
+}
+.brand{display:flex;align-items:center;gap:10px}.brand-mark{display:grid;place-items:center;width:28px;height:28px;background:var(--acid);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.status{display:flex;align-items:center;gap:8px}.dot{width:8px;height:8px;border-radius:50%;background:var(--acid);border:1px solid var(--ink)}
+.hero{padding:38px 0 50px}
+.eyebrow{display:inline-block;padding:6px 9px;background:var(--ink);color:var(--acid);font:800 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase}
+h1,h2,h3,p{overflow-wrap:anywhere}
+h1{max-width:930px;margin:17px 0 22px;font-size:clamp(42px,8.2vw,86px);line-height:.89;letter-spacing:-.065em}
+h1 .slash{color:var(--violet)}.lede{max-width:720px;margin:0;color:var(--muted);font-size:clamp(16px,2.3vw,21px)}
+.specimen{margin-top:30px;display:grid;grid-template-columns:.86fr 1.14fr;border:2px solid var(--ink);background:var(--paper);box-shadow:9px 9px 0 var(--ink)}
+.spec-label{padding:20px;border-right:2px solid var(--ink);background:var(--acid)}
+.spec-label small,.mono{font:800 10px/1.25 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase}
+.spec-label h2{font-size:clamp(26px,4vw,43px);line-height:.95;letter-spacing:-.045em;margin:42px 0 10px}
+.spec-label p{margin:0;font-size:12px}
+.channels{display:grid;grid-template-columns:repeat(3,1fr)}
+.channel{padding:18px;min-height:210px;border-right:1px solid var(--ink)}
+.channel:last-child{border-right:0}.channel:nth-child(2){background:#f0ebff}.channel:nth-child(3){background:#fff0e8}
+.channel b{font:850 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--violet);letter-spacing:.09em}
+.channel p{margin:46px 0 0;font-size:16px;font-weight:760;line-height:1.15}
+.trace{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}.chip{padding:4px 7px;border:1px solid var(--ink);background:var(--paper);font:750 9px ui-monospace,SFMono-Regular,Menlo,monospace}
+.section{padding:54px 0;border-top:2px solid var(--ink)}
+.section-head{display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;align-items:end;margin-bottom:28px}
+.section h2{margin:0;font-size:clamp(31px,5.3vw,58px);line-height:.94;letter-spacing:-.05em}
+.section-head p{margin:0;color:var(--muted);font-size:15px}
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.outcome{min-width:0;padding:20px;border:2px solid var(--ink);background:var(--paper)}
+.outcome:nth-child(2){background:var(--acid)}.outcome:nth-child(5){background:#f0ebff}
+.num{display:flex;justify-content:space-between;gap:10px;font:900 11px ui-monospace,SFMono-Regular,Menlo,monospace}
+.outcome h3{font-size:20px;line-height:1.05;margin:32px 0 9px}.outcome p{margin:0;color:#4b4943;font-size:12px}
+.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fit{border:2px solid var(--ink);padding:23px;background:var(--paper)}.fit.no{background:#ffddd1}
+.fit h3{margin:0 0 14px;font-size:21px}.fit ul{margin:0;padding-left:18px}.fit li{margin:8px 0;font-size:13px}
+.pipeline{display:grid;grid-template-columns:repeat(6,1fr);border:2px solid var(--ink);background:var(--paper)}
+.step{position:relative;min-width:0;padding:16px 13px;border-right:1px solid var(--ink);min-height:145px}
+.step:last-child{border-right:0}.step:nth-child(2),.step:nth-child(5){background:var(--acid)}
+.step .mono{color:var(--violet)}.step h3{font-size:15px;line-height:1.05;margin:30px 0 8px}.step p{font-size:10px;color:var(--muted);margin:0}
+.modes{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mode{padding:19px;border:2px solid var(--ink);background:var(--paper)}
+.mode.default{background:var(--violet);color:white}.mode b{display:block;font-size:18px}.mode span{display:block;margin-top:8px;font-size:11px}
+.input-layout{display:grid;grid-template-columns:.78fr 1.22fr;gap:14px}
+.checklist,.prompt{border:2px solid var(--ink);background:var(--paper);padding:23px;min-width:0}
+.checklist h3,.prompt h3{margin:0 0 18px;font-size:20px}.check-row{display:flex;gap:10px;align-items:flex-start;border-top:1px solid #b9b5aa;padding:10px 0;font-size:12px}
+.check-row:first-of-type{border-top:0}.check-icon{display:grid;place-items:center;flex:0 0 20px;height:20px;background:var(--acid);border:1px solid var(--ink);font-weight:900}
+.prompt{background:var(--ink);color:#fdfaf0}.prompt h3{color:var(--acid)}.prompt pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;color:#e8e3d8}
+.package{border:2px solid var(--ink);background:var(--paper);padding:10px 22px}
+.file{display:grid;grid-template-columns:1fr 1.2fr;gap:20px;padding:13px 0;border-bottom:1px solid #b9b5aa;font-size:12px}.file:last-child{border-bottom:0}.file code{font-weight:850;color:var(--violet)}
+.guardrails{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.guard{padding:20px;border:2px solid var(--ink);background:var(--paper)}.guard:nth-child(2){background:#ffddd1}.guard:nth-child(3){background:var(--acid)}
+.guard h3{margin:0 0 10px;font-size:18px}.guard p{margin:0;font-size:12px}
+.cta{padding:64px 0 75px;text-align:center}.cta h2{font-size:clamp(40px,8vw,86px);line-height:.87;letter-spacing:-.065em;margin:0}.cta p{max-width:640px;margin:24px auto 0;color:var(--muted)}
+.footer{padding:23px 0 36px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;gap:16px;font:750 10px ui-monospace,SFMono-Regular,Menlo,monospace}
+@media(max-width:820px){
+  .specimen{grid-template-columns:.78fr 1.22fr}.outcomes{grid-template-columns:repeat(3,1fr)}
+  .pipeline{grid-template-columns:repeat(3,1fr)}.step:nth-child(3){border-right:0}.step:nth-child(-n+3){border-bottom:1px solid var(--ink)}
+}
+@media(max-width:700px){
+  .section-head{grid-template-columns:1fr 1fr}.specimen{grid-template-columns:1fr}.spec-label{border-right:0;border-bottom:2px solid var(--ink)}
+  .spec-label h2{margin-top:25px}.channels{grid-template-columns:repeat(3,1fr)}.channel{min-height:185px;padding:14px}
+  .channel p{font-size:13px;margin-top:34px}.input-layout{grid-template-columns:1fr}.modes{grid-template-columns:repeat(2,1fr)}
+  .guardrails{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:500px){
+  .wrap{width:calc(100% - 24px)}.status{display:none}.hero{padding:30px 0 40px}.specimen{box-shadow:5px 5px 0 var(--ink)}
+  .channels,.outcomes,.fit-grid,.section-head,.guardrails{grid-template-columns:1fr}.channel{min-height:auto;border-right:0;border-bottom:1px solid var(--ink)}
+  .channel:last-child{border-bottom:0}.channel p{margin-top:20px}.section{padding:43px 0}.pipeline{grid-template-columns:1fr 1fr}
+  .step{border-bottom:1px solid var(--ink)}.step:nth-child(3){border-right:1px solid var(--ink)}.step:nth-child(even){border-right:0}.step:nth-last-child(-n+2){border-bottom:0}
+  .file{grid-template-columns:1fr;gap:4px}.footer{display:block}.footer span{display:block;margin-top:5px}
+}
+@media(max-width:360px){.modes,.pipeline{grid-template-columns:1fr}.step{border-right:0!important}.step:nth-last-child(2){border-bottom:1px solid var(--ink)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;transform:none!important}}
+</style>
+</head>
+<body>
+<div class="finchip-page">
+  <header class="wrap topbar">
+    <div class="brand"><span class="brand-mark">H</span><span>Commerce Hook Lab</span></div>
+    <div class="status"><span class="dot"></span><span>Instruction · v1.0</span></div>
+  </header>
+
+  <main>
+    <section class="wrap hero">
+      <span class="eyebrow">Evidence → Hook → Shoot → Test</span>
+      <h1>Stop writing 12 versions of the <span class="slash">same opening.</span></h1>
+      <p class="lede">Turn approved product facts, footage, reviews, offers, and restrictions into distinct first-three-second hooks—then expand the strongest ideas into production-ready scripts and AI-video prompts.</p>
+
+      <div class="specimen">
+        <div class="spec-label">
+          <small>Real output specimen · H01</small>
+          <h2>One hook.<br>Three jobs.</h2>
+          <p>The visual proves. The spoken line opens a loop. The overlay gives instant context.</p>
+          <div class="trace"><span class="chip">F02</span><span class="chip">F11</span><span class="chip">R01</span><span class="chip">R02</span></div>
+        </div>
+        <div class="channels">
+          <article class="channel"><b>SPOKEN</b><p>“One slow pass—watch the edge.”</p></article>
+          <article class="channel"><b>FIRST FRAME</b><p>Owned macro starts mid-pass on a compatible cereal bag.</p></article>
+          <article class="channel"><b>OVERLAY</b><p>OPEN CEREAL,<br>RESEALED</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><h2>What you get.</h2><p>Not a loose list of “viral hooks.” Every idea is connected to evidence, a proof plan, production constraints, and a controlled test.</p></div>
+        <div class="outcomes">
+          <article class="outcome"><div class="num"><span>01</span><span>TRUTH</span></div><h3>Product truth ledger</h3><p>Stable fact, quote, restriction, source, rights, proof, and review IDs.</p></article>
+          <article class="outcome"><div class="num"><span>02</span><span>12 / 6</span></div><h3>Distinct hook matrix</h3><p>12 hooks in lab mode or 6 in quick mode—each built on a different commercial angle.</p></article>
+          <article class="outcome"><div class="num"><span>03</span><span>8×</span></div><h3>Readiness scoring</h3><p>Eight editorial dimensions measure test readiness, never predicted performance.</p></article>
+          <article class="outcome"><div class="num"><span>04</span><span>15 SEC</span></div><h3>Production timelines</h3><p>Continuous shot, audio, overlay, CTA, reference, and fallback direction.</p></article>
+          <article class="outcome"><div class="num"><span>05</span><span>AIGC</span></div><h3>Video prompts</h3><p>Generic prompt plus a timestamped, reference-aware Seedance prompt.</p></article>
+          <article class="outcome"><div class="num"><span>06</span><span>QA</span></div><h3>Deterministic validation</h3><p>Traceability, timing, similarity, channel repetition, counts, and file parity.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><h2>Use it when the first three seconds matter.</h2><p>Commerce Hook Lab is designed for short-form product creative where proof, production feasibility, and clean testing matter as much as the copy.</p></div>
+        <div class="fit-grid">
+          <article class="fit"><h3>Good fit</h3><ul><li>TikTok Shop, Reels, Shorts, UGC, product demos, and paid social.</li><li>A product page, brief, approved claims, real reviews, images, or footage already exist.</li><li>You need spoken, visual, and overlay hooks—not headline-only copy.</li><li>You want scripts, shot direction, Seedance prompts, or a controlled hook test.</li></ul></article>
+          <article class="fit no"><h3>Not a substitute for</h3><ul><li>Legal, regulatory, platform-policy, or brand approval.</li><li>Actual video rendering, publishing, trafficking, or ad spend.</li><li>Performance prediction, guaranteed virality, CTR, CVR, ROAS, or sales.</li><li>Missing product truth, usage rights, or real proof of product performance.</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><h2>The lab pipeline.</h2><p>Each stage narrows uncertainty. Unsupported claims remain visible as restrictions instead of silently leaking into copy.</p></div>
+        <div class="pipeline">
+          <article class="step"><span class="mono">01 · ingest</span><h3>Collect sources</h3><p>Product, audience, platform, rights, offer, proof, prohibitions.</p></article>
+          <article class="step"><span class="mono">02 · ground</span><h3>Build truth ledger</h3><p>Normalize F, Q, and R IDs with locators and companion rules.</p></article>
+          <article class="step"><span class="mono">03 · diverge</span><h3>Generate angles</h3><p>Create materially different visual, verbal, and contextual openings.</p></article>
+          <article class="step"><span class="mono">04 · gate</span><h3>Score readiness</h3><p>Reject unsupported, unshootable, repetitive, or risky openings.</p></article>
+          <article class="step"><span class="mono">05 · produce</span><h3>Expand winners</h3><p>Write exact timelines, prompts, references, and real-footage fallbacks.</p></article>
+          <article class="step"><span class="mono">06 · validate</span><h3>Check the pack</h3><p>Run machine QA, preserve warnings, and list human decisions.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><h2>Choose a run mode.</h2><p>Lab is the default. Quick is intentionally smaller; Audit and Iterate start from supplied creative or performance data.</p></div>
+        <div class="modes">
+          <article class="mode default"><b>LAB</b><span>12 hooks · strongest 3 expanded · controlled test plan</span></article>
+          <article class="mode"><b>QUICK</b><span>6 hooks · strongest 1 expanded · fast direction</span></article>
+          <article class="mode"><b>AUDIT</b><span>Diagnose supplied hooks · before/after repair evidence</span></article>
+          <article class="mode"><b>ITERATE</b><span>Use supplied results · create the next controlled round</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><h2>Give it truth, context, and boundaries.</h2><p>The skill can infer audience context when necessary, but it will label the assumption. It will not invent product facts or recover inaccessible pages from memory.</p></div>
+        <div class="input-layout">
+          <article class="checklist">
+            <h3>Minimum useful input</h3>
+            <div class="check-row"><span class="check-icon">✓</span><span>Product source: page, brief, screenshots, images, reviews, or approved claims.</span></div>
+            <div class="check-row"><span class="check-icon">✓</span><span>Audience or enough context to make a clearly labeled assumption.</span></div>
+            <div class="check-row"><span class="check-icon">✓</span><span>Platform, duration, and objective—or accept 9:16, 15 seconds, hold.</span></div>
+            <div class="check-row"><span class="check-icon">✓</span><span>Rights status for product media, reviews, likenesses, and competitor material.</span></div>
+            <div class="check-row"><span class="check-icon">+</span><span>Helpful: offer, objections, proof assets, brand voice, prohibited phrases, and current data.</span></div>
+          </article>
+          <article class="prompt">
+            <h3>Recommended prompt</h3>
+            <pre>Use Commerce Hook Lab in lab mode.
+
+Turn this product brief and approved footage list into 12 TikTok Shop hooks for a 15-second vertical video.
+
+Audience: [who + situation]
+Objective: hold
+Voice: precise, playful, low-hype
+Rights: all supplied product media is owned
+
+Keep every claim traceable. Expand the strongest three into scripts, generic AI-video prompts, Seedance prompts, and a controlled A/B test. Run the validator and preserve all human-review items.</pre>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><h2>Your delivery is a working package.</h2><p>The JSON manifest is the source of truth. The human-readable files make the same decisions easy for creative, production, and media teams to inspect.</p></div>
+        <div class="package">
+          <div class="file"><code>product-truth.md</code><span>Facts, reviews, restrictions, locators, proof, and review flags.</span></div>
+          <div class="file"><code>audience-and-test.md</code><span>Persona, context, objective, hypothesis, controls, metrics, interpretation.</span></div>
+          <div class="file"><code>hook-matrix.md</code><span>Every hook, first frame, overlay, evidence IDs, proof plan, risk, scores, decision.</span></div>
+          <div class="file"><code>hook-pack.json</code><span>Machine-readable source of truth conforming to the bundled schema.</span></div>
+          <div class="file"><code>production/*.md</code><span>Continuous timelines, CTA, generic prompt, Seedance prompt, reference plan, fallback.</span></div>
+          <div class="file"><code>qa-report.json</code><span>Deterministic pass/fail result, issues, counts, and explicit limitations.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><h2>Guardrails stay attached to the idea.</h2><p>A hook is not “ready” just because it sounds sharp. It must be supported, executable, distinct, and capable of delivering the promised payoff.</p></div>
+        <div class="guardrails">
+          <article class="guard"><h3>Never invented</h3><p>Reviews, results, discounts, scarcity, comparisons, guarantees, creator experience, and performance.</p></article>
+          <article class="guard"><h3>Always reviewed</h3><p>Price, testimonial, before/after, regulated, likeness, copyright, safety, and platform-policy risk.</p></article>
+          <article class="guard"><h3>Always honest</h3><p>AI footage cannot replace real proof when the product interaction or physical result could be misrepresented.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap cta">
+      <span class="eyebrow">The useful promise</span>
+      <h2>Hooks you can prove.<br>Plans you can shoot.<br>Tests you can trust.</h2>
+      <p>Bring one real product source. Leave with an inspectable creative system instead of a pile of unsupported opening lines.</p>
+    </section>
+  </main>
+
+  <footer class="wrap footer"><span>Commerce Hook Lab · Instruction</span><span>MIT · Python 3 validator · No runtime network dependency</span></footer>
+</div>
+</body>
+</html>
