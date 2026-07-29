@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Humanizer — Benchmark</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page-bg: #f4efe4;
+      --page-fg: #251d19;
+      --paper: #fffdf7;
+      --ink: #173f67;
+      --red: #b63a36;
+      --green: #25765e;
+      --amber: #b16d17;
+      --line: #d7cbb8;
+      --muted: #6f645b;
+      --soft-blue: #e8f1f4;
+      --soft-red: #f4ddd7;
+      --soft-green: #e4f0e9;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--page-bg); color: var(--page-fg); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-fg);
+    }
+    .shell {
+      width: 100%;
+      max-width: 1120px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(16px, 4vw, 42px);
+    }
+    .mast {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(28px, 6vw, 54px);
+      border: 1px solid var(--line);
+      border-radius: 28px 28px 8px 28px;
+      background: var(--paper);
+      box-shadow: 0 24px 70px rgba(66, 44, 29, 0.11);
+    }
+    .mast::before {
+      content: "PROOF";
+      position: absolute;
+      right: -20px;
+      bottom: -18px;
+      color: rgba(23, 63, 103, 0.055);
+      font: 800 clamp(72px, 18vw, 174px)/0.8 Georgia, "Times New Roman", serif;
+      letter-spacing: -0.06em;
+    }
+    .kicker {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding-bottom: 5px;
+      border-bottom: 3px solid var(--red);
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      position: relative;
+      z-index: 1;
+      max-width: 750px;
+      margin-bottom: 14px;
+      font: 700 clamp(36px, 7vw, 66px)/1 Georgia, "Times New Roman", serif;
+      letter-spacing: -0.04em;
+    }
+    .lede {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin-bottom: 22px;
+      color: var(--muted);
+      font-size: clamp(16px, 2.4vw, 20px);
+    }
+    .scope {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .scope span {
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #faf5eb;
+      color: #5c5149;
+      font-size: 11px;
+      font-weight: 750;
+    }
+    .scoreboard {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .score {
+      min-width: 0;
+      padding: clamp(18px, 3vw, 26px);
+      border: 1px solid var(--line);
+      border-radius: 8px 20px 20px 20px;
+      background: var(--paper);
+    }
+    .score .value {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ink);
+      font: 700 clamp(28px, 6vw, 48px)/1 Georgia, "Times New Roman", serif;
+      letter-spacing: -0.04em;
+      overflow-wrap: anywhere;
+    }
+    .score .label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .panel {
+      margin-top: 18px;
+      padding: clamp(22px, 5vw, 42px);
+      border: 1px solid var(--line);
+      border-radius: 10px 26px 26px 26px;
+      background: var(--paper);
+    }
+    .panel-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      gap: clamp(16px, 5vw, 56px);
+      margin-bottom: 24px;
+    }
+    h2 {
+      margin-bottom: 8px;
+      font: 700 clamp(27px, 5vw, 43px)/1.04 Georgia, "Times New Roman", serif;
+      letter-spacing: -0.03em;
+    }
+    .panel-head p, .muted { color: var(--muted); }
+    .gate-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .gate {
+      min-width: 0;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fbf7ef;
+    }
+    .gate-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .gate h3 { margin-bottom: 0; color: var(--ink); font-size: 16px; }
+    .badge {
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: var(--soft-green);
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .badge.review { background: #f6ead6; color: var(--amber); }
+    .gate p { margin-bottom: 0; color: var(--muted); font-size: 13px; }
+    .fixture {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 92px minmax(0, 1fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+    .sample {
+      min-width: 0;
+      padding: 20px;
+      border-radius: 16px;
+      font-size: 14px;
+    }
+    .sample.before { background: var(--soft-red); color: #6f302d; }
+    .sample.after { background: var(--soft-blue); color: var(--ink); }
+    .sample b {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .delta {
+      display: grid;
+      place-items: center;
+      border: 1px dashed var(--line);
+      border-radius: 16px;
+      color: var(--red);
+      font: 700 13px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-align: center;
+    }
+    .matrix {
+      display: grid;
+      gap: 9px;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.55fr) minmax(92px, 0.43fr);
+      gap: 12px;
+      align-items: center;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbf7ef;
+    }
+    .row.header {
+      border: 0;
+      padding: 0 16px 3px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .row strong { color: var(--ink); font-size: 13px; }
+    .row span { color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .status { font-weight: 850; text-align: right; }
+    .status.pass { color: var(--green); }
+    .status.review { color: var(--amber); }
+    .evidence {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .evidence-card {
+      min-width: 0;
+      padding: 18px;
+      border-left: 4px solid var(--ink);
+      background: #f2eee5;
+    }
+    .evidence-card b {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .evidence-card code {
+      color: #5d5147;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      overflow-wrap: anywhere;
+    }
+    .verdict {
+      margin-top: 18px;
+      padding: clamp(22px, 5vw, 36px);
+      border: 2px solid var(--green);
+      border-radius: 10px 26px 26px 26px;
+      background: var(--soft-green);
+    }
+    .verdict h2 { color: #1f644f; }
+    .verdict p { max-width: 850px; margin-bottom: 0; color: #355e51; }
+    footer {
+      padding: 26px 4px 8px;
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+    }
+    @media (max-width: 780px) {
+      .scoreboard { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 620px) {
+      .panel-head, .gate-grid, .evidence { grid-template-columns: 1fr; }
+      .fixture { grid-template-columns: 1fr; }
+      .delta { min-height: 56px; }
+      .row, .row.header { grid-template-columns: 1fr; gap: 5px; }
+      .row.header { display: none; }
+      .status { text-align: left; }
+    }
+    @media (max-width: 400px) {
+      .shell { padding: 13px; }
+      .mast, .panel { padding: 21px 17px; }
+      .scoreboard { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="shell">
+      <header class="mast">
+        <div class="kicker">Humanizer · Evidence report</div>
+        <h1>What was tested, what passed, and what remains human.</h1>
+        <p class="lede">This benchmark separates package safety from editorial quality. Humanizer is an instruction set applied by a host agent, so the evidence covers archive integrity, declared behavior, and one reproducible language fixture—never a fictional executable detector score.</p>
+        <div class="scope">
+          <span>Test date · 29 July 2026</span>
+          <span>Registry package · 1.0.0</span>
+          <span>Embedded ruleset label · 2.1.1</span>
+          <span>Local macOS inspection</span>
+        </div>
+      </header>
+
+      <section class="scoreboard" aria-label="Observed benchmark facts">
+        <article class="score"><span class="value">10 → 0</span><span class="label">Listed style markers remaining in the representative fixture</span></article>
+        <article class="score"><span class="value">3 / 3</span><span class="label">Required meaning tokens preserved in that fixture</span></article>
+        <article class="score"><span class="value">4</span><span class="label">Package files inspected with no executable payload</span></article>
+        <article class="score"><span class="value">63 / 63</span><span class="label">VirusTotal vendors reported clean by ClawHub</span></article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="kicker">Acceptance gates</div><h2>Evidence before adjectives.</h2></div>
+          <p>Each gate has a narrow pass condition. A pass means the observed package met that condition in this run; it does not imply that every future rewrite will preserve every nuance.</p>
+        </div>
+        <div class="gate-grid">
+          <article class="gate">
+            <div class="gate-top"><h3>Archive integrity</h3><span class="badge">Passed</span></div>
+            <p>Four expected files, zero absolute paths, zero parent-directory traversal entries, and zero hidden bidi or zero-width characters in SKILL.md.</p>
+          </article>
+          <article class="gate">
+            <div class="gate-top"><h3>Frontmatter structure</h3><span class="badge">Passed</span></div>
+            <p>The YAML frontmatter parsed successfully and declared the Humanizer name, ruleset label, purpose, and allowed host tools.</p>
+          </article>
+          <article class="gate">
+            <div class="gate-top"><h3>Network and execution</h3><span class="badge">Passed</span></div>
+            <p>No script, binary, package manifest, installer, credential request, or executable network path is included in the package.</p>
+          </article>
+          <article class="gate">
+            <div class="gate-top"><h3>General rewrite quality</h3><span class="badge review">Human review</span></div>
+            <p>One fixture demonstrates the method. Broader tone, factual nuance, and domain accuracy still require editorial review across representative customer texts.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="kicker">Representative fixture</div><h2>A measurable editing pass.</h2></div>
+          <p>The input was created to contain ten patterns named in the real Skill: inflated significance, formulaic vocabulary, promotional triples, an em dash, and a superficial “ensuring” clause.</p>
+        </div>
+        <div class="fixture">
+          <article class="sample before">
+            <b>Input</b>
+            Additionally, the update introduces keyboard shortcuts and offline mode, serving as a pivotal testament to the team’s commitment to innovation and delivering a seamless, intuitive, and powerful experience—ensuring users can complete tasks efficiently.
+          </article>
+          <div class="delta">10 hits<br>to<br>0 hits</div>
+          <article class="sample after">
+            <b>Output</b>
+            The update adds keyboard shortcuts and offline mode, which reduce the steps needed for common tasks.
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="kicker">Test matrix</div><h2>Claim-to-check mapping.</h2></div>
+          <p>The matrix distinguishes what was directly observed from what still needs multiple authors, document types, and reviewer judgments.</p>
+        </div>
+        <div class="matrix" role="table" aria-label="Humanizer test matrix">
+          <div class="row header" role="row"><span>Capability claim</span><span>Observed check</span><span>Result</span></div>
+          <div class="row" role="row"><strong>Remove listed AI-style patterns</strong><span>Ten named markers were counted before and after one representative rewrite.</span><span class="status pass">Passed · 10/10 removed</span></div>
+          <div class="row" role="row"><strong>Preserve core meaning</strong><span>“Keyboard shortcuts,” “offline mode,” and “tasks” were required to remain.</span><span class="status pass">Passed · 3/3 retained</span></div>
+          <div class="row" role="row"><strong>Match a requested voice</strong><span>No multi-audience tone panel was run in this local package audit.</span><span class="status review">Not yet verified</span></div>
+          <div class="row" role="row"><strong>Edit local documents safely</strong><span>Write/Edit permissions are declared; no destructive automation is bundled.</span><span class="status review">User diff required</span></div>
+          <div class="row" role="row"><strong>Operate without remote services</strong><span>All package files and executable paths were inspected.</span><span class="status pass">Passed · no network path</span></div>
+          <div class="row" role="row"><strong>Package security posture</strong><span>ClawHub audit outcome Pass; static analysis clean; 63/63 vendors clean.</span><span class="status pass">Passed</span></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="kicker">Evidence trail</div><h2>Recheckable artifacts.</h2></div>
+          <p>The hashes identify the exact local package inspected. The editorial fixture remains visible above so the result can be recalculated without a hidden scoring service.</p>
+        </div>
+        <div class="evidence">
+          <div class="evidence-card"><b>Package SHA-256</b><code>273fcc8509470f4771f9ba578f031956f5802a949c108c773dea88da833c1016</code></div>
+          <div class="evidence-card"><b>SKILL.md SHA-256</b><code>d7ce483d368e430185b707611ce82ef4206021da28cf306d75d4b64f1167416f</code></div>
+          <div class="evidence-card"><b>Observed package surface</b><code>README.md · SKILL.md · skill-card.md · _meta.json</code></div>
+          <div class="evidence-card"><b>Registry audit snapshot</b><code>Outcome: Pass · Static analysis: clean · VirusTotal: 63/63 clean</code></div>
+        </div>
+      </section>
+
+      <section class="verdict">
+        <div class="kicker">Conclusion</div>
+        <h2>Verified as a lightweight editorial rule set.</h2>
+        <p>The inspected package is structurally clean and works without an API or executable dependency. The representative fixture supports its pattern-removal method, but no defensible universal “human score” exists. Delivery should always include a user review for factual meaning, voice, and disclosure obligations.</p>
+      </section>
+
+      <footer>Benchmark scope: exact local package and one representative rule-application fixture · No aggregate score was invented</footer>
+    </main>
+  </div>
+</body>
+</html>

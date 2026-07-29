@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Multi Search Engine — Instructions</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page-bg: #07111f;
+      --page-fg: #edf8f7;
+      --muted: #9bb4bd;
+      --line: #244052;
+      --cyan: #55e6d2;
+      --lime: #c6ff6a;
+      --amber: #ffc56b;
+      --panel: #0c1b2c;
+      --panel-2: #102438;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--page-bg); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background-color: var(--page-bg);
+      background-image:
+        radial-gradient(circle at 86% 8%, rgba(85, 230, 210, .13), transparent 28rem),
+        linear-gradient(180deg, #07111f 0%, #091827 100%);
+      color: var(--page-fg);
+    }
+    .shell { width: 100%; max-width: 1080px; margin: 0 auto; padding: 28px clamp(16px, 4vw, 44px) 56px; }
+    .topline { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; font-weight: 760; letter-spacing: -.02em; }
+    .mark { width: 28px; height: 28px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; flex: 0 0 auto; }
+    .mark i { display: block; border: 1px solid var(--cyan); border-radius: 50%; background: rgba(85, 230, 210, .14); }
+    .status { color: var(--lime); border: 1px solid rgba(198, 255, 106, .35); padding: 6px 10px; border-radius: 999px; font-size: 12px; white-space: nowrap; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr); gap: 28px; align-items: center; padding: 22px 0 34px; }
+    .eyebrow { color: var(--cyan); text-transform: uppercase; letter-spacing: .14em; font-size: 12px; font-weight: 800; margin: 0 0 12px; }
+    h1 { font-size: clamp(36px, 7vw, 66px); line-height: .98; letter-spacing: -.055em; margin: 0; max-width: 760px; }
+    .lead { color: #bdd1d7; font-size: clamp(16px, 2.3vw, 20px); line-height: 1.55; margin: 20px 0 0; max-width: 700px; }
+    .engine-orbit { position: relative; min-height: 250px; display: grid; place-items: center; }
+    .orbit { position: absolute; border: 1px solid var(--line); border-radius: 50%; }
+    .orbit.one { width: 210px; height: 210px; }
+    .orbit.two { width: 142px; height: 142px; border-style: dashed; }
+    .orbit-core { width: 76px; height: 76px; border-radius: 22px; display: grid; place-items: center; background: var(--cyan); color: #06121a; font-weight: 900; font-size: 22px; box-shadow: 0 0 50px rgba(85, 230, 210, .22); z-index: 2; }
+    .node { position: absolute; padding: 7px 9px; border: 1px solid var(--line); border-radius: 9px; background: #0a1726; color: #cfe1e5; font-size: 11px; font-weight: 700; }
+    .n1 { top: 11px; left: 50%; transform: translateX(-50%); }
+    .n2 { right: 2px; top: 74px; }
+    .n3 { right: 20px; bottom: 33px; }
+    .n4 { bottom: 7px; left: 36%; }
+    .n5 { left: 3px; bottom: 54px; }
+    .n6 { left: 5px; top: 57px; }
+    .privacy-note { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; padding: 18px; border: 1px solid rgba(255, 197, 107, .35); background: rgba(255, 197, 107, .07); border-radius: 16px; margin: 0 0 34px; }
+    .privacy-icon { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--amber); color: #2b1900; font-weight: 950; }
+    .privacy-note strong { display: block; color: #ffe2b2; margin-bottom: 4px; }
+    .privacy-note p { margin: 0; color: #c9bfae; line-height: 1.5; }
+    .section { margin-top: 38px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+    h2 { font-size: clamp(25px, 4vw, 36px); letter-spacing: -.035em; margin: 0; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 13px; text-align: right; }
+    .fit-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .fit-card { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: rgba(12, 27, 44, .82); }
+    .fit-card h3 { margin: 0 0 8px; font-size: 17px; }
+    .fit-card p { margin: 0; color: var(--muted); line-height: 1.55; }
+    .fit-card.no { border-color: rgba(255, 197, 107, .25); }
+    .workflow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; counter-reset: route; }
+    .step { counter-increment: route; min-width: 0; padding: 17px; border-top: 2px solid var(--cyan); background: var(--panel); border-radius: 4px 4px 14px 14px; }
+    .step::before { content: "0" counter(route); color: var(--cyan); font: 800 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .step h3 { margin: 18px 0 7px; font-size: 16px; }
+    .step p { margin: 0; color: var(--muted); line-height: 1.48; font-size: 14px; }
+    .prompt-card { overflow: hidden; border: 1px solid #335367; border-radius: 18px; background: #07101b; }
+    .prompt-label { display: flex; justify-content: space-between; gap: 12px; padding: 11px 15px; border-bottom: 1px solid #294457; color: var(--muted); font-size: 12px; }
+    pre { margin: 0; padding: 20px; white-space: pre-wrap; overflow-wrap: anywhere; color: #e7f6f4; font: 500 14px/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .output-grid { display: grid; grid-template-columns: .72fr 1.28fr; gap: 14px; margin-top: 14px; }
+    .mini-panel { padding: 18px; min-width: 0; border-radius: 16px; background: var(--panel-2); border: 1px solid var(--line); }
+    .mini-panel h3 { margin: 0 0 12px; font-size: 15px; color: var(--cyan); }
+    .mini-panel ul { margin: 0; padding-left: 18px; color: #bad0d6; line-height: 1.65; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { padding: 7px 9px; border-radius: 8px; border: 1px solid #2e4b5f; color: #c2d9dc; font-size: 12px; background: #0a1a2a; }
+    .limits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .limit { padding: 16px; border-left: 3px solid var(--amber); background: rgba(255,255,255,.025); }
+    .limit strong { display: block; margin-bottom: 6px; }
+    .limit span { color: var(--muted); font-size: 13px; line-height: 1.5; display: block; }
+    footer { margin-top: 42px; padding-top: 18px; border-top: 1px solid var(--line); color: #7895a0; font-size: 12px; display: flex; justify-content: space-between; gap: 12px; }
+    @media (max-width: 700px) {
+      .hero { grid-template-columns: 1fr; }
+      .engine-orbit { min-height: 220px; }
+      .workflow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .output-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 500px) {
+      .shell { padding-top: 20px; }
+      .topline { align-items: flex-start; }
+      .brand span { max-width: 160px; }
+      .fit-grid, .workflow, .limits { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .section-head p { text-align: left; margin-top: 7px; }
+      .privacy-note { grid-template-columns: 1fr; }
+      footer { display: block; }
+      footer span { display: block; margin-top: 6px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="shell">
+      <div class="topline">
+        <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Multi Search Engine</span></div>
+        <div class="status">No API key required</div>
+      </div>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Public-web routing guide</p>
+          <h1>One question. Sixteen search front doors.</h1>
+          <p class="lead">Route a public query across seven Chinese and nine international search engines, apply useful operators, then consolidate the accessible results into one readable report.</p>
+        </div>
+        <div class="engine-orbit" aria-label="A visual map of multiple search providers">
+          <span class="orbit one"></span><span class="orbit two"></span>
+          <span class="orbit-core">16</span>
+          <span class="node n1">Brave</span><span class="node n2">Baidu</span><span class="node n3">Qwant</span>
+          <span class="node n4">Wolfram</span><span class="node n5">Sogou</span><span class="node n6">Bing</span>
+        </div>
+      </section>
+
+      <aside class="privacy-note">
+        <div class="privacy-icon">!</div>
+        <div>
+          <strong>No key does not mean no disclosure.</strong>
+          <p>Your query and request metadata leave the local environment and are sent to whichever third-party providers are selected. Never include secrets, private source code, customer data, internal hostnames, or regulated information.</p>
+        </div>
+      </aside>
+
+      <section class="section">
+        <div class="section-head"><h2>Use it for the open web</h2><p>Instruction-driven, not a bundled crawler</p></div>
+        <div class="fit-grid">
+          <article class="fit-card">
+            <h3>Good fit</h3>
+            <p>Public research, multilingual discovery, site-specific searches, file-type discovery, recent-news queries, and basic WolframAlpha knowledge lookups.</p>
+          </article>
+          <article class="fit-card no">
+            <h3>Not a good fit</h3>
+            <p>Confidential investigations, unattended scraping, guaranteed access to every provider, private databases, authenticated sources, or compliance-sensitive routing.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2>The routing loop</h2><p>Six decisions from query to report</p></div>
+        <div class="workflow">
+          <article class="step"><h3>Classify</h3><p>Identify language, intent, freshness, geography, and whether the query is safe to disclose.</p></article>
+          <article class="step"><h3>Select</h3><p>Choose only the providers relevant to the task rather than sending every query everywhere.</p></article>
+          <article class="step"><h3>Encode</h3><p>Apply URL-safe encoding plus operators such as site:, filetype:, exact match, exclusion, or a time filter.</p></article>
+          <article class="step"><h3>Fetch</h3><p>Request providers sequentially in small batches with a one-to-two-second delay.</p></article>
+          <article class="step"><h3>Handle blocks</h3><p>Record CAPTCHA, 403, 429, reset, or timeout outcomes. Retry at most once when the host supports isolated session cookies.</p></article>
+          <article class="step"><h3>Report</h3><p>Merge accessible results, name each source, disclose gaps, and avoid presenting blocked providers as successful.</p></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2>Recommended prompt</h2><p>Give the skill a public, scoped question</p></div>
+        <div class="prompt-card">
+          <div class="prompt-label"><span>Example input</span><span>Safe for public search</span></div>
+          <pre>Find recent public documentation about passkeys for consumer apps.
+
+Use two relevant international search providers, restrict one query to official documentation, report any blocked routes, and return:
+1. the strongest sources,
+2. points of agreement,
+3. unresolved questions,
+4. the exact providers used.</pre>
+        </div>
+        <div class="output-grid">
+          <article class="mini-panel">
+            <h3>Input checklist</h3>
+            <ul>
+              <li>A public query</li>
+              <li>Preferred language or region</li>
+              <li>Freshness window</li>
+              <li>Useful domain or file filters</li>
+            </ul>
+          </article>
+          <article class="mini-panel">
+            <h3>Expected delivery</h3>
+            <div class="chips">
+              <span class="chip">Provider log</span><span class="chip">Accessible sources</span>
+              <span class="chip">Blocked routes</span><span class="chip">Cross-source summary</span>
+              <span class="chip">Caveats</span><span class="chip">Suggested next query</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2>Operational limits</h2><p>What the artifact does not guarantee</p></div>
+        <div class="limits">
+          <div class="limit"><strong>Provider access varies</strong><span>Search engines may return CAPTCHA, 403, 429, resets, regional blocks, or bot challenges.</span></div>
+          <div class="limit"><strong>Host tools matter</strong><span>Cookie isolation, headers, delays, and fetching are performed by the host Agent. No executable client is bundled.</span></div>
+          <div class="limit"><strong>Provider rules apply</strong><span>Respect terms of service, robots policies, rate limits, and the user's intended provider routing.</span></div>
+        </div>
+      </section>
+
+      <footer><strong>Multi Search Engine</strong><span>16 configured providers / 7 CN / 9 international</span></footer>
+    </main>
+  </div>
+</body>
+</html>

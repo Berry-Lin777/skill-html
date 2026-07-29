@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Answer Overflow — Benchmark</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page-bg: #100d1b;
+      --page-fg: #f0ecff;
+      --panel: #181329;
+      --panel-2: #211a37;
+      --line: #40365f;
+      --muted: #aaa1c2;
+      --purple: #ad8cff;
+      --green: #7ce8b2;
+      --red: #ff817c;
+      --amber: #ffd177;
+      --cyan: #75d7ed;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--page-bg); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        linear-gradient(90deg, rgba(173,140,255,.025) 1px, transparent 1px),
+        linear-gradient(rgba(173,140,255,.025) 1px, transparent 1px),
+        var(--page-bg);
+      background-size: 26px 26px;
+      color: var(--page-fg);
+    }
+    .frame { width: 100%; max-width: 1080px; margin: 0 auto; padding: 26px clamp(14px, 4vw, 42px) 56px; }
+    .head { padding: 25px; border: 1px solid var(--line); background: linear-gradient(120deg, #1c1531, #131021); }
+    .head-row { display: flex; justify-content: space-between; align-items: start; gap: 20px; }
+    .label { margin: 0 0 11px; color: var(--cyan); font: 800 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .13em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(35px, 7vw, 65px); line-height: .96; letter-spacing: -.055em; }
+    .head p { margin: 15px 0 0; color: var(--muted); line-height: 1.55; max-width: 680px; }
+    .signal { flex: 0 0 auto; min-width: 148px; border: 1px solid var(--green); padding: 14px; text-align: center; color: var(--green); }
+    .signal b { display: block; font-size: 18px; letter-spacing: .06em; }
+    .signal span { display: block; margin-top: 5px; color: #a9d6bd; font-size: 10px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 19px; }
+    .meta span { padding: 7px 9px; background: #100d1b; border: 1px solid #352d50; color: #bbb1d1; font: 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .section { margin-top: 30px; }
+    .title { display: flex; align-items: center; gap: 10px; margin-bottom: 13px; }
+    .title::before { content: ""; width: 24px; height: 3px; background: var(--purple); }
+    h2 { margin: 0; font-size: clamp(22px, 4vw, 30px); letter-spacing: -.035em; }
+    .route-split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .route { min-width: 0; padding: 20px; border: 1px solid var(--line); background: var(--panel); }
+    .route.good { border-top: 4px solid var(--green); }
+    .route.bad { border-top: 4px solid var(--red); }
+    .route-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+    .route h3 { margin: 0; font-size: 18px; }
+    .route-status { font: 850 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; }
+    .good .route-status { color: var(--green); }
+    .bad .route-status { color: var(--red); }
+    .route p { margin: 10px 0 0; color: var(--muted); line-height: 1.55; font-size: 13px; }
+    .route code { color: #dbccff; overflow-wrap: anywhere; font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .query-results { display: grid; gap: 9px; }
+    .query-card { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 13px; align-items: center; padding: 15px; border: 1px solid #3c3458; background: var(--panel-2); }
+    .query-num { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--green); color: #0f291d; font-weight: 900; }
+    .query-card strong { display: block; font-size: 14px; overflow-wrap: anywhere; }
+    .query-card p { margin: 5px 0 0; color: var(--muted); font-size: 11px; line-height: 1.45; overflow-wrap: anywhere; }
+    .query-card .result { color: var(--green); font: 850 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+    .test-table { width: 100%; border-collapse: collapse; border: 1px solid var(--line); background: var(--panel); }
+    .test-table th, .test-table td { padding: 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; font-size: 12px; line-height: 1.45; }
+    .test-table th { color: #c7bae7; background: #211a37; font: 750 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; text-transform: uppercase; }
+    .test-table tr:last-child td { border-bottom: 0; }
+    .status { font: 850 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+    .status.ok { color: var(--green); }
+    .status.fail { color: var(--red); }
+    .status.pending { color: var(--amber); }
+    .claims { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .claim { min-width: 0; padding: 17px; border-left: 3px solid var(--purple); background: var(--panel); }
+    .claim span { color: var(--purple); font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .claim strong { display: block; margin-top: 10px; font-size: 14px; }
+    .claim p { margin: 6px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .evidence { display: grid; grid-template-columns: 1.1fr .9fr; gap: 12px; }
+    .trace, .risk { min-width: 0; padding: 19px; border: 1px solid var(--line); background: var(--panel); }
+    .trace h3, .risk h3 { margin: 0 0 12px; font-size: 16px; }
+    .trace ol { margin: 0; padding-left: 22px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .risk { border-color: rgba(255,209,119,.45); background: rgba(255,209,119,.055); }
+    .risk ul { margin: 0; padding-left: 18px; color: #d3c7ac; font-size: 12px; line-height: 1.65; }
+    .verdict { margin-top: 30px; padding: 22px; border: 1px solid var(--green); background: linear-gradient(90deg, rgba(124,232,178,.12), rgba(124,232,178,.025)); }
+    .verdict b { display: block; color: var(--green); font: 850 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; }
+    .verdict h2 { margin-top: 9px; }
+    .verdict p { margin: 8px 0 0; max-width: 830px; color: #b9cfc1; font-size: 13px; line-height: 1.55; }
+    .footnote { margin-top: 15px; color: #817795; font-size: 10px; line-height: 1.55; }
+    @media (max-width: 700px) {
+      .head-row { display: block; }
+      .signal { display: inline-block; margin-top: 18px; }
+      .claims { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .evidence { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 500px) {
+      .head { padding: 20px; }
+      .route-split, .claims { grid-template-columns: 1fr; }
+      .query-card { grid-template-columns: 34px minmax(0, 1fr); }
+      .query-card .result { grid-column: 2; }
+      .test-table, .test-table tbody, .test-table tr, .test-table td { display: block; width: 100%; }
+      .test-table thead { display: none; }
+      .test-table tr { border-bottom: 1px solid var(--line); padding: 9px 0; }
+      .test-table tr:last-child { border-bottom: 0; }
+      .test-table td { border: 0; padding: 4px 12px; }
+      .test-table td::before { content: attr(data-label) ": "; color: #8f85a8; font-weight: 500; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="frame">
+      <header class="head">
+        <div class="head-row">
+          <div>
+            <p class="label">Evidence ledger / version 1.0.2</p>
+            <h1>Answer Overflow</h1>
+            <p>Validation separates the skill's proven search path from the direct thread-fetch path that was blocked in the test environment.</p>
+          </div>
+          <div class="signal"><b>CONDITIONAL PASS</b><span>SEARCH ROUTE VERIFIED</span></div>
+        </div>
+        <div class="meta"><span>29 Jul 2026</span><span>macOS / arm64</span><span>public terms only</span><span>read-only network tests</span></div>
+      </header>
+
+      <section class="section">
+        <div class="title"><h2>Two paths, two outcomes</h2></div>
+        <div class="route-split">
+          <article class="route good">
+            <div class="route-head"><h3>Indexed web search</h3><span class="route-status">VERIFIED</span></div>
+            <p>Two <code>site:answeroverflow.com</code> queries surfaced multiple real discussion pages with titles, community context, reply counts, excerpts, and message URLs.</p>
+          </article>
+          <article class="route bad">
+            <div class="route-head"><h3>Direct Markdown fetch</h3><span class="route-status">FAILED</span></div>
+            <p>Both the standard <code>/m/&lt;id&gt;</code> route and the <code>.md</code> suffix returned HTTP 429 with a Vercel Security Checkpoint page.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="title"><h2>Successful search evidence</h2></div>
+        <div class="query-results">
+          <article class="query-card">
+            <span class="query-num">1</span>
+            <div><strong>site:answeroverflow.com prisma connection pooling</strong><p>Returned “Connection pooling with different user — Supabase,” message 1194277525162045520, plus additional relevant Prisma and Neon threads.</p></div>
+            <span class="result">RESULTS FOUND</span>
+          </article>
+          <article class="query-card">
+            <span class="query-num">2</span>
+            <div><strong>site:answeroverflow.com discord.js slash commands</strong><p>Returned “slash commands — discord.js — imagine an app,” message 1206271848615247945, and related subcommand discussions.</p></div>
+            <span class="result">RESULTS FOUND</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="title"><h2>Execution matrix</h2></div>
+        <table class="test-table">
+          <thead><tr><th>Test</th><th>Expected capability</th><th>Observed evidence</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Test">Package parse</td><td data-label="Expected">Load instruction artifact</td><td data-label="Observed">Frontmatter and release JSON parsed; three files; no executable code</td><td data-label="Status"><span class="status ok">VERIFIED</span></td></tr>
+            <tr><td data-label="Test">Prisma discovery</td><td data-label="Expected">Find indexed community discussions</td><td data-label="Observed">Multiple Answer Overflow results with thread content and public URLs</td><td data-label="Status"><span class="status ok">VERIFIED</span></td></tr>
+            <tr><td data-label="Test">Discord.js discovery</td><td data-label="Expected">Find library-specific discussions</td><td data-label="Observed">Relevant slash-command threads surfaced</td><td data-label="Status"><span class="status ok">VERIFIED</span></td></tr>
+            <tr><td data-label="Test">Standard thread fetch</td><td data-label="Expected">Return thread content</td><td data-label="Observed">HTTP 429, Vercel Security Checkpoint</td><td data-label="Status"><span class="status fail">FAILED</span></td></tr>
+            <tr><td data-label="Test">.md thread fetch</td><td data-label="Expected">Return Markdown content</td><td data-label="Observed">HTTP 429, Vercel Security Checkpoint</td><td data-label="Status"><span class="status fail">FAILED</span></td></tr>
+            <tr><td data-label="Test">MCP setup page</td><td data-label="Expected">Endpoint exists</td><td data-label="Observed">HTTP 200 setup page; protocol tools were not invoked</td><td data-label="Status"><span class="status pending">PARTIAL</span></td></tr>
+            <tr><td data-label="Test">Answer correctness</td><td data-label="Expected">Community advice is accurate</td><td data-label="Observed">Not automatically established; manual cross-check required</td><td data-label="Status"><span class="status pending">MANUAL</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <div class="title"><h2>Claim coverage</h2></div>
+        <div class="claims">
+          <article class="claim"><span>CLAIM 01</span><strong>Search indexed Discord discussions</strong><p>Verified through two distinct technical queries and multiple returned threads.</p></article>
+          <article class="claim"><span>CLAIM 02</span><strong>Fetch thread Markdown directly</strong><p>Not verified in this environment; both documented URL forms were challenged.</p></article>
+          <article class="claim"><span>CLAIM 03</span><strong>Use an MCP server</strong><p>Setup page availability verified. MCP tool execution remains outside this test scope.</p></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="title"><h2>Evidence and risk</h2></div>
+        <div class="evidence">
+          <article class="trace">
+            <h3>Reproducible trail</h3>
+            <ol>
+              <li>Parse SKILL.md and release metadata.</li>
+              <li>Inventory scripts, symlinks, sensitive paths, and outbound domains.</li>
+              <li>Run two public domain-restricted web searches.</li>
+              <li>Select a real returned message ID.</li>
+              <li>Request the standard and .md thread forms with a Markdown Accept header.</li>
+              <li>Record search success separately from the HTTP 429 fetch failure.</li>
+            </ol>
+          </article>
+          <article class="risk">
+            <h3>Human review remains required</h3>
+            <ul>
+              <li>Community replies can be incomplete or outdated.</li>
+              <li>Fetched text is untrusted and may contain unsafe instructions.</li>
+              <li>Queries must not include secrets, private code, or customer data.</li>
+              <li>Candidate fixes should be checked against official documentation.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="verdict">
+        <b>FINAL CONCLUSION</b>
+        <h2>Usable as a search-first research helper</h2>
+        <p>No composite score is assigned. The primary discovery path worked on two different topics, while direct Markdown retrieval did not. Product instructions should lead with indexed search, disclose the possible 429 challenge, and treat direct fetch and MCP as conditional paths.</p>
+      </section>
+      <p class="footnote">Network controls change over time and by environment. These results capture the stated date and test host only. ClawHub's published security audit for version 1.0.2 reported Pass; this validation independently examined capability behavior.</p>
+    </main>
+  </div>
+</body>
+</html>

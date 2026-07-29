@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Humanizer — Instructions</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page-bg: #f4efe4;
+      --page-fg: #251d19;
+      --paper: #fffdf7;
+      --paper-2: #efe7d7;
+      --ink: #173f67;
+      --edit: #b63a36;
+      --edit-soft: #f2d2cc;
+      --line: #d8ccba;
+      --muted: #6c625a;
+      --shadow: 0 22px 60px rgba(62, 44, 32, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html {
+      background: var(--page-bg);
+      color: var(--page-fg);
+    }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        linear-gradient(rgba(37, 29, 25, 0.035) 1px, transparent 1px),
+        var(--page-bg);
+      background-size: 100% 28px;
+      color: var(--page-fg);
+    }
+    .shell {
+      width: 100%;
+      max-width: 1120px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(18px, 4vw, 44px);
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(30px, 6vw, 58px);
+      border: 1px solid var(--line);
+      border-radius: 28px 28px 8px 28px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .hero::after {
+      content: "Aa";
+      position: absolute;
+      right: clamp(14px, 4vw, 42px);
+      top: -26px;
+      color: rgba(182, 58, 54, 0.065);
+      font: 700 clamp(110px, 24vw, 250px)/1 Georgia, "Times New Roman", serif;
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 16px;
+      color: var(--edit);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 26px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--edit);
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin-bottom: 18px;
+      font: 700 clamp(38px, 8vw, 72px)/0.98 Georgia, "Times New Roman", serif;
+      letter-spacing: -0.045em;
+    }
+    h1 .marked {
+      position: relative;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    h1 .marked::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -4px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--edit);
+      transform: rotate(-1deg);
+      opacity: 0.78;
+    }
+    .lede {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: clamp(17px, 2.5vw, 21px);
+    }
+    .truth-strip {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+    .truth-strip span {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fffaf0;
+      color: #4f4740;
+      font-size: 12px;
+      font-weight: 750;
+    }
+    .preview {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .copy-card {
+      min-width: 0;
+      padding: clamp(20px, 4vw, 30px);
+      border-radius: 8px 24px 24px 24px;
+      box-shadow: 0 14px 32px rgba(62, 44, 32, 0.08);
+    }
+    .copy-card.before {
+      border: 1px solid #d5c7b5;
+      background: #e8dfd1;
+      color: #5d5149;
+    }
+    .copy-card.after {
+      border: 1px solid #b9c9d5;
+      background: #edf5f8;
+      color: #173f67;
+    }
+    .card-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .strike {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      text-decoration-color: var(--edit);
+    }
+    .section {
+      margin-top: clamp(20px, 4vw, 34px);
+      padding: clamp(24px, 5vw, 46px);
+      border: 1px solid var(--line);
+      border-radius: 10px 28px 28px 28px;
+      background: var(--paper);
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr);
+      gap: clamp(18px, 5vw, 62px);
+      align-items: start;
+      margin-bottom: 26px;
+    }
+    h2 {
+      margin-bottom: 8px;
+      font: 700 clamp(29px, 5vw, 46px)/1.02 Georgia, "Times New Roman", serif;
+      letter-spacing: -0.035em;
+    }
+    .section-head p, .muted { color: var(--muted); }
+    .grid-2, .grid-3 {
+      display: grid;
+      gap: 14px;
+    }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-card {
+      min-width: 0;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fbf7ee;
+    }
+    .mini-card h3 {
+      margin-bottom: 7px;
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.25;
+    }
+    .mini-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      counter-reset: steps;
+    }
+    .step {
+      min-width: 0;
+      padding: 18px 14px;
+      border-top: 3px solid var(--ink);
+      background: #f7f1e6;
+      counter-increment: steps;
+    }
+    .step::before {
+      content: "0" counter(steps);
+      display: block;
+      margin-bottom: 18px;
+      color: var(--edit);
+      font: 700 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.08em;
+    }
+    .step strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+    }
+    .step span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .prompt {
+      position: relative;
+      padding: clamp(22px, 4vw, 34px);
+      border: 2px solid var(--ink);
+      border-radius: 6px 22px 22px 22px;
+      background: #f1f7f8;
+      color: #173f67;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: clamp(13px, 2vw, 15px);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .prompt::before {
+      content: "RECOMMENDED PROMPT";
+      position: absolute;
+      top: -12px;
+      left: 18px;
+      padding: 4px 8px;
+      background: var(--ink);
+      color: white;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+    .check-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .check-list li {
+      position: relative;
+      padding-left: 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .check-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--edit);
+      font-weight: 900;
+    }
+    .boundary {
+      border-left: 5px solid var(--edit);
+      background: var(--edit-soft);
+    }
+    .boundary h3 { color: #7a2926; }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .fact {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fffaf0;
+    }
+    .fact b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--ink);
+      font-size: 13px;
+    }
+    .fact span { color: var(--muted); font-size: 12px; }
+    footer {
+      padding: 26px 4px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+    @media (max-width: 760px) {
+      .workflow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 620px) {
+      .preview, .section-head, .grid-2 { grid-template-columns: 1fr; }
+      .workflow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-head { gap: 6px; }
+      h1 .marked { white-space: normal; }
+    }
+    @media (max-width: 420px) {
+      .shell { padding: 14px; }
+      .hero, .section { padding: 22px 18px; }
+      .hero { border-radius: 22px 22px 6px 22px; }
+      .grid-3, .workflow, .facts { grid-template-columns: 1fr; }
+      .truth-strip span { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="shell">
+      <header class="hero">
+        <div class="eyebrow">Humanizer · Writing editor</div>
+        <h1>Keep the meaning. <span class="marked">Lose the machine voice.</span></h1>
+        <p class="lede">Humanizer gives a host agent a 24-pattern editorial playbook for turning stiff, generic copy into specific, natural writing while protecting the original message and intended tone.</p>
+        <div class="truth-strip" aria-label="Product facts">
+          <span>Text and Markdown output</span>
+          <span>No API or network required</span>
+          <span>Host-agent rule application</span>
+          <span>Review before accepting edits</span>
+        </div>
+      </header>
+
+      <section class="preview" aria-label="Representative result preview">
+        <article class="copy-card before">
+          <div class="card-label"><span>Before</span><span>Generic</span></div>
+          <p>Additionally, the update <span class="strike">serves as a pivotal testament</span> to the team’s commitment to innovation, delivering a seamless, intuitive, and powerful experience.</p>
+        </article>
+        <article class="copy-card after">
+          <div class="card-label"><span>After</span><span>Specific</span></div>
+          <p>The update adds keyboard shortcuts and offline mode, which reduce the steps needed for common tasks.</p>
+        </article>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">What you get</div>
+            <h2>A practical editing pass, not a detector.</h2>
+          </div>
+          <p>Humanizer does not run a statistical classifier or promise that text is “undetectable.” It guides the host agent through concrete language, structure, rhythm, and tone checks, then returns revised copy with an optional change summary.</p>
+        </div>
+        <div class="grid-3">
+          <article class="mini-card">
+            <h3>Specific over inflated</h3>
+            <p>Replaces grand claims, vague significance, and promotional padding with direct facts.</p>
+          </article>
+          <article class="mini-card">
+            <h3>Voice over template</h3>
+            <p>Varies sentence rhythm, removes chatbot artifacts, and matches the requested tone.</p>
+          </article>
+          <article class="mini-card">
+            <h3>Meaning stays visible</h3>
+            <p>Preserves the core message and lets the user review every material change.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Workflow</div>
+            <h2>Five deliberate edits.</h2>
+          </div>
+          <p>The workflow is compact enough for a paragraph and structured enough for a long article. Supply the source, audience, and desired voice; the agent handles the editorial pass.</p>
+        </div>
+        <div class="workflow" aria-label="Humanizer workflow">
+          <div class="step"><strong>Read</strong><span>Understand purpose, facts, and intended audience.</span></div>
+          <div class="step"><strong>Spot</strong><span>Identify matching patterns without rewriting everything.</span></div>
+          <div class="step"><strong>Rewrite</strong><span>Replace generic phrasing with natural alternatives.</span></div>
+          <div class="step"><strong>Protect</strong><span>Keep meaning, factual nuance, and requested tone.</span></div>
+          <div class="step"><strong>Deliver</strong><span>Return clean copy and an optional change note.</span></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">How to call it</div>
+            <h2>Give context, not just text.</h2>
+          </div>
+          <p>The best inputs identify what the writing is for and what must not change. For files, work on a copy and review the diff before replacing the original.</p>
+        </div>
+        <div class="prompt">Humanize the text below for a technical product update. Keep every factual claim, preserve a confident but restrained tone, remove generic AI phrasing, and return the revised copy followed by a short list of material edits.
+
+[PASTE SOURCE TEXT]</div>
+        <div class="facts">
+          <div class="fact"><b>Required</b><span>Source text</span></div>
+          <div class="fact"><b>Helpful</b><span>Audience and purpose</span></div>
+          <div class="fact"><b>Optional</b><span>Tone and length</span></div>
+          <div class="fact"><b>Output</b><span>Rewritten text + notes</span></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Good fit</div>
+            <h2>Use it where voice matters.</h2>
+          </div>
+          <p>Humanizer is strongest when the facts already exist and the problem is expression. It should not be used to invent evidence or conceal authorship where disclosure is required.</p>
+        </div>
+        <div class="grid-2">
+          <article class="mini-card">
+            <h3>Works well for</h3>
+            <ul class="check-list">
+              <li>Articles, product updates, and knowledge-base copy</li>
+              <li>Drafts with repetitive rhythm or inflated language</li>
+              <li>Text that needs a clearer personal or brand voice</li>
+              <li>Local documents when the user explicitly requests edits</li>
+            </ul>
+          </article>
+          <article class="mini-card boundary">
+            <h3>Do not use it for</h3>
+            <ul class="check-list">
+              <li>Evading academic, workplace, legal, or publishing disclosure rules</li>
+              <li>Adding facts, quotes, or sources that are not in the input</li>
+              <li>Replacing expert review of legal, medical, or regulated copy</li>
+              <li>Claiming that rewritten text is guaranteed to appear human-authored</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Technical truth</div>
+            <h2>Lightweight by design.</h2>
+          </div>
+          <p>The package contains editorial instructions and examples. It has no bundled executable, model, scoring service, or network integration. Actual rewriting is performed by the host agent using the loaded rules.</p>
+        </div>
+        <div class="grid-3">
+          <article class="mini-card"><h3>Permissions</h3><p>Read, Write, Edit, Grep, Glob, and AskUserQuestion are declared. Scope file access to user-selected content.</p></article>
+          <article class="mini-card"><h3>Dependencies</h3><p>No API key, package installation, or remote service is required for the instruction workflow.</p></article>
+          <article class="mini-card"><h3>Delivery</h3><p>Plain text or Markdown, with an optional concise explanation of what changed.</p></article>
+        </div>
+      </section>
+
+      <footer>Humanizer · Editorial rules applied by the host agent · Always review meaning and disclosure requirements</footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Answer Overflow — Showcase</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page-bg: #edf3f7;
+      --page-fg: #111c27;
+      --paper: #ffffff;
+      --blue: #0066ff;
+      --blue-dark: #003d99;
+      --lime: #c8ff4d;
+      --ink-soft: #566675;
+      --line: #b9c7d1;
+      --dark: #0f1d2a;
+      --red: #c83f38;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--page-bg); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background-color: var(--page-bg);
+      background-image: linear-gradient(135deg, #edf3f7 0 62%, #e2ebf0 62% 100%);
+      color: var(--page-fg);
+    }
+    .canvas { width: 100%; max-width: 1080px; margin: 0 auto; padding: 26px clamp(14px, 4vw, 44px) 58px; }
+    header { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 24px; padding-bottom: 18px; border-bottom: 3px solid var(--dark); }
+    .issue { margin: 0 0 9px; color: var(--blue); font: 800 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 0; max-width: 780px; font-size: clamp(36px, 7vw, 69px); line-height: .94; letter-spacing: -.06em; }
+    .case-no { padding: 10px 13px; background: var(--lime); border: 2px solid var(--dark); box-shadow: 4px 4px 0 var(--dark); font: 900 11px/1.35 ui-monospace, SFMono-Regular, Menlo, monospace; text-align: center; }
+    .input-card { margin-top: 22px; display: grid; grid-template-columns: 86px minmax(0, 1fr); border: 2px solid var(--dark); background: var(--paper); }
+    .input-label { display: grid; place-items: center; padding: 13px; color: white; background: var(--blue); font: 850 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); }
+    blockquote { margin: 0; padding: 22px; font-size: clamp(18px, 3.2vw, 28px); line-height: 1.35; font-weight: 720; letter-spacing: -.025em; }
+    .search-line { margin-top: 12px; padding: 14px 16px; color: white; background: var(--dark); border-left: 8px solid var(--lime); overflow-wrap: anywhere; font: 12px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .process { margin-top: 28px; display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr); gap: 16px; }
+    .query-plan { min-width: 0; padding: 20px; border: 1px solid var(--line); background: rgba(255,255,255,.6); }
+    .query-plan h2, .results h2, .final h2, .evidence h2 { margin: 0; font-size: clamp(22px, 4vw, 31px); letter-spacing: -.04em; }
+    .query-plan ol { margin: 17px 0 0; padding-left: 23px; color: var(--ink-soft); line-height: 1.65; font-size: 13px; }
+    .query-plan li::marker { color: var(--blue); font-weight: 900; }
+    .results { min-width: 0; padding: 20px; background: var(--paper); border: 2px solid var(--dark); box-shadow: 7px 7px 0 #aab8c2; }
+    .result-tag { margin-top: 13px; display: inline-block; padding: 6px 8px; color: white; background: var(--blue); font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; letter-spacing: .08em; }
+    .result-title { margin: 12px 0 0; font-size: clamp(19px, 3vw, 26px); line-height: 1.25; color: var(--blue-dark); }
+    .result-meta { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+    .result-meta span { padding: 5px 7px; border: 1px solid var(--line); color: var(--ink-soft); font: 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .thread { margin-top: 17px; display: grid; gap: 8px; }
+    .thread-row { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 10px; align-items: start; }
+    .avatar { width: 31px; height: 31px; border-radius: 50%; display: grid; place-items: center; background: #d7e2ea; color: #405260; font-size: 11px; font-weight: 900; }
+    .thread-row.reply .avatar { background: var(--lime); color: #284000; }
+    .message { min-width: 0; padding: 11px 13px; border: 1px solid var(--line); background: #f7fafc; color: var(--ink-soft); font-size: 12px; line-height: 1.5; }
+    .thread-row.reply .message { border-color: #94bd32; background: #f8ffe8; color: #34451e; }
+    .message strong { display: block; margin-bottom: 4px; color: var(--page-fg); font-size: 11px; }
+    .extract { margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .extract-card { min-width: 0; padding: 17px; border-top: 5px solid var(--blue); background: var(--paper); }
+    .extract-card:nth-child(2) { border-top-color: #73a900; }
+    .extract-card:nth-child(3) { border-top-color: #f08b36; }
+    .extract-card span { color: var(--ink-soft); font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; text-transform: uppercase; }
+    .extract-card h3 { margin: 10px 0 6px; font-size: 16px; }
+    .extract-card p { margin: 0; color: var(--ink-soft); font-size: 12px; line-height: 1.5; }
+    .final { margin-top: 30px; padding: 23px; color: white; background: var(--dark); position: relative; overflow: hidden; }
+    .final::after { content: "LEAD"; position: absolute; right: -8px; top: -8px; color: rgba(200,255,77,.1); font-size: 94px; font-weight: 950; letter-spacing: -.08em; }
+    .final > * { position: relative; z-index: 1; }
+    .final h2 { color: var(--lime); }
+    .final-grid { margin-top: 17px; display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; }
+    .lead-answer { padding: 17px; border: 1px solid #485d6d; background: #172b3c; }
+    .lead-answer strong { display: block; margin-bottom: 8px; color: var(--lime); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+    .lead-answer p { margin: 0; line-height: 1.58; color: #d8e4eb; font-size: 14px; }
+    .verify { padding: 17px; border: 1px dashed var(--lime); }
+    .verify strong { color: var(--lime); }
+    .verify ul { margin: 9px 0 0; padding-left: 18px; color: #c8d6de; font-size: 12px; line-height: 1.55; }
+    .evidence { margin-top: 30px; }
+    .evidence-head { display: flex; justify-content: space-between; gap: 16px; align-items: end; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+    .evidence-head p { margin: 0; color: var(--ink-soft); font-size: 11px; text-align: right; }
+    .evidence-grid { margin-top: 12px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .evidence-item { min-width: 0; padding: 13px; border: 1px solid var(--line); background: rgba(255,255,255,.62); }
+    .evidence-item b { display: block; color: var(--blue); font: 900 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .evidence-item span { display: block; margin-top: 7px; color: var(--ink-soft); font-size: 11px; line-height: 1.45; overflow-wrap: anywhere; }
+    .failure-note { margin-top: 12px; padding: 14px; border: 1px solid #dfaaa5; background: #fff5f4; color: #7d3b36; font-size: 12px; line-height: 1.55; }
+    footer { margin-top: 30px; color: #748592; font: 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    @media (max-width: 700px) {
+      .process, .final-grid { grid-template-columns: 1fr; }
+      .extract { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .evidence-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 500px) {
+      header { grid-template-columns: 1fr; }
+      .case-no { justify-self: start; }
+      .input-card { grid-template-columns: 1fr; }
+      .input-label { writing-mode: horizontal-tb; transform: none; }
+      .extract, .evidence-grid { grid-template-columns: 1fr; }
+      .results { box-shadow: 4px 4px 0 #aab8c2; }
+      .evidence-head { display: block; }
+      .evidence-head p { text-align: left; margin-top: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="canvas">
+      <header>
+        <div><p class="issue">Case study / indexed community research</p><h1>From a vague database symptom to a sourced line of investigation.</h1></div>
+        <div class="case-no">CASE 01<br>PRISMA</div>
+      </header>
+
+      <section class="input-card">
+        <div class="input-label">User input</div>
+        <blockquote>“Next.js development keeps exhausting database connections with Prisma. Find relevant Discord support discussions and tell me what to investigate first.”</blockquote>
+      </section>
+      <div class="search-line">site:answeroverflow.com prisma connection pooling nextjs hot reload</div>
+
+      <section class="process">
+        <article class="query-plan">
+          <h2>Search judgment</h2>
+          <ol>
+            <li>Preserve the product names: Prisma and Next.js.</li>
+            <li>Keep the symptom: connection-pool exhaustion.</li>
+            <li>Add the development clue: hot reload.</li>
+            <li>Restrict results to Answer Overflow's public index.</li>
+            <li>Prefer a thread that links to official documentation.</li>
+          </ol>
+        </article>
+        <article class="results">
+          <h2>Selected indexed thread</h2>
+          <span class="result-tag">Relevant result</span>
+          <h3 class="result-title">Connection pooling with different user — Supabase</h3>
+          <div class="result-meta"><span>MESSAGE 1194277525162045520</span><span>4 REPLIES</span><span>PUBLIC ARCHIVE</span></div>
+          <div class="thread">
+            <div class="thread-row"><span class="avatar">OP</span><div class="message"><strong>Original symptom</strong>Next.js development repeatedly reaches reserved connection slots and requires restarts.</div></div>
+            <div class="thread-row reply"><span class="avatar">R</span><div class="message"><strong>Community signal</strong>Hot reloading may create a new database client each time, exhausting available connections.</div></div>
+            <div class="thread-row reply"><span class="avatar">R</span><div class="message"><strong>Verification clue</strong>The reply points to Prisma guidance about caching the client globally during development.</div></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="extract" aria-label="Extracted reasoning">
+        <article class="extract-card"><span>Observed symptom</span><h3>Connections grow during development</h3><p>The failure repeats under Next.js hot reload rather than appearing as a single production timeout.</p></article>
+        <article class="extract-card"><span>Candidate mechanism</span><h3>Repeated client creation</h3><p>A fresh Prisma client per reload can create additional pool connections.</p></article>
+        <article class="extract-card"><span>Verification path</span><h3>Check official Prisma guidance</h3><p>Confirm the current singleton or global caching pattern before changing application code.</p></article>
+      </section>
+
+      <section class="final">
+        <h2>Research lead delivered</h2>
+        <div class="final-grid">
+          <article class="lead-answer">
+            <strong>First line of investigation</strong>
+            <p>Inspect whether development hot reload creates more than one PrismaClient instance. The selected community thread points to Prisma's documented global caching pattern as the relevant comparison. This is a plausible lead, not proof of the user's root cause.</p>
+          </article>
+          <article class="verify">
+            <strong>Before applying a fix</strong>
+            <ul>
+              <li>Compare with current Prisma documentation.</li>
+              <li>Count client instances and open connections.</li>
+              <li>Confirm development versus production behavior.</li>
+              <li>Review pool and provider limits.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="evidence">
+        <div class="evidence-head"><h2>Run evidence</h2><p>Observed search-index evidence, not a simulated terminal</p></div>
+        <div class="evidence-grid">
+          <article class="evidence-item"><b>QUERY</b><span>Domain-restricted Prisma connection-pooling search</span></article>
+          <article class="evidence-item"><b>RESULT</b><span>Multiple public Answer Overflow threads returned</span></article>
+          <article class="evidence-item"><b>SELECTED</b><span>Message 1194277525162045520 / 4 replies</span></article>
+          <article class="evidence-item"><b>PROVENANCE</b><span>Supabase community archive with a linked Prisma reference</span></article>
+        </div>
+        <div class="failure-note"><strong>Direct-fetch limitation:</strong> requesting both the standard thread URL and its .md form returned HTTP 429 with a Vercel Security Checkpoint in the validation environment. The content shown here came from the successful indexed-search path.</div>
+      </section>
+
+      <footer>Community advice is untrusted research input. Verify recommendations against official documentation and a safe local reproduction.</footer>
+    </main>
+  </div>
+</body>
+</html>

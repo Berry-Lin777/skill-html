@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Multi Search Engine — Validation Record</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page-bg: #f4f1e9;
+      --page-fg: #1d211e;
+      --paper: #fffdf7;
+      --ink-2: #5f655e;
+      --rule: #c8c7bd;
+      --green: #0d7356;
+      --red: #ad342d;
+      --amber: #9a6300;
+      --blue: #225e8c;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--page-bg); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        linear-gradient(rgba(42, 45, 41, .035) 1px, transparent 1px),
+        var(--page-bg);
+      background-size: 100% 28px;
+      color: var(--page-fg);
+    }
+    .sheet { width: 100%; max-width: 1100px; margin: 0 auto; padding: 30px clamp(14px, 4vw, 42px) 56px; }
+    .mast { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 22px; padding: 26px; border: 2px solid #272b27; background: var(--paper); box-shadow: 8px 8px 0 #272b27; }
+    .kicker { margin: 0 0 10px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); font-weight: 800; }
+    h1 { margin: 0; font: 800 clamp(34px, 7vw, 64px)/.98 ui-sans-serif, system-ui, sans-serif; letter-spacing: -.055em; }
+    .deck { margin: 15px 0 0; max-width: 690px; color: var(--ink-2); line-height: 1.6; font-size: 14px; }
+    .stamp { align-self: start; min-width: 132px; padding: 15px 10px; border: 3px double var(--amber); color: var(--amber); text-align: center; transform: rotate(2deg); }
+    .stamp strong { display: block; font-size: 22px; letter-spacing: .08em; }
+    .stamp span { display: block; margin-top: 4px; font-size: 10px; }
+    .meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 24px; border: 1px solid var(--rule); background: rgba(255,255,255,.66); }
+    .meta div { min-width: 0; padding: 13px; border-right: 1px solid var(--rule); }
+    .meta div:last-child { border-right: 0; }
+    .meta span { display: block; color: var(--ink-2); font-size: 10px; text-transform: uppercase; letter-spacing: .09em; }
+    .meta strong { display: block; margin-top: 6px; overflow-wrap: anywhere; font-size: 13px; }
+    .section { margin-top: 34px; }
+    .section-title { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .section-title b { display: grid; place-items: center; width: 26px; height: 26px; background: #272b27; color: white; border-radius: 50%; font-size: 12px; }
+    h2 { margin: 0; font: 800 clamp(22px, 4vw, 31px)/1.1 ui-sans-serif, system-ui, sans-serif; letter-spacing: -.035em; }
+    .gate-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--rule); background: var(--paper); }
+    .gate { min-width: 0; padding: 17px; border-bottom: 1px solid var(--rule); }
+    .gate:nth-child(odd) { border-right: 1px solid var(--rule); }
+    .gate:nth-last-child(-n+2) { border-bottom: 0; }
+    .gate-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+    .gate h3 { margin: 0; font-size: 14px; }
+    .badge { font-size: 10px; padding: 4px 6px; border: 1px solid currentColor; font-weight: 800; white-space: nowrap; }
+    .pass { color: var(--green); }
+    .fail { color: var(--red); }
+    .review { color: var(--amber); }
+    .gate p { margin: 9px 0 0; color: var(--ink-2); line-height: 1.55; font-size: 12px; }
+    .probe-board { padding: 20px; border: 1px solid #272b27; background: #272b27; color: #f8f4e8; }
+    .probe-summary { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+    .ratio { font: 900 clamp(48px, 10vw, 82px)/.85 ui-sans-serif, system-ui, sans-serif; letter-spacing: -.08em; color: #ffd06f; }
+    .ratio small { font-size: .3em; letter-spacing: 0; color: #e4decf; }
+    .probe-summary p { margin: 0; max-width: 410px; color: #c9c5bb; line-height: 1.5; font-size: 12px; text-align: right; }
+    .probes { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; }
+    .probe { min-width: 0; padding: 12px 10px; border: 1px solid #56584f; background: #31342f; }
+    .probe strong { display: block; font-size: 12px; overflow-wrap: anywhere; }
+    .probe span { display: block; margin-top: 12px; font-size: 10px; color: #aaa99e; }
+    .probe.ok { border-top: 4px solid #5cd39f; }
+    .probe.blocked { border-top: 4px solid #ffcc68; }
+    .probe.down { border-top: 4px solid #ef766d; }
+    .matrix { width: 100%; border-collapse: collapse; background: var(--paper); border: 1px solid var(--rule); }
+    .matrix th, .matrix td { padding: 12px 11px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); font-size: 11px; line-height: 1.45; }
+    .matrix th { background: #dedbd1; text-transform: uppercase; letter-spacing: .06em; font-size: 10px; }
+    .matrix tr:last-child td { border-bottom: 0; }
+    .matrix td:first-child { font-weight: 800; }
+    .status-word { font-weight: 900; white-space: nowrap; }
+    .evidence { display: grid; grid-template-columns: .9fr 1.1fr; gap: 14px; }
+    .ledger, .finding { padding: 18px; border: 1px solid var(--rule); background: var(--paper); min-width: 0; }
+    .ledger h3, .finding h3 { margin: 0 0 13px; font: 750 17px/1.2 ui-sans-serif, system-ui, sans-serif; }
+    .ledger ol { margin: 0; padding-left: 22px; color: var(--ink-2); line-height: 1.65; font-size: 12px; }
+    .finding { border-left: 5px solid var(--red); }
+    .finding p { margin: 0; color: var(--ink-2); line-height: 1.6; font-size: 12px; }
+    .finding code { color: var(--red); font-weight: 800; overflow-wrap: anywhere; }
+    .verdict { margin-top: 34px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 18px; align-items: center; padding: 22px; border: 2px solid var(--amber); background: #fff5d8; }
+    .verdict-mark { font: 900 23px/1 ui-sans-serif, system-ui, sans-serif; color: var(--amber); }
+    .verdict h2 { color: #704900; }
+    .verdict p { margin: 7px 0 0; color: #6c5c35; line-height: 1.5; font-size: 13px; }
+    .note { margin-top: 17px; color: var(--ink-2); font-size: 11px; line-height: 1.55; }
+    @media (max-width: 700px) {
+      .mast { grid-template-columns: 1fr; }
+      .stamp { justify-self: start; }
+      .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .meta div:nth-child(2) { border-right: 0; }
+      .meta div:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+      .probes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .evidence { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 500px) {
+      .mast { padding: 20px; box-shadow: 5px 5px 0 #272b27; }
+      .gate-grid { grid-template-columns: 1fr; }
+      .gate:nth-child(odd) { border-right: 0; }
+      .gate:nth-last-child(-n+2) { border-bottom: 1px solid var(--rule); }
+      .gate:last-child { border-bottom: 0; }
+      .probe-summary { display: block; }
+      .probe-summary p { text-align: left; margin-top: 12px; }
+      .probes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .matrix, .matrix tbody, .matrix tr, .matrix td { display: block; width: 100%; }
+      .matrix thead { display: none; }
+      .matrix tr { border-bottom: 1px solid var(--rule); padding: 10px 0; }
+      .matrix tr:last-child { border-bottom: 0; }
+      .matrix td { border: 0; padding: 4px 12px; }
+      .matrix td::before { content: attr(data-label) ": "; color: var(--ink-2); font-weight: 400; }
+      .verdict { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="sheet">
+      <header class="mast">
+        <div>
+          <p class="kicker">Validation record / 29 July 2026</p>
+          <h1>Multi Search Engine</h1>
+          <p class="deck">A reproducible review of package structure, provider configuration, public endpoint reachability, and privacy claims. Results below are observed evidence, not a promotional score.</p>
+        </div>
+        <div class="stamp"><strong>REVIEW</strong><span>DEPLOYMENT GATE</span></div>
+      </header>
+
+      <section class="meta" aria-label="Test metadata">
+        <div><span>Release under test</span><strong>2.1.3 package</strong></div>
+        <div><span>Environment</span><strong>macOS / arm64</strong></div>
+        <div><span>Network mode</span><strong>Direct HTTPS, no proxy</strong></div>
+        <div><span>Scope</span><strong>Static + 5 probes</strong></div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><b>1</b><h2>Capability gates</h2></div>
+        <div class="gate-grid">
+          <article class="gate"><div class="gate-head"><h3>Package safety</h3><span class="badge pass">PASS</span></div><p>Nine readable data/document files, no executable code files, no symlinks, and no local credential or system access.</p></article>
+          <article class="gate"><div class="gate-head"><h3>Engine registry</h3><span class="badge pass">PASS</span></div><p>16 unique HTTPS templates parsed: seven CN and nine international; every configured route includes the keyword placeholder.</p></article>
+          <article class="gate"><div class="gate-head"><h3>Direct reachability</h3><span class="badge review">LIMITED</span></div><p>Two of five representative no-key probes returned an immediately usable page in this environment.</p></article>
+          <article class="gate"><div class="gate-head"><h3>Privacy accuracy</h3><span class="badge fail">FAIL</span></div><p>The source says “no external data transmission” even though all searches send queries and request metadata to third parties.</p></article>
+          <article class="gate"><div class="gate-head"><h3>Version consistency</h3><span class="badge review">REVIEW</span></div><p>Release metadata says 2.1.3; metadata.json and changelog stop at 2.1.0; CHANNELLOG identifies 2.0.1.</p></article>
+          <article class="gate"><div class="gate-head"><h3>Bundled execution</h3><span class="badge review">HOST-DEPENDENT</span></div><p>The package documents routing, cookies, retry, and aggregation but includes no client that implements them.</p></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><b>2</b><h2>Representative endpoint probes</h2></div>
+        <div class="probe-board">
+          <div class="probe-summary">
+            <div class="ratio">2/5 <small>usable</small></div>
+            <p>Benign public queries were sent once per provider with a 15-second limit. HTTP 200 alone was not counted when the response was a CAPTCHA.</p>
+          </div>
+          <div class="probes">
+            <div class="probe ok"><strong>Brave Search</strong><span>200 / search page</span></div>
+            <div class="probe ok"><strong>WolframAlpha</strong><span>200 / input page</span></div>
+            <div class="probe blocked"><strong>Baidu</strong><span>200 / CAPTCHA redirect</span></div>
+            <div class="probe down"><strong>DuckDuckGo</strong><span>connection reset</span></div>
+            <div class="probe down"><strong>Google</strong><span>5 s connect timeout</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><b>3</b><h2>Test matrix</h2></div>
+        <table class="matrix">
+          <thead><tr><th>Test</th><th>Method</th><th>Observed result</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Test">Frontmatter parse</td><td data-label="Method">Safe YAML parse</td><td data-label="Observed">Name and description loaded successfully</td><td data-label="Status"><span class="status-word pass">VERIFIED</span></td></tr>
+            <tr><td data-label="Test">JSON parse</td><td data-label="Method">Standard library parser</td><td data-label="Observed">config, metadata, and release files valid</td><td data-label="Status"><span class="status-word pass">VERIFIED</span></td></tr>
+            <tr><td data-label="Test">Registry shape</td><td data-label="Method">Count and uniqueness checks</td><td data-label="Observed">16 unique routes; 7 CN + 9 global</td><td data-label="Status"><span class="status-word pass">VERIFIED</span></td></tr>
+            <tr><td data-label="Test">Dangerous local behavior</td><td data-label="Method">File and pattern inventory</td><td data-label="Observed">No executable payloads or hidden filesystem actions</td><td data-label="Status"><span class="status-word pass">VERIFIED</span></td></tr>
+            <tr><td data-label="Test">Provider access</td><td data-label="Method">Five direct HTTPS GET probes</td><td data-label="Observed">2 usable, 1 challenged, 2 failed</td><td data-label="Status"><span class="status-word review">PARTIAL</span></td></tr>
+            <tr><td data-label="Test">Cookie retry workflow</td><td data-label="Method">Source inspection</td><td data-label="Observed">Documented only; host support not demonstrated</td><td data-label="Status"><span class="status-word review">NOT VERIFIED</span></td></tr>
+            <tr><td data-label="Test">Privacy statement</td><td data-label="Method">Claim-to-network comparison</td><td data-label="Observed">Contradiction confirmed</td><td data-label="Status"><span class="status-word fail">FAILED</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><b>4</b><h2>Evidence trail</h2></div>
+        <div class="evidence">
+          <article class="ledger">
+            <h3>Reproduction order</h3>
+            <ol>
+              <li>Parse the two frontmatter blocks and three JSON files.</li>
+              <li>Count engine names, regions, HTTPS schemes, and placeholders.</li>
+              <li>Inventory files and scan for executable extensions and sensitive access.</li>
+              <li>Probe Brave, WolframAlpha, Baidu, DuckDuckGo, and Google with public terms.</li>
+              <li>Compare the documented privacy claim with the declared third-party URLs.</li>
+            </ol>
+          </article>
+          <article class="finding">
+            <h3>Blocking finding</h3>
+            <p>The package states <code>“all operations run locally, no external data transmission”</code>. The core workflow necessarily sends every selected query to an external search provider. That statement must not be used as a customer promise.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="verdict">
+        <div class="verdict-mark">REVIEW</div>
+        <div>
+          <h2>No composite score assigned</h2>
+          <p>The registry and instruction artifact are structurally usable, but real provider access is environment-dependent and the privacy claim is materially inaccurate. Treat this release as a routing guide for public queries, not a guaranteed multi-engine crawler.</p>
+        </div>
+      </section>
+      <p class="note">Probe results are a time-and-environment-specific snapshot. Search providers can change access controls without notice. A blocked probe does not prove permanent unavailability; a successful probe does not guarantee future access.</p>
+    </main>
+  </div>
+</body>
+</html>

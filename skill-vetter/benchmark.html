@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Skill Vetter — Benchmark</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page-bg: #07111f;
+      --page-fg: #e9f2f6;
+      --panel: #0d1b2a;
+      --panel-hi: #102538;
+      --cyan: #63e0d8;
+      --green: #76e3a0;
+      --amber: #ffc857;
+      --red: #ff7078;
+      --line: #294158;
+      --muted: #97adbc;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--page-bg); color: var(--page-fg); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 88% 4%, rgba(99, 224, 216, 0.11), transparent 30%),
+        var(--page-bg);
+      color: var(--page-fg);
+    }
+    .shell {
+      width: 100%;
+      max-width: 1140px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(16px, 4vw, 42px);
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(28px, 6vw, 56px);
+      border: 1px solid #31516a;
+      border-radius: 7px 28px 28px 28px;
+      background: linear-gradient(135deg, #0a1726 0%, #10283c 100%);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.34);
+    }
+    .hero::after {
+      content: "AUDIT / 01";
+      position: absolute;
+      right: 22px;
+      top: 22px;
+      color: rgba(99, 224, 216, 0.13);
+      font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.16em;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 15px;
+      color: var(--cyan);
+      font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .tag::before {
+      content: "";
+      width: 22px;
+      height: 2px;
+      background: var(--cyan);
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 820px;
+      margin-bottom: 14px;
+      font-size: clamp(36px, 7vw, 66px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+    h1 span { color: var(--cyan); }
+    .lede {
+      max-width: 760px;
+      margin-bottom: 22px;
+      color: var(--muted);
+      font-size: clamp(16px, 2.4vw, 20px);
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .meta span {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: rgba(7, 17, 31, 0.55);
+      color: #c3d4df;
+      font: 700 10px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .fact {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 7px 18px 18px 18px;
+      background: var(--panel);
+    }
+    .fact b {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--cyan);
+      font: 800 clamp(25px, 5vw, 42px)/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: -0.05em;
+    }
+    .fact span { display: block; color: var(--muted); font-size: 11px; }
+    .panel {
+      margin-top: 16px;
+      padding: clamp(22px, 5vw, 42px);
+      border: 1px solid var(--line);
+      border-radius: 7px 24px 24px 24px;
+      background: var(--panel);
+    }
+    .panel-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+      gap: clamp(18px, 5vw, 58px);
+      margin-bottom: 24px;
+    }
+    h2 {
+      margin-bottom: 8px;
+      font-size: clamp(27px, 5vw, 44px);
+      line-height: 1.04;
+      letter-spacing: -0.035em;
+    }
+    .panel-head p, .muted { color: var(--muted); }
+    .gate-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .gate {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--green);
+      background: #091725;
+    }
+    .gate.review { border-left-color: var(--amber); }
+    .gate-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .gate h3 { margin-bottom: 0; font-size: 14px; }
+    .state {
+      flex: 0 0 auto;
+      color: var(--green);
+      font: 800 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+    }
+    .review .state { color: var(--amber); }
+    .gate p { margin-bottom: 0; color: var(--muted); font-size: 12px; }
+    .coverage {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 9px;
+    }
+    .coverage-card {
+      min-width: 0;
+      min-height: 150px;
+      padding: 17px;
+      border: 1px solid var(--line);
+      background: #081624;
+    }
+    .coverage-card .n {
+      display: block;
+      margin-bottom: 16px;
+      color: var(--amber);
+      font: 800 24px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .coverage-card b { display: block; margin-bottom: 5px; font-size: 13px; }
+    .coverage-card span { display: block; color: var(--muted); font-size: 11px; }
+    .matrix { display: grid; gap: 8px; }
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr) minmax(100px, 0.4fr);
+      gap: 12px;
+      align-items: center;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      background: #091725;
+    }
+    .row.header {
+      padding-top: 0;
+      padding-bottom: 4px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font: 800 9px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .row strong { color: #dbe8ee; font-size: 12px; }
+    .row span { color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
+    .status {
+      font-weight: 850;
+      text-align: right;
+    }
+    .status.pass { color: var(--green); }
+    .status.review { color: var(--amber); }
+    .lookup {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+      gap: 12px;
+    }
+    .lookup-card {
+      min-width: 0;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: #081624;
+    }
+    .lookup-card b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--cyan);
+      font: 800 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .lookup-card p { margin-bottom: 0; color: var(--muted); font-size: 12px; }
+    .json {
+      display: grid;
+      gap: 7px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+    }
+    .json span {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 7px;
+      border-bottom: 1px solid var(--line);
+      color: #bfd3df;
+    }
+    .json i { color: var(--green); font-style: normal; overflow-wrap: anywhere; text-align: right; }
+    .limits {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .limit {
+      min-width: 0;
+      padding: 17px;
+      border: 1px solid #70464a;
+      border-left: 4px solid var(--red);
+      background: #241820;
+    }
+    .limit b { display: block; margin-bottom: 5px; color: #ffc1c4; font-size: 12px; }
+    .limit span { display: block; color: #c79da1; font-size: 11px; }
+    .evidence {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .hash {
+      min-width: 0;
+      padding: 16px;
+      border: 1px dashed #3e637b;
+      background: #071420;
+    }
+    .hash b {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--cyan);
+      font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+    }
+    .hash code {
+      color: var(--muted);
+      font: 10px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-wrap: anywhere;
+    }
+    .verdict {
+      border: 2px solid var(--green);
+      background: #0c251f;
+    }
+    .verdict h2 { color: var(--green); }
+    .verdict p { max-width: 870px; margin-bottom: 0; color: #a6d9bc; }
+    footer {
+      padding: 24px 4px 8px;
+      color: #718798;
+      font-size: 10px;
+      text-align: center;
+    }
+    @media (max-width: 780px) {
+      .facts, .coverage { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 620px) {
+      .panel-head, .gate-grid, .lookup, .limits, .evidence { grid-template-columns: 1fr; }
+      .row, .row.header { grid-template-columns: 1fr; gap: 5px; }
+      .row.header { display: none; }
+      .status { text-align: left; }
+    }
+    @media (max-width: 400px) {
+      .shell { padding: 13px; }
+      .hero, .panel { padding: 21px 17px; }
+      .facts, .coverage { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="shell">
+      <header class="hero">
+        <div class="tag">Skill Vetter · Validation dossier</div>
+        <h1>Clean package. <span>Manual method.</span></h1>
+        <p class="lede">The evidence supports Skill Vetter as a lightweight pre-install review protocol. It does not support a claim of automated malware detection, exploit testing, or guaranteed safety.</p>
+        <div class="meta">
+          <span>Test date · 29 July 2026</span>
+          <span>Package · 1.0.0</span>
+          <span>Local macOS inspection</span>
+          <span>Scope · package + optional lookup path</span>
+        </div>
+      </header>
+
+      <section class="facts" aria-label="Observed benchmark facts">
+        <article class="fact"><b>3</b><span>Package files inspected</span></article>
+        <article class="fact"><b>14</b><span>Documented red-flag categories</span></article>
+        <article class="fact"><b>0</b><span>Bundled executable files</span></article>
+        <article class="fact"><b>63 / 63</b><span>VirusTotal vendors clean via ClawHub</span></article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="tag">Acceptance gates</div><h2>Verify the package before the promise.</h2></div>
+          <p>The gates cover what can be directly reproduced: archive structure, frontmatter, executable surface, public registry audit, and the optional GitHub lookup dependencies.</p>
+        </div>
+        <div class="gate-grid">
+          <article class="gate">
+            <div class="gate-top"><h3>Archive safety</h3><span class="state">Passed</span></div>
+            <p>Zero absolute paths, zero parent-directory traversal entries, and zero hidden bidi or zero-width characters in SKILL.md.</p>
+          </article>
+          <article class="gate">
+            <div class="gate-top"><h3>Instruction structure</h3><span class="state">Passed</span></div>
+            <p>Frontmatter parsed successfully with the expected name, description, and version 1.0.0.</p>
+          </article>
+          <article class="gate">
+            <div class="gate-top"><h3>Executable surface</h3><span class="state">Passed</span></div>
+            <p>The package contains SKILL.md, skill-card.md, and _meta.json only; no script, installer, binary, or credential path is bundled.</p>
+          </article>
+          <article class="gate review">
+            <div class="gate-top"><h3>Detection effectiveness</h3><span class="state">Not applicable</span></div>
+            <p>No scanner implementation or labeled malware corpus exists in the package, so precision, recall, and exploit-detection claims cannot be measured.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="tag">Protocol coverage</div><h2>The checklist is complete enough to use.</h2></div>
+          <p>The real SKILL.md defines each stage and a stable report shape. These counts describe written coverage, not scanner detections.</p>
+        </div>
+        <div class="coverage">
+          <article class="coverage-card"><span class="n">05</span><b>Source questions</b><span>Origin, author, popularity, freshness, and reviews.</span></article>
+          <article class="coverage-card"><span class="n">14</span><b>Red-flag categories</b><span>Network, secrets, obfuscation, elevated access, persistence, and more.</span></article>
+          <article class="coverage-card"><span class="n">05</span><b>Permission questions</b><span>Files, writes, commands, network, and purpose fit.</span></article>
+          <article class="coverage-card"><span class="n">04</span><b>Risk levels</b><span>Low, medium, high, and extreme with an action for each.</span></article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="tag">Test matrix</div><h2>Claim-to-evidence mapping.</h2></div>
+          <p>“Passed” means the package contains and supports the named manual workflow. Review labels identify claims that require a separate engine, pinned source, or human judgment.</p>
+        </div>
+        <div class="matrix" role="table" aria-label="Skill Vetter test matrix">
+          <div class="row header" role="row"><span>Claim</span><span>Observed evidence</span><span>Result</span></div>
+          <div class="row" role="row"><strong>Review source trust</strong><span>Five provenance and popularity questions are present in Step 1.</span><span class="status pass">Passed</span></div>
+          <div class="row" role="row"><strong>Review every package file</strong><span>The protocol explicitly requires reading all files before installation.</span><span class="status pass">Passed as guidance</span></div>
+          <div class="row" role="row"><strong>Map permission scope</strong><span>Files, writes, commands, network, and purpose fit are all requested.</span><span class="status pass">Passed</span></div>
+          <div class="row" role="row"><strong>Produce a consistent report</strong><span>Identity, metrics, red flags, permissions, risk, verdict, and notes are specified.</span><span class="status pass">Passed</span></div>
+          <div class="row" role="row"><strong>Fetch public GitHub context</strong><span>curl and jq were available; a public repository metadata response parsed successfully.</span><span class="status pass">Passed in environment</span></div>
+          <div class="row" role="row"><strong>Pin inspected source</strong><span>Examples read the moving main branch and do not record a commit hash.</span><span class="status review">Gap</span></div>
+          <div class="row" role="row"><strong>Automatically detect malware</strong><span>No executable scanner, signatures, sandbox, tests, or labeled corpus is bundled.</span><span class="status review">Not implemented</span></div>
+          <div class="row" role="row"><strong>Registry security posture</strong><span>ClawHub outcome Pass; static analysis clean; 63/63 vendors clean.</span><span class="status pass">Passed</span></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="tag">Optional network path</div><h2>The lookup works, with boundaries.</h2></div>
+          <p>The GitHub examples need curl, jq, and public network access. They require no API key, but anonymous rate limits, local proxy settings, and moving branch content can affect repeatability.</p>
+        </div>
+        <div class="lookup">
+          <article class="lookup-card">
+            <b>Observed transport check</b>
+            <p>A read-only request to a public GitHub repository returned structured metrics and was parsed by jq. This verifies the optional command path in this environment, not the safety of that repository.</p>
+          </article>
+          <article class="lookup-card json" aria-label="Observed GitHub response fields">
+            <span><b>curl</b><i>/usr/bin/curl</i></span>
+            <span><b>jq</b><i>/usr/bin/jq</i></span>
+            <span><b>Response fields</b><i>stars · forks · updated</i></span>
+            <span><b>Authentication</b><i>none used</i></span>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="tag">Known limits</div><h2>Where human review still decides.</h2></div>
+          <p>The Skill’s simplicity is useful, but its strongest language must not be confused with detection accuracy.</p>
+        </div>
+        <div class="limits">
+          <div class="limit"><b>Popularity is not proof</b><span>Stars and known authors are context signals, not evidence that a package is safe.</span></div>
+          <div class="limit"><b>Simple patterns can over-report</b><span>Base64, shell access, or secret use may be legitimate when justified and scoped.</span></div>
+          <div class="limit"><b>Fetched content is untrusted</b><span>A reviewer must treat target instructions as data and avoid following embedded commands.</span></div>
+          <div class="limit"><b>Future updates are out of scope</b><span>A clean review covers only the exact files inspected at that time.</span></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="tag">Evidence trail</div><h2>Exact artifacts.</h2></div>
+          <p>These identifiers make the inspected package distinguishable from a future release or repackaged copy.</p>
+        </div>
+        <div class="evidence">
+          <div class="hash"><b>Package SHA-256</b><code>b89a72d67a97453317c372790b349c973a20126ab31a1dbb7936d009612ff9c9</code></div>
+          <div class="hash"><b>SKILL.md SHA-256</b><code>e8eb7583355c2ae78a79187dca6a1ec448d9c8360e91652871392179f7ffb8bf</code></div>
+          <div class="hash"><b>Observed files</b><code>SKILL.md · skill-card.md · _meta.json</code></div>
+          <div class="hash"><b>Registry audit snapshot</b><code>Outcome: Pass · Static analysis: clean · VirusTotal: 63/63 clean</code></div>
+        </div>
+      </section>
+
+      <section class="panel verdict">
+        <div class="tag">Conclusion</div>
+        <h2>Validated as a manual pre-install checklist.</h2>
+        <p>The exact package is structurally clean, low-dependency, and ready to guide a deliberate review. Its value is procedural consistency and a clear decision record. No benchmark evidence supports marketing it as an automated security scanner, so no detection score or overall safety score has been invented.</p>
+      </section>
+
+      <footer>Benchmark scope: exact package, static inspection, and optional GitHub transport check · No malware-detection score was claimed</footer>
+    </main>
+  </div>
+</body>
+</html>

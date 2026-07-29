@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Humanizer — Showcase</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page-bg: #f3ecdf;
+      --page-fg: #281f1a;
+      --paper: #fffdf8;
+      --ink: #173f67;
+      --red: #b53b37;
+      --red-soft: #f1d6d0;
+      --blue-soft: #e5f0f4;
+      --green: #276b58;
+      --line: #d6c8b4;
+      --muted: #6f635a;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--page-bg); color: var(--page-fg); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.58;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(77, 59, 44, 0.035) 31px 32px),
+        var(--page-bg);
+      color: var(--page-fg);
+    }
+    .shell {
+      width: 100%;
+      max-width: 1100px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(16px, 4vw, 42px);
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .topline .stamp {
+      padding: 6px 9px;
+      border: 2px solid var(--red);
+      border-radius: 4px;
+      color: var(--red);
+      transform: rotate(-1deg);
+    }
+    .hero {
+      padding: clamp(28px, 6vw, 54px);
+      border: 1px solid var(--line);
+      border-radius: 26px 26px 8px 26px;
+      background: var(--paper);
+      box-shadow: 0 24px 65px rgba(67, 44, 29, 0.11);
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 820px;
+      margin-bottom: 15px;
+      font: 700 clamp(37px, 8vw, 70px)/0.98 Georgia, "Times New Roman", serif;
+      letter-spacing: -0.045em;
+    }
+    h1 em {
+      color: var(--ink);
+      font-style: normal;
+      border-bottom: 6px solid var(--red);
+    }
+    .lede {
+      max-width: 700px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2.5vw, 20px);
+    }
+    .result-bar {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .result {
+      min-width: 0;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 8px 18px 18px 18px;
+      background: var(--paper);
+    }
+    .result b {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font: 700 clamp(24px, 5vw, 38px)/1 Georgia, "Times New Roman", serif;
+    }
+    .result span { color: var(--muted); font-size: 11px; }
+    .sheet {
+      position: relative;
+      margin-top: 18px;
+      padding: clamp(24px, 5vw, 48px);
+      border: 1px solid var(--line);
+      border-radius: 8px 28px 28px 28px;
+      background: var(--paper);
+    }
+    .sheet::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: clamp(20px, 4vw, 42px);
+      width: 1px;
+      background: rgba(181, 59, 55, 0.23);
+    }
+    .sheet-inner {
+      position: relative;
+      min-width: 0;
+      padding-left: clamp(18px, 4vw, 38px);
+    }
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: var(--red);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .label::before {
+      content: "";
+      width: 20px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--red);
+    }
+    h2 {
+      margin-bottom: 12px;
+      font: 700 clamp(27px, 5vw, 43px)/1.05 Georgia, "Times New Roman", serif;
+      letter-spacing: -0.03em;
+    }
+    .prompt {
+      padding: 18px 20px;
+      border-left: 4px solid var(--ink);
+      background: var(--blue-soft);
+      color: var(--ink);
+      font-size: 14px;
+    }
+    .edit-stage {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .text-panel {
+      min-width: 0;
+      padding: clamp(20px, 4vw, 30px);
+      border-radius: 18px;
+    }
+    .text-panel.before { background: #eee4d7; color: #5f5148; }
+    .text-panel.after { background: var(--blue-soft); color: var(--ink); }
+    .text-panel h3 {
+      margin-bottom: 13px;
+      font-size: 11px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+    .text-panel p { margin-bottom: 0; font-size: clamp(15px, 2.4vw, 18px); }
+    .marked {
+      padding: 0 2px;
+      background: var(--red-soft);
+      color: #7c2f2a;
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      text-decoration-color: var(--red);
+    }
+    .ledger {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .change {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbf7ef;
+    }
+    .change b {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--red);
+      font-size: 12px;
+    }
+    .change span { color: var(--muted); font-size: 12px; }
+    .explain {
+      display: grid;
+      grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+      gap: clamp(18px, 5vw, 54px);
+      align-items: start;
+    }
+    .explain p { color: var(--muted); }
+    .meaning {
+      display: grid;
+      gap: 9px;
+    }
+    .token {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 13px 15px;
+      border: 1px solid #bcd0c7;
+      border-radius: 12px;
+      background: #edf5f0;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 750;
+    }
+    .run {
+      border: 2px solid var(--ink);
+      background: #f0f6f8;
+    }
+    .run-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 9px;
+      margin-top: 18px;
+    }
+    .run-fact {
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid #b7c9d4;
+      border-radius: 12px;
+      background: white;
+    }
+    .run-fact b {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ink);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .run-fact span {
+      display: block;
+      color: #586d7a;
+      font-size: 11px;
+      overflow-wrap: anywhere;
+    }
+    .honesty {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--red);
+      background: var(--red-soft);
+      color: #6c3733;
+      font-size: 12px;
+    }
+    footer {
+      padding: 25px 4px 8px;
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+    }
+    @media (max-width: 720px) {
+      .run-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 620px) {
+      .edit-stage, .ledger, .explain { grid-template-columns: 1fr; }
+      .result-bar { grid-template-columns: 1fr; }
+      .sheet::before { left: 17px; }
+      .sheet-inner { padding-left: 10px; }
+    }
+    @media (max-width: 400px) {
+      .shell { padding: 13px; }
+      .hero, .sheet { padding: 21px 17px; }
+      .run-grid { grid-template-columns: 1fr; }
+      .topline { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="shell">
+      <div class="topline"><span>Humanizer · Representative run</span><span class="stamp">Reviewed copy</span></div>
+      <header class="hero">
+        <h1>One paragraph, <em>ten edits</em>, no lost facts.</h1>
+        <p class="lede">A concrete input-to-output example showing how the real Humanizer rules remove generic phrasing while keeping the product details that matter.</p>
+      </header>
+
+      <section class="result-bar" aria-label="Run summary">
+        <article class="result"><b>10</b><span>Named pattern hits in the source</span></article>
+        <article class="result"><b>0</b><span>Those pattern hits after the edit</span></article>
+        <article class="result"><b>3 / 3</b><span>Required meaning tokens retained</span></article>
+      </section>
+
+      <section class="sheet">
+        <div class="sheet-inner">
+          <div class="label">Representative user prompt</div>
+          <h2>The brief</h2>
+          <div class="prompt">Humanize this product update for a customer newsletter. Keep the keyboard-shortcut and offline-mode facts, preserve the claim that tasks become easier, remove generic AI phrasing, and return only the revised paragraph plus a concise change note.</div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="sheet-inner">
+          <div class="label">Input → output</div>
+          <h2>The editorial transformation</h2>
+          <div class="edit-stage">
+            <article class="text-panel before">
+              <h3>Source copy</h3>
+              <p><span class="marked">Additionally</span>, the update introduces keyboard shortcuts and offline mode, <span class="marked">serving as a pivotal testament</span> to the team’s <span class="marked">commitment to innovation</span> and delivering a <span class="marked">seamless, intuitive, and powerful</span> experience<span class="marked">—ensuring</span> users can complete tasks efficiently.</p>
+            </article>
+            <article class="text-panel after">
+              <h3>Humanized copy</h3>
+              <p>The update adds keyboard shortcuts and offline mode, which reduce the steps needed for common tasks.</p>
+            </article>
+          </div>
+          <div class="ledger" aria-label="Change ledger">
+            <div class="change"><b>Inflated significance removed</b><span>“Pivotal testament” became a direct statement of what changed.</span></div>
+            <div class="change"><b>Promotional triple removed</b><span>“Seamless, intuitive, and powerful” was replaced by a concrete user benefit.</span></div>
+            <div class="change"><b>Sentence shape simplified</b><span>The trailing em-dash clause became a short causal phrase.</span></div>
+            <div class="change"><b>Chatbot vocabulary removed</b><span>“Additionally,” “commitment,” and “ensuring” no longer pad the message.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="sheet-inner explain">
+          <div>
+            <div class="label">Meaning check</div>
+            <h2>The facts survived.</h2>
+            <p>The fixture defined three non-negotiable meaning tokens before the edit. Each is still explicit in the final paragraph.</p>
+          </div>
+          <div class="meaning">
+            <div class="token"><span>Keyboard shortcuts</span><span>Retained ✓</span></div>
+            <div class="token"><span>Offline mode</span><span>Retained ✓</span></div>
+            <div class="token"><span>Easier task completion</span><span>Retained ✓</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet run">
+        <div class="sheet-inner">
+          <div class="label">Run evidence</div>
+          <h2>What actually happened</h2>
+          <p class="lede">The host agent applied the real 24-pattern instruction set to the visible paragraph, then a deterministic text check counted the ten selected markers and verified the three required meaning tokens.</p>
+          <div class="run-grid">
+            <div class="run-fact"><b>Run type</b><span>Host-agent rule application</span></div>
+            <div class="run-fact"><b>Artifact</b><span>Plain-text input and output</span></div>
+            <div class="run-fact"><b>Package</b><span>Registry release 1.0.0</span></div>
+            <div class="run-fact"><b>Result</b><span>10 → 0 markers; 3/3 facts</span></div>
+          </div>
+          <div class="honesty"><strong>Evidence boundary:</strong> Humanizer contains instructions, not an executable detector. The text shown above is the real deliverable; no terminal screenshot or classifier score has been fabricated. Tone and factual nuance still require a human review.</div>
+        </div>
+      </section>
+
+      <footer>Showcase evidence · One representative editorial fixture · Results do not guarantee performance on every writing style</footer>
+    </main>
+  </div>
+</body>
+</html>

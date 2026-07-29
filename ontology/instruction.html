@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="How to use Ontology to maintain an inspectable local knowledge graph for agent memory.">
+  <title>Ontology — Instruction</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3efe4;
+      --paper-deep: #e8e0cf;
+      --ink: #18282d;
+      --muted: #64706b;
+      --rust: #bd572f;
+      --sage: #4f725f;
+      --gold: #d7a647;
+      --line: #c9bea8;
+      --white: #fffdf7;
+    }
+    * { box-sizing: border-box; }
+    html {
+      min-width: 0;
+      background: var(--paper);
+      color: var(--ink);
+    }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        linear-gradient(rgba(24, 40, 45, 0.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 100% 32px;
+      color: var(--ink);
+    }
+    .shell {
+      width: 100%;
+      max-width: 1120px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: 24px clamp(16px, 4vw, 48px) 64px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      flex: 0 0 auto;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      color: var(--rust);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 19px;
+    }
+    .edition {
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: .06em;
+      white-space: nowrap;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr);
+      gap: clamp(24px, 5vw, 58px);
+      align-items: center;
+      padding: clamp(34px, 6vw, 62px) 0 40px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      margin: 0 0 16px;
+      color: var(--rust);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      width: 26px;
+      height: 2px;
+      content: "";
+      background: currentColor;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 700px;
+      margin-bottom: 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(38px, 7vw, 70px);
+      font-weight: 500;
+      letter-spacing: -.045em;
+      line-height: .97;
+    }
+    .lede {
+      max-width: 640px;
+      margin-bottom: 22px;
+      color: #475854;
+      font-size: clamp(16px, 2.3vw, 19px);
+      line-height: 1.55;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 247, .68);
+      color: #33443f;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+    }
+    .graph-card {
+      position: relative;
+      min-width: 0;
+      min-height: 315px;
+      overflow: hidden;
+      border: 1px solid #a89b82;
+      border-radius: 22px 22px 7px 22px;
+      background: var(--white);
+      box-shadow: 12px 14px 0 var(--paper-deep);
+    }
+    .graph-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--sage);
+      font-weight: 800;
+    }
+    .live::before {
+      width: 7px;
+      height: 7px;
+      content: "";
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .canvas {
+      position: relative;
+      height: 215px;
+      margin: 12px;
+      border: 1px dashed var(--line);
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at center, rgba(79, 114, 95, .08) 1px, transparent 1.5px),
+        #fbf8f0;
+      background-size: 20px 20px;
+    }
+    .edge {
+      position: absolute;
+      z-index: 1;
+      height: 2px;
+      transform-origin: left center;
+      background: #9aa79b;
+    }
+    .edge::after {
+      position: absolute;
+      top: -3px;
+      right: -1px;
+      width: 7px;
+      height: 7px;
+      content: "";
+      border-top: 2px solid #9aa79b;
+      border-right: 2px solid #9aa79b;
+      transform: rotate(45deg);
+    }
+    .edge.one { top: 87px; left: 26%; width: 30%; transform: rotate(9deg); }
+    .edge.two { top: 104px; left: 53%; width: 25%; transform: rotate(43deg); }
+    .edge.three { top: 100px; left: 27%; width: 23%; transform: rotate(83deg); }
+    .node {
+      position: absolute;
+      z-index: 2;
+      min-width: 88px;
+      max-width: 116px;
+      padding: 9px 10px;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 3px 3px 0 rgba(24, 40, 45, .14);
+      font-size: 11px;
+      line-height: 1.25;
+    }
+    .node b {
+      display: block;
+      overflow-wrap: anywhere;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+    }
+    .node span {
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 8px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .node.project { top: 54px; left: 7%; border-color: var(--rust); }
+    .node.task { top: 74px; left: 47%; border-color: var(--sage); }
+    .node.person { right: 5%; bottom: 24px; border-color: var(--gold); }
+    .node.task-two { bottom: 15px; left: 20%; border-color: var(--sage); }
+    .query-strip {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 16px 15px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+    }
+    .query-strip strong { color: var(--ink); }
+    .section {
+      padding: clamp(38px, 6vw, 70px) 0;
+      border-top: 1px solid var(--line);
+    }
+    .section-label {
+      margin-bottom: 10px;
+      color: var(--rust);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h2 {
+      max-width: 760px;
+      margin-bottom: 28px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(29px, 4.8vw, 48px);
+      font-weight: 500;
+      letter-spacing: -.035em;
+      line-height: 1.03;
+    }
+    h3 {
+      margin-bottom: 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .three-up {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .benefit {
+      min-width: 0;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 247, .62);
+    }
+    .benefit-num {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      margin-bottom: 22px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+    }
+    .benefit p, .step p, .note p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .workflow {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+    .step {
+      min-width: 0;
+      padding: 20px 16px;
+      border-right: 1px solid var(--line);
+    }
+    .step:last-child { border-right: 0; }
+    .step-kicker {
+      display: block;
+      margin-bottom: 14px;
+      color: var(--rust);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+    }
+    .step h3 {
+      font-size: 17px;
+      overflow-wrap: anywhere;
+    }
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+    .requirements {
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: var(--paper-deep);
+    }
+    .requirements ul {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: #40514c;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+    .prompt {
+      min-width: 0;
+      padding: 22px;
+      border-radius: 16px;
+      background: var(--ink);
+      color: #edf0e8;
+    }
+    .prompt-tag {
+      display: inline-block;
+      margin-bottom: 15px;
+      padding: 5px 8px;
+      border: 1px solid rgba(237, 240, 232, .25);
+      border-radius: 999px;
+      color: #d8b66d;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    pre, code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .output-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+    .ledger {
+      min-width: 0;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+    .ledger-title {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .ledger-row {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e5ded0;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .ledger-row:last-child { border-bottom: 0; }
+    .ledger-row span:first-child {
+      color: var(--rust);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .ledger-row span:last-child { overflow-wrap: anywhere; }
+    .notes {
+      display: grid;
+      gap: 12px;
+    }
+    .note {
+      padding: 18px;
+      border-left: 4px solid var(--sage);
+      background: rgba(255, 253, 247, .7);
+    }
+    .note.warning { border-color: var(--rust); }
+    .note code {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: rgba(24, 40, 45, .08);
+      font-size: 12px;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+    .footer strong { color: var(--ink); }
+    @media (max-width: 820px) {
+      .hero { grid-template-columns: minmax(0, 1fr) minmax(260px, .8fr); gap: 24px; }
+      .three-up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .benefit:last-child { grid-column: 1 / -1; }
+      .workflow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .step { border-bottom: 1px solid var(--line); }
+      .step:nth-child(3) { border-right: 0; }
+      .step:nth-child(4), .step:nth-child(5) { border-bottom: 0; }
+    }
+    @media (max-width: 700px) {
+      .hero { grid-template-columns: minmax(0, 1fr); }
+      .graph-card { min-height: 300px; box-shadow: 7px 8px 0 var(--paper-deep); }
+      .prompt-grid, .output-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 500px) {
+      .shell { padding-left: 14px; padding-right: 14px; }
+      .edition { display: none; }
+      .three-up, .workflow { grid-template-columns: minmax(0, 1fr); }
+      .benefit:last-child { grid-column: auto; }
+      .step {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .step:nth-child(3), .step:nth-child(4) { border-bottom: 1px solid var(--line); }
+      .step:last-child { border-bottom: 0; }
+      .canvas { height: 225px; }
+      .node { min-width: 76px; max-width: 96px; padding: 7px 8px; }
+      .node b { font-size: 12px; }
+      .node.project { left: 3%; }
+      .node.task { left: 42%; }
+      .node.person { right: 2%; }
+      .node.task-two { left: 14%; }
+      .edge.one { left: 24%; width: 25%; }
+      .edge.two { left: 50%; width: 28%; }
+      .footer { display: block; }
+      .footer span { display: block; margin-top: 8px; }
+    }
+    @media (max-width: 360px) {
+      .query-strip { display: block; }
+      .query-strip span { display: block; margin-top: 5px; }
+      .node.person { bottom: 17px; }
+      .ledger-row { grid-template-columns: 62px minmax(0, 1fr); padding: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark">O</span><span>Ontology</span></div>
+        <div class="edition">Instruction / v1.0.4</div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Local graph memory</p>
+          <h1>Give agent memory a structure you can inspect.</h1>
+          <p class="lede">Ontology stores typed entities and relationships as a local append-only event log, then reconstructs the current graph for queries, traversal, and explicit validation.</p>
+          <div class="chips">
+            <span class="chip">JSONL on disk</span>
+            <span class="chip">Typed entities</span>
+            <span class="chip">Graph queries</span>
+            <span class="chip">No remote API</span>
+          </div>
+        </div>
+        <div class="graph-card" aria-label="Representative ontology result">
+          <div class="graph-head">
+            <span>Current graph</span>
+            <span class="live">4 active nodes</span>
+          </div>
+          <div class="canvas">
+            <span class="edge one"></span>
+            <span class="edge two"></span>
+            <span class="edge three"></span>
+            <div class="node project"><span>Project</span><b>Atlas Redesign</b></div>
+            <div class="node task"><span>Task · open</span><b>Verify accessibility</b></div>
+            <div class="node person"><span>Person</span><b>Maya</b></div>
+            <div class="node task-two"><span>Task · open</span><b>Review tokens</b></div>
+          </div>
+          <div class="query-strip"><strong>Query: open tasks</strong><span>2 matches · local</span></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="section-label">What you gain</p>
+        <h2>A memory model with visible parts, not an opaque pile of notes.</h2>
+        <div class="three-up">
+          <article class="benefit">
+            <span class="benefit-num">01</span>
+            <h3>Named things</h3>
+            <p>Represent people, projects, tasks, decisions, or your own entity types with stable IDs and property maps.</p>
+          </article>
+          <article class="benefit">
+            <span class="benefit-num">02</span>
+            <h3>Meaningful links</h3>
+            <p>Connect entities with directed, typed relations so an agent can answer “what belongs to this?” and “who owns that?”</p>
+          </article>
+          <article class="benefit">
+            <span class="benefit-num">03</span>
+            <h3>Inspectible history</h3>
+            <p>Mutations append JSONL events. The active graph is reconstructed from those events instead of being hidden in a hosted service.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="section-label">Recommended workflow</p>
+        <h2>Build the graph, ask the graph, then validate it explicitly.</h2>
+        <div class="workflow">
+          <article class="step">
+            <span class="step-kicker">Step 01</span>
+            <h3>Choose a graph</h3>
+            <p>Use a graph name under the skill’s data directory. Path containment rejects traversal outside that directory.</p>
+          </article>
+          <article class="step">
+            <span class="step-kicker">Step 02</span>
+            <h3>Define types</h3>
+            <p>Optionally add YAML schema rules for required fields, enums, relation types, cardinality, and acyclic relations.</p>
+          </article>
+          <article class="step">
+            <span class="step-kicker">Step 03</span>
+            <h3>Append events</h3>
+            <p>Create or update entities, add relations, and record logical deletes as events in the local JSONL ledger.</p>
+          </article>
+          <article class="step">
+            <span class="step-kicker">Step 04</span>
+            <h3>Query &amp; traverse</h3>
+            <p>Filter active entities by type and properties, or follow relations to retrieve connected context.</p>
+          </article>
+          <article class="step">
+            <span class="step-kicker">Step 05</span>
+            <h3>Run validation</h3>
+            <p>Invoke validation as a separate review step and inspect its text output before accepting a mutation.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="section-label">A good request</p>
+        <h2>Provide concrete identities, types, properties, and the question you want answered.</h2>
+        <div class="prompt-grid">
+          <aside class="requirements">
+            <h3>Include these details</h3>
+            <ul>
+              <li>A graph name and stable entity IDs</li>
+              <li>Entity types and useful properties</li>
+              <li>Relation direction and relation type</li>
+              <li>The query or traversal to run afterward</li>
+              <li>Whether schema validation is required</li>
+            </ul>
+          </aside>
+          <div class="prompt">
+            <span class="prompt-tag">Recommended prompt</span>
+            <pre>In the “studio” graph, remember the Atlas Redesign project, an open task named “Verify accessibility,” and Maya as the task owner. Link the task to the project and Maya, then return every open task related to Atlas Redesign. Run explicit schema validation and report any issues separately.</pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="section-label">Delivered output</p>
+        <h2>Small local artifacts that remain readable outside the agent.</h2>
+        <div class="output-grid">
+          <div class="ledger">
+            <div class="ledger-title">Expected delivery set</div>
+            <div class="ledger-row"><span>Graph</span><span>A local <code>.jsonl</code> event ledger containing entity and relation mutations.</span></div>
+            <div class="ledger-row"><span>Query</span><span>Current active entities or related entities returned as structured JSON.</span></div>
+            <div class="ledger-row"><span>Schema</span><span>An optional YAML file describing constraints for the selected graph.</span></div>
+            <div class="ledger-row"><span>Review</span><span>A separate validation report listing detected constraint violations.</span></div>
+          </div>
+          <div class="notes">
+            <article class="note">
+              <h3>Best suited to</h3>
+              <p>Local agent memory, research maps, project context, decision records, dependency graphs, and other modest knowledge graphs that benefit from transparent files.</p>
+            </article>
+            <article class="note warning">
+              <h3>Not a database server</h3>
+              <p>This is a file-backed CLI, not a concurrent graph database, access-control system, vector search engine, or automatic truth verifier.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="section-label">Dependencies &amp; limits</p>
+        <h2>Know the boundary before treating the graph as trusted memory.</h2>
+        <div class="three-up">
+          <article class="benefit">
+            <h3>Python requirement</h3>
+            <p>The source uses modern type syntax and requires Python 3.10 or newer. Core CRUD uses the standard library.</p>
+          </article>
+          <article class="benefit">
+            <h3>Schema requirement</h3>
+            <p>Schema commands import PyYAML. Install it explicitly before using schema append or schema-aware validation.</p>
+          </article>
+          <article class="benefit">
+            <h3>Validation boundary</h3>
+            <p>Mutations are appended before validation. The validator reports issues but currently returns a zero process exit code, so automation must parse and review the report.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <strong>Ontology · local graph memory</strong>
+        <span>Instruction based on skill v1.0.4 and local verification on July 29, 2026.</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

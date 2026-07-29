@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>EdgeOne ClawScan — Benchmark</title>
+  <style>
+    :root { color-scheme: light; --page-bg:#f2f0e9; --page-fg:#17212b; --ink:#17212b; --paper:#fffefa; --line:#b9b4a7; --red:#cf3b32; --amber:#b87809; --green:#197354; --blue:#275f9d; }
+    * { box-sizing:border-box; }
+    html { background:var(--page-bg); }
+    body { margin:0; min-width:0; overflow-x:hidden; background:var(--page-bg); color:var(--page-fg); font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; }
+    .finchip-page { min-height:100%; overflow-x:hidden; background:var(--page-bg); color:var(--page-fg); }
+    .sheet { width:100%; max-width:1080px; margin:0 auto; padding:clamp(18px,4vw,42px); }
+    header { border-top:8px solid var(--ink); border-bottom:2px solid var(--ink); padding:18px 0 16px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:18px; align-items:end; }
+    .serial { font-size:12px; letter-spacing:.12em; color:#5c5a54; }
+    h1 { margin:8px 0 0; font-size:clamp(31px,6vw,60px); line-height:.96; letter-spacing:-.06em; font-family:Inter,ui-sans-serif,system-ui,sans-serif; }
+    .stamp { border:3px solid var(--red); color:var(--red); padding:10px 13px; transform:rotate(-2deg); font-weight:900; text-align:center; }
+    .facts { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border:1px solid var(--line); border-top:0; background:var(--paper); }
+    .fact { min-width:0; padding:15px; border-right:1px solid var(--line); }
+    .fact:last-child { border-right:0; }
+    .fact small { display:block; color:#68655c; margin-bottom:7px; }
+    .fact b { font-size:14px; }
+    section { margin-top:24px; }
+    .section-title { display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-bottom:2px solid var(--ink); padding-bottom:8px; }
+    .section-title h2 { margin:0; font:800 clamp(21px,3.5vw,31px)/1.1 Inter,ui-sans-serif,system-ui,sans-serif; }
+    .section-title span { color:#69655d; font-size:11px; }
+    .score-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; margin-top:12px; }
+    .score { min-width:0; min-height:130px; padding:14px; background:var(--paper); border:1px solid var(--line); display:flex; flex-direction:column; justify-content:space-between; }
+    .score b { font:900 36px/1 Inter,ui-sans-serif,system-ui,sans-serif; }
+    .score p { margin:0; font-size:12px; line-height:1.4; }
+    .score small { color:#666157; }
+    .matrix { margin-top:12px; background:var(--paper); border:1px solid var(--line); }
+    .row { display:grid; grid-template-columns:100px minmax(0,1.1fr) minmax(0,1fr) 116px; border-bottom:1px solid #d7d2c7; }
+    .row:last-child { border-bottom:0; }
+    .row > * { min-width:0; padding:12px; border-right:1px solid #d7d2c7; font-size:12px; line-height:1.45; }
+    .row > *:last-child { border-right:0; }
+    .head { background:var(--ink); color:white; font-weight:800; text-transform:uppercase; letter-spacing:.07em; }
+    .pass { color:var(--green); font-weight:900; }
+    .fail { color:var(--red); font-weight:900; }
+    .review { color:var(--amber); font-weight:900; }
+    .ledger { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); gap:14px; margin-top:12px; }
+    .note { padding:17px; background:var(--paper); border:1px solid var(--line); }
+    .note h3 { margin:0 0 10px; font:800 17px Inter,ui-sans-serif,system-ui,sans-serif; }
+    .note ul { margin:0; padding-left:18px; font-size:12px; line-height:1.65; }
+    .verdict { padding:17px; background:#1b2632; color:#eef4fa; border-left:8px solid var(--red); }
+    .verdict small { color:#aebdca; }
+    .verdict strong { display:block; margin:10px 0; font:900 clamp(28px,5vw,48px)/1 Inter,ui-sans-serif,system-ui,sans-serif; }
+    .verdict p { margin:0; color:#d1dce5; line-height:1.55; font-size:13px; }
+    footer { margin-top:24px; padding-top:12px; border-top:2px solid var(--ink); display:flex; justify-content:space-between; gap:14px; color:#666157; font-size:11px; }
+    @media(max-width:760px){ .facts{grid-template-columns:repeat(2,minmax(0,1fr))}.fact:nth-child(2){border-right:0}.fact:nth-child(-n+2){border-bottom:1px solid var(--line)}.score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.score:last-child{grid-column:1/-1}.ledger{grid-template-columns:1fr}.row{grid-template-columns:76px minmax(0,1fr) 92px}.row>*:nth-child(3){display:none} }
+    @media(max-width:440px){ header{grid-template-columns:1fr}.stamp{justify-self:start}.facts,.score-grid{grid-template-columns:1fr}.fact,.fact:nth-child(2){border-right:0}.fact:not(:last-child){border-bottom:1px solid var(--line)}.score:last-child{grid-column:auto}.row{grid-template-columns:66px minmax(0,1fr) 76px}.row>*{padding:10px 8px;font-size:10px}.section-title,footer{align-items:flex-start;flex-direction:column} }
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="sheet">
+      <header>
+        <div><span class="serial">INDEPENDENT PACKAGE REVIEW · 2026-07-29</span><h1>EdgeOne ClawScan<br>evidence record</h1></div>
+        <div class="stamp">REVIEW<br>NOT CLEARED</div>
+      </header>
+      <div class="facts">
+        <div class="fact"><small>Registry version</small><b>1.0.15</b></div>
+        <div class="fact"><small>Package shape</small><b>Markdown + metadata</b></div>
+        <div class="fact"><small>Required binary</small><b>openclaw — missing</b></div>
+        <div class="fact"><small>Registry audit</small><b>Review</b></div>
+      </div>
+
+      <section>
+        <div class="section-title"><h2>Evidence dimensions</h2><span>Scores describe package readiness, not scanner accuracy</span></div>
+        <div class="score-grid">
+          <article class="score"><small>PACKAGE INTEGRITY</small><b>96</b><p>Valid UTF-8, frontmatter, and safe archive paths.</p></article>
+          <article class="score"><small>CAPABILITY PROOF</small><b>34</b><p>No bundled scanner and no executable run in this environment.</p></article>
+          <article class="score"><small>PRIVACY CONTROL</small><b>42</b><p>Cloud disclosure exists, but “off” is Agent-enforced rather than program-enforced.</p></article>
+          <article class="score"><small>PORTABILITY</small><b>28</b><p>Requires a configured OpenClaw environment and may probe its Gateway.</p></article>
+          <article class="score"><small>DOCUMENTATION</small><b>71</b><p>Broad disclosures, but mixed-language output and metadata conflicts remain.</p></article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title"><h2>Test matrix</h2><span>Local isolated review · no production target</span></div>
+        <div class="matrix">
+          <div class="row head"><span>Case</span><span>Check</span><span>Evidence</span><span>Result</span></div>
+          <div class="row"><span>ARCHIVE</span><span>Reject path traversal, bidi controls, and malformed frontmatter.</span><span>3 files; no absolute or parent paths; valid UTF-8 and YAML.</span><span class="pass">PASS</span></div>
+          <div class="row"><span>PREFLIGHT</span><span>Resolve the required OpenClaw binary.</span><span><code>openclaw</code> not installed on the validation machine.</span><span class="fail">BLOCKED</span></div>
+          <div class="row"><span>OFFLINE</span><span>Confirm that <code>AIG_CLOUD_LOOKUP=off</code> prevents the documented curl command itself.</span><span>Isolated loopback listener still received the documented request when the command was run.</span><span class="fail">FAIL</span></div>
+          <div class="row"><span>GATEWAY</span><span>Run the full deep audit without touching an external target.</span><span>No trusted OpenClaw binary or test Gateway was available.</span><span class="review">NOT RUN</span></div>
+          <div class="row"><span>POSITION</span><span>Determine whether the artifact is an autonomous scanner.</span><span>Package contains instructions and metadata, not a scanner executable.</span><span class="review">LIMITED</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title"><h2>Evidence trail</h2><span>What is known and what is not</span></div>
+        <div class="ledger">
+          <article class="note">
+            <h3>Verified</h3>
+            <ul>
+              <li>Registry package downloaded as version 1.0.15.</li>
+              <li>Archive SHA-256: 1f6ee7e128d093af6b9d303059707a9d2b0e24738b33695a60d72d9adf783dbc.</li>
+              <li>Cloud mode declares Skill-name/source and OpenClaw-version transmission.</li>
+              <li>Local package requires the external <code>openclaw</code> binary.</li>
+              <li>Registry metadata and in-file license labels disagree.</li>
+            </ul>
+          </article>
+          <aside class="verdict">
+            <small>FINAL DISPOSITION</small>
+            <strong>HOLD</strong>
+            <p>Do not describe this package as a locally verified antivirus or a zero-network scanner. Re-test with a trusted OpenClaw installation and a controlled Gateway, and make the offline control fail closed before public release.</p>
+          </aside>
+        </div>
+      </section>
+
+      <footer><span>Benchmark scope: package behavior and local reproducibility</span><span>No security-detection accuracy claim</span></footer>
+    </main>
+  </div>
+</body>
+</html>

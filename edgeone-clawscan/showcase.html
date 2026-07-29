@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>EdgeOne ClawScan — Showcase</title>
+  <style>
+    :root { color-scheme:dark; --page-bg:#090b10; --page-fg:#f4f0e9; --panel:#11151d; --line:#343b48; --lime:#b8f35b; --orange:#ff9c55; --muted:#9ba4b2; }
+    *{box-sizing:border-box} html{background:var(--page-bg)} body{margin:0;min-width:0;overflow-x:hidden;background:var(--page-bg);color:var(--page-fg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .finchip-page{min-height:100%;overflow-x:hidden;background:linear-gradient(150deg,#090b10,#0d1118 55%,#080a0e);background-color:var(--page-bg);color:var(--page-fg)}
+    .wrap{width:100%;max-width:1100px;margin:0 auto;padding:22px clamp(15px,4vw,40px) 44px}
+    .top{display:flex;justify-content:space-between;gap:14px;padding-bottom:13px;border-bottom:1px solid var(--line);font:700 11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+    .live{color:var(--orange)}
+    .hero{padding:34px 0 22px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end}
+    h1{margin:0;font-size:clamp(34px,7vw,70px);line-height:.93;letter-spacing:-.055em}.hero p{max-width:670px;margin:16px 0 0;color:#bac1cc;font-size:17px;line-height:1.55}
+    .state{padding:14px 17px;border:1px solid #74523b;background:#221811;color:#ffc596;font:900 13px ui-monospace,monospace}
+    .case{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:14px}
+    .card{min-width:0;border:1px solid var(--line);background:var(--panel)}
+    .cap{display:flex;justify-content:space-between;gap:12px;padding:11px 13px;border-bottom:1px solid var(--line);font:800 11px ui-monospace,monospace;letter-spacing:.08em;color:var(--muted)}
+    .content{padding:17px}.prompt{font:650 15px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;color:#e9edf2;white-space:pre-wrap}
+    .constraints{display:grid;gap:8px;margin-top:17px}.pill{display:flex;justify-content:space-between;gap:10px;padding:10px;border:1px solid #2d3440;color:#aeb7c4;font-size:12px}.pill b{color:var(--lime)}
+    .plan{display:grid;gap:0}.plan-row{display:grid;grid-template-columns:38px minmax(0,1fr) 106px;align-items:center;border-bottom:1px solid #2c333e}.plan-row:last-child{border-bottom:0}.num{display:grid;place-items:center;height:100%;min-height:74px;border-right:1px solid #2c333e;color:var(--lime);font:900 12px ui-monospace,monospace}.desc{min-width:0;padding:13px}.desc b{display:block;margin-bottom:5px}.desc span{color:var(--muted);font-size:12px;line-height:1.45}.tag{justify-self:end;margin-right:12px;padding:7px 9px;border:1px solid #6d4a32;color:#ffbd85;font:800 10px ui-monospace,monospace}.tag.ready{border-color:#416027;color:var(--lime)}
+    .result{margin-top:14px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:14px}
+    .report{padding:18px}.report h2{margin:0 0 15px;font-size:24px}.report-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.signal{padding:13px;border:1px solid #2e3540;background:#0d1118}.signal small{display:block;color:var(--muted);margin-bottom:8px}.signal strong{font-size:16px}.signal.unavailable strong{color:var(--orange)}
+    .evidence{padding:18px;border-left:5px solid var(--orange)}.evidence h2{margin:0 0 12px;font-size:20px}.evidence p{margin:0;color:#b9c0ca;line-height:1.55}.facts{margin-top:14px;display:grid;gap:8px}.facts div{padding-top:8px;border-top:1px solid var(--line);font:12px/1.45 ui-monospace,monospace}.facts b{color:var(--orange)}
+    footer{margin-top:20px;display:flex;justify-content:space-between;gap:14px;padding-top:13px;border-top:1px solid var(--line);color:#7f8997;font-size:11px}
+    @media(max-width:760px){.hero{grid-template-columns:1fr}.state{justify-self:start}.case,.result{grid-template-columns:1fr}.report-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:440px){.top,footer{align-items:flex-start;flex-direction:column}.report-grid{grid-template-columns:1fr}.plan-row{grid-template-columns:34px minmax(0,1fr)}.tag{grid-column:2;justify-self:start;margin:0 0 12px 12px}.content,.report,.evidence{padding:14px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="wrap">
+      <div class="top"><span>EdgeOne ClawScan · representative run</span><span class="live">Preflight stopped safely</span></div>
+      <div class="hero">
+        <div><h1>A checkup that knows when not to run.</h1><p>This showcase demonstrates the Skill’s preflight logic with the actual validation environment. Because the required OpenClaw binary was unavailable, no Gateway probe and no cloud request were authorized.</p></div>
+        <div class="state">RUN STATE · BLOCKED</div>
+      </div>
+
+      <section class="case">
+        <article class="card">
+          <div class="cap"><span>REPRESENTATIVE INPUT</span><span>ISOLATED HOST</span></div>
+          <div class="content">
+            <div class="prompt">Run an OpenClaw security checkup.
+Keep Tencent A.I.G lookup off.
+Do not touch a production Gateway.
+Separate missing evidence from clean findings.</div>
+            <div class="constraints">
+              <div class="pill"><span>Cloud metadata lookup</span><b>DISABLED</b></div>
+              <div class="pill"><span>Production probe</span><b>NOT AUTHORIZED</b></div>
+              <div class="pill"><span>Evidence wording</span><b>FAIL CLOSED</b></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="cap"><span>SKILL-EXTRACTED PLAN</span><span>4 SIGNAL GROUPS</span></div>
+          <div class="plan">
+            <div class="plan-row"><span class="num">00</span><div class="desc"><b>Verify the runtime</b><span>Resolve the intended OpenClaw binary and inspect the configured Gateway before deep mode.</span></div><span class="tag">BLOCKED</span></div>
+            <div class="plan-row"><span class="num">01</span><div class="desc"><b>Configuration audit</b><span>Would use built-in OpenClaw findings as risk hints, not confirmed attacks.</span></div><span class="tag">NOT RUN</span></div>
+            <div class="plan-row"><span class="num">02</span><div class="desc"><b>Supply-chain review</b><span>Local review remains possible; online threat intelligence is disabled by policy.</span></div><span class="tag ready">LOCAL ONLY</span></div>
+            <div class="plan-row"><span class="num">03</span><div class="desc"><b>Version advisories</b><span>Online CVE/GHSA matching must be reported as unavailable, not “zero found.”</span></div><span class="tag">UNAVAILABLE</span></div>
+            <div class="plan-row"><span class="num">04</span><div class="desc"><b>Privacy paths</b><span>Would inspect metadata and permission state without reading personal content.</span></div><span class="tag">NOT RUN</span></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="result">
+        <article class="card report">
+          <h2>Final report state</h2>
+          <div class="report-grid">
+            <div class="signal unavailable"><small>Configuration</small><strong>NOT TESTED</strong></div>
+            <div class="signal"><small>Package integrity</small><strong>VERIFIED</strong></div>
+            <div class="signal unavailable"><small>Online advisories</small><strong>UNAVAILABLE</strong></div>
+            <div class="signal unavailable"><small>Gateway exposure</small><strong>NOT PROBED</strong></div>
+          </div>
+        </article>
+        <aside class="card evidence">
+          <h2>Run evidence</h2>
+          <p>This is an honest stopped run, not a simulated clean bill of health. Preflight found no trusted <code>openclaw</code> binary, so execution ended before any network-sensitive step.</p>
+          <div class="facts">
+            <div><b>PACKAGE</b> v1.0.15 · 3 files · valid archive</div>
+            <div><b>BINARY</b> openclaw missing</div>
+            <div><b>NETWORK</b> no public endpoint contacted in this run</div>
+            <div><b>VERDICT</b> environment security remains unknown</div>
+          </div>
+        </aside>
+      </section>
+
+      <footer><span>Representative validation · 2026-07-29</span><span>No scanner-accuracy or “safe environment” claim</span></footer>
+    </main>
+  </div>
+</body>
+</html>
