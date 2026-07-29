@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Clinical Reports — Instruction</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f7f4ec;
+      --paper-2: #fffdf8;
+      --ink: #172826;
+      --muted: #667571;
+      --line: #cbd8d3;
+      --teal: #0a786d;
+      --teal-soft: #d9eee9;
+      --coral: #c84e42;
+      --coral-soft: #f7dfda;
+      --navy: #183d4b;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--paper); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        linear-gradient(rgba(23,40,38,.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 100% 28px;
+      color: var(--ink);
+    }
+    .page { width: 100%; max-width: 1040px; margin: 0 auto; padding: 34px clamp(16px, 4vw, 44px) 60px; }
+    .kicker, .eyebrow {
+      margin: 0;
+      color: var(--teal);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .masthead {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255,253,248,.96);
+      box-shadow: 0 22px 54px rgba(33,60,56,.10);
+    }
+    .masthead::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 7px;
+      background: linear-gradient(var(--teal), #3fb2a1 60%, var(--coral));
+    }
+    .hero { padding: clamp(28px, 6vw, 58px); padding-bottom: 28px; }
+    h1 {
+      max-width: 780px;
+      margin: 12px 0 14px;
+      color: var(--navy);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(34px, 7vw, 66px);
+      font-weight: 500;
+      line-height: .98;
+      letter-spacing: -.045em;
+    }
+    .lede { max-width: 690px; margin: 0; color: #40534f; font-size: clamp(16px, 2.3vw, 20px); line-height: 1.55; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .badge {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      padding: 7px 11px;
+      color: #40534f;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .badge.safe { border-color: #9bcfc5; background: var(--teal-soft); color: #075d55; }
+    .trace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr) 32px minmax(0, 1.2fr);
+      align-items: center;
+      gap: 10px;
+      border-top: 1px solid var(--line);
+      background: #edf4f1;
+      padding: 20px clamp(20px, 5vw, 58px);
+    }
+    .trace-card {
+      min-width: 0;
+      border: 1px solid #bfd1cb;
+      border-radius: 14px;
+      background: #fff;
+      padding: 13px;
+    }
+    .trace-card b { display: block; color: var(--navy); font-size: 14px; }
+    .trace-card span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
+    .arrow { color: var(--teal); text-align: center; font-weight: 900; }
+    .status { border-color: #8fc5bb; background: #f6fffc; }
+    .status b { color: var(--teal); }
+    section { margin-top: 48px; }
+    .section-head { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 20px; align-items: start; }
+    h2 {
+      margin: -3px 0 0;
+      color: var(--navy);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -.025em;
+    }
+    .intro { margin: 0; color: var(--muted); line-height: 1.7; }
+    .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,253,248,.93);
+      padding: 20px;
+    }
+    .card .num { color: var(--coral); font-family: Georgia, serif; font-size: 30px; line-height: 1; }
+    .card h3 { margin: 12px 0 7px; color: var(--navy); font-size: 16px; }
+    .card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .workflow { margin-top: 20px; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; background: var(--paper-2); }
+    .step { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 17px 20px; border-bottom: 1px solid var(--line); }
+    .step:last-child { border-bottom: 0; }
+    .step-no { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: #fff; font-weight: 800; }
+    .step strong { display: block; color: var(--navy); font-size: 14px; }
+    .step small { display: block; margin-top: 3px; color: var(--muted); line-height: 1.45; }
+    .gate { border-radius: 999px; padding: 5px 8px; background: var(--teal-soft); color: var(--teal); font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .gate.stop { background: var(--coral-soft); color: var(--coral); }
+    .split { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 14px; margin-top: 20px; }
+    .prompt, .rules { min-width: 0; border-radius: 20px; padding: 22px; }
+    .prompt { background: var(--navy); color: #eef9f5; }
+    .prompt .eyebrow { color: #7ed7c8; }
+    pre {
+      margin: 15px 0 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      color: inherit;
+      font: 12px/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .rules { border: 1px solid #e4beb7; background: var(--coral-soft); }
+    .rules h3 { margin: 0 0 12px; color: #7e2c28; font-size: 17px; }
+    .rules ul { margin: 0; padding-left: 18px; color: #6a4642; font-size: 13px; line-height: 1.65; }
+    .deliverables { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .deliverable { border: 1px solid var(--line); border-radius: 16px; background: #fff; padding: 18px; }
+    .deliverable code { color: var(--teal); font-size: 12px; font-weight: 800; overflow-wrap: anywhere; }
+    .deliverable p { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .handoff {
+      margin-top: 48px;
+      border-radius: 22px;
+      background: var(--navy);
+      padding: clamp(24px, 5vw, 42px);
+      color: #f4fbf8;
+    }
+    .handoff h2 { color: #fff; }
+    .handoff p { max-width: 760px; color: #c7dad4; line-height: 1.65; }
+    .notice { margin-top: 18px; border-left: 4px solid #e67868; background: rgba(255,255,255,.08); padding: 14px 16px; color: #fff1ee; font-size: 13px; line-height: 1.55; }
+    footer { margin-top: 26px; color: #75817e; font-size: 11px; text-align: center; }
+    @media (max-width: 700px) {
+      .section-head { grid-template-columns: 1fr; gap: 8px; }
+      .cards { grid-template-columns: 1fr 1fr; }
+      .split { grid-template-columns: 1fr; }
+      .trace { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); }
+      .step { grid-template-columns: 42px minmax(0, 1fr); }
+      .gate { grid-column: 2; justify-self: start; }
+    }
+    @media (max-width: 460px) {
+      .page { padding-inline: 12px; }
+      .hero { padding-inline: 24px; }
+      .cards, .deliverables { grid-template-columns: 1fr; }
+      .step { padding-inline: 14px; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .masthead { animation: settle .55s ease-out both; }
+      @keyframes settle { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page">
+      <article class="masthead">
+        <div class="hero">
+          <p class="kicker">Clinical Reports · local drafting system</p>
+          <h1>Make every clinical claim traceable—or leave it blank.</h1>
+          <p class="lede">Build safety-bounded report structures from synthetic, deidentified, or aggregate facts, then run deterministic checks before qualified review.</p>
+          <div class="badges">
+            <span class="badge safe">No API or account</span>
+            <span class="badge">15 report templates</span>
+            <span class="badge">8 local validators</span>
+            <span class="badge">Python 3.11+</span>
+          </div>
+        </div>
+        <div class="trace" aria-label="Provenance workflow preview">
+          <div class="trace-card"><b>Fact F-001</b><span>verified source locator + value hash</span></div>
+          <div class="arrow">→</div>
+          <div class="trace-card"><b>Claim C-001</b><span>linked to one authorized fact</span></div>
+          <div class="arrow">→</div>
+          <div class="trace-card status"><b>Traceability complete</b><span>qualified review still required</span></div>
+        </div>
+      </article>
+
+      <section>
+        <div class="section-head">
+          <p class="eyebrow">The result</p>
+          <div>
+            <h2>A controlled draft, not a confident guess.</h2>
+            <p class="intro">Clinical Reports routes the requested artifact, copies a fail-closed structure, links populated claims to verified facts, and reports exactly what remains unresolved. Unsupported content stays <code>null</code> or <code>missing</code>.</p>
+          </div>
+        </div>
+        <div class="cards">
+          <div class="card"><div class="num">01</div><h3>Route correctly</h3><p>CARE, CONSORT 2025, SPIRIT 2025, ICH E3, diagnostic scaffolds, safety tables, and research summaries.</p></div>
+          <div class="card"><div class="num">02</div><h3>Preserve provenance</h3><p>Every populated field or claim points to verified source-fact IDs instead of invented narrative.</p></div>
+          <div class="card"><div class="num">03</div><h3>Fail closed</h3><p>Missing facts, authorization, privacy checks, or reviewers block delivery rather than disappearing.</p></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <p class="eyebrow">Workflow</p>
+          <h2>Five gates from request to handoff.</h2>
+        </div>
+        <div class="workflow">
+          <div class="step"><span class="step-no">1</span><div><strong>Classify purpose and data</strong><small>Name the artifact and confirm synthetic, deidentified, or aggregate input.</small></div><span class="gate stop">Stop if unsafe</span></div>
+          <div class="step"><span class="step-no">2</span><div><strong>Choose the reporting route</strong><small>Select the exact guidance, version, template, and required review roles.</small></div><span class="gate">Route</span></div>
+          <div class="step"><span class="step-no">3</span><div><strong>Build the source-fact manifest</strong><small>Record locators, verification state, verifier role, date, and SHA-256 value hashes.</small></div><span class="gate">Trace</span></div>
+          <div class="step"><span class="step-no">4</span><div><strong>Draft verified fields only</strong><small>Preserve uncertainty; never infer diagnoses, causality, coding, or reportability.</small></div><span class="gate">Draft</span></div>
+          <div class="step"><span class="step-no">5</span><div><strong>Validate and hand off</strong><small>Run local checks and state every missing item, limitation, and qualified reviewer.</small></div><span class="gate stop">Review required</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <p class="eyebrow">Start here</p>
+          <h2>Give the agent a bounded job.</h2>
+        </div>
+        <div class="split">
+          <div class="prompt">
+            <p class="eyebrow">Recommended prompt</p>
+            <pre>Using Clinical Reports, create a CARE 2013 case-report draft from the attached synthetic source-fact manifest.
+
+Keep unsupported fields null, preserve every fact ID, run the provenance and case-report validators, and return:
+1. the draft JSON,
+2. unresolved fields,
+3. validator results,
+4. required human reviewers.
+
+Do not infer clinical content or authorize submission.</pre>
+          </div>
+          <aside class="rules">
+            <h3>Input gate</h3>
+            <ul>
+              <li>Explicit reporting purpose</li>
+              <li>Allowed data classification</li>
+              <li>Documented authority</li>
+              <li>Minimum-necessary fields</li>
+              <li>Verified provenance</li>
+              <li>Named review owner</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <p class="eyebrow">Deliverables</p>
+          <h2>Files a reviewer can inspect.</h2>
+        </div>
+        <div class="deliverables">
+          <div class="deliverable"><code>report-draft.json</code><p>A visibly blocked draft structure populated only from supported facts.</p></div>
+          <div class="deliverable"><code>provenance-manifest.json</code><p>Fact-to-claim linkage, verification metadata, and source value hashes.</p></div>
+          <div class="deliverable"><code>validator-result.json</code><p>Errors, warnings, missing requirements, and review-required status.</p></div>
+          <div class="deliverable"><code>handoff-summary.md</code><p>Guidance version, unresolved fields, limitations, and named reviewer roles.</p></div>
+        </div>
+      </section>
+
+      <section class="handoff">
+        <p class="eyebrow">Non-negotiable boundary</p>
+        <h2>Structure and evidence—not clinical authority.</h2>
+        <p>Use only local synthetic, properly deidentified, or aggregate material. The skill does not diagnose, interpret patient data, decide reportability, sign, file, transmit, or certify compliance.</p>
+        <div class="notice">DRAFT — NOT FOR CLINICAL USE, SIGNATURE, FILING, OR SUBMISSION. Qualified clinical, statistical, safety, privacy, legal, authorship, and regulatory review may be required.</div>
+      </section>
+      <footer>Clinical Reports v2.0 · deterministic local tools · customer instruction</footer>
+    </main>
+  </div>
+</body>
+</html>

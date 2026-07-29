@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Clinical Reports — Showcase</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --desk: #dfe5df;
+      --paper: #fffef9;
+      --ink: #182522;
+      --muted: #66726e;
+      --teal: #087668;
+      --red: #bd463e;
+      --navy: #173d47;
+      --line: #c5cec8;
+      --green-soft: #dcefe9;
+      --red-soft: #f7dfdb;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--desk); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--desk);
+      color: var(--ink);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 14% 3%, rgba(255,255,255,.72), transparent 28%),
+        var(--desk);
+      color: var(--ink);
+    }
+    .page { width: 100%; max-width: 1060px; margin: 0 auto; padding: 30px clamp(14px, 4vw, 42px) 62px; }
+    .topline { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 14px; color: #52605c; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .live { display: inline-flex; align-items: center; gap: 7px; color: var(--teal); }
+    .live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 4px rgba(8,118,104,.12); }
+    .case-sheet {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+      box-shadow: 0 26px 55px rgba(44,62,56,.15);
+      overflow: hidden;
+    }
+    .case-sheet::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 44px;
+      width: 1px;
+      background: #efc9c4;
+    }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(220px, .75fr); gap: 24px; padding: clamp(28px, 6vw, 62px); }
+    .eyebrow { margin: 0; color: var(--red); font-size: 10px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { margin: 12px 0 10px; color: var(--navy); font-family: Georgia, "Times New Roman", serif; font-size: clamp(35px, 7vw, 65px); font-weight: 500; line-height: .98; letter-spacing: -.045em; }
+    .lede { max-width: 600px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
+    .run-stamp { align-self: end; border: 2px solid var(--teal); border-radius: 8px; padding: 15px; color: var(--teal); transform: rotate(-2deg); }
+    .run-stamp b { display: block; font-size: 17px; letter-spacing: .08em; text-transform: uppercase; }
+    .run-stamp span { display: block; margin-top: 4px; font-size: 10px; line-height: 1.45; }
+    .case-id { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #f0f4f0; padding-left: 44px; }
+    .case-id div { min-width: 0; padding: 13px 16px; border-right: 1px solid var(--line); }
+    .case-id div:last-child { border-right: 0; }
+    .case-id span { display: block; color: var(--muted); font-size: 8px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .case-id strong { display: block; margin-top: 4px; color: var(--navy); font-size: 11px; overflow-wrap: anywhere; }
+    .body { padding: 34px clamp(22px, 6vw, 68px); }
+    .section-label { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; color: var(--navy); font-size: 11px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+    .section-label::before { content: attr(data-n); display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--navy); color: #fff; font-size: 9px; }
+    .prompt {
+      border: 1px solid #afc3bd;
+      border-radius: 10px;
+      background: #f5faf7;
+      padding: 18px;
+      color: #334b45;
+      font: 12px/1.65 ui-monospace, SFMono-Regular, Menlo, monospace;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 18px 0 28px; }
+    .flow-card { position: relative; min-width: 0; border: 1px solid var(--line); border-radius: 9px; background: #fff; padding: 15px; }
+    .flow-card:not(:last-child)::after { content: "→"; position: absolute; right: -10px; top: 50%; z-index: 2; width: 19px; border-radius: 50%; background: var(--navy); color: #fff; text-align: center; line-height: 19px; transform: translateY(-50%); }
+    .flow-card b { display: block; color: var(--navy); font-size: 12px; }
+    .flow-card span { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .results { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 12px; margin-bottom: 28px; }
+    .result-card { min-width: 0; border: 1px solid var(--line); border-radius: 10px; background: #fff; overflow: hidden; }
+    .result-card header { display: flex; justify-content: space-between; gap: 10px; align-items: center; border-bottom: 1px solid var(--line); background: #edf3ef; padding: 11px 14px; }
+    .result-card header b { color: var(--navy); font-size: 11px; }
+    .pill { border-radius: 999px; padding: 4px 7px; background: var(--green-soft); color: var(--teal); font-size: 8px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .pill.block { background: var(--red-soft); color: var(--red); }
+    .json { margin: 0; padding: 16px; color: #344842; font: 10px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .highlight { color: var(--teal); font-weight: 800; }
+    .warning { color: var(--red); font-weight: 800; }
+    .evidence {
+      border: 1px solid #92bcb3;
+      border-radius: 12px;
+      background: #e9f5f1;
+      padding: 20px;
+    }
+    .run-shot { margin: 0 0 14px; }
+    .run-shot img { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 9 / 7; border: 1px solid #315248; border-radius: 9px; background: #07110e; object-fit: cover; object-position: top; }
+    .run-shot figcaption { margin-top: 7px; color: var(--muted); font-size: 9px; line-height: 1.45; }
+    .evidence-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 13px; }
+    .evidence-item { border-left: 3px solid var(--teal); background: rgba(255,255,255,.7); padding: 10px 12px; }
+    .evidence-item b { display: block; color: var(--navy); font-size: 11px; }
+    .evidence-item span { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; line-height: 1.4; overflow-wrap: anywhere; }
+    .command { margin: 14px 0 0; border-radius: 8px; background: var(--navy); padding: 13px; color: #d6ebe5; font: 10px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .interpretation { margin-top: 24px; border-left: 4px solid var(--red); padding: 2px 0 2px 15px; }
+    .interpretation b { display: block; color: var(--red); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+    .interpretation p { margin: 6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    footer { margin-top: 22px; color: #72807b; font-size: 10px; text-align: center; }
+    @media (max-width: 700px) {
+      .hero, .results { grid-template-columns: 1fr; }
+      .run-stamp { justify-self: start; max-width: 280px; }
+      .case-id { grid-template-columns: 1fr 1fr; }
+      .case-id div:nth-child(2) { border-right: 0; }
+      .case-id div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .flow { grid-template-columns: 1fr; }
+      .flow-card:not(:last-child)::after { right: auto; left: 50%; top: auto; bottom: -14px; transform: translateX(-50%) rotate(90deg); }
+    }
+    @media (max-width: 470px) {
+      .page { padding-inline: 9px; }
+      .case-sheet::before { left: 22px; }
+      .case-id { padding-left: 22px; grid-template-columns: 1fr; }
+      .case-id div { border-right: 0; border-bottom: 1px solid var(--line); }
+      .case-id div:last-child { border-bottom: 0; }
+      .evidence-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page">
+      <div class="topline"><span>Showcase / controlled case file</span><span class="live">Verified local run</span></div>
+      <article class="case-sheet">
+        <div class="hero">
+          <div>
+            <p class="eyebrow">Synthetic evidence · no patient data</p>
+            <h1>One fact. One claim. Zero invented medicine.</h1>
+            <p class="lede">A source-fact manifest becomes a CARE-shaped draft and an explicit review trail. The skill proves traceability, then refuses to pretend that traceability is clinical approval.</p>
+          </div>
+          <div class="run-stamp"><b>Review required</b><span>Traceability complete<br>Clinical use: not authorized</span></div>
+        </div>
+
+        <div class="case-id">
+          <div><span>Run</span><strong>CR-SYN-001</strong></div>
+          <div><span>Route</span><strong>CARE 2013 / 2017</strong></div>
+          <div><span>Data class</span><strong>Synthetic</strong></div>
+          <div><span>Runtime</span><strong>Python stdlib</strong></div>
+        </div>
+
+        <div class="body">
+          <div class="section-label" data-n="1">Representative user input</div>
+          <div class="prompt">Create a publication case-report scaffold from this synthetic fact manifest. Preserve the source locator and SHA-256 value hash. Link Claim C-001 only to Fact F-001, keep every unsupported CARE item missing, run provenance validation, and do not authorize clinical use or submission.</div>
+
+          <div class="flow" aria-label="Transformation pipeline">
+            <div class="flow-card"><b>Route + gate</b><span>Purpose, synthetic classification, authority, and review owner checked.</span></div>
+            <div class="flow-card"><b>Draft + link</b><span>CARE structure copied; Claim C-001 references only Fact F-001.</span></div>
+            <div class="flow-card"><b>Validate + stop</b><span>Traceability passes; incomplete clinical content stays blocked.</span></div>
+          </div>
+
+          <div class="section-label" data-n="2">Actual output snapshot</div>
+          <div class="results">
+            <article class="result-card">
+              <header><b>provenance-report.json</b><span class="pill">Executed</span></header>
+              <pre class="json">{
+  "fact_count": <span class="highlight">1</span>,
+  "claim_count": <span class="highlight">1</span>,
+  "linked_fact_count": <span class="highlight">1</span>,
+  "errors": [],
+  "warnings": [],
+  "status": "<span class="highlight">TRACEABILITY_COMPLETE_REVIEW_REQUIRED</span>",
+  "review_required": true,
+  "authorizes_clinical_use_or_submission": <span class="warning">false</span>
+}</pre>
+            </article>
+            <article class="result-card">
+              <header><b>case-report-draft.json</b><span class="pill block">Blocked</span></header>
+              <pre class="json">{
+  "draft_status":
+    "<span class="warning">BLOCKED_INCOMPLETE_DRAFT</span>",
+  "care_items": {
+    "title": "missing",
+    "clinical_findings": "missing",
+    "informed_consent": "missing"
+  },
+  "submission_authorized": <span class="warning">false</span>
+}</pre>
+            </article>
+          </div>
+
+          <div class="section-label" data-n="3">Run evidence</div>
+          <div class="evidence">
+            <figure class="run-shot">
+              <img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/clinical-reports/run-evidence/provenance-validator-2026-07-28.png" width="900" height="700" alt="Actual provenance validator JSON output loaded from the local validation artifact">
+              <figcaption>Actual local artifact: <code>provenance-report.json</code>, opened after the validator run. The complete source path and output are visible in the capture.</figcaption>
+            </figure>
+            <div class="evidence-grid">
+              <div class="evidence-item"><b>Template catalog</b><span>15 structures listed successfully</span></div>
+              <div class="evidence-item"><b>Provenance validator</b><span>1 fact linked · 0 errors · exit 0</span></div>
+              <div class="evidence-item"><b>Case validator</b><span>Expected non-zero block on incomplete draft</span></div>
+            </div>
+            <pre class="command">python3 scripts/provenance_validator.py synthetic-provenance.json
+→ TRACEABILITY_COMPLETE_REVIEW_REQUIRED
+
+python3 scripts/validate_case_report.py case-report-draft.json
+→ BLOCKED · required fields and reviews missing</pre>
+          </div>
+
+          <div class="interpretation">
+            <b>What this run proves</b>
+            <p>The local tools preserve a tested fact-to-claim link and refuse premature delivery. They do not establish source truth, clinical correctness, deidentification, consent, compliance, or submission readiness.</p>
+          </div>
+        </div>
+      </article>
+      <footer>Clinical Reports v2.0 · actual synthetic validation artifacts · 2026-07-28</footer>
+    </main>
+  </div>
+</body>
+</html>

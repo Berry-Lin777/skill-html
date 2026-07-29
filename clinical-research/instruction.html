@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Clinical Research — Instruction</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f7f1e4;
+      --paper-deep: #eee3cf;
+      --ink: #17233f;
+      --muted: #667085;
+      --blue: #145cc7;
+      --blue-soft: #dce9fb;
+      --coral: #ef6b5a;
+      --coral-soft: #f9ddd5;
+      --line: #c8bda9;
+      --white: #fffdf8;
+      --green: #1f7a5a;
+    }
+    * { box-sizing: border-box; }
+    html {
+      background: var(--paper);
+      color: var(--ink);
+    }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        linear-gradient(90deg, transparent 0 5.4%, rgba(239, 107, 90, .2) 5.4% 5.55%, transparent 5.55%),
+        repeating-linear-gradient(0deg, rgba(23, 35, 63, .025) 0 1px, transparent 1px 32px),
+        var(--paper);
+      color: var(--ink);
+    }
+    .page-shell {
+      width: 100%;
+      max-width: 1180px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(20px, 4vw, 48px);
+    }
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-width: 0;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      gap: 9px;
+      font-weight: 800;
+      color: var(--blue);
+    }
+    .brand-mark {
+      width: 13px;
+      height: 13px;
+      flex: 0 0 auto;
+      border: 3px solid var(--blue);
+      border-radius: 50%;
+      box-shadow: 8px 0 0 -4px var(--coral);
+    }
+    .version {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(280px, .82fr);
+      gap: clamp(22px, 4vw, 52px);
+      align-items: center;
+      padding: clamp(30px, 5vw, 56px) 0 38px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 16px;
+      color: var(--coral);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 3px;
+      background: var(--coral);
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 760px;
+      margin-bottom: 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(38px, 7vw, 70px);
+      font-weight: 500;
+      line-height: .99;
+      letter-spacing: -.045em;
+    }
+    .hero-copy {
+      max-width: 700px;
+      margin-bottom: 20px;
+      color: #46516a;
+      font-size: clamp(16px, 2vw, 19px);
+    }
+    .boundary {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border: 1px solid #e7afa3;
+      border-radius: 999px;
+      background: var(--coral-soft);
+      color: #82362e;
+      font-size: 12px;
+      font-weight: 750;
+    }
+    .result-notebook {
+      position: relative;
+      min-width: 0;
+      padding: 20px 18px 18px 34px;
+      border: 1px solid #b8ae9d;
+      border-radius: 4px 18px 4px 4px;
+      background: var(--white);
+      box-shadow: 10px 12px 0 var(--paper-deep);
+    }
+    .result-notebook::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 18px;
+      width: 1px;
+      background: #f0aca0;
+    }
+    .notebook-kicker {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .number-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .number-cell {
+      min-width: 0;
+      padding: 12px 9px;
+      border-top: 3px solid var(--blue);
+      background: #f3f7fd;
+    }
+    .number-cell.coral { border-color: var(--coral); background: #fff3ef; }
+    .number-cell.green { border-color: var(--green); background: #eff8f3; }
+    .number {
+      display: block;
+      margin-bottom: 2px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(23px, 4vw, 34px);
+      line-height: 1;
+    }
+    .number-label {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.3;
+    }
+    .mini-note {
+      margin: 14px 0 0;
+      padding-top: 12px;
+      border-top: 1px dashed var(--line);
+      color: #59647a;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      overflow-wrap: anywhere;
+    }
+    .section {
+      min-width: 0;
+      padding: 40px 0;
+      border-top: 1px solid var(--line);
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(150px, .42fr) minmax(0, 1.58fr);
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .section-index {
+      color: var(--blue);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin-bottom: 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -.025em;
+    }
+    .section-lead {
+      max-width: 700px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+    .three-tools {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .tool-card {
+      min-width: 0;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 248, .78);
+    }
+    .tool-card:nth-child(2) {
+      transform: translateY(10px);
+      border-top: 4px solid var(--coral);
+    }
+    .tool-card:nth-child(1) { border-top: 4px solid var(--blue); }
+    .tool-card:nth-child(3) { border-top: 4px solid var(--green); }
+    .tool-no {
+      display: block;
+      margin-bottom: 28px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+    }
+    h3 {
+      margin-bottom: 8px;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+    .tool-card p {
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .output-chip {
+      display: inline-block;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: #174d99;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .workflow {
+      counter-reset: flow;
+      display: grid;
+      gap: 0;
+    }
+    .flow-row {
+      counter-increment: flow;
+      display: grid;
+      grid-template-columns: 54px minmax(150px, .55fr) minmax(0, 1.45fr);
+      gap: 18px;
+      align-items: start;
+      min-width: 0;
+      padding: 18px 0;
+      border-top: 1px dashed var(--line);
+    }
+    .flow-row::before {
+      content: "0" counter(flow);
+      color: var(--coral);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .flow-row strong { font-size: 14px; }
+    .flow-row span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(240px, .85fr);
+      gap: 16px;
+      min-width: 0;
+    }
+    .prompt-card {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #f8f3e8;
+    }
+    .prompt-label {
+      margin-bottom: 14px;
+      color: #91bafa;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .prompt-card pre {
+      margin: 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font: 12px/1.65 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .input-list {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+    }
+    .input-item {
+      min-width: 0;
+      padding: 13px 14px;
+      border-left: 4px solid var(--coral);
+      background: var(--white);
+    }
+    .input-item strong {
+      display: block;
+      font-size: 12px;
+    }
+    .input-item span {
+      color: var(--muted);
+      font-size: 11px;
+      overflow-wrap: anywhere;
+    }
+    .scope-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .scope {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 248, .78);
+    }
+    .scope.good { border-top: 5px solid var(--blue); }
+    .scope.stop { border-top: 5px solid var(--coral); }
+    .scope ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .scope li + li { margin-top: 7px; }
+    .delivery-band {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(210px, .6fr);
+      gap: 22px;
+      align-items: center;
+      padding: clamp(24px, 4vw, 40px);
+      border: 1px solid #9bb8df;
+      background: var(--blue-soft);
+    }
+    .delivery-band h2 { margin-bottom: 10px; font-size: clamp(26px, 4vw, 40px); }
+    .delivery-band p { margin-bottom: 0; color: #425879; }
+    .delivery-meta {
+      display: grid;
+      gap: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+    }
+    .delivery-meta span {
+      padding: 9px 10px;
+      border: 1px solid rgba(20, 92, 199, .28);
+      background: rgba(255, 255, 255, .55);
+    }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px 0 4px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: minmax(0, 1fr); }
+      .result-notebook { max-width: 560px; }
+      .three-tools { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+      .tool-card:nth-child(2) { transform: none; }
+      .tool-card:nth-child(3) { grid-column: 1 / -1; }
+      .prompt-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .page-shell { padding: 18px; }
+      .topline { align-items: flex-start; }
+      .hero { padding-top: 32px; }
+      .number-row { grid-template-columns: minmax(0, 1fr); }
+      .section-head { grid-template-columns: minmax(0, 1fr); gap: 7px; }
+      .three-tools, .scope-grid { grid-template-columns: minmax(0, 1fr); }
+      .tool-card:nth-child(3) { grid-column: auto; }
+      .flow-row { grid-template-columns: 36px minmax(0, 1fr); gap: 12px; }
+      .flow-row span { grid-column: 2; }
+      .delivery-band { grid-template-columns: minmax(0, 1fr); }
+      footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page-shell">
+      <div class="topline">
+        <div class="brand"><span class="brand-mark"></span> Clinical Research</div>
+        <div class="version">Instruction · v2.9.0</div>
+      </div>
+
+      <header class="hero">
+        <div>
+          <div class="eyebrow">Prospective study design</div>
+          <h1>Turn a trial hypothesis into a reviewable first plan.</h1>
+          <p class="hero-copy">Rank endpoints, estimate a two-arm sample size, and pressure-test feasibility before a protocol reaches submission.</p>
+          <div class="boundary">Estimate only · named human review required</div>
+        </div>
+        <aside class="result-notebook" aria-label="Verified sample result preview">
+          <div class="notebook-kicker"><span>Verified sample</span><span>PSO-2026-P2</span></div>
+          <div class="number-row">
+            <div class="number-cell">
+              <strong class="number">74</strong>
+              <span class="number-label">per arm after dropout</span>
+            </div>
+            <div class="number-cell coral">
+              <strong class="number">89.2</strong>
+              <span class="number-label">primary endpoint score</span>
+            </div>
+            <div class="number-cell green">
+              <strong class="number">87.3</strong>
+              <span class="number-label">feasibility composite</span>
+            </div>
+          </div>
+          <p class="mini-note">63 raw / arm → 74 / arm at 15% dropout · PASI-75 PRIMARY · gate verdict GO</p>
+        </aside>
+      </header>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="section-index">01 / Three decisions</div>
+          <div>
+            <h2>A compact decision stack for the pre-protocol moment.</h2>
+            <p class="section-lead">Each deterministic tool answers one design question and keeps the assumptions visible for review.</p>
+          </div>
+        </div>
+        <div class="three-tools">
+          <article class="tool-card">
+            <span class="tool-no">TOOL 01 · POWER</span>
+            <h3>Estimate sample size</h3>
+            <p>Closed-form estimates for two-arm means, proportions, or survival designs, with explicit dropout inflation.</p>
+            <span class="output-chip">n per arm + assumptions</span>
+          </article>
+          <article class="tool-card">
+            <span class="tool-no">TOOL 02 · ENDPOINTS</span>
+            <h3>Rank candidate endpoints</h3>
+            <p>Scores clinical relevance, measurability, regulatory acceptance, sensitivity, and burden. Unvalidated surrogates are penalized.</p>
+            <span class="output-chip">Primary / secondary / exploratory</span>
+          </article>
+          <article class="tool-card">
+            <span class="tool-no">TOOL 03 · GATE</span>
+            <h3>Score feasibility</h3>
+            <p>Combines recruitment, endpoint readiness, statistical power, operational complexity, and budget fit into a routed gate decision.</p>
+            <span class="output-chip">Verdict + blockers + owners</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="section-index">02 / Workflow</div>
+          <div>
+            <h2>From synopsis to sign-off packet.</h2>
+            <p class="section-lead">Use the sequence as a review trail, not as an autonomous authorization system.</p>
+          </div>
+        </div>
+        <div class="workflow">
+          <div class="flow-row"><strong>Draft the synopsis</strong><span>Capture objectives, design, population, candidate endpoints, statistical assumptions, and the people who must sign.</span></div>
+          <div class="flow-row"><strong>Select endpoints</strong><span>Provide a non-empty endpoint set with all five 0–100 scores and explicit surrogate and validation flags.</span></div>
+          <div class="flow-row"><strong>Estimate enrollment</strong><span>Choose means, proportions, or survival. Cite the effect size, response difference, or hazard ratio source.</span></div>
+          <div class="flow-row"><strong>Score feasibility</strong><span>Supply population, target enrollment, sites, timeline, readiness, required n, visit burden, and budget.</span></div>
+          <div class="flow-row"><strong>Route to owners</strong><span>Package the outputs for a biostatistician, medical monitor, principal investigator, and regulatory owner.</span></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="section-index">03 / Start a run</div>
+          <div>
+            <h2>Ask for a study design review, not a clinical answer.</h2>
+            <p class="section-lead">The strongest prompt names the development area, design assumptions, endpoint candidates, and owner expectations.</p>
+          </div>
+        </div>
+        <div class="prompt-grid">
+          <div class="prompt-card">
+            <div class="prompt-label">Recommended prompt</div>
+            <pre>Use clinical-research to prepare a first-pass Phase 2 study design for moderate-to-severe plaque psoriasis.
+
+Rank PASI-75, DLQI, and serum cytokine at the supplied five-dimension scores. Flag any unvalidated surrogate.
+
+Estimate a two-arm means design using Cohen's d = 0.5, two-sided alpha = 0.05, power = 0.80, equal allocation, and 15% dropout.
+
+Then score recruitment, endpoint readiness, power, operational complexity, and budget fit. Return assumptions, blockers, verdict, and named human owners. Treat every result as an estimate.</pre>
+          </div>
+          <div class="input-list">
+            <div class="input-item"><strong>Development profile</strong><span>drug · device · biologic · diagnostic · digital-therapeutic</span></div>
+            <div class="input-item"><strong>Endpoint evidence</strong><span>Five scores, surrogate status, validation status, indication</span></div>
+            <div class="input-item"><strong>Statistical assumptions</strong><span>Effect, alpha, power, allocation, dropout or event probability</span></div>
+            <div class="input-item"><strong>Operational plan</strong><span>Eligible pool, target n, sites, months, visits, procedures, budget</span></div>
+            <div class="input-item"><strong>Review owners</strong><span>Biostatistician, medical monitor, regulatory owner</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="section-index">04 / Boundaries</div>
+          <div>
+            <h2>Useful before submission. Deliberately incomplete after it.</h2>
+            <p class="section-lead">The Skill structures decisions; qualified humans remain accountable for the final protocol and its evidence.</p>
+          </div>
+        </div>
+        <div class="scope-grid">
+          <article class="scope good">
+            <h3>Use it for</h3>
+            <ul>
+              <li>Defensible first-pass sample-size estimates</li>
+              <li>Endpoint ranking and surrogate scrutiny</li>
+              <li>Pre-gate feasibility reviews</li>
+              <li>Assumption and owner traceability</li>
+            </ul>
+          </article>
+          <article class="scope stop">
+            <h3>Do not use it for</h3>
+            <ul>
+              <li>Diagnosis, treatment, dosing, or triage</li>
+              <li>A finished protocol or regulatory submission</li>
+              <li>Final biostatistical justification</li>
+              <li>Claims of regulatory or medical validation</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="delivery-band">
+          <div>
+            <h2>Local, deterministic, and review-friendly.</h2>
+            <p>Six Python scripts use only the standard library. No API key, paid account, network call, or external model is required for the core workflow.</p>
+          </div>
+          <div class="delivery-meta">
+            <span>OUTPUT · human or JSON</span>
+            <span>RUNTIME · Python 3</span>
+            <span>LICENSE · MIT</span>
+            <span>STATUS · estimate only</span>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <span>Clinical Research · Prospective study design support</span>
+        <span>Version 2.9.0 · Human review required</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Clinical Research — Showcase</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f8f2e7;
+      --paper-2: #eee2cd;
+      --ink: #18243e;
+      --muted: #6a7180;
+      --blue: #1c63ca;
+      --blue-soft: #dce9fb;
+      --coral: #ee6c5c;
+      --coral-soft: #f9ded7;
+      --green: #21765a;
+      --green-soft: #dff0e8;
+      --rule: #c9bda7;
+      --white: #fffdfa;
+      --yellow: #f1c75b;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--paper); color: var(--ink); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.52;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        linear-gradient(90deg, transparent 0 8%, rgba(28, 99, 202, .045) 8% 8.15%, transparent 8.15% 92%, rgba(238, 108, 92, .05) 92% 92.15%, transparent 92.15%),
+        var(--paper);
+      color: var(--ink);
+    }
+    .folio {
+      width: 100%;
+      max-width: 1160px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(18px, 4vw, 46px);
+    }
+    .folio-head {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding: 11px 0 15px;
+      border-top: 7px solid var(--coral);
+      border-bottom: 1px solid var(--rule);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    .folio-head strong { color: var(--blue); }
+    .folio-head .line { height: 1px; background: var(--rule); }
+    .hero {
+      padding: clamp(30px, 5vw, 55px) 0 30px;
+    }
+    .hero-code {
+      margin-bottom: 14px;
+      color: var(--coral);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 900px;
+      margin-bottom: 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(40px, 7.8vw, 78px);
+      font-weight: 500;
+      line-height: .96;
+      letter-spacing: -.05em;
+    }
+    .hero-copy {
+      max-width: 760px;
+      margin-bottom: 24px;
+      color: #515c72;
+      font-size: clamp(15px, 2vw, 19px);
+    }
+    .payoff {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      min-width: 0;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      gap: 1px;
+    }
+    .payoff-cell {
+      min-width: 0;
+      padding: 18px;
+      background: var(--white);
+    }
+    .payoff-cell small {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .payoff-cell strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 4.8vw, 44px);
+      font-weight: 500;
+      line-height: .95;
+    }
+    .payoff-cell span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .payoff-cell:nth-child(1) strong { color: var(--blue); }
+    .payoff-cell:nth-child(2) strong { color: var(--coral); }
+    .payoff-cell:nth-child(3) strong { color: var(--green); }
+    .chapter {
+      min-width: 0;
+      padding: 40px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .chapter-title {
+      display: grid;
+      grid-template-columns: 62px minmax(0, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .chapter-no {
+      color: var(--coral);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      font-weight: 850;
+    }
+    h2 {
+      margin-bottom: 7px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(29px, 5vw, 48px);
+      font-weight: 500;
+      line-height: 1.06;
+      letter-spacing: -.03em;
+    }
+    .chapter-title p {
+      max-width: 760px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .prompt-sheet {
+      position: relative;
+      min-width: 0;
+      padding: clamp(22px, 4vw, 36px);
+      border: 1px solid var(--rule);
+      background:
+        repeating-linear-gradient(0deg, transparent 0 30px, rgba(28, 99, 202, .07) 30px 31px),
+        var(--white);
+      box-shadow: 8px 9px 0 var(--paper-2);
+    }
+    .prompt-sheet::before {
+      content: "INPUT";
+      position: absolute;
+      top: -11px;
+      left: 24px;
+      padding: 4px 9px;
+      background: var(--blue);
+      color: white;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+    .prompt-sheet p {
+      max-width: 900px;
+      margin-bottom: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(17px, 2.4vw, 22px);
+      line-height: 1.62;
+    }
+    .assumption-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .assumption {
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid var(--rule);
+      background: var(--paper);
+    }
+    .assumption small {
+      display: block;
+      color: var(--muted);
+      font-size: 8px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .assumption strong {
+      display: block;
+      margin-top: 3px;
+      overflow-wrap: anywhere;
+      font-size: 12px;
+    }
+    .sample-board {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(220px, .8fr);
+      gap: 18px;
+      min-width: 0;
+    }
+    .arms {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      min-width: 0;
+    }
+    .arm {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid #9bb7df;
+      background: var(--blue-soft);
+    }
+    .arm:nth-child(2) {
+      border-color: #e7aa9f;
+      background: var(--coral-soft);
+    }
+    .arm-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 22px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .arm-count {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      min-width: 0;
+      margin-bottom: 9px;
+    }
+    .arm-count strong {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 500;
+      line-height: .8;
+    }
+    .arm-count span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .dropout-line {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .72);
+    }
+    .dropout-line span {
+      display: block;
+      width: 85%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--blue);
+    }
+    .arm:nth-child(2) .dropout-line span { background: var(--coral); }
+    .arm-note {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .formula-card {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #f7f1e5;
+    }
+    .formula-card small {
+      display: block;
+      margin-bottom: 18px;
+      color: #91b9f4;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .formula {
+      margin-bottom: 16px;
+      overflow-wrap: anywhere;
+      color: white;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(20px, 3vw, 28px);
+      line-height: 1.35;
+    }
+    .formula-card p {
+      margin-bottom: 0;
+      color: #b9c6dc;
+      font-size: 11px;
+    }
+    .endpoint-ladder {
+      display: grid;
+      gap: 12px;
+      min-width: 0;
+    }
+    .endpoint {
+      display: grid;
+      grid-template-columns: 46px minmax(170px, .8fr) minmax(140px, 1.2fr) 78px;
+      gap: 14px;
+      align-items: center;
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--rule);
+      background: var(--white);
+    }
+    .rank {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 22px;
+    }
+    .endpoint:nth-child(2) .rank { background: var(--coral-soft); color: var(--coral); }
+    .endpoint:nth-child(3) .rank { background: #eee6d5; color: #775f28; }
+    .endpoint-name strong {
+      display: block;
+      font-size: 13px;
+    }
+    .endpoint-name span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .endpoint-track {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--paper-2);
+    }
+    .endpoint-track span {
+      display: block;
+      width: var(--score);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--blue);
+    }
+    .endpoint:nth-child(2) .endpoint-track span { background: var(--coral); }
+    .endpoint:nth-child(3) .endpoint-track span { background: var(--yellow); }
+    .endpoint-score {
+      text-align: right;
+    }
+    .endpoint-score strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      line-height: 1;
+    }
+    .endpoint-score span {
+      display: block;
+      color: var(--muted);
+      font-size: 8px;
+      font-weight: 850;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .surrogate-note {
+      margin: 14px 0 0;
+      padding: 14px 16px;
+      border-left: 5px solid var(--coral);
+      background: var(--coral-soft);
+      color: #72423d;
+      font-size: 12px;
+    }
+    .gate-layout {
+      display: grid;
+      grid-template-columns: minmax(220px, .62fr) minmax(0, 1.38fr);
+      gap: 18px;
+      min-width: 0;
+    }
+    .gate-seal {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      padding: 24px;
+      border: 1px solid #9ac6b3;
+      background: var(--green-soft);
+      text-align: center;
+    }
+    .gate-seal strong {
+      display: block;
+      color: var(--green);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(55px, 10vw, 82px);
+      font-weight: 500;
+      line-height: .8;
+    }
+    .gate-seal b {
+      display: block;
+      margin-top: 14px;
+      color: var(--green);
+      font-size: 22px;
+      letter-spacing: .08em;
+    }
+    .gate-seal span {
+      display: block;
+      margin-top: 8px;
+      color: #557065;
+      font-size: 10px;
+    }
+    .gate-dimensions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      min-width: 0;
+    }
+    .gate-dimension {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-width: 0;
+      padding: 13px 14px;
+      border: 1px solid var(--rule);
+      background: var(--white);
+    }
+    .gate-dimension span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .gate-dimension strong {
+      flex: 0 0 auto;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 22px;
+    }
+    .gate-dimension:last-child { grid-column: 1 / -1; }
+    .owners {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }
+    .owner {
+      padding: 6px 9px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .evidence-box {
+      min-width: 0;
+      border: 1px solid var(--ink);
+      background: var(--white);
+    }
+    .artifact-proof {
+      min-width: 0;
+      margin: 0 0 18px;
+      padding: 10px;
+      border: 1px solid var(--rule);
+      background: var(--white);
+      box-shadow: 7px 8px 0 var(--paper-2);
+    }
+    .artifact-proof img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      aspect-ratio: 10 / 9;
+      border: 1px solid #d3c6b1;
+      background: var(--paper);
+    }
+    .artifact-proof figcaption {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      min-width: 0;
+      padding: 11px 4px 3px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .artifact-proof figcaption strong {
+      color: var(--blue);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .evidence-head {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--ink);
+    }
+    .evidence-head div {
+      min-width: 0;
+      padding: 12px;
+      background: var(--ink);
+      color: white;
+    }
+    .evidence-head small {
+      display: block;
+      color: #91a0ba;
+      font-size: 8px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .evidence-head strong {
+      display: block;
+      margin-top: 3px;
+      overflow-wrap: anywhere;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 10px;
+    }
+    .evidence-runs {
+      display: grid;
+      gap: 0;
+    }
+    .run {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr) 70px;
+      gap: 12px;
+      min-width: 0;
+      padding: 14px 16px;
+      border-top: 1px dashed var(--rule);
+      font-size: 11px;
+    }
+    .run code {
+      color: var(--blue);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 9px;
+      overflow-wrap: anywhere;
+    }
+    .run span { color: var(--muted); }
+    .run b {
+      justify-self: end;
+      color: var(--green);
+      font-size: 10px;
+    }
+    .evidence-note {
+      padding: 14px 16px;
+      border-top: 1px solid var(--rule);
+      background: var(--paper);
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .final-boundary {
+      margin-top: 18px;
+      padding: 18px;
+      border: 1px solid #e5aaa0;
+      background: var(--coral-soft);
+      color: #69423e;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(16px, 2.4vw, 21px);
+    }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 24px 0 4px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 760px) {
+      .assumption-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .sample-board { grid-template-columns: minmax(0, 1fr); }
+      .endpoint { grid-template-columns: 44px minmax(130px, .8fr) minmax(100px, 1.2fr) 66px; }
+      .gate-layout { grid-template-columns: minmax(185px, .58fr) minmax(0, 1.42fr); }
+      .evidence-head { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .folio { padding: 18px; }
+      .folio-head { grid-template-columns: auto minmax(0, 1fr); }
+      .folio-head .line { display: none; }
+      .payoff, .arms, .gate-layout, .gate-dimensions { grid-template-columns: minmax(0, 1fr); }
+      .chapter-title { grid-template-columns: minmax(0, 1fr); gap: 7px; }
+      .assumption-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .endpoint {
+        grid-template-columns: 42px minmax(0, 1fr) 62px;
+        gap: 10px;
+      }
+      .endpoint-track { grid-column: 2 / -1; }
+      .endpoint-score { grid-column: 3; grid-row: 1; }
+      .gate-dimension:last-child { grid-column: auto; }
+      .evidence-head { grid-template-columns: minmax(0, 1fr); }
+      .artifact-proof figcaption { grid-template-columns: minmax(0, 1fr); }
+      .run { grid-template-columns: minmax(0, 1fr) auto; }
+      .run span { grid-column: 1 / -1; grid-row: 2; }
+      .run b { grid-column: 2; grid-row: 1; }
+      footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="folio">
+      <div class="folio-head">
+        <strong>Clinical Research</strong>
+        <span class="line"></span>
+        <span>Showcase · PSO-2026-P2</span>
+      </div>
+
+      <header class="hero">
+        <div class="hero-code">One representative run · three linked decisions</div>
+        <h1>From a Phase 2 question to a reviewable gate packet.</h1>
+        <p class="hero-copy">A real replay of the embedded psoriasis fixtures shows how enrollment, endpoint hierarchy, and feasibility become one traceable recommendation.</p>
+        <div class="payoff">
+          <div class="payoff-cell"><small>Enrollment estimate</small><strong>74 / arm</strong><span>after 15% dropout</span></div>
+          <div class="payoff-cell"><small>Primary endpoint</small><strong>PASI-75</strong><span>89.2 composite</span></div>
+          <div class="payoff-cell"><small>Phase gate</small><strong>87.3 · GO</strong><span>zero blockers</span></div>
+        </div>
+      </header>
+
+      <section class="chapter">
+        <div class="chapter-title">
+          <div class="chapter-no">01 / INPUT</div>
+          <div>
+            <h2>The study-design request.</h2>
+            <p>This representative request combines the exact assumptions and fixtures exercised by the three deterministic sample runs.</p>
+          </div>
+        </div>
+        <div class="prompt-sheet">
+          <p>Prepare a first-pass Phase 2 plan for moderate-to-severe plaque psoriasis. Rank PASI-75 at week 16, DLQI at week 16, and serum cytokine at week 4. Estimate a two-arm means design, inflate for dropout, then evaluate the PSO-2026-P2 plan for feasibility. Return assumptions, endpoint roles, blockers, verdict, and required human owners.</p>
+          <div class="assumption-row">
+            <div class="assumption"><small>Effect</small><strong>d = 0.5</strong></div>
+            <div class="assumption"><small>Alpha</small><strong>0.05</strong></div>
+            <div class="assumption"><small>Power</small><strong>0.80</strong></div>
+            <div class="assumption"><small>Allocation</small><strong>1 : 1</strong></div>
+            <div class="assumption"><small>Dropout</small><strong>15%</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-title">
+          <div class="chapter-no">02 / SIZE</div>
+          <div>
+            <h2>Dropout becomes visible before enrollment begins.</h2>
+            <p>The closed-form means estimate produces 63 raw participants per group. Applying the stated 15% dropout assumption raises each arm to 74.</p>
+          </div>
+        </div>
+        <div class="sample-board">
+          <div class="arms">
+            <article class="arm">
+              <div class="arm-label"><span>Group 1</span><span>1:1 allocation</span></div>
+              <div class="arm-count"><strong>74</strong><span>participants</span></div>
+              <div class="dropout-line"><span></span></div>
+              <p class="arm-note">63 raw + 11-person retention buffer</p>
+            </article>
+            <article class="arm">
+              <div class="arm-label"><span>Group 2</span><span>1:1 allocation</span></div>
+              <div class="arm-count"><strong>74</strong><span>participants</span></div>
+              <div class="dropout-line"><span></span></div>
+              <p class="arm-note">63 raw + 11-person retention buffer</p>
+            </article>
+          </div>
+          <aside class="formula-card">
+            <small>Recorded formula</small>
+            <div class="formula">n<sub>i</sub> = (1 + 1/k or k) × ((z<sub>α</sub> + z<sub>β</sub>) / d)²</div>
+            <p>First-pass normal approximation. The effect size must trace to a published or anchor-based source, and a biostatistician must sign the final justification.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-title">
+          <div class="chapter-no">03 / RANK</div>
+          <div>
+            <h2>The endpoint hierarchy explains itself.</h2>
+            <p>Five weighted dimensions generate the ranking; the unvalidated cytokine surrogate receives an explicit penalty and cannot anchor the primary endpoint.</p>
+          </div>
+        </div>
+        <div class="endpoint-ladder">
+          <div class="endpoint" style="--score:89.2%">
+            <div class="rank">1</div>
+            <div class="endpoint-name"><strong>PASI-75 at week 16</strong><span>Validated clinical endpoint</span></div>
+            <div class="endpoint-track"><span></span></div>
+            <div class="endpoint-score"><strong>89.2</strong><span>Primary</span></div>
+          </div>
+          <div class="endpoint" style="--score:71.2%">
+            <div class="rank">2</div>
+            <div class="endpoint-name"><strong>DLQI at week 16</strong><span>Quality-of-life measure</span></div>
+            <div class="endpoint-track"><span></span></div>
+            <div class="endpoint-score"><strong>71.2</strong><span>Key-secondary</span></div>
+          </div>
+          <div class="endpoint" style="--score:38.7%">
+            <div class="rank">3</div>
+            <div class="endpoint-name"><strong>Serum cytokine at week 4</strong><span>Unvalidated surrogate</span></div>
+            <div class="endpoint-track"><span></span></div>
+            <div class="endpoint-score"><strong>38.7</strong><span>Exploratory</span></div>
+          </div>
+        </div>
+        <p class="surrogate-note"><strong>Flag emitted:</strong> unvalidated surrogate — not on a validated-surrogate table; confirm acceptability.</p>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-title">
+          <div class="chapter-no">04 / GATE</div>
+          <div>
+            <h2>Feasibility is decomposed before the verdict.</h2>
+            <p>The 87.3 composite is a planning heuristic built from the submitted study assumptions. It is not permission to conduct the trial.</p>
+          </div>
+        </div>
+        <div class="gate-layout">
+          <div class="gate-seal">
+            <div><strong>87.3</strong><b>GO</b><span>0 blockers · Phase 2</span></div>
+          </div>
+          <div>
+            <div class="gate-dimensions">
+              <div class="gate-dimension"><span>Recruitment feasibility</span><strong>100.0</strong></div>
+              <div class="gate-dimension"><span>Endpoint readiness</span><strong>100.0</strong></div>
+              <div class="gate-dimension"><span>Statistical power</span><strong>89.2</strong></div>
+              <div class="gate-dimension"><span>Operational complexity</span><strong>50.0</strong></div>
+              <div class="gate-dimension"><span>Budget fit</span><strong>83.3</strong></div>
+            </div>
+            <div class="owners">
+              <span class="owner">Principal Investigator</span>
+              <span class="owner">Medical Monitor</span>
+              <span class="owner">Biostatistician</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-title">
+          <div class="chapter-no">05 / EVIDENCE</div>
+          <div>
+            <h2>Run evidence, without a simulated terminal.</h2>
+            <p>The entries below are transcribed from the saved JSON outputs and validation record. No terminal screenshot or mock conversation is used.</p>
+          </div>
+        </div>
+        <figure class="artifact-proof">
+          <img
+            src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/clinical-research/run-evidence/endpoint-selector-v2.9.0-aa8d778.png"
+            width="1400"
+            height="1260"
+            alt="Actual saved endpoint-selector JSON artifact showing PASI-75 scored 89.2 as primary, DLQI scored 71.2 as key-secondary, and the unvalidated serum cytokine surrogate scored 38.7 as exploratory.">
+          <figcaption>
+            <strong>Actual artifact screenshot</strong>
+            <span>Direct rendering of the verified <b>endpoint-selector.json</b> output from the 2026-07-28 run. Its embedded JSON was checked for exact structural equality with the saved result before upload; this is not a terminal or conversation mock.</span>
+          </figcaption>
+        </figure>
+        <div class="evidence-box">
+          <div class="evidence-head">
+            <div><small>Date</small><strong>2026-07-28</strong></div>
+            <div><small>Runtime</small><strong>Python 3.14.6</strong></div>
+            <div><small>Configuration</small><strong>disabled for fixtures</strong></div>
+            <div><small>Skill check</small><strong>valid</strong></div>
+          </div>
+          <div class="evidence-runs">
+            <div class="run"><code>sample_size_estimator.py</code><span>JSON saved · 63 raw per arm · 74 with dropout</span><b>EXIT 0</b></div>
+            <div class="run"><code>endpoint_selector.py</code><span>JSON saved · three endpoints ranked · surrogate warning present</span><b>EXIT 0</b></div>
+            <div class="run"><code>phase_gate_scorer.py</code><span>JSON saved · 87.3 composite · GO · no blockers</span><b>EXIT 0</b></div>
+            <div class="run"><code>ar_evaluator.py</code><span>feasibility_composite: 87.3</span><b>EXIT 0</b></div>
+          </div>
+          <div class="evidence-note">Evidence artifacts: sample-size-estimator.json · endpoint-selector.json · phase-gate-scorer.json · validation-summary.md. Eight malformed-input classes were also rejected cleanly in the engineering benchmark.</div>
+        </div>
+        <div class="final-boundary">This result is a review packet, not a protocol. A biostatistician, medical monitor, principal investigator, and regulatory owner remain responsible for the final study design.</div>
+      </section>
+
+      <footer>
+        <span>Clinical Research · Representative run showcase</span>
+        <span>Estimate only · human review required</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

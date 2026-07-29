@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>CAPA Officer — Instruction</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #e8e5dc;
+      --paper: #fffdf6;
+      --ink: #20231f;
+      --muted: #676c65;
+      --graphite: #242a27;
+      --line: #c9c7bd;
+      --amber: #f1ae2d;
+      --amber-soft: #f8e8be;
+      --red: #c84637;
+      --green: #2b8061;
+      --blue: #477583;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body { margin: 0; min-width: 0; overflow-x: hidden; background: var(--bg); color: var(--ink); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        linear-gradient(135deg, rgba(36,42,39,.025) 25%, transparent 25%) 0 0 / 18px 18px,
+        var(--bg);
+      color: var(--ink);
+    }
+    .page { width: 100%; max-width: 1060px; margin: 0 auto; padding: 28px clamp(12px, 4vw, 40px) 60px; }
+    .board { border: 1px solid #bdbbb1; background: var(--paper); box-shadow: 12px 14px 0 rgba(41,45,41,.10); }
+    .hazard { height: 12px; background: repeating-linear-gradient(135deg, var(--amber) 0 18px, var(--graphite) 18px 36px); }
+    .topbar { display: flex; justify-content: space-between; gap: 12px; align-items: center; border-bottom: 1px solid var(--line); padding: 14px clamp(18px, 4vw, 38px); color: var(--muted); font-size: 9px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+    .brand { color: var(--graphite); }
+    .brand::before { content: "Q"; display: inline-grid; place-items: center; width: 22px; height: 22px; margin-right: 8px; border: 2px solid var(--graphite); font-size: 11px; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(250px, .8fr); gap: 26px; align-items: center; padding: clamp(28px, 6vw, 62px); }
+    .kicker, .eyebrow { margin: 0; color: var(--red); font-size: 10px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { max-width: 700px; margin: 12px 0 14px; color: var(--graphite); font-size: clamp(38px, 8vw, 74px); line-height: .93; letter-spacing: -.065em; }
+    .lede { margin: 0; color: var(--muted); font-size: clamp(15px, 2.1vw, 18px); line-height: 1.6; }
+    .signal { position: relative; border: 2px solid var(--graphite); background: #f6f2e7; padding: 20px; }
+    .signal::before { content: "INVESTIGATION AID"; position: absolute; top: -10px; right: 12px; background: var(--amber); padding: 4px 7px; color: var(--graphite); font-size: 8px; font-weight: 900; letter-spacing: .1em; }
+    .signal b { display: block; font-size: 12px; }
+    .why { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px; align-items: center; border-top: 1px solid var(--line); padding: 8px 0; }
+    .why:first-of-type { margin-top: 10px; }
+    .why span { display: grid; place-items: center; width: 22px; height: 22px; background: var(--graphite); color: #fff; font-size: 9px; font-weight: 900; }
+    .why small { color: var(--muted); font-size: 9px; line-height: 1.35; }
+    .why:last-child span { background: var(--red); }
+    .why:last-child small { color: var(--red); font-weight: 800; }
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .stat { min-width: 0; padding: 15px 18px; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: 0; }
+    .stat strong { display: block; color: var(--graphite); font-size: 19px; }
+    .stat span { display: block; margin-top: 3px; color: var(--muted); font-size: 8px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    section { padding: 42px clamp(18px, 5vw, 50px); border-bottom: 1px solid var(--line); }
+    .section-head { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 18px; }
+    h2 { margin: -4px 0 0; color: var(--graphite); font-size: clamp(27px, 5vw, 44px); line-height: 1; letter-spacing: -.045em; }
+    .section-head p { margin: 10px 0 0; color: var(--muted); line-height: 1.65; }
+    .methods { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 20px; }
+    .method { min-width: 0; border: 1px solid var(--line); background: #fff; padding: 16px; }
+    .method .mark { display: inline-grid; place-items: center; width: 30px; height: 30px; background: var(--graphite); color: var(--amber); font-weight: 900; }
+    .method h3 { margin: 12px 0 6px; font-size: 13px; }
+    .method p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .method.off { border-style: dashed; background: #f0eee8; }
+    .method.off .mark { background: #7b7d78; color: #fff; }
+    .method.off h3 { color: #747872; }
+    .workflow { margin-top: 20px; }
+    .step { display: grid; grid-template-columns: 42px minmax(0, 1fr) 145px; gap: 12px; align-items: center; border-top: 1px solid var(--line); padding: 14px 0; }
+    .step-no { color: var(--red); font-size: 20px; font-weight: 900; }
+    .step b { display: block; font-size: 12px; }
+    .step small { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .deliver { justify-self: end; border-left: 3px solid var(--amber); padding-left: 9px; color: #6d5728; font: 9px/1.4 ui-monospace, monospace; text-align: right; }
+    .two-col { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 12px; margin-top: 20px; }
+    .prompt, .limits { min-width: 0; padding: 20px; }
+    .prompt { background: var(--graphite); color: #f7f4e9; }
+    .prompt .eyebrow { color: var(--amber); }
+    pre { margin: 13px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 10px/1.65 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .limits { border: 1px solid #d7aa9f; background: #f8e5e1; }
+    .limits h3 { margin: 0 0 10px; color: #8f3127; font-size: 13px; }
+    .limits ul { margin: 0; padding-left: 17px; color: #775049; font-size: 10px; line-height: 1.65; }
+    .outputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-top: 18px; }
+    .output { border: 1px solid var(--line); background: #fff; padding: 15px; }
+    .output code { color: var(--red); font-size: 10px; font-weight: 900; overflow-wrap: anywhere; }
+    .output p { margin: 6px 0 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .boundary { background: var(--graphite); color: #fff; padding: clamp(24px, 5vw, 44px); }
+    .boundary h2 { color: #fff; }
+    .boundary p { max-width: 820px; color: #c8cfca; line-height: 1.65; }
+    .boundary strong { color: var(--amber); }
+    footer { padding: 16px; color: #7b7d77; font-size: 9px; text-align: center; }
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; }
+      .signal { max-width: 520px; }
+      .methods { grid-template-columns: 1fr 1fr; }
+      .step { grid-template-columns: 38px minmax(0, 1fr); }
+      .deliver { grid-column: 2; justify-self: start; text-align: left; }
+    }
+    @media (max-width: 620px) {
+      .section-head, .two-col { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat:nth-child(2) { border-right: 0; }
+      .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    }
+    @media (max-width: 420px) {
+      .page { padding-inline: 7px; }
+      .methods, .outputs { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page">
+      <article class="board">
+        <div class="hazard"></div>
+        <div class="topbar"><span class="brand">CAPA Officer</span><span>Instruction · local quality workflow</span></div>
+        <header class="hero">
+          <div>
+            <p class="kicker">Root-cause investigation + CAPA tracking</p>
+            <h1>Find the system behind the symptom.</h1>
+            <p class="lede">Turn evidence into a structured 5‑Why, Fishbone, or shallow Fault Tree analysis; connect causes to corrective actions; then surface overdue and ineffective CAPAs.</p>
+          </div>
+          <aside class="signal">
+            <b>Evidence chain preview</b>
+            <div class="why"><span>1</span><small>Observed failure</small></div>
+            <div class="why"><span>2</span><small>Immediate mechanism</small></div>
+            <div class="why"><span>3</span><small>Missing process control</small></div>
+            <div class="why"><span>4</span><small>Change-system gap</small></div>
+            <div class="why"><span>5</span><small>Systemic cause + evidence</small></div>
+          </aside>
+        </header>
+        <div class="stats">
+          <div class="stat"><strong>3</strong><span>RCA methods</span></div>
+          <div class="stat"><strong>2</strong><span>local scripts</span></div>
+          <div class="stat"><strong>12/12</strong><span>semantic checks</span></div>
+          <div class="stat"><strong>0</strong><span>API keys</span></div>
+        </div>
+
+        <section>
+          <div class="section-head">
+            <p class="eyebrow">Choose the method</p>
+            <div><h2>Match the structure to the evidence you have.</h2><p>The skill does not invent causes. Supply method-specific observations, evidence, events, or category branches and let the analysis expose gaps.</p></div>
+          </div>
+          <div class="methods">
+            <div class="method"><span class="mark">5×</span><h3>5‑Why</h3><p>Trace a verified causal chain from event to systemic process gap.</p></div>
+            <div class="method"><span class="mark">魚</span><h3>Fishbone</h3><p>Map categorized candidates, sub-causes, evidence, and missing branches.</p></div>
+            <div class="method"><span class="mark">∨</span><h3>Fault Tree</h3><p>List basic events and simple direct OR/AND cut sets—no recursive reduction.</p></div>
+            <div class="method off"><span class="mark">—</span><h3>Kepner–Tregoe</h3><p>Not implemented. Requests fail clearly instead of returning empty output.</p></div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head"><p class="eyebrow">Investigation flow</p><h2>From containment question to effectiveness gate.</h2></div>
+          <div class="workflow">
+            <div class="step"><span class="step-no">01</span><div><b>Frame the fictional or authorized event</b><small>State the problem, impact, scope, containment state, owner, and evidence sources.</small></div><span class="deliver">problem statement</span></div>
+            <div class="step"><span class="step-no">02</span><div><b>Build an evidence-backed cause model</b><small>Use 5‑Why, Fishbone, or Fault Tree with verified steps and explicit unknowns.</small></div><span class="deliver">root-cause analysis JSON</span></div>
+            <div class="step"><span class="step-no">03</span><div><b>Connect each action to a cause</b><small>Separate correction, corrective action, and preventive/systemic work.</small></div><span class="deliver">action linkage</span></div>
+            <div class="step"><span class="step-no">04</span><div><b>Name objective effectiveness criteria</b><small>Define metric, baseline, target, window, sample, reviewer, and failure response.</small></div><span class="deliver">verification plan</span></div>
+            <div class="step"><span class="step-no">05</span><div><b>Track age, overdue state, and outcome</b><small>Surface stalled verification, ineffective closure, cycle-time, and ownership signals.</small></div><span class="deliver">CAPA dashboard JSON</span></div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head"><p class="eyebrow">Recommended prompt</p><h2>Ask for evidence discipline, not a polished story.</h2></div>
+          <div class="two-col">
+            <div class="prompt">
+              <p class="eyebrow">Example</p>
+              <pre>Using CAPA Officer, analyze this fictional assembly event with 5‑Why.
+
+Use only the five supplied question/answer/evidence steps. Mark the systemic cause, connect each proposed action to a cause ID, define measurable effectiveness criteria, and report missing evidence.
+
+Then run the CAPA tracker on the attached synthetic register and flag overdue or ineffective records. Do not approve closure or claim compliance.</pre>
+            </div>
+            <aside class="limits">
+              <h3>Keep accountable humans in the loop</h3>
+              <ul>
+                <li>Quality confirms scope and investigation adequacy.</li>
+                <li>Technical owners verify causal evidence.</li>
+                <li>Action owners accept dates and deliverables.</li>
+                <li>Independent reviewers judge effectiveness.</li>
+                <li>Only authorized roles approve CAPA closure.</li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head"><p class="eyebrow">Deliverables</p><h2>Readable artifacts with cause-to-action traceability.</h2></div>
+          <div class="outputs">
+            <div class="output"><code>root-cause-analysis.json</code><p>Method, evidence, root causes, contributing factors, confidence, and method details.</p></div>
+            <div class="output"><code>capa-register-analysis.json</code><p>Status, aging, overdue list, cycle time, effectiveness rate, and recommendations.</p></div>
+            <div class="output"><code>effectiveness-plan.md</code><p>Metric, baseline, target, sample, duration, owner, reviewer, and failure response.</p></div>
+            <div class="output"><code>review-handoff.md</code><p>Open questions, missing evidence, limitations, and required Quality approvals.</p></div>
+          </div>
+        </section>
+
+        <div class="boundary">
+          <p class="eyebrow">Use boundary</p>
+          <h2>An investigation aid—not autonomous Quality authority.</h2>
+          <p>Scores and recommendations are heuristics. Fault Tree support is intentionally shallow. The skill cannot establish regulatory compliance, decide reportability or recall, prove root cause, verify effectiveness, or close a CAPA. <strong>Qualified Quality review is required.</strong></p>
+        </div>
+        <footer>CAPA Officer · standard-library local tools · customer instruction</footer>
+      </article>
+    </main>
+  </div>
+</body>
+</html>

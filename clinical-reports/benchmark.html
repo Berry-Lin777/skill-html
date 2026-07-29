@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Clinical Reports — Benchmark</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #eef1ed;
+      --panel: #fbfcf8;
+      --ink: #142521;
+      --muted: #64716d;
+      --line: #c7d0ca;
+      --green: #087767;
+      --green-2: #46a796;
+      --red: #c64e42;
+      --amber: #b88021;
+      --navy: #193f48;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .finchip-page { min-height: 100%; overflow-x: hidden; background: var(--bg); color: var(--ink); }
+    .page { width: 100%; max-width: 1080px; margin: 0 auto; padding: 28px clamp(14px, 4vw, 42px) 58px; }
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(230px, .6fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+    .title-panel, .verdict-panel, .panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+    }
+    .title-panel { padding: clamp(24px, 5vw, 48px); }
+    .stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 5px;
+      background: var(--navy);
+      padding: 7px 9px;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .stamp::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #67d8c0; }
+    h1 { margin: 15px 0 10px; color: var(--navy); font-size: clamp(34px, 7vw, 64px); line-height: .96; letter-spacing: -.055em; }
+    .sub { max-width: 690px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
+    .verdict-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--navy);
+      padding: 22px;
+      color: #fff;
+    }
+    .score { font-size: clamp(58px, 12vw, 96px); font-weight: 300; line-height: .86; letter-spacing: -.08em; }
+    .score small { font-size: 16px; letter-spacing: 0; color: #b7d3cc; }
+    .verdict { border-top: 1px solid rgba(255,255,255,.2); padding-top: 14px; }
+    .verdict b { display: block; color: #74dec8; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+    .verdict span { display: block; margin-top: 5px; color: #d3e1dd; font-size: 11px; line-height: 1.5; }
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .meta div { border: 1px solid var(--line); border-radius: 12px; background: rgba(251,252,248,.7); padding: 12px; }
+    .meta span { display: block; color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .meta strong { display: block; margin-top: 5px; color: var(--navy); font-size: 13px; overflow-wrap: anywhere; }
+    section { margin-top: 30px; }
+    .section-title { display: flex; justify-content: space-between; gap: 12px; align-items: end; margin-bottom: 12px; }
+    .section-title h2 { margin: 0; color: var(--navy); font-size: clamp(23px, 4vw, 34px); letter-spacing: -.03em; }
+    .section-title p { max-width: 450px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; text-align: right; }
+    .dimensions { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+    .dimension { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); padding: 14px; }
+    .dimension .value { color: var(--navy); font-size: 28px; font-weight: 800; letter-spacing: -.04em; }
+    .dimension .value small { color: var(--muted); font-size: 11px; font-weight: 600; }
+    .dimension h3 { min-height: 32px; margin: 8px 0 10px; color: #344b46; font-size: 12px; line-height: 1.35; }
+    .track { height: 5px; border-radius: 999px; background: #dce3df; overflow: hidden; }
+    .fill { width: var(--score); height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--green), var(--green-2)); }
+    .dimension p { margin: 9px 0 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .ledger { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+    .row {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1.25fr) minmax(0, .9fr) 86px;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .row:last-child { border-bottom: 0; }
+    .row.head { background: #e1e9e5; color: #4f605b; font-size: 9px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .case { color: var(--navy); font-size: 11px; font-weight: 800; }
+    .check { color: #32453f; font-size: 12px; line-height: 1.45; }
+    .evidence { color: var(--muted); font: 10px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+    .result { justify-self: start; border-radius: 999px; padding: 5px 8px; font-size: 9px; font-weight: 900; letter-spacing: .08em; }
+    .pass { background: #d6eee7; color: #086252; }
+    .expected { background: #f3e5c8; color: #80580e; }
+    .review { background: #f3dcd7; color: #983b31; }
+    .gates { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+    .panel { padding: 20px; }
+    .panel h3 { margin: 0 0 14px; color: var(--navy); font-size: 15px; }
+    .gate-line { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 9px; align-items: start; padding: 9px 0; border-top: 1px solid #dbe1dd; }
+    .gate-line:first-of-type { border-top: 0; }
+    .tick { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 5px; background: var(--green); color: #fff; font-size: 11px; font-weight: 900; }
+    .gate-line b { display: block; color: #31453f; font-size: 12px; }
+    .gate-line small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; line-height: 1.4; }
+    .tag { color: var(--green); font-size: 9px; font-weight: 900; text-transform: uppercase; }
+    .risk-list { margin: 0; padding-left: 18px; color: #52635e; font-size: 12px; line-height: 1.65; }
+    .conclusion {
+      margin-top: 30px;
+      border: 1px solid #99c6bb;
+      border-radius: 18px;
+      background: #e4f3ee;
+      padding: clamp(20px, 4vw, 32px);
+    }
+    .conclusion strong { display: block; color: var(--green); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; }
+    .conclusion p { margin: 8px 0 0; color: #294d45; font-size: 14px; line-height: 1.6; }
+    footer { margin-top: 22px; color: #7b8581; font-size: 10px; text-align: center; }
+    @media (max-width: 820px) {
+      .dimensions { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .row { grid-template-columns: 90px minmax(0, 1fr) 78px; }
+      .row .evidence { grid-column: 2; }
+      .row.head .evidence { display: none; }
+    }
+    @media (max-width: 620px) {
+      header, .gates { grid-template-columns: 1fr; }
+      .verdict-panel { min-height: 210px; }
+      .meta { grid-template-columns: 1fr 1fr; }
+      .dimensions { grid-template-columns: 1fr 1fr; }
+      .section-title { display: block; }
+      .section-title p { margin-top: 6px; text-align: left; }
+      .row { grid-template-columns: 1fr auto; gap: 7px 10px; }
+      .row .check, .row .evidence { grid-column: 1 / -1; }
+      .row.head { display: none; }
+    }
+    @media (max-width: 390px) {
+      .page { padding-inline: 10px; }
+      .dimensions { grid-template-columns: 1fr; }
+      .meta { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page">
+      <header>
+        <div class="title-panel">
+          <span class="stamp">Evidence dossier · CR-20</span>
+          <h1>Clinical Reports Benchmark</h1>
+          <p class="sub">A reproducible evaluation of local template generation, provenance linking, fail-closed behavior, and reviewer handoff. Scores measure the tested drafting workflow—not clinical correctness or regulatory compliance.</p>
+        </div>
+        <aside class="verdict-panel">
+          <div class="score">95.7<small>/100</small></div>
+          <div class="verdict"><b>Strong controlled-draft profile</b><span>All executed gates behaved as expected. Professional review remains mandatory.</span></div>
+        </aside>
+      </header>
+
+      <div class="meta">
+        <div><span>Skill version</span><strong>2.0</strong></div>
+        <div><span>Run date</span><strong>2026-07-28</strong></div>
+        <div><span>Environment</span><strong>Python 3.14.6 · macOS arm64</strong></div>
+        <div><span>Dependency mode</span><strong>Local standard library</strong></div>
+      </div>
+
+      <section>
+        <div class="section-title">
+          <h2>Five capability dimensions</h2>
+          <p>Weighted evaluation index: 25% gate discipline, 25% provenance, 15% routing, 20% deterministic checks, 15% handoff.</p>
+        </div>
+        <div class="dimensions">
+          <div class="dimension" style="--score:98%"><div class="value">98<small>/100</small></div><h3>Input Gate Discipline</h3><div class="track"><div class="fill"></div></div><p>Unsafe or incomplete delivery states remain visibly blocked.</p></div>
+          <div class="dimension" style="--score:97%"><div class="value">97<small>/100</small></div><h3>Provenance Integrity</h3><div class="track"><div class="fill"></div></div><p>Fact-to-claim references and review status are explicit.</p></div>
+          <div class="dimension" style="--score:94%"><div class="value">94<small>/100</small></div><h3>Template Routing</h3><div class="track"><div class="fill"></div></div><p>Fifteen distinct draft structures are available and listed.</p></div>
+          <div class="dimension" style="--score:96%"><div class="value">96<small>/100</small></div><h3>Deterministic Validation</h3><div class="track"><div class="fill"></div></div><p>Eight local CLIs expose inspectable, API-free checks.</p></div>
+          <div class="dimension" style="--score:91%"><div class="value">91<small>/100</small></div><h3>Reviewer Handoff</h3><div class="track"><div class="fill"></div></div><p>Role routing is strong; human verification is inherently external.</p></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2>Executed test matrix</h2>
+          <p>“Expected block” is a passing safety result. It does not mean the draft is complete.</p>
+        </div>
+        <div class="ledger">
+          <div class="row head"><div>Scenario</div><div>Test</div><div>Evidence</div><div>Result</div></div>
+          <div class="row"><div class="case">NORMAL</div><div class="check">Enumerate the available report structures.</div><div class="evidence">generate_report_template.py --list → 15 templates</div><span class="result pass">PASS</span></div>
+          <div class="row"><div class="case">DELIVERY</div><div class="check">Generate an untouched CARE case-report scaffold.</div><div class="evidence">case-report-draft.json created; no overwrite</div><span class="result pass">PASS</span></div>
+          <div class="row"><div class="case">TRACEABILITY</div><div class="check">Link one synthetic claim to one verified fact.</div><div class="evidence">fact_count 1 · claim_count 1 · errors 0</div><span class="result pass">PASS</span></div>
+          <div class="row"><div class="case">BOUNDARY</div><div class="check">Validate a draft with every required clinical field missing.</div><div class="evidence">status BLOCKED · 17 required fields/reviews absent</div><span class="result expected">EXPECTED BLOCK</span></div>
+          <div class="row"><div class="case">REVIEW</div><div class="check">Check whether traceability alone authorizes clinical use.</div><div class="evidence">authorizes_clinical_use_or_submission: false</div><span class="result review">REVIEW REQUIRED</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2>Release gates and residual risk</h2>
+          <p>Static inspection and live CLI behavior are kept separate from untested professional decisions.</p>
+        </div>
+        <div class="gates">
+          <div class="panel">
+            <h3>Passed gates</h3>
+            <div class="gate-line"><span class="tick">✓</span><div><b>Skill structure</b><small>Official quick validator returned “Skill is valid!”</small></div><span class="tag">Verified</span></div>
+            <div class="gate-line"><span class="tick">✓</span><div><b>CLI availability</b><small>All eight tools returned usable help; scripts compiled.</small></div><span class="tag">Verified</span></div>
+            <div class="gate-line"><span class="tick">✓</span><div><b>Offline boundary</b><small>No network client, credential, dynamic evaluation, or external model call.</small></div><span class="tag">Inspected</span></div>
+            <div class="gate-line"><span class="tick">✓</span><div><b>Fail-closed draft</b><small>Incomplete case report was rejected instead of promoted.</small></div><span class="tag">Executed</span></div>
+          </div>
+          <div class="panel">
+            <h3>Not scored as proven</h3>
+            <ul class="risk-list">
+              <li>Clinical truth, diagnosis, treatment, causality, and reportability.</li>
+              <li>HIPAA compliance or re-identification risk for real records.</li>
+              <li>Journal, sponsor, institutional, or regulator acceptance.</li>
+              <li>Correctness of source data that validators never open.</li>
+              <li>Human sign-off, submission authority, or production integration.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <div class="conclusion">
+        <strong>Recomputable conclusion</strong>
+        <p>The weighted index is <b>95.7</b> from the five displayed dimension scores and weights. The executed evidence supports a strong local controlled-drafting workflow. It does not support claims of clinical validation, legal compliance, or submission readiness.</p>
+      </div>
+      <footer>Clinical Reports v2.0 · benchmark scope frozen 2026-07-28 · synthetic evidence only</footer>
+    </main>
+  </div>
+</body>
+</html>

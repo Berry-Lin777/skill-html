@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Clinical Research — Engineering Benchmark</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ivory: #f5efe2;
+      --ivory-2: #ebe0cb;
+      --navy: #15223d;
+      --navy-2: #213252;
+      --blue: #2f72df;
+      --blue-pale: #dbe8fa;
+      --coral: #f06d5e;
+      --coral-pale: #fae1db;
+      --ink: #172238;
+      --muted: #687084;
+      --rule: #cabfac;
+      --white: #fffdf8;
+      --pass: #197153;
+      --pass-pale: #ddf0e7;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--ivory); color: var(--ink); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--ivory);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background: var(--ivory);
+      color: var(--ink);
+    }
+    .bench-cover {
+      width: 100%;
+      min-width: 0;
+      background:
+        linear-gradient(135deg, transparent 0 72%, rgba(47, 114, 223, .16) 72% 86%, transparent 86%),
+        var(--navy);
+      color: #f8f3e8;
+    }
+    .cover-inner, .ledger {
+      width: 100%;
+      max-width: 1180px;
+      min-width: 0;
+      margin: 0 auto;
+      padding-left: clamp(18px, 4vw, 48px);
+      padding-right: clamp(18px, 4vw, 48px);
+    }
+    .cover-inner { padding-top: 30px; padding-bottom: 34px; }
+    .mast {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, .2);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+    .mast strong { color: #9bc0ff; }
+    .cover-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(230px, .65fr);
+      gap: clamp(22px, 4vw, 50px);
+      align-items: center;
+      padding-top: 28px;
+    }
+    .cover-tag {
+      margin-bottom: 12px;
+      color: #ff9b8f;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 770px;
+      margin-bottom: 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(37px, 6.7vw, 68px);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
+    .cover-copy {
+      max-width: 720px;
+      margin-bottom: 15px;
+      color: #c5d0e4;
+      font-size: clamp(14px, 2vw, 18px);
+    }
+    .not-clinical {
+      display: inline-block;
+      padding: 7px 10px;
+      border: 1px solid rgba(240, 109, 94, .65);
+      background: rgba(240, 109, 94, .12);
+      color: #ffc2ba;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .score-orbit {
+      display: grid;
+      place-items: center;
+      width: min(210px, 100%);
+      aspect-ratio: 1;
+      margin-left: auto;
+      border-radius: 50%;
+      background: conic-gradient(var(--coral) 0 95.2%, #334463 95.2% 100%);
+      box-shadow: 0 0 0 12px rgba(255, 255, 255, .04);
+    }
+    .score-core {
+      display: grid;
+      place-items: center;
+      width: 78%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 50%;
+      background: var(--navy);
+      text-align: center;
+    }
+    .score-core strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(40px, 7vw, 64px);
+      font-weight: 500;
+      line-height: .9;
+    }
+    .score-core span {
+      display: block;
+      max-width: 100px;
+      color: #9eabc0;
+      font-size: 9px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .ledger {
+      padding-top: 36px;
+      padding-bottom: 42px;
+    }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin-bottom: 38px;
+      border: 1px solid var(--rule);
+      background: var(--rule);
+    }
+    .fact {
+      min-width: 0;
+      padding: 14px 15px;
+      background: var(--white);
+    }
+    .fact small {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .fact strong {
+      display: block;
+      overflow-wrap: anywhere;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+    }
+    .ledger-section {
+      min-width: 0;
+      padding: 36px 0;
+      border-top: 2px solid var(--ink);
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: var(--blue);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .section-label::before {
+      content: "";
+      width: 22px;
+      height: 3px;
+      background: var(--blue);
+    }
+    h2 {
+      margin-bottom: 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(29px, 5vw, 48px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+    }
+    .section-copy {
+      max-width: 760px;
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .dimension-list {
+      display: grid;
+      gap: 11px;
+      min-width: 0;
+    }
+    .dimension {
+      display: grid;
+      grid-template-columns: minmax(170px, .75fr) minmax(150px, 1.25fr) 56px;
+      gap: 16px;
+      align-items: center;
+      min-width: 0;
+      padding: 13px 15px;
+      border: 1px solid var(--rule);
+      background: var(--white);
+    }
+    .dimension-title strong {
+      display: block;
+      font-size: 13px;
+    }
+    .dimension-title span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .track {
+      min-width: 0;
+      height: 9px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--ivory-2);
+    }
+    .fill {
+      display: block;
+      width: var(--score);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--blue);
+    }
+    .dimension:nth-child(2) .fill,
+    .dimension:nth-child(5) .fill { background: var(--coral); }
+    .dimension:nth-child(3) .fill { background: var(--pass); }
+    .dimension-score {
+      text-align: right;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+    }
+    .gate-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+      gap: 18px;
+      min-width: 0;
+    }
+    .gate-card {
+      min-width: 0;
+      padding: 20px;
+      border: 1px solid var(--rule);
+      background: var(--white);
+    }
+    .gate-card h3 {
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+    .gate-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .gate-card li {
+      position: relative;
+      padding: 9px 0 9px 26px;
+      border-top: 1px dashed var(--rule);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .gate-card li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--pass);
+      font-weight: 900;
+    }
+    .claim-map {
+      display: grid;
+      gap: 8px;
+    }
+    .claim {
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr);
+      gap: 12px;
+      min-width: 0;
+      padding: 10px 0;
+      border-top: 1px dashed var(--rule);
+      font-size: 12px;
+    }
+    .claim b { color: var(--blue); }
+    .claim span { color: var(--muted); }
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      min-width: 0;
+    }
+    .case {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) auto;
+      gap: 11px;
+      align-items: center;
+      min-width: 0;
+      padding: 13px;
+      border-left: 4px solid var(--pass);
+      background: var(--white);
+      box-shadow: inset 0 0 0 1px var(--rule);
+    }
+    .case-id {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--pass-pale);
+      color: var(--pass);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .case strong {
+      display: block;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    .case span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .case-result {
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: var(--pass-pale);
+      color: var(--pass);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .normal-band {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .normal-result {
+      min-width: 0;
+      padding: 18px;
+      border-top: 4px solid var(--blue);
+      background: var(--blue-pale);
+    }
+    .normal-result:nth-child(2) { border-color: var(--coral); background: var(--coral-pale); }
+    .normal-result:nth-child(3) { border-color: var(--pass); background: var(--pass-pale); }
+    .normal-result small {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .normal-result strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(25px, 4vw, 37px);
+      font-weight: 500;
+      line-height: 1;
+    }
+    .normal-result span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .evidence-strip {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(220px, .8fr);
+      gap: 18px;
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid #99b3d7;
+      background: var(--blue-pale);
+    }
+    .evidence-strip h3 { margin-bottom: 7px; font-size: 17px; }
+    .evidence-strip p { margin-bottom: 0; color: #52627a; font-size: 12px; }
+    .evidence-files {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 9px;
+    }
+    .evidence-files span {
+      padding: 8px;
+      overflow-wrap: anywhere;
+      border: 1px solid rgba(47, 114, 223, .25);
+      background: rgba(255, 255, 255, .58);
+    }
+    .limit-note {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-left: 5px solid var(--coral);
+      background: var(--coral-pale);
+      color: #70443f;
+      font-size: 12px;
+    }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 22px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 760px) {
+      .cover-grid { grid-template-columns: minmax(0, 1fr) minmax(170px, .48fr); }
+      .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .gate-grid { grid-template-columns: minmax(0, 1fr); }
+      .dimension { grid-template-columns: minmax(145px, .9fr) minmax(110px, 1.1fr) 48px; }
+    }
+    @media (max-width: 560px) {
+      .cover-inner, .ledger { padding-left: 18px; padding-right: 18px; }
+      .cover-grid { grid-template-columns: minmax(0, 1fr); }
+      .score-orbit { width: 156px; margin: 4px 0 0; }
+      .facts, .normal-band, .matrix { grid-template-columns: minmax(0, 1fr); }
+      .dimension {
+        grid-template-columns: minmax(0, 1fr) 48px;
+        gap: 8px;
+      }
+      .track { grid-column: 1 / -1; grid-row: 2; }
+      .dimension-score { grid-column: 2; grid-row: 1; }
+      .evidence-strip { grid-template-columns: minmax(0, 1fr); }
+      footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <header class="bench-cover">
+      <div class="cover-inner">
+        <div class="mast">
+          <strong>Clinical Research</strong>
+          <span>Engineering Benchmark · 2026-07-28</span>
+        </div>
+        <div class="cover-grid">
+          <div>
+            <div class="cover-tag">Evidence ledger CR-2.9</div>
+            <h1>Confidence measured at the workflow boundary.</h1>
+            <p class="cover-copy">A deterministic engineering review of sample-size estimation, endpoint classification, phase-gate scoring, and malformed-input rejection.</p>
+            <span class="not-clinical">Not a clinical efficacy or medical validation score</span>
+          </div>
+          <div class="score-orbit" aria-label="Engineering confidence score 95.2 out of 100">
+            <div class="score-core">
+              <div><strong>95.2</strong><span>Engineering confidence / 100</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="ledger">
+      <div class="facts">
+        <div class="fact"><small>Tested skill</small><strong>v2.9.0</strong></div>
+        <div class="fact"><small>Runtime</small><strong>Python 3.14.6</strong></div>
+        <div class="fact"><small>Upstream revision</small><strong>aa8d778811a5</strong></div>
+        <div class="fact"><small>Dependency mode</small><strong>stdlib · offline</strong></div>
+      </div>
+
+      <section class="ledger-section">
+        <div class="section-label">Scorecard / five dimensions</div>
+        <h2>Five different questions, five different scores.</h2>
+        <p class="section-copy">The scores summarize observed software behavior and evidence quality. They do not estimate medical validity, regulatory acceptance, or real-world trial success.</p>
+        <div class="dimension-list">
+          <div class="dimension" style="--score:97%">
+            <div class="dimension-title"><strong>Deterministic repeatability</strong><span>Stable normal-case outputs</span></div>
+            <div class="track"><span class="fill"></span></div>
+            <div class="dimension-score">97</div>
+          </div>
+          <div class="dimension" style="--score:93%">
+            <div class="dimension-title"><strong>Workflow coverage</strong><span>Three core decision stages exercised</span></div>
+            <div class="track"><span class="fill"></span></div>
+            <div class="dimension-score">93</div>
+          </div>
+          <div class="dimension" style="--score:100%">
+            <div class="dimension-title"><strong>Guardrail behavior</strong><span>Eight malformed-input classes rejected</span></div>
+            <div class="track"><span class="fill"></span></div>
+            <div class="dimension-score">100</div>
+          </div>
+          <div class="dimension" style="--score:95%">
+            <div class="dimension-title"><strong>Evidence traceability</strong><span>JSON, fixtures, commands, exits retained</span></div>
+            <div class="track"><span class="fill"></span></div>
+            <div class="dimension-score">95</div>
+          </div>
+          <div class="dimension" style="--score:91%">
+            <div class="dimension-title"><strong>Oversight clarity</strong><span>Estimate labels and owner routing</span></div>
+            <div class="track"><span class="fill"></span></div>
+            <div class="dimension-score">91</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ledger-section">
+        <div class="section-label">Gates / claim mapping</div>
+        <h2>What had to pass.</h2>
+        <div class="gate-grid">
+          <article class="gate-card">
+            <h3>Release gates</h3>
+            <ul>
+              <li>Three representative JSON runs exit 0</li>
+              <li>Expected numbers and classifications match</li>
+              <li>Malformed inputs exit non-zero without traceback</li>
+              <li>Six Python files parse successfully</li>
+              <li>Skill schema validates</li>
+              <li>No network, API key, or third-party runtime dependency</li>
+            </ul>
+          </article>
+          <article class="gate-card">
+            <h3>Capability claim → evidence</h3>
+            <div class="claim-map">
+              <div class="claim"><b>Sample size</b><span>Means sample returned 63 raw per arm and 74 after 15% dropout.</span></div>
+              <div class="claim"><b>Endpoints</b><span>PASI-75 ranked PRIMARY; DLQI KEY-SECONDARY; cytokine surrogate EXPLORATORY.</span></div>
+              <div class="claim"><b>Phase gate</b><span>Five-dimension composite returned 87.3, GO, zero blockers, and owner roles.</span></div>
+              <div class="claim"><b>Resilience</b><span>Eight malformed-input classes rejected cleanly; missing files also rejected.</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="ledger-section">
+        <div class="section-label">Normal path / exact observations</div>
+        <h2>The baseline remained unchanged after hardening.</h2>
+        <p class="section-copy">All three embedded representative cases were replayed with saved configuration disabled.</p>
+        <div class="normal-band">
+          <div class="normal-result">
+            <small>Sample-size estimator</small>
+            <strong>63 → 74</strong>
+            <span>per arm · raw to dropout-adjusted</span>
+          </div>
+          <div class="normal-result">
+            <small>Endpoint selector</small>
+            <strong>89.2</strong>
+            <span>PASI-75 · PRIMARY</span>
+          </div>
+          <div class="normal-result">
+            <small>Phase-gate scorer</small>
+            <strong>87.3 · GO</strong>
+            <span>five dimensions · no blockers</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="ledger-section">
+        <div class="section-label">Negative path / eight classes</div>
+        <h2>Bad inputs fail closed and fail cleanly.</h2>
+        <p class="section-copy">Each case returned a concise message, a non-zero exit, and no Python traceback. These are input-contract checks, not adversarial security certification.</p>
+        <div class="matrix">
+          <div class="case"><div class="case-id">N1</div><div><strong>Zero or NaN allocation</strong><span>Finite positive ratio required</span></div><div class="case-result">Exit 2</div></div>
+          <div class="case"><div class="case-id">N2</div><div><strong>Infinite effect size</strong><span>Finite effect required</span></div><div class="case-result">Exit 2</div></div>
+          <div class="case"><div class="case-id">N3</div><div><strong>Empty endpoints</strong><span>Non-empty array required</span></div><div class="case-result">Exit 2</div></div>
+          <div class="case"><div class="case-id">N4</div><div><strong>Endpoint score over 100</strong><span>Field-specific range error</span></div><div class="case-result">Exit 2</div></div>
+          <div class="case"><div class="case-id">N5</div><div><strong>Missing score dimension</strong><span>All five dimensions required</span></div><div class="case-result">Exit 2</div></div>
+          <div class="case"><div class="case-id">N6</div><div><strong>Missing validation flag</strong><span>Explicit booleans required</span></div><div class="case-result">Exit 2</div></div>
+          <div class="case"><div class="case-id">N7</div><div><strong>Zero target enrollment</strong><span>Positive denominator required</span></div><div class="case-result">Exit 2</div></div>
+          <div class="case"><div class="case-id">N8</div><div><strong>Invalid autoresearch target</strong><span>N/A metric, clean failure</span></div><div class="case-result">Exit 1</div></div>
+        </div>
+      </section>
+
+      <section class="ledger-section">
+        <div class="section-label">Evidence trail / reproducible</div>
+        <h2>Every displayed result has a local source.</h2>
+        <div class="evidence-strip">
+          <div>
+            <h3>Run record</h3>
+            <p>Test date 2026-07-28 · Python 3.14.6 · configuration disabled for deterministic fixtures · three JSON outputs · eight malformed-input classes · schema and syntax checks passed.</p>
+          </div>
+          <div class="evidence-files">
+            <span>sample-size-estimator.json</span>
+            <span>endpoint-selector.json</span>
+            <span>phase-gate-scorer.json</span>
+            <span>malformed-input-results.txt</span>
+          </div>
+        </div>
+        <div class="limit-note"><strong>Interpretation limit:</strong> this benchmark establishes implementation behavior against representative fixtures. Closed-form formulas, endpoint priors, cost benchmarks, and user assumptions still require qualified clinical and statistical review.</div>
+      </section>
+
+      <footer>
+        <span>Clinical Research · Engineering evidence ledger</span>
+        <span>Observed behavior, not medical validation</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

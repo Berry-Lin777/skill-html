@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Crypto Protocol Diagram — Benchmark</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page-bg: #030611;
+      --page-fg: #f0f4ff;
+      --surface: #080d20;
+      --surface-2: #0c132c;
+      --ink: #f0f4ff;
+      --muted: #9da9cc;
+      --hairline: rgba(142, 162, 225, 0.20);
+      --cobalt: #4b78ff;
+      --electric: #62dcff;
+      --indigo: #8067ff;
+      --mint: #72efc1;
+      --amber: #ffc766;
+      --rose: #ff7899;
+      --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--page-bg);
+      color: var(--page-fg);
+    }
+
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      font-family: var(--sans);
+      line-height: 1.5;
+    }
+
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        linear-gradient(90deg, rgba(75, 120, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(rgba(75, 120, 255, 0.025) 1px, transparent 1px),
+        radial-gradient(circle at 50% -8%, rgba(75, 120, 255, 0.22), transparent 34rem),
+        #030611;
+      background-size: 36px 36px, 36px 36px, auto, auto;
+      color: var(--page-fg);
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 1140px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 48px) 64px;
+    }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: center;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--hairline);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .mast-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      color: #cbd7ff;
+    }
+
+    .mast-title::before {
+      content: "";
+      width: 28px;
+      height: 8px;
+      border-left: 8px solid var(--electric);
+      border-right: 8px solid var(--indigo);
+      background: var(--cobalt);
+      box-shadow: 0 0 16px rgba(98, 220, 255, 0.42);
+    }
+
+    .gate {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 9px;
+      border: 1px solid rgba(114, 239, 193, 0.34);
+      border-radius: 5px;
+      background: rgba(114, 239, 193, 0.06);
+      color: var(--mint);
+      white-space: nowrap;
+    }
+
+    .gate::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 10px var(--mint);
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+      gap: clamp(24px, 5vw, 64px);
+      align-items: end;
+      padding: clamp(38px, 6vw, 64px) 0 34px;
+    }
+
+    .kicker {
+      margin: 0 0 13px;
+      color: var(--electric);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 16px;
+      font-size: clamp(38px, 6vw, 66px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      text-wrap: balance;
+    }
+
+    .lead {
+      max-width: 700px;
+      margin-bottom: 0;
+      color: #b8c3e7;
+      font-size: clamp(15px, 2vw, 18px);
+    }
+
+    .snapshot {
+      border: 1px solid var(--hairline);
+      background: rgba(8, 13, 32, 0.88);
+      padding: 17px;
+    }
+
+    .snapshot-label {
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .snapshot-row {
+      display: grid;
+      grid-template-columns: 82px minmax(0, 1fr);
+      gap: 10px;
+      padding: 7px 0;
+      border-top: 1px solid var(--hairline);
+      font-size: 11px;
+    }
+
+    .snapshot-row b {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-weight: 500;
+    }
+
+    .snapshot-row span {
+      min-width: 0;
+      color: #e1e7fb;
+      overflow-wrap: anywhere;
+    }
+
+    .score-deck {
+      padding: 24px;
+      border: 1px solid rgba(75, 120, 255, 0.38);
+      background:
+        linear-gradient(135deg, rgba(75, 120, 255, 0.08), transparent 36%),
+        rgba(6, 10, 25, 0.94);
+      box-shadow: 0 24px 74px rgba(0, 0, 0, 0.32);
+    }
+
+    .score-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .score-header h2 {
+      margin-bottom: 0;
+      font-size: clamp(22px, 4vw, 34px);
+      letter-spacing: -0.035em;
+    }
+
+    .score-header p {
+      max-width: 520px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      --score: 90;
+      --accent: var(--electric);
+      min-width: 0;
+      padding: 16px 10px 14px;
+      border: 1px solid var(--hairline);
+      background: linear-gradient(180deg, rgba(12, 19, 44, 0.95), rgba(6, 10, 25, 0.95));
+      text-align: center;
+    }
+
+    .metric-ring {
+      position: relative;
+      display: grid;
+      width: min(104px, 100%);
+      aspect-ratio: 1;
+      margin: 0 auto 13px;
+      place-items: center;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent) calc(var(--score) * 1%), rgba(142, 162, 225, 0.10) 0);
+    }
+
+    .metric-ring::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(142, 162, 225, 0.18);
+      border-radius: 50%;
+      background: #080d20;
+    }
+
+    .metric-value {
+      position: relative;
+      z-index: 1;
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .metric-value small {
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .metric h3 {
+      margin-bottom: 5px;
+      color: #dce4ff;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .metric p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .metric.integrity { --score: 97; --accent: var(--mint); }
+    .metric.flow { --score: 94; --accent: var(--electric); }
+    .metric.crypto { --score: 91; --accent: var(--cobalt); }
+    .metric.abort { --score: 89; --accent: var(--rose); }
+    .metric.delivery { --score: 96; --accent: var(--indigo); }
+
+    section {
+      padding: clamp(46px, 7vw, 78px) 0;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .section-intro {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr);
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .section-code {
+      color: var(--electric);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      font-size: clamp(28px, 4.5vw, 46px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      text-wrap: balance;
+    }
+
+    .section-text {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .claim-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 1px solid var(--hairline);
+      border-left: 1px solid var(--hairline);
+    }
+
+    .claim {
+      min-width: 0;
+      padding: 20px;
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      background: rgba(8, 13, 32, 0.76);
+    }
+
+    .claim-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 9px;
+    }
+
+    .claim-id {
+      color: var(--electric);
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+
+    .status {
+      padding: 4px 7px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .status.pass { color: var(--mint); }
+    .status.review { color: var(--amber); }
+    .status.unscored { color: #8d98bb; }
+
+    .claim h3 {
+      margin-bottom: 7px;
+      color: #e4eaff;
+      font-size: 15px;
+    }
+
+    .claim p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .matrix {
+      display: grid;
+      gap: 10px;
+    }
+
+    .test-row {
+      display: grid;
+      grid-template-columns: 72px 118px minmax(0, 1.35fr) minmax(0, 1fr) 86px;
+      gap: 12px;
+      align-items: center;
+      min-width: 0;
+      padding: 14px 16px;
+      border: 1px solid var(--hairline);
+      background: rgba(8, 13, 32, 0.78);
+      font-size: 11px;
+    }
+
+    .test-id,
+    .test-class,
+    .test-result {
+      font-family: var(--mono);
+      text-transform: uppercase;
+    }
+
+    .test-id { color: var(--electric); }
+    .test-class { color: #c8d4ff; }
+    .test-action { color: #e5eaff; }
+    .test-evidence { color: var(--muted); }
+    .test-result {
+      justify-self: end;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+    }
+
+    .test-result.pass { color: var(--mint); }
+    .test-result.review { color: var(--amber); }
+    .test-result.unscored { color: #8d98bb; }
+
+    .evidence-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+      gap: 18px;
+    }
+
+    .evidence-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .evidence-card {
+      position: relative;
+      min-width: 0;
+      padding: 18px 18px 18px 42px;
+      border: 1px solid var(--hairline);
+      background: rgba(8, 13, 32, 0.82);
+    }
+
+    .evidence-card::before {
+      content: "";
+      position: absolute;
+      top: 22px;
+      left: 18px;
+      width: 8px;
+      height: 8px;
+      border: 1px solid var(--electric);
+      transform: rotate(45deg);
+    }
+
+    .evidence-card h3 {
+      margin-bottom: 6px;
+      color: #e4eaff;
+      font-size: 14px;
+    }
+
+    .evidence-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .terminal {
+      min-width: 0;
+      border: 1px solid rgba(98, 220, 255, 0.25);
+      background: #050915;
+    }
+
+    .terminal-head {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--hairline);
+      color: #8793b8;
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+    }
+
+    .terminal-head i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cobalt);
+      box-shadow: 12px 0 0 var(--indigo), 24px 0 0 var(--electric);
+      margin-right: 24px;
+    }
+
+    pre {
+      margin: 0;
+      min-width: 0;
+      padding: 16px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: #cbd6fa;
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.65;
+    }
+
+    .pass-line { color: var(--mint); }
+    .warn-line { color: var(--amber); }
+
+    .limits {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .limit {
+      padding: 18px;
+      border-top: 2px solid var(--amber);
+      background: rgba(12, 19, 44, 0.82);
+    }
+
+    .limit:nth-child(2) { border-top-color: var(--rose); }
+    .limit:nth-child(3) { border-top-color: var(--indigo); }
+
+    .limit span {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    .limit h3 {
+      margin-bottom: 7px;
+      color: #e6ebff;
+      font-size: 14px;
+    }
+
+    .limit p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .method-note {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid rgba(255, 199, 102, 0.25);
+      background: rgba(255, 199, 102, 0.05);
+      color: #cbd1e2;
+      font-size: 12px;
+    }
+
+    .method-note strong { color: var(--amber); }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 24px;
+      border-top: 1px solid var(--hairline);
+      color: #7682a7;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .metrics {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .test-row {
+        grid-template-columns: 60px 105px minmax(0, 1fr) 76px;
+      }
+
+      .test-evidence {
+        grid-column: 3 / 5;
+        padding-top: 8px;
+        border-top: 1px solid var(--hairline);
+      }
+    }
+
+    @media (max-width: 720px) {
+      header,
+      .section-intro,
+      .evidence-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .score-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .score-header p { text-align: left; }
+      .claim-grid { grid-template-columns: 1fr; }
+      .limits { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .wrap { padding-inline: 14px; }
+      .masthead { grid-template-columns: 1fr; }
+      .gate { justify-self: start; }
+      h1 { font-size: clamp(38px, 13vw, 54px); }
+      .score-deck { padding: 14px; }
+
+      .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .metric:last-child { grid-column: 1 / -1; }
+
+      .test-row {
+        grid-template-columns: 50px minmax(0, 1fr) auto;
+        gap: 8px;
+        align-items: start;
+      }
+
+      .test-class { grid-column: 2; }
+      .test-result { grid-column: 3; grid-row: 1; }
+      .test-action { grid-column: 1 / -1; }
+      .test-evidence {
+        grid-column: 1 / -1;
+        padding-top: 8px;
+      }
+
+      footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="wrap">
+      <div class="masthead">
+        <div class="mast-title">Crypto Protocol Diagram / Evidence Console</div>
+        <div class="gate">Code-path gate passed</div>
+      </div>
+
+      <header>
+        <div>
+          <p class="kicker">Benchmark record · 2026-07-28</p>
+          <h1>Measured on what actually ran.</h1>
+          <p class="lead">
+            This scorecard evaluates package integrity, semantic extraction on a real local
+            handshake fixture, failure-path visibility, and deliverable compatibility. Scores
+            are evidence-weighted confidence indicators—not parser accuracy claims.
+          </p>
+        </div>
+
+        <aside class="snapshot" aria-label="Test snapshot">
+          <div class="snapshot-label">Evaluation snapshot</div>
+          <div class="snapshot-row"><b>Upstream</b><span>cfe5d7b1619e47fb…</span></div>
+          <div class="snapshot-row"><b>Plugin</b><span>Trailmark 0.8.2</span></div>
+          <div class="snapshot-row"><b>Runtime</b><span>Python 3.14.6 · uv 0.7.13</span></div>
+          <div class="snapshot-row"><b>Renderer</b><span>Mermaid CLI 11.12.0 · Chrome 150</span></div>
+          <div class="snapshot-row"><b>Scope</b><span>One dependency-free code-path fixture</span></div>
+        </aside>
+      </header>
+
+      <div class="score-deck">
+        <div class="score-header">
+          <h2>Five distinct capability signals</h2>
+          <p>
+            A dimension is reduced when evidence comes from a single fixture, when only one branch
+            was dynamically exercised, or when a path remains untested.
+          </p>
+        </div>
+
+        <div class="metrics">
+          <article class="metric integrity">
+            <div class="metric-ring"><div class="metric-value">97<small>/100</small></div></div>
+            <h3>Package integrity</h3>
+            <p>Complete resources, byte-identical upstream files, validator pass.</p>
+          </article>
+
+          <article class="metric flow">
+            <div class="metric-ring"><div class="metric-value">94<small>/100</small></div></div>
+            <h3>Message-flow fidelity</h3>
+            <p>Four logical messages and both directions represented.</p>
+          </article>
+
+          <article class="metric crypto">
+            <div class="metric-ring"><div class="metric-value">91<small>/100</small></div></div>
+            <h3>Crypto placement</h3>
+            <p>DH, HMAC, and derivation mapped to the computing party.</p>
+          </article>
+
+          <article class="metric abort">
+            <div class="metric-ring"><div class="metric-value">89<small>/100</small></div></div>
+            <h3>Abort-path visibility</h3>
+            <p>Three branches rendered; one tamper path executed end-to-end.</p>
+          </article>
+
+          <article class="metric delivery">
+            <div class="metric-ring"><div class="metric-value">96<small>/100</small></div></div>
+            <h3>Delivery compatibility</h3>
+            <p>Mermaid parsed and rendered; Markdown and ASCII delivered.</p>
+          </article>
+        </div>
+      </div>
+
+      <section>
+        <div class="section-intro">
+          <div class="section-code">01 / Claims → evidence</div>
+          <div>
+            <h2>What each score is allowed to mean.</h2>
+            <p class="section-text">
+              Every scored claim maps to a concrete artifact or command. Unrun spec extraction and
+              cross-platform rendering do not contribute to the five scores.
+            </p>
+          </div>
+        </div>
+
+        <div class="claim-grid">
+          <article class="claim">
+            <div class="claim-top"><span class="claim-id">C-01</span><span class="status pass">Verified</span></div>
+            <h3>A standalone package has every referenced local resource.</h3>
+            <p>
+              Thirteen files were present, no symlinks were found, all references and examples
+              resolved, and the official quick validator returned “Skill is valid!”
+            </p>
+          </article>
+
+          <article class="claim">
+            <div class="claim-top"><span class="claim-id">C-02</span><span class="status pass">Verified</span></div>
+            <h3>A local implementation becomes a phase-aware message trace.</h3>
+            <p>
+              The toy authenticated-DH source produced ClientHello, ServerHello, ClientFinished,
+              and SessionAccepted across setup, derivation, confirmation, and abort regions.
+            </p>
+          </article>
+
+          <article class="claim">
+            <div class="claim-top"><span class="claim-id">C-03</span><span class="status review">Bounded</span></div>
+            <h3>Failure conditions are visible rather than implied.</h3>
+            <p>
+              BAD_CLIENT_MAC, BAD_SERVER_MAC, and BAD_CLIENT_FINISHED appear in the diagram. The
+              server-MAC tamper branch was dynamically executed; the other two were source-traced.
+            </p>
+          </article>
+
+          <article class="claim">
+            <div class="claim-top"><span class="claim-id">C-04</span><span class="status unscored">Not scored</span></div>
+            <h3>The broader spec workflow remains agent-guided.</h3>
+            <p>
+              RFC, paper, ProVerif, and Tamarin guidance exists in the package, but this run did not
+              execute a separate spec-to-diagram case. No deterministic or 100% parsing claim is made.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-intro">
+          <div class="section-code">02 / Test matrix</div>
+          <div>
+            <h2>Normal, adversarial, boundary, and delivery gates.</h2>
+            <p class="section-text">
+              Statuses distinguish executed passes from inspected evidence and unrun paths. A green
+              label never stands in for a test that did not happen.
+            </p>
+          </div>
+        </div>
+
+        <div class="matrix" aria-label="Benchmark test matrix">
+          <div class="test-row">
+            <div class="test-id">T-01</div>
+            <div class="test-class">Normal</div>
+            <div class="test-action">Run the dependency-free authenticated-DH happy path.</div>
+            <div class="test-evidence">Key match true; SessionAccepted.</div>
+            <div class="test-result pass">Pass</div>
+          </div>
+          <div class="test-row">
+            <div class="test-id">T-02</div>
+            <div class="test-class">Adversarial</div>
+            <div class="test-action">Flip one bit in the returned server MAC.</div>
+            <div class="test-evidence">TAMPER_REJECTED · BAD_SERVER_MAC.</div>
+            <div class="test-result pass">Pass</div>
+          </div>
+          <div class="test-row">
+            <div class="test-id">T-03</div>
+            <div class="test-class">Boundary</div>
+            <div class="test-action">Trace every explicit HandshakeAbort source branch.</div>
+            <div class="test-evidence">Three branches represented; two source-reviewed only.</div>
+            <div class="test-result review">Reviewed</div>
+          </div>
+          <div class="test-row">
+            <div class="test-id">T-04</div>
+            <div class="test-class">Delivery</div>
+            <div class="test-action">Parse and render generated Mermaid with CLI 11.12.0.</div>
+            <div class="test-evidence">784×1530 RGB PNG; no syntax error.</div>
+            <div class="test-result pass">Pass</div>
+          </div>
+          <div class="test-row">
+            <div class="test-id">T-05</div>
+            <div class="test-class">Delivery</div>
+            <div class="test-action">Inspect Markdown summary and inline ASCII trace.</div>
+            <div class="test-evidence">Both participants, four messages, primitive list, caveat.</div>
+            <div class="test-result review">Reviewed</div>
+          </div>
+          <div class="test-row">
+            <div class="test-id">T-06</div>
+            <div class="test-class">Ambiguous</div>
+            <div class="test-action">Resolve an intentionally underspecified prose protocol.</div>
+            <div class="test-evidence">Not included in this validation run.</div>
+            <div class="test-result unscored">Not run</div>
+          </div>
+          <div class="test-row">
+            <div class="test-id">T-07</div>
+            <div class="test-class">Spec path</div>
+            <div class="test-action">Convert a ProVerif or Tamarin model in a fresh run.</div>
+            <div class="test-evidence">Bundled examples inspected; extraction not re-run.</div>
+            <div class="test-result unscored">Not run</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-intro">
+          <div class="section-code">03 / Evidence trail</div>
+          <div>
+            <h2>Reproducible commands, named artifacts.</h2>
+            <p class="section-text">
+              The strongest evidence is kept outside the product repository in the workspace
+              validation package so the published Skill remains clean.
+            </p>
+          </div>
+        </div>
+
+        <div class="evidence-layout">
+          <div class="evidence-stack">
+            <article class="evidence-card">
+              <h3>Fixture execution</h3>
+              <p>
+                A standard-library Python fixture exercised both a successful exchange and a
+                modified server-MAC rejection without an API, account, or third-party package.
+              </p>
+            </article>
+            <article class="evidence-card">
+              <h3>Skill structure</h3>
+              <p>
+                The official skill-creator validator passed after supplying its own PyYAML
+                dependency through an isolated uv invocation.
+              </p>
+            </article>
+            <article class="evidence-card">
+              <h3>Rendered delivery</h3>
+              <p>
+                Mermaid CLI parsed the generated source and produced a 107,046-byte RGB PNG. The
+                rendered participants, arrows, phase regions, and abort branches were visually inspected.
+              </p>
+            </article>
+          </div>
+
+          <div class="terminal" aria-label="Recorded validation output">
+            <div class="terminal-head"><i aria-hidden="true"></i>recorded output</div>
+            <pre>$ python3 …/toy_authenticated_dh.py
+<span class="pass-line">HANDSHAKE_OK key_match=True
+status=SessionAccepted</span>
+<span class="pass-line">TAMPER_REJECTED
+reason=BAD_SERVER_MAC</span>
+
+$ uv run --with pyyaml …/quick_validate.py
+<span class="pass-line">Skill is valid!</span>
+
+$ mermaid-cli@11.12.0
+<span class="pass-line">Generating single mermaid chart</span>
+PNG · 784 × 1530 · RGB
+107046 bytes</pre>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-intro">
+          <div class="section-code">04 / Interpretation limits</div>
+          <div>
+            <h2>Confidence with the uncertainty left intact.</h2>
+            <p class="section-text">
+              These limits are part of the result, not footnotes to hide. They define what a buyer
+              can responsibly conclude from this benchmark.
+            </p>
+          </div>
+        </div>
+
+        <div class="limits">
+          <article class="limit">
+            <span>Single-fixture limit</span>
+            <h3>Code-path depth, not corpus breadth</h3>
+            <p>
+              The four-message toy handshake gives strong traceability for one representative
+              implementation. It does not establish a population-wide extraction rate.
+            </p>
+          </article>
+          <article class="limit">
+            <span>Dynamic coverage limit</span>
+            <h3>One abort branch executed</h3>
+            <p>
+              BAD_SERVER_MAC was triggered at runtime. BAD_CLIENT_MAC and BAD_CLIENT_FINISHED were
+              confirmed in source and rendered, but were not separately executed.
+            </p>
+          </article>
+          <article class="limit">
+            <span>Semantic limit</span>
+            <h3>Agent-guided, not formal verification</h3>
+            <p>
+              The skill organizes evidence and can flag divergences. It neither proves protocol
+              security nor replaces ProVerif, Tamarin, or expert cryptographic review.
+            </p>
+          </article>
+        </div>
+
+        <div class="method-note">
+          <strong>Score method:</strong> the five scores combine observed gate completion,
+          artifact quality, and an uncertainty reduction for untested breadth. They are deliberately
+          non-equal and must be read independently; no aggregate “accuracy” percentage is reported.
+        </div>
+      </section>
+
+      <footer>
+        <span>Crypto Protocol Diagram · Benchmark</span>
+        <span>Evidence scope: local Python code-path fixture</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

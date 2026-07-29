@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Risk Management Specialist — Instruction</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07120f;
+      --panel: #0d1d19;
+      --panel-2: #112722;
+      --ink: #effcf6;
+      --muted: #94aaa2;
+      --line: #284039;
+      --lime: #b8f34a;
+      --green: #34c98d;
+      --amber: #f3b43f;
+      --orange: #ef753b;
+      --red: #ef4e59;
+      --cyan: #55d7dc;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 80% 2%, rgba(85,215,220,.11), transparent 25%),
+        linear-gradient(120deg, rgba(184,243,74,.045) 1px, transparent 1px),
+        var(--bg);
+      background-size: auto, 28px 28px, auto;
+      color: var(--ink);
+    }
+    .page { width: 100%; max-width: 1100px; margin: 0 auto; padding: 28px clamp(14px, 4vw, 42px) 64px; }
+    nav { display: flex; justify-content: space-between; gap: 12px; align-items: center; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .brand { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
+    .brand::before { content: ""; width: 12px; height: 12px; border: 3px solid var(--lime); transform: rotate(45deg); }
+    .mode { border: 1px solid var(--line); border-radius: 999px; padding: 6px 9px; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); gap: 18px; align-items: center; margin-top: 28px; }
+    .kicker { margin: 0; color: var(--lime); font-size: 11px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
+    h1 { margin: 12px 0 14px; max-width: 720px; font-size: clamp(38px, 8vw, 76px); line-height: .92; letter-spacing: -.065em; }
+    .lede { max-width: 650px; margin: 0; color: var(--muted); font-size: clamp(15px, 2.1vw, 19px); line-height: 1.55; }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
+    .chip { border: 1px solid var(--line); border-radius: 6px; background: rgba(17,39,34,.85); padding: 7px 9px; color: #c8ddd5; font-size: 10px; font-weight: 700; }
+    .matrix-card { min-width: 0; border: 1px solid #36534b; border-radius: 18px; background: rgba(13,29,25,.95); padding: 16px; box-shadow: 0 22px 45px rgba(0,0,0,.28); }
+    .matrix-head { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+    .matrix-head b { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+    .matrix-head span { color: var(--amber); font: 10px ui-monospace, monospace; }
+    .matrix { display: grid; grid-template-columns: 24px repeat(5, minmax(0, 1fr)); gap: 4px; align-items: center; }
+    .axis { color: #789088; font: 8px ui-monospace, monospace; text-align: center; }
+    .cell { aspect-ratio: 1.28; min-width: 0; border-radius: 4px; opacity: .82; }
+    .low { background: #248b65; }
+    .med { background: #b99426; }
+    .high { background: #d86b32; }
+    .bad { background: #c53f4b; }
+    .selected { position: relative; outline: 2px solid #fff; opacity: 1; box-shadow: 0 0 0 3px rgba(243,180,63,.45); }
+    .selected::after { content: "P3×S4"; position: absolute; inset: 50% auto auto 50%; color: #fff; font: 7px ui-monospace, monospace; transform: translate(-50%,-50%); white-space: nowrap; }
+    .matrix-result { display: flex; justify-content: space-between; gap: 10px; align-items: end; margin-top: 13px; border-top: 1px solid var(--line); padding-top: 12px; }
+    .matrix-result span { color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: .1em; }
+    .matrix-result strong { display: block; margin-top: 3px; color: var(--orange); font-size: 23px; }
+    .matrix-result code { color: #d6e7e1; font-size: 11px; }
+    section { margin-top: 54px; }
+    .section-head { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 18px; }
+    .eyebrow { margin: 0; color: var(--lime); font-size: 10px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+    h2 { margin: -5px 0 0; font-size: clamp(27px, 5vw, 45px); line-height: 1.02; letter-spacing: -.045em; }
+    .section-copy { margin: 10px 0 0; color: var(--muted); line-height: 1.65; }
+    .lifecycle { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; margin-top: 20px; }
+    .phase { min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 15px; }
+    .phase b { display: block; color: var(--lime); font: 10px ui-monospace, monospace; }
+    .phase h3 { margin: 10px 0 6px; font-size: 13px; }
+    .phase p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .tool-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin-top: 20px; }
+    .tool { min-width: 0; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); overflow: hidden; }
+    .tool-top { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--line); background: var(--panel-2); padding: 14px 16px; }
+    .tool-top b { font-size: 13px; }
+    .tool-top span { color: var(--cyan); font-size: 9px; font-weight: 900; text-transform: uppercase; }
+    .tool-body { padding: 16px; }
+    pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; color: #bcd1ca; font: 10px/1.65 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .tool-output { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin-top: 13px; }
+    .metric { border: 1px solid var(--line); border-radius: 8px; padding: 9px; }
+    .metric span { display: block; color: var(--muted); font-size: 8px; text-transform: uppercase; }
+    .metric b { display: block; margin-top: 4px; font-size: 12px; }
+    .metric .hot { color: var(--orange); }
+    .workflow { margin-top: 20px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+    .step { display: grid; grid-template-columns: 38px minmax(0, 1fr) minmax(100px, .36fr); gap: 12px; align-items: center; border-bottom: 1px solid var(--line); background: rgba(13,29,25,.86); padding: 14px 16px; }
+    .step:last-child { border-bottom: 0; }
+    .step-no { color: var(--lime); font: 14px ui-monospace, monospace; }
+    .step b { font-size: 12px; }
+    .step p { margin: 4px 0 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .artifact { color: var(--cyan); font: 9px/1.45 ui-monospace, monospace; text-align: right; overflow-wrap: anywhere; }
+    .prompt-box { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 12px; margin-top: 20px; }
+    .prompt, .boundary { min-width: 0; border-radius: 16px; padding: 20px; }
+    .prompt { border: 1px solid #41635a; background: #10241f; }
+    .prompt h3, .boundary h3 { margin: 0 0 12px; font-size: 13px; }
+    .boundary { border: 1px solid #764034; background: #271715; }
+    .boundary h3 { color: #ff9b76; }
+    .boundary ul { margin: 0; padding-left: 17px; color: #d9b2a5; font-size: 11px; line-height: 1.65; }
+    .callout { margin-top: 48px; border: 1px solid #526b32; border-radius: 18px; background: rgba(184,243,74,.09); padding: clamp(21px, 5vw, 38px); }
+    .callout h2 { color: var(--lime); }
+    .callout p { max-width: 800px; margin: 11px 0 0; color: #c0d2ca; line-height: 1.65; }
+    footer { margin-top: 25px; color: #698078; font-size: 10px; text-align: center; }
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; }
+      .matrix-card { max-width: 540px; }
+      .lifecycle { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 650px) {
+      .section-head { grid-template-columns: 1fr; gap: 8px; }
+      .tool-grid, .prompt-box { grid-template-columns: 1fr; }
+      .step { grid-template-columns: 32px minmax(0, 1fr); }
+      .artifact { grid-column: 2; text-align: left; }
+    }
+    @media (max-width: 460px) {
+      .page { padding-inline: 10px; }
+      .lifecycle { grid-template-columns: 1fr 1fr; }
+      .tool-output { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .selected { animation: pulse 2.8s ease-in-out infinite; }
+      @keyframes pulse { 50% { box-shadow: 0 0 0 5px rgba(243,180,63,.18); } }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page">
+      <nav><span class="brand">Risk Management Specialist</span><span class="mode">Local · API-free</span></nav>
+
+      <header class="hero">
+        <div>
+          <p class="kicker">ISO 14971 workflow support</p>
+          <h1>Turn hazards into reviewable control decisions.</h1>
+          <p class="lede">Structure medical-device risk planning, analysis, evaluation, control, and post-production monitoring—then calculate transparent matrix and FMEA results locally.</p>
+          <div class="chips"><span class="chip">5×5 matrix</span><span class="chip">Design &amp; process FMEA</span><span class="chip">Control hierarchy</span><span class="chip">Residual-risk handoff</span></div>
+        </div>
+        <aside class="matrix-card" aria-label="Illustrative five by five risk matrix">
+          <div class="matrix-head"><b>Illustrative matrix</b><span>S1 → S5</span></div>
+          <div class="matrix">
+            <span class="axis">P5</span><i class="cell med"></i><i class="cell high"></i><i class="cell high"></i><i class="cell bad"></i><i class="cell bad"></i>
+            <span class="axis">P4</span><i class="cell med"></i><i class="cell med"></i><i class="cell high"></i><i class="cell high"></i><i class="cell bad"></i>
+            <span class="axis">P3</span><i class="cell low"></i><i class="cell med"></i><i class="cell med"></i><i class="cell high selected"></i><i class="cell high"></i>
+            <span class="axis">P2</span><i class="cell low"></i><i class="cell low"></i><i class="cell med"></i><i class="cell med"></i><i class="cell high"></i>
+            <span class="axis">P1</span><i class="cell low"></i><i class="cell low"></i><i class="cell low"></i><i class="cell med"></i><i class="cell med"></i>
+          </div>
+          <div class="matrix-result"><div><span>Evaluated result</span><strong>HIGH</strong></div><code>index 12 · AFAP</code></div>
+        </aside>
+      </header>
+
+      <section>
+        <div class="section-head">
+          <p class="eyebrow">Lifecycle coverage</p>
+          <div><h2>One continuous risk file, not a one-time worksheet.</h2><p class="section-copy">The skill organizes the decisions and evidence expected across the product lifecycle. It keeps criteria, control selection, verification, residual risk, and field feedback connected.</p></div>
+        </div>
+        <div class="lifecycle">
+          <div class="phase"><b>01</b><h3>Plan</h3><p>Scope, criteria, roles, verification, and monitoring.</p></div>
+          <div class="phase"><b>02</b><h3>Analyze</h3><p>Hazards, sequences, hazardous situations, probability, severity.</p></div>
+          <div class="phase"><b>03</b><h3>Evaluate</h3><p>Compare estimates with approved acceptability criteria.</p></div>
+          <div class="phase"><b>04</b><h3>Control</h3><p>Design first, then protection, then information for safety.</p></div>
+          <div class="phase"><b>05</b><h3>Monitor</h3><p>Complaints, service, vigilance, literature, clinical data.</p></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <p class="eyebrow">Local tools</p>
+          <div><h2>Explainable calculations, inspectable output.</h2><p class="section-copy">Both command-line tools use only the Python standard library. JSON output can feed a review workflow without sending device information to an API.</p></div>
+        </div>
+        <div class="tool-grid">
+          <article class="tool">
+            <div class="tool-top"><b>Risk matrix calculator</b><span>5-point scales</span></div>
+            <div class="tool-body">
+              <pre>python3 scripts/risk_matrix_calculator.py \
+  --probability 3 --severity 4 --output json</pre>
+              <div class="tool-output"><div class="metric"><span>Probability</span><b>P3</b></div><div class="metric"><span>Severity</span><b>S4</b></div><div class="metric"><span>Result</span><b class="hot">High</b></div></div>
+            </div>
+          </article>
+          <article class="tool">
+            <div class="tool-top"><b>FMEA analyzer</b><span>1–10 ratings</span></div>
+            <div class="tool-body">
+              <pre>python3 scripts/fmea_analyzer.py \
+  --data fictional-fmea.json --output json</pre>
+              <div class="tool-output"><div class="metric"><span>RPN</span><b>84</b></div><div class="metric"><span>Band</span><b>Medium</b></div><div class="metric"><span>Critical sev.</span><b class="hot">Separate</b></div></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <p class="eyebrow">Recommended workflow</p>
+          <h2>Produce the record behind the decision.</h2>
+        </div>
+        <div class="workflow">
+          <div class="step"><span class="step-no">01</span><div><b>Define the device-specific framework</b><p>Intended use, jurisdictions, approved probability/severity scales, acceptability criteria, and owners.</p></div><span class="artifact">risk-management-plan.md</span></div>
+          <div class="step"><span class="step-no">02</span><div><b>Identify hazards and sequences</b><p>Record foreseeable misuse, initiating events, hazardous situations, harms, and existing controls.</p></div><span class="artifact">hazard-analysis.json</span></div>
+          <div class="step"><span class="step-no">03</span><div><b>Estimate and evaluate</b><p>Use the approved matrix or FMEA method; keep severity and RPN signals visible.</p></div><span class="artifact">risk-evaluation.json</span></div>
+          <div class="step"><span class="step-no">04</span><div><b>Select and verify controls</b><p>Apply the control hierarchy, identify new hazards, and link test evidence.</p></div><span class="artifact">control-records.md</span></div>
+          <div class="step"><span class="step-no">05</span><div><b>Review residual and production risk</b><p>Document approvals, unresolved risk, benefit-risk needs, and monitoring triggers.</p></div><span class="artifact">risk-file-handoff.md</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <p class="eyebrow">Prompt pattern</p>
+          <h2>Bring your approved criteria.</h2>
+        </div>
+        <div class="prompt-box">
+          <div class="prompt">
+            <h3>Recommended prompt</h3>
+            <pre>Using Risk Management Specialist, analyze this fictional infusion-monitor FMEA.
+
+Use our approved S/O/D scales and action bands. Calculate each RPN, flag severity ≥8 independently, rank the top risks, propose control options in the order design → protection → information, and list the verification evidence still required.
+
+Do not claim ISO 14971 compliance or approve residual risk.</pre>
+          </div>
+          <aside class="boundary">
+            <h3>Do not use the defaults blindly</h3>
+            <ul>
+              <li>The bundled matrix is illustrative.</li>
+              <li>ISO 14971 does not mandate its thresholds.</li>
+              <li>Generated controls are candidate ideas.</li>
+              <li>A qualified owner approves criteria and records.</li>
+              <li>Control effectiveness requires real verification.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <div class="callout">
+        <p class="eyebrow">Decision boundary</p>
+        <h2>Decision support, never certification.</h2>
+        <p>Replace or formally approve all example probability bands, severity definitions, matrix cells, and RPN thresholds before regulated use. Clinical, engineering, quality, and regulatory judgment remain with accountable professionals.</p>
+      </div>
+      <footer>Risk Management Specialist · ISO 14971 workflow support · local deterministic utilities</footer>
+    </main>
+  </div>
+</body>
+</html>

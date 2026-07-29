@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Crypto Protocol Diagram — Instructions</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page-bg: #050817;
+      --page-fg: #f3f6ff;
+      --panel: #0a1028;
+      --panel-2: #0e1738;
+      --soft: #151f46;
+      --line: rgba(133, 159, 255, 0.23);
+      --line-strong: rgba(116, 149, 255, 0.52);
+      --muted: #a8b2d8;
+      --cobalt: #4f7cff;
+      --cyan: #5ee7ff;
+      --violet: #9c78ff;
+      --lime: #b6f264;
+      --warning: #ffcc66;
+      --danger: #ff7396;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--page-bg);
+      color: var(--page-fg);
+    }
+
+    body {
+      margin: 0;
+      min-width: 0;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      font-family: var(--sans);
+      line-height: 1.55;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .finchip-page {
+      min-height: 100%;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 82% 5%, rgba(79, 124, 255, 0.20), transparent 31rem),
+        radial-gradient(circle at 5% 42%, rgba(94, 231, 255, 0.08), transparent 24rem),
+        linear-gradient(180deg, #050817 0%, #070b1d 54%, #050817 100%);
+      color: var(--page-fg);
+      isolation: isolate;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 1120px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: 0 clamp(18px, 4vw, 48px) 64px;
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      color: #dce5ff;
+    }
+
+    .brand-mark {
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--cyan);
+      border-radius: 5px;
+      background:
+        linear-gradient(90deg, transparent 44%, var(--cyan) 44% 56%, transparent 56%),
+        linear-gradient(transparent 44%, var(--cyan) 44% 56%, transparent 56%);
+      box-shadow: 0 0 22px rgba(94, 231, 255, 0.28);
+      flex: 0 0 auto;
+    }
+
+    .top-status {
+      color: var(--lime);
+      white-space: nowrap;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+      gap: clamp(28px, 5vw, 64px);
+      align-items: center;
+      padding: clamp(38px, 7vw, 72px) 0 44px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 16px;
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 780px;
+      margin-bottom: 18px;
+      font-size: clamp(38px, 6.8vw, 72px);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      text-wrap: balance;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin-bottom: 24px;
+      color: #c3cdef;
+      font-size: clamp(16px, 2vw, 19px);
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(14, 23, 56, 0.72);
+      color: #cfdaff;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .chip strong { color: var(--lime); }
+
+    .signal-card {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: 22px;
+      background:
+        linear-gradient(rgba(79, 124, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79, 124, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(145deg, rgba(18, 29, 71, 0.96), rgba(7, 12, 31, 0.98));
+      background-size: 24px 24px, 24px 24px, auto;
+      padding: 20px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+    }
+
+    .signal-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(105deg, transparent 35%, rgba(94, 231, 255, 0.07), transparent 65%);
+      transform: translateX(-35%);
+      animation: sweep 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes sweep {
+      to { transform: translateX(35%); }
+    }
+
+    .signal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .signal-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--lime);
+    }
+
+    .signal-live::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 10px var(--lime);
+    }
+
+    .participants {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 8px;
+    }
+
+    .participant {
+      position: relative;
+      padding: 10px 12px;
+      border: 1px solid rgba(94, 231, 255, 0.28);
+      border-radius: 10px;
+      background: #0b1534;
+      color: #eef5ff;
+      font-family: var(--mono);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .participant::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      width: 1px;
+      height: 178px;
+      background: linear-gradient(var(--cobalt), rgba(79, 124, 255, 0.08));
+    }
+
+    .messages {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 13px;
+      padding: 12px 2px 0;
+    }
+
+    .message {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-height: 31px;
+      padding: 5px 31px 5px 10px;
+      border-top: 1px solid var(--cobalt);
+      color: #dfe7ff;
+      font-family: var(--mono);
+      font-size: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .message::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -4px;
+      width: 0;
+      height: 0;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      border-left: 7px solid var(--cobalt);
+    }
+
+    .message.reply {
+      justify-content: flex-end;
+      padding: 5px 10px 5px 31px;
+      border-top-style: dashed;
+      border-top-color: var(--cyan);
+      text-align: right;
+    }
+
+    .message.reply::after {
+      right: auto;
+      left: -1px;
+      border-left: 0;
+      border-right: 7px solid var(--cyan);
+    }
+
+    .crypto-note {
+      margin-top: 15px;
+      padding: 11px 12px;
+      border-left: 2px solid var(--violet);
+      background: rgba(156, 120, 255, 0.09);
+      color: #c8d2f1;
+      font-family: var(--mono);
+      font-size: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .output-pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 13px;
+    }
+
+    .output {
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(5, 8, 23, 0.75);
+    }
+
+    .output b {
+      display: block;
+      margin-bottom: 3px;
+      color: #f4f7ff;
+      font-size: 12px;
+    }
+
+    .output span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    section {
+      padding: clamp(42px, 7vw, 76px) 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 30px;
+    }
+
+    .section-index {
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      font-size: clamp(28px, 4.8vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      text-wrap: balance;
+    }
+
+    .section-copy {
+      max-width: 690px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .input-card,
+    .artifact-card,
+    .boundary-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(14, 23, 56, 0.92), rgba(8, 13, 34, 0.96));
+      padding: 20px;
+    }
+
+    .input-card.featured {
+      border-color: rgba(94, 231, 255, 0.45);
+      box-shadow: inset 0 1px 0 rgba(94, 231, 255, 0.12);
+    }
+
+    .card-tag {
+      display: inline-block;
+      margin-bottom: 13px;
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      color: #f3f6ff;
+      font-size: 17px;
+    }
+
+    .input-card p,
+    .artifact-card p,
+    .boundary-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .formats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .format {
+      padding: 4px 7px;
+      border-radius: 6px;
+      background: rgba(79, 124, 255, 0.12);
+      color: #c5d2ff;
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(8, 13, 34, 0.8);
+      overflow: hidden;
+    }
+
+    .stage {
+      position: relative;
+      min-width: 0;
+      padding: 20px 16px 22px;
+      border-right: 1px solid var(--line);
+    }
+
+    .stage:last-child { border-right: 0; }
+
+    .stage::after {
+      content: "";
+      position: absolute;
+      top: 31px;
+      right: -5px;
+      z-index: 2;
+      width: 9px;
+      height: 9px;
+      border-top: 1px solid var(--cyan);
+      border-right: 1px solid var(--cyan);
+      background: var(--panel);
+      transform: rotate(45deg);
+    }
+
+    .stage:last-child::after { display: none; }
+
+    .stage-num {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .stage b {
+      display: block;
+      margin-bottom: 7px;
+      color: #f3f6ff;
+      font-size: 14px;
+    }
+
+    .stage span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .prompt-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 22px;
+    }
+
+    .prompt-intro {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(14, 23, 56, 0.65);
+    }
+
+    .prompt-intro p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    pre {
+      margin: 0;
+      min-width: 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      font-family: var(--mono);
+    }
+
+    .prompt {
+      padding: 22px;
+      border: 1px solid rgba(94, 231, 255, 0.38);
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(79, 124, 255, 0.12), rgba(156, 120, 255, 0.07)),
+        #090f27;
+      color: #e5ecff;
+      font-size: 13px;
+    }
+
+    .prompt::before {
+      content: "RECOMMENDED PROMPT";
+      display: block;
+      margin-bottom: 13px;
+      color: var(--lime);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.13em;
+    }
+
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .artifact-card {
+      position: relative;
+      padding-top: 52px;
+    }
+
+    .artifact-badge {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--lime);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .artifact-badge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border: 1px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    .artifact-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .artifact-line {
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1fr);
+      gap: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(133, 159, 255, 0.14);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .artifact-line b {
+      color: #dce5ff;
+      font-family: var(--mono);
+      font-weight: 500;
+    }
+
+    .boundary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .boundary-card.good { border-top: 2px solid var(--lime); }
+    .boundary-card.caution { border-top: 2px solid var(--warning); }
+    .boundary-card.stop { border-top: 2px solid var(--danger); }
+
+    .boundary-card ul {
+      margin: 13px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .boundary-card li {
+      position: relative;
+      padding: 7px 0 7px 17px;
+      border-top: 1px solid rgba(133, 159, 255, 0.12);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .boundary-card li::before {
+      content: "↳";
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+    }
+
+    .footnote {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+      margin-top: 24px;
+      padding: 18px;
+      border: 1px solid rgba(255, 204, 102, 0.28);
+      border-radius: 14px;
+      background: rgba(255, 204, 102, 0.06);
+      color: #d7d9df;
+      font-size: 13px;
+    }
+
+    .footnote-symbol {
+      color: var(--warning);
+      font-family: var(--mono);
+      font-size: 16px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+      color: #7f8bb5;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 900px) {
+      .pipeline {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .stage:nth-child(3) { border-right: 0; }
+      .stage:nth-child(3)::after { display: none; }
+      .stage:nth-child(n+4) { border-top: 1px solid var(--line); }
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .section-head,
+      .prompt-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        gap: 30px;
+        padding-top: 42px;
+      }
+
+      .signal-card { max-width: 560px; }
+
+      .input-grid,
+      .boundary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .shell { padding-inline: 16px; }
+      .topline { align-items: flex-start; }
+      .top-status { font-size: 9px; }
+      h1 { font-size: clamp(38px, 13vw, 56px); }
+
+      .pipeline,
+      .artifact-grid,
+      .output-pair {
+        grid-template-columns: 1fr;
+      }
+
+      .stage,
+      .stage:nth-child(3) {
+        border-right: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .stage:first-child { border-top: 0; }
+      .stage::after { display: none; }
+
+      .artifact-line {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+
+      .message { font-size: 9px; }
+      .participant::after { height: 188px; }
+      .footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="shell">
+      <div class="topline">
+        <div class="brand"><span class="brand-mark" aria-hidden="true"></span>Crypto Protocol Diagram</div>
+        <div class="top-status">Instruction / local-ready</div>
+      </div>
+
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Protocol semantics, made visible</p>
+          <h1>Turn a handshake into an auditable signal map.</h1>
+          <p class="hero-copy">
+            Give the skill source code, a protocol specification, or both. It traces who sends
+            what, places each cryptographic operation on the party that performs it, exposes
+            abort branches, then returns Mermaid source plus an inline ASCII diagram.
+          </p>
+          <div class="chip-row" aria-label="Key product facts">
+            <span class="chip"><strong>No API key</strong></span>
+            <span class="chip">Local files work offline</span>
+            <span class="chip">Mermaid + ASCII</span>
+            <span class="chip">Code · RFC · ProVerif · Tamarin</span>
+          </div>
+        </div>
+
+        <div class="signal-card" aria-label="Representative protocol output anatomy">
+          <div class="signal-head">
+            <span>Output anatomy</span>
+            <span class="signal-live">semantic trace</span>
+          </div>
+          <div class="participants">
+            <div class="participant">CLIENT</div>
+            <div class="participant">SERVER</div>
+          </div>
+          <div class="messages">
+            <div class="message">ClientHello(epk_c || nonce_c || mac_c)</div>
+            <div class="message reply">ServerHello(epk_s || nonce_s || mac_s)</div>
+            <div class="message">ClientFinished(finished)</div>
+            <div class="message reply">SessionAccepted</div>
+          </div>
+          <div class="crypto-note">DH → HKDF-like → HMAC verification → explicit abort paths</div>
+          <div class="output-pair">
+            <div class="output"><b>Mermaid file</b><span>Portable sequenceDiagram + summary</span></div>
+            <div class="output"><b>ASCII inline</b><span>Readable immediately in the response</span></div>
+          </div>
+        </div>
+      </header>
+
+      <section>
+        <div class="section-head">
+          <div class="section-index">01 / Choose the input path</div>
+          <div>
+            <h2>Start from evidence, not protocol memory.</h2>
+            <p class="section-copy">
+              The skill first classifies the material. That choice controls how participants,
+              message ordering, and cryptographic meaning are recovered.
+            </p>
+          </div>
+        </div>
+
+        <div class="input-grid">
+          <article class="input-card featured">
+            <span class="card-tag">Code path</span>
+            <h3>Read the implementation</h3>
+            <p>
+              Finds handshake entry points, follows sends and receives, treats meaningful
+              in-process role boundaries as logical messages, and maps crypto calls to phases.
+            </p>
+            <div class="formats">
+              <span class="format">.py</span><span class="format">.rs</span>
+              <span class="format">.go</span><span class="format">.ts</span>
+              <span class="format">.js</span><span class="format">.c/.cpp</span>
+            </div>
+          </article>
+
+          <article class="input-card">
+            <span class="card-tag">Spec path</span>
+            <h3>Extract the intended flow</h3>
+            <p>
+              Reads formal or informal descriptions, recovers named and implied roles, preserves
+              round ordering, and marks underspecified operations or inferred steps.
+            </p>
+            <div class="formats">
+              <span class="format">RFC</span><span class="format">paper</span>
+              <span class="format">pseudocode</span><span class="format">.pv</span>
+              <span class="format">.spthy</span>
+            </div>
+          </article>
+
+          <article class="input-card">
+            <span class="card-tag">Both</span>
+            <h3>Compare intent with behavior</h3>
+            <p>
+              Builds the canonical spec flow first, then checks the implementation and annotates
+              divergences directly on the diagram with a visible warning.
+            </p>
+            <div class="formats">
+              <span class="format">spec → baseline</span>
+              <span class="format">code → comparison</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div class="section-index">02 / Extraction pipeline</div>
+          <div>
+            <h2>Five gates between input and diagram.</h2>
+            <p class="section-copy">
+              The workflow favors completeness and semantic correctness over decorative brevity.
+              Every distinct message and known failure path belongs in the result.
+            </p>
+          </div>
+        </div>
+
+        <div class="pipeline" aria-label="Protocol extraction workflow">
+          <div class="stage">
+            <span class="stage-num">GATE 01</span>
+            <b>Classify</b>
+            <span>Code, spec, both, or ambiguous.</span>
+          </div>
+          <div class="stage">
+            <span class="stage-num">GATE 02</span>
+            <b>Locate roles</b>
+            <span>Participants, orchestration, rounds.</span>
+          </div>
+          <div class="stage">
+            <span class="stage-num">GATE 03</span>
+            <b>Trace messages</b>
+            <span>Sender, receiver, payload, order.</span>
+          </div>
+          <div class="stage">
+            <span class="stage-num">GATE 04</span>
+            <b>Annotate crypto</b>
+            <span>DH, KDF, signatures, MACs, encryption.</span>
+          </div>
+          <div class="stage">
+            <span class="stage-num">GATE 05</span>
+            <b>Verify delivery</b>
+            <span>Directions, phases, aborts, syntax.</span>
+          </div>
+        </div>
+
+        <div class="prompt-panel">
+          <div class="prompt-intro">
+            <span class="card-tag">What to include</span>
+            <h3>Point to the evidence and define the comparison.</h3>
+            <p>
+              For the strongest result, provide the source directory, the governing spec when
+              available, the protocol name, and any deployment boundary that turns local calls
+              into real network messages.
+            </p>
+          </div>
+          <pre class="prompt">Diagram the authenticated handshake implemented in ./src/handshake.
+Treat calls between Client and Server state machines as network messages.
+Show every distinct message, DH/HKDF/signature operation, and verification
+failure path. Write the Mermaid result to authenticated-handshake.md and
+print the ASCII sequence diagram plus protocol summary inline.</pre>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div class="section-index">03 / Delivery contract</div>
+          <div>
+            <h2>Two views of the same protocol truth.</h2>
+            <p class="section-copy">
+              The written artifact is durable and renderable. The inline artifact is immediate
+              and portable. Both carry the same roles, messages, operations, and risk notes.
+            </p>
+          </div>
+        </div>
+
+        <div class="artifact-grid">
+          <article class="artifact-card">
+            <span class="artifact-badge">File output</span>
+            <h3>Protocol-name.md</h3>
+            <p>A Mermaid <code>sequenceDiagram</code> followed by a compact protocol summary.</p>
+            <div class="artifact-list">
+              <div class="artifact-line"><b>Participants</b><span>Declared in dominant left-to-right flow.</span></div>
+              <div class="artifact-line"><b>Phases</b><span>Setup, handshake, authentication, derivation, data, teardown.</span></div>
+              <div class="artifact-line"><b>Branches</b><span><code>alt</code>, <code>loop</code>, <code>par</code>, and warnings when supported by evidence.</span></div>
+              <div class="artifact-line"><b>Summary</b><span>Round complexity, primitives, authentication, forward secrecy, notable gaps.</span></div>
+            </div>
+          </article>
+
+          <article class="artifact-card">
+            <span class="artifact-badge">Inline output</span>
+            <h3>ASCII signal trace</h3>
+            <p>A response-safe sequence view with lifelines, requests, replies, local operations, and abort notes.</p>
+            <div class="artifact-list">
+              <div class="artifact-line"><b>Solid arrows</b><span>Requests and protocol sends.</span></div>
+              <div class="artifact-line"><b>Dashed arrows</b><span>Responses and replies.</span></div>
+              <div class="artifact-line"><b>Self loops</b><span>Local key generation, signing, verification, derivation.</span></div>
+              <div class="artifact-line"><b>Legend</b><span>Short labels stay readable; detail moves into the summary.</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div class="section-index">04 / Scope and operating limits</div>
+          <div>
+            <h2>Use it to reason about flow—not to certify security.</h2>
+            <p class="section-copy">
+              This is an agent-guided semantic extraction workflow. It can surface missing checks
+              and implementation/spec divergences, but it is not a deterministic parser or a
+              formal proof engine.
+            </p>
+          </div>
+        </div>
+
+        <div class="boundary-grid">
+          <article class="boundary-card good">
+            <span class="card-tag">Best fit</span>
+            <h3>Protocol understanding</h3>
+            <ul>
+              <li>Handshake and key-exchange reviews</li>
+              <li>Code-to-spec comparisons</li>
+              <li>MPC and multi-party round mapping</li>
+              <li>Security-review communication</li>
+            </ul>
+          </article>
+
+          <article class="boundary-card caution">
+            <span class="card-tag">Human review</span>
+            <h3>Ambiguity remains visible</h3>
+            <ul>
+              <li>Inferred ordering must be labeled</li>
+              <li>Underspecified crypto stays flagged</li>
+              <li>Complex implementations need source coverage checks</li>
+              <li>Rendered syntax should be verified when a renderer exists</li>
+            </ul>
+          </article>
+
+          <article class="boundary-card stop">
+            <span class="card-tag">Out of scope</span>
+            <h3>Do not overclaim</h3>
+            <ul>
+              <li>Not a call-graph generator</li>
+              <li>Not formal protocol verification</li>
+              <li>Not proof of cryptographic security</li>
+              <li>Not guaranteed 100% extraction</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="footnote">
+          <div class="footnote-symbol">§</div>
+          <div>
+            <strong>Dependencies and licensing.</strong> Core operation needs no API key, package
+            manifest, or external service. Local files work offline; a remote URL requires network
+            access. Mermaid rendering is optional and not bundled. The redistributed skill is
+            licensed CC BY-SA 4.0; retain attribution, license, source link, and change history.
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>CRYPTO PROTOCOL DIAGRAM / INSTRUCTION</span>
+        <span>Mermaid source + ASCII trace + protocol summary</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
