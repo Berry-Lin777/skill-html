@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>Algorithmic Art — Benchmark</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4ecd9;
+      --paper-deep: #e9dcc0;
+      --ink: #2c2132;
+      --muted: #695d69;
+      --plum: #6f4164;
+      --coral: #d86e50;
+      --moss: #62784f;
+      --sun: #e5ad3f;
+      --blue: #557b8c;
+      --white: #fffaf0;
+      --line: rgba(44, 33, 50, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      color-scheme: light;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 10% 4%, rgba(229, 173, 63, 0.20) 0 8rem, transparent 8.1rem),
+        radial-gradient(circle at 91% 10%, rgba(216, 110, 80, 0.14) 0 11rem, transparent 11.1rem),
+        var(--paper);
+      color: var(--ink);
+    }
+
+    .page-shell {
+      width: 100%;
+      max-width: 1180px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(20px, 4vw, 56px);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1,
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      letter-spacing: -0.035em;
+    }
+
+    h1 {
+      max-width: 12ch;
+      margin-bottom: 18px;
+      font-size: clamp(3rem, 8vw, 7.2rem);
+      line-height: 0.88;
+    }
+
+    h2 {
+      margin-bottom: 22px;
+      font-size: clamp(2rem, 4.5vw, 3.8rem);
+      line-height: 0.98;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1rem;
+      line-height: 1.35;
+    }
+
+    p {
+      line-height: 1.65;
+    }
+
+    code {
+      overflow-wrap: anywhere;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      color: var(--plum);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 42px;
+      height: 3px;
+      background: var(--coral);
+      content: "";
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+      gap: clamp(30px, 7vw, 86px);
+      align-items: center;
+      min-width: 0;
+      padding: 18px 0 68px;
+    }
+
+    .lede {
+      max-width: 58ch;
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.9vw, 1.25rem);
+    }
+
+    .verdict {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 15px;
+      border: 1px solid rgba(98, 120, 79, 0.35);
+      border-radius: 999px;
+      background: rgba(255, 250, 240, 0.68);
+      color: #43563a;
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .verdict::before {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--moss);
+      box-shadow: 0 0 0 5px rgba(98, 120, 79, 0.13);
+      content: "";
+    }
+
+    .seed-plate {
+      position: relative;
+      min-width: 0;
+      aspect-ratio: 1 / 1;
+      border: 1px solid rgba(44, 33, 50, 0.28);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 37% 31%, var(--sun) 0 3.5%, transparent 3.7%),
+        radial-gradient(circle at 62% 46%, var(--coral) 0 8%, transparent 8.2%),
+        radial-gradient(circle at 34% 70%, var(--plum) 0 5%, transparent 5.2%),
+        repeating-radial-gradient(circle at 50% 50%, transparent 0 12px, rgba(44, 33, 50, 0.16) 13px 14px),
+        var(--white);
+      box-shadow: 18px 22px 0 rgba(111, 65, 100, 0.11);
+    }
+
+    .seed-plate::before,
+    .seed-plate::after {
+      position: absolute;
+      border-radius: 50%;
+      content: "";
+    }
+
+    .seed-plate::before {
+      inset: 18%;
+      border: 2px dashed rgba(85, 123, 140, 0.65);
+      transform: rotate(9deg);
+    }
+
+    .seed-plate::after {
+      inset: 36%;
+      border: 8px solid rgba(98, 120, 79, 0.75);
+      background: var(--paper);
+    }
+
+    .plate-label {
+      position: absolute;
+      z-index: 1;
+      right: 3%;
+      bottom: 8%;
+      max-width: 44%;
+      padding: 10px 12px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--white);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: clamp(0.65rem, 1.4vw, 0.78rem);
+      line-height: 1.45;
+      transform: rotate(-4deg);
+    }
+
+    .meta-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 76px;
+    }
+
+    .meta-item {
+      min-width: 0;
+      padding: 18px 16px 18px 0;
+    }
+
+    .meta-item + .meta-item {
+      padding-left: 18px;
+      border-left: 1px solid var(--line);
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      display: block;
+      overflow-wrap: anywhere;
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .section {
+      margin-bottom: 82px;
+    }
+
+    .section-intro {
+      max-width: 68ch;
+      margin-bottom: 30px;
+      color: var(--muted);
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .evidence-card {
+      min-width: 0;
+      padding: clamp(20px, 3vw, 30px);
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.7);
+    }
+
+    .evidence-card:nth-child(1) {
+      border-radius: 28px 6px 28px 6px;
+    }
+
+    .evidence-card:nth-child(2) {
+      border-radius: 6px 28px 6px 28px;
+    }
+
+    .evidence-card:nth-child(3) {
+      border-radius: 6px 28px 28px 6px;
+    }
+
+    .evidence-card:nth-child(4) {
+      border-radius: 28px 6px 6px 28px;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .ordinal {
+      color: var(--coral);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2rem;
+      font-style: italic;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+      color: var(--moss);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .status::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+    }
+
+    .evidence-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .claim-map {
+      display: grid;
+      gap: 1px;
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--line);
+    }
+
+    .claim-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 0.85fr) minmax(170px, 1.4fr) minmax(110px, 0.65fr);
+      gap: 20px;
+      align-items: start;
+      min-width: 0;
+      padding: 20px;
+      background: var(--white);
+    }
+
+    .claim-row.header {
+      background: var(--ink);
+      color: var(--white);
+      font-size: 0.71rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .claim {
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .method {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .tag {
+      display: inline-block;
+      width: fit-content;
+      max-width: 100%;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .tag.verified {
+      background: rgba(98, 120, 79, 0.14);
+      color: #43563a;
+    }
+
+    .tag.designed {
+      background: rgba(85, 123, 140, 0.14);
+      color: #345c6e;
+    }
+
+    .tag.pending {
+      background: rgba(229, 173, 63, 0.2);
+      color: #76550f;
+    }
+
+    .rubric {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .rubric-card {
+      min-width: 0;
+      padding: 20px 16px;
+      border-top: 5px solid var(--accent, var(--plum));
+      background: var(--white);
+      box-shadow: 0 8px 20px rgba(44, 33, 50, 0.06);
+    }
+
+    .rubric-card:nth-child(2) {
+      --accent: var(--coral);
+    }
+
+    .rubric-card:nth-child(3) {
+      --accent: var(--moss);
+    }
+
+    .rubric-card:nth-child(4) {
+      --accent: var(--sun);
+    }
+
+    .rubric-card:nth-child(5) {
+      --accent: var(--blue);
+    }
+
+    .weight {
+      display: block;
+      margin-bottom: 22px;
+      color: var(--accent, var(--plum));
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.2rem;
+      line-height: 1;
+    }
+
+    .rubric-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .rubric-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-style: italic;
+    }
+
+    .matrix-wrap {
+      width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--white);
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .matrix th,
+    .matrix td {
+      padding: 17px 15px;
+      border-bottom: 1px solid var(--line);
+      overflow-wrap: anywhere;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .matrix tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .matrix th {
+      background: var(--plum);
+      color: var(--white);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .matrix td {
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .matrix td:first-child {
+      font-weight: 800;
+    }
+
+    .risk-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: clamp(22px, 5vw, 56px);
+      align-items: start;
+      padding: clamp(24px, 4vw, 48px);
+      border-radius: 34px 8px 34px 8px;
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .risk-panel h2 {
+      margin-bottom: 16px;
+    }
+
+    .risk-panel p {
+      color: rgba(255, 250, 240, 0.72);
+    }
+
+    .risk-list {
+      display: grid;
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 250, 240, 0.16);
+      border-radius: 16px;
+      background: rgba(255, 250, 240, 0.16);
+    }
+
+    .risk-item {
+      padding: 17px 18px;
+      background: #35283a;
+    }
+
+    .risk-item strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #f1c867;
+      font-size: 0.82rem;
+    }
+
+    .risk-item span {
+      color: rgba(255, 250, 240, 0.72);
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .conclusion {
+      display: grid;
+      grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr);
+      gap: 28px;
+      align-items: start;
+      padding: 34px 0 8px;
+      border-top: 3px solid var(--ink);
+    }
+
+    .conclusion-mark {
+      color: var(--plum);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-style: italic;
+      line-height: 0.85;
+    }
+
+    .conclusion h2 {
+      margin-bottom: 14px;
+    }
+
+    .conclusion p {
+      max-width: 64ch;
+      margin-bottom: 12px;
+      color: var(--muted);
+    }
+
+    .footnote {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 820px) {
+      .hero {
+        grid-template-columns: minmax(0, 1.05fr) minmax(220px, 0.75fr);
+        gap: 32px;
+      }
+
+      .rubric {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr) minmax(190px, 0.64fr);
+      }
+
+      .meta-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .meta-item:nth-child(3) {
+        padding-left: 0;
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+
+      .meta-item:nth-child(4) {
+        border-top: 1px solid var(--line);
+      }
+
+      .claim-row {
+        gap: 12px;
+      }
+
+      .risk-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page-shell {
+        padding: 22px 16px 38px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-bottom: 48px;
+      }
+
+      .hero-copy {
+        order: 1;
+      }
+
+      .seed-plate {
+        order: 2;
+        width: min(78%, 320px);
+        margin: 0 auto;
+      }
+
+      .meta-strip {
+        margin-bottom: 58px;
+      }
+
+      .section {
+        margin-bottom: 62px;
+      }
+
+      .evidence-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .claim-row,
+      .claim-row.header {
+        grid-template-columns: 1fr;
+      }
+
+      .claim-row.header span:not(:first-child) {
+        display: none;
+      }
+
+      .rubric {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .matrix,
+      .matrix tbody,
+      .matrix tr,
+      .matrix td {
+        display: block;
+        width: 100%;
+      }
+
+      .matrix thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+
+      .matrix tr {
+        padding: 15px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .matrix tr:last-child {
+        border-bottom: 0;
+      }
+
+      .matrix td {
+        display: grid;
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 10px;
+        padding: 7px 0;
+        border: 0;
+      }
+
+      .matrix td::before {
+        color: var(--muted);
+        font-size: 0.66rem;
+        font-weight: 800;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      .matrix td:nth-child(1)::before {
+        content: "Scenario";
+      }
+
+      .matrix td:nth-child(2)::before {
+        content: "What to run";
+      }
+
+      .matrix td:nth-child(3)::before {
+        content: "Pass gate";
+      }
+
+      .matrix td:nth-child(4)::before {
+        content: "State";
+      }
+
+      .conclusion {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .meta-strip,
+      .rubric {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-item,
+      .meta-item + .meta-item,
+      .meta-item:nth-child(3),
+      .meta-item:nth-child(4) {
+        padding: 14px 0;
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+
+      .meta-item:first-child {
+        border-top: 0;
+      }
+
+      .matrix td {
+        grid-template-columns: 78px minmax(0, 1fr);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="finchip-page">
+    <div class="page-shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <div class="eyebrow">Benchmark dossier · Algorithmic Art</div>
+          <h1 id="page-title">Can the system preserve its soul?</h1>
+          <p class="lede">
+            This benchmark separates what has already been verified in the package from what must still be proven in a generated artwork: reproducible seeds, meaningful controls, visual intent, runtime stability, and a usable delivery artifact.
+          </p>
+          <div class="verdict">Conditional pass · package ready for artwork trials</div>
+        </div>
+        <div class="seed-plate" aria-label="Abstract seed fingerprint representing reproducible generative variation">
+          <div class="plate-label">same seed<br>same system state</div>
+        </div>
+      </section>
+
+      <section class="meta-strip" aria-label="Benchmark metadata">
+        <div class="meta-item">
+          <span class="meta-label">Source snapshot</span>
+          <span class="meta-value"><code>b29e7cf65e5c</code></span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Assessment date</span>
+          <span class="meta-value">30 July 2026</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Environment</span>
+          <span class="meta-value">Local package inspection</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Scope</span>
+          <span class="meta-value">Contract, templates, packaging</span>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="evidence-heading">
+        <h2 id="evidence-heading">Verified evidence, not aesthetic inference.</h2>
+        <p class="section-intro">
+          Four checks were completed against the packaged skill. They establish that the instructions and starter materials are structurally usable; they do not prove the quality of an artwork that has not yet been generated.
+        </p>
+        <div class="evidence-grid">
+          <article class="evidence-card">
+            <div class="card-top">
+              <span class="ordinal">01</span>
+              <span class="status">Verified</span>
+            </div>
+            <h3>Skill package structure</h3>
+            <p>The packaged <code>SKILL.md</code> passed the workspace structural validator, with the expected entry point available.</p>
+          </article>
+          <article class="evidence-card">
+            <div class="card-top">
+              <span class="ordinal">02</span>
+              <span class="status">Verified</span>
+            </div>
+            <h3>Agent interface metadata</h3>
+            <p><code>agents/openai.yaml</code> contains a display name, a short description, and a default invocation prompt.</p>
+          </article>
+          <article class="evidence-card">
+            <div class="card-top">
+              <span class="ordinal">03</span>
+              <span class="status">Verified</span>
+            </div>
+            <h3>JavaScript starter syntax</h3>
+            <p>The bundled <code>generator_template.js</code> passed syntax validation as a JavaScript reference template.</p>
+          </article>
+          <article class="evidence-card">
+            <div class="card-top">
+              <span class="ordinal">04</span>
+              <span class="status">Verified</span>
+            </div>
+            <h3>Viewer foundation</h3>
+            <p>The required viewer structure is present, including seed navigation, parameter controls, a canvas area, and action controls.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="claims-heading">
+        <h2 id="claims-heading">Claim-to-test map.</h2>
+        <p class="section-intro">
+          Each product claim is paired with the evidence needed to support it. “Designed” means the behavior is explicitly required by the skill; “pending” means a generated artifact still needs to demonstrate it.
+        </p>
+        <div class="claim-map" role="table" aria-label="Capability claim mapping">
+          <div class="claim-row header" role="row">
+            <span role="columnheader">Capability claim</span>
+            <span role="columnheader">Evidence or required test</span>
+            <span role="columnheader">Current state</span>
+          </div>
+          <div class="claim-row" role="row">
+            <span class="claim" role="cell">Seeded reproducibility</span>
+            <span class="method" role="cell">The contract requires both <code>randomSeed(seed)</code> and <code>noiseSeed(seed)</code>. A two-run pixel comparison is still required.</span>
+            <span role="cell"><span class="tag designed">Designed</span></span>
+          </div>
+          <div class="claim-row" role="row">
+            <span class="claim" role="cell">Interactive exploration</span>
+            <span class="method" role="cell">The viewer includes previous, next, random, and direct seed entry plus parameter controls; functional interaction remains unexecuted.</span>
+            <span role="cell"><span class="tag verified">Structure verified</span></span>
+          </div>
+          <div class="claim-row" role="row">
+            <span class="claim" role="cell">Original generative expression</span>
+            <span class="method" role="cell">The workflow requires an original algorithmic philosophy and implementation. Originality and conceptual coherence need human review per artwork.</span>
+            <span role="cell"><span class="tag pending">Review pending</span></span>
+          </div>
+          <div class="claim-row" role="row">
+            <span class="claim" role="cell">Browser-ready delivery</span>
+            <span class="method" role="cell">The prescribed output is one HTML artifact with inline art code. A real generated file must still be opened and exercised in a browser.</span>
+            <span role="cell"><span class="tag pending">Runtime pending</span></span>
+          </div>
+          <div class="claim-row" role="row">
+            <span class="claim" role="cell">PNG export</span>
+            <span class="method" role="cell">The reference generator provides an export helper and the workflow requires a download action; successful file creation has not yet been observed.</span>
+            <span role="cell"><span class="tag designed">Designed</span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="rubric-heading">
+        <h2 id="rubric-heading">Artwork trial rubric.</h2>
+        <p class="section-intro">
+          These weights define how a future generated artifact should be judged. They are assessment dimensions, not claimed performance scores.
+        </p>
+        <div class="rubric">
+          <article class="rubric-card">
+            <span class="weight">25%</span>
+            <h3>Determinism</h3>
+            <p>Identical seed and parameters reproduce an identical visual state.</p>
+          </article>
+          <article class="rubric-card">
+            <span class="weight">22%</span>
+            <h3>Concept fidelity</h3>
+            <p>The implementation expresses its written algorithmic philosophy.</p>
+          </article>
+          <article class="rubric-card">
+            <span class="weight">20%</span>
+            <h3>Control integrity</h3>
+            <p>Every exposed control has a clear, stable, and visible effect.</p>
+          </article>
+          <article class="rubric-card">
+            <span class="weight">18%</span>
+            <h3>Visual craft</h3>
+            <p>Hierarchy, palette, density, and controlled variation feel intentional.</p>
+          </article>
+          <article class="rubric-card">
+            <span class="weight">15%</span>
+            <h3>Delivery quality</h3>
+            <p>The viewer opens cleanly, remains responsive, and exports a PNG.</p>
+          </article>
+        </div>
+        <p class="rubric-note">The five weights total 100%; no weighted result is reported until the artwork trial is executed.</p>
+      </section>
+
+      <section class="section" aria-labelledby="matrix-heading">
+        <h2 id="matrix-heading">Planned test matrix.</h2>
+        <p class="section-intro">
+          The matrix covers the normal path, ambiguity, boundary behavior, and final delivery. All rows below are explicitly pending rather than silently counted as passes.
+        </p>
+        <div class="matrix-wrap">
+          <table class="matrix">
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>What to run</th>
+                <th>Pass gate</th>
+                <th>State</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Normal concept</td>
+                <td>Generate from a specific aesthetic prompt, then exercise seed and parameter controls.</td>
+                <td>Philosophy, algorithm, controls, and result remain visibly aligned.</td>
+                <td><span class="tag pending">Not executed</span></td>
+              </tr>
+              <tr>
+                <td>Ambiguous brief</td>
+                <td>Use a sparse request with one subtle conceptual cue.</td>
+                <td>The result makes a coherent interpretation without copying a named artist.</td>
+                <td><span class="tag pending">Not executed</span></td>
+              </tr>
+              <tr>
+                <td>Seed boundary</td>
+                <td>Try seed 1, a large valid seed, repeated values, and invalid entry recovery.</td>
+                <td>Valid seeds are stable; invalid input does not corrupt the current state.</td>
+                <td><span class="tag pending">Not executed</span></td>
+              </tr>
+              <tr>
+                <td>Parameter extremes</td>
+                <td>Move every slider to both ends and combine extreme settings.</td>
+                <td>No crash, unusable control state, or accidental empty canvas.</td>
+                <td><span class="tag pending">Not executed</span></td>
+              </tr>
+              <tr>
+                <td>Delivery</td>
+                <td>Open the generated HTML in a browser, reload it, and export a PNG.</td>
+                <td>Viewer loads through its declared dependency and the image file is created.</td>
+                <td><span class="tag pending">Not executed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section risk-panel" aria-labelledby="limits-heading">
+        <div>
+          <div class="eyebrow" style="color:#f1c867;">Limits &amp; dependencies</div>
+          <h2 id="limits-heading">What this benchmark does not hide.</h2>
+          <p>The package is ready to generate a trial, but production confidence depends on observing the artwork itself.</p>
+        </div>
+        <div class="risk-list">
+          <div class="risk-item">
+            <strong>Public CDN dependency</strong>
+            <span>The default viewer loads p5.js from a public CDN, so it is not fully offline and requires network access on first load.</span>
+          </div>
+          <div class="risk-item">
+            <strong>Template is intentionally incomplete</strong>
+            <span>The bundled viewer and generator are foundations. Their placeholder algorithm sections are expected to be replaced per artwork.</span>
+          </div>
+          <div class="risk-item">
+            <strong>Visual quality needs human judgment</strong>
+            <span>Syntax and structure cannot prove originality, composition, conceptual depth, or the absence of accidental resemblance.</span>
+          </div>
+          <div class="risk-item">
+            <strong>Performance is artwork-dependent</strong>
+            <span>Particle counts, animation loops, and canvas complexity must be profiled in the actual generated implementation.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="conclusion" aria-labelledby="conclusion-heading">
+        <div class="conclusion-mark">Pass*</div>
+        <div>
+          <h2 id="conclusion-heading">Packaging gate passed; artwork gate remains open.</h2>
+          <p>
+            The source snapshot is structurally valid and contains the expected philosophy-to-code workflow, seeded-randomness requirements, viewer foundation, and agent metadata.
+          </p>
+          <p>
+            A final effectiveness score would be misleading today. Approve this package for a representative artwork trial, then calculate the weighted rubric only after deterministic replay, interaction, export, browser, and human visual-review evidence is captured.
+          </p>
+          <div class="footnote">
+            Evidence trail: <code>SKILL.md</code>, <code>agents/openai.yaml</code>, <code>templates/generator_template.js</code>, <code>templates/viewer.html</code>, and the selected-nine preflight report dated 30 July 2026. License retained in the package: Apache-2.0.
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

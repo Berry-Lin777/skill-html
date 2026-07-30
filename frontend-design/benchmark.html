@@ -1,0 +1,1136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Frontend Design — Interface Critique Benchmark</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ground: #dedbd4;
+      --paper: #f8f7f2;
+      --ink: #28232c;
+      --muted: #6c6670;
+      --rule: #aaa5ac;
+      --red: #e5483f;
+      --red-soft: #f5c7c1;
+      --lime: #c9ec62;
+      --aqua: #77cfcb;
+      --lilac: #c2b1e7;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: light;
+      background: var(--ground);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(40, 35, 44, 0.035) 1px, transparent 1px) 0 0 / 22px 22px,
+        linear-gradient(rgba(40, 35, 44, 0.035) 1px, transparent 1px) 0 0 / 22px 22px,
+        var(--ground);
+      color: var(--ink);
+    }
+
+    .review {
+      width: 100%;
+      max-width: 1160px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(17px, 4.5vw, 54px);
+    }
+
+    .utility {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      padding: 10px 13px;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      font-size: 0.67rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .utility span:last-child {
+      color: var(--red);
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(300px, 1.18fr);
+      gap: clamp(30px, 6vw, 78px);
+      align-items: center;
+      padding: clamp(48px, 8vw, 96px) 0;
+    }
+
+    .hero-copy,
+    .browser-proof,
+    section,
+    .contract-grid > *,
+    .rubric-grid > *,
+    .matrix > * {
+      min-width: 0;
+    }
+
+    .eyebrow,
+    .section-tag,
+    .micro,
+    .weight,
+    .state,
+    dt {
+      font-size: 0.67rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      color: var(--red);
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    dd {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(3.25rem, 8.5vw, 7rem);
+      font-weight: 900;
+      line-height: 0.82;
+      letter-spacing: -0.075em;
+    }
+
+    h1 .strike {
+      position: relative;
+      display: inline-block;
+    }
+
+    h1 .strike::after {
+      content: "";
+      position: absolute;
+      right: -2%;
+      bottom: 8%;
+      left: -2%;
+      height: 7px;
+      background: var(--lime);
+      transform: rotate(-2deg);
+      z-index: -1;
+    }
+
+    .hero-copy > p:last-child {
+      max-width: 590px;
+      margin: 27px 0 0;
+      color: #514b55;
+      font-size: clamp(1rem, 2.2vw, 1.22rem);
+      line-height: 1.6;
+    }
+
+    .browser-proof {
+      position: relative;
+      border: 2px solid var(--ink);
+      background: var(--white);
+      box-shadow: 15px 15px 0 var(--ink);
+    }
+
+    .browser-bar {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      height: 35px;
+      padding: 0 12px;
+      border-bottom: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .dot:nth-child(2) {
+      background: var(--lime);
+    }
+
+    .dot:nth-child(3) {
+      background: var(--aqua);
+    }
+
+    .address {
+      min-width: 0;
+      margin-left: 7px;
+      color: var(--muted);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .browser-canvas {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      min-height: 360px;
+    }
+
+    .canvas-rail {
+      padding: 13px 9px;
+      border-right: 1px solid var(--ink);
+      background: var(--lilac);
+    }
+
+    .rail-mark {
+      width: 100%;
+      height: 9px;
+      margin-bottom: 9px;
+      background: var(--ink);
+    }
+
+    .rail-mark:nth-child(2) {
+      width: 70%;
+    }
+
+    .rail-mark:nth-child(3) {
+      width: 42%;
+    }
+
+    .canvas-content {
+      position: relative;
+      padding: 23px;
+      overflow: hidden;
+    }
+
+    .spec-label {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 5px 7px;
+      background: var(--lime);
+      font-size: 0.6rem;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .spec-headline {
+      max-width: 8ch;
+      margin: 0;
+      font-size: clamp(2.3rem, 5.4vw, 4.5rem);
+      font-weight: 900;
+      line-height: 0.82;
+      letter-spacing: -0.065em;
+    }
+
+    .spec-copy {
+      max-width: 310px;
+      margin: 19px 0 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .spec-action {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 14px;
+      border: 2px solid var(--ink);
+      background: var(--aqua);
+      font-size: 0.69rem;
+      font-weight: 900;
+    }
+
+    .redline {
+      position: absolute;
+      z-index: 3;
+      color: var(--red);
+      font-size: 0.59rem;
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .redline::before {
+      content: "";
+      position: absolute;
+      background: var(--red);
+      transform-origin: left center;
+    }
+
+    .redline-a {
+      top: 72px;
+      right: 16px;
+      width: 95px;
+    }
+
+    .redline-a::before {
+      width: 75px;
+      height: 1px;
+      left: -71px;
+      top: 14px;
+      transform: rotate(12deg);
+    }
+
+    .redline-b {
+      right: 15px;
+      bottom: 56px;
+      width: 102px;
+    }
+
+    .redline-b::before {
+      width: 92px;
+      height: 1px;
+      left: -86px;
+      top: 13px;
+      transform: rotate(-8deg);
+    }
+
+    .review-stamp {
+      position: absolute;
+      right: -18px;
+      bottom: -23px;
+      z-index: 4;
+      padding: 11px 14px;
+      border: 3px solid var(--red);
+      background: var(--paper);
+      color: var(--red);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      line-height: 1.3;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(-5deg);
+    }
+
+    .status-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .status-cell {
+      min-width: 0;
+      padding: 18px;
+      border-right: 1px solid var(--ink);
+    }
+
+    .status-cell:last-child {
+      border-right: 0;
+    }
+
+    .status-cell strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      line-height: 1;
+    }
+
+    .status-cell span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.45;
+    }
+
+    .status-cell:nth-child(2) {
+      background: var(--lime);
+    }
+
+    .status-cell:nth-child(2) span {
+      color: #4e552d;
+    }
+
+    section {
+      padding: clamp(54px, 9vw, 105px) 0;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 136px minmax(0, 1fr);
+      gap: clamp(18px, 4vw, 54px);
+      margin-bottom: 31px;
+    }
+
+    .section-tag {
+      margin: 6px 0 0;
+      color: var(--red);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      max-width: 850px;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 0.88;
+      letter-spacing: -0.06em;
+    }
+
+    .section-head > p:last-child {
+      grid-column: 2;
+      max-width: 760px;
+      margin: -10px 0 0;
+      color: #57515b;
+      line-height: 1.65;
+    }
+
+    .contract-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .contract {
+      position: relative;
+      min-height: 220px;
+      padding: 22px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .contract:nth-child(2),
+    .contract:nth-child(5) {
+      background: var(--aqua);
+    }
+
+    .contract:nth-child(3) {
+      background: var(--lilac);
+    }
+
+    .contract:nth-child(6) {
+      background: var(--lime);
+    }
+
+    .contract-code {
+      display: block;
+      margin-bottom: 42px;
+      color: var(--red);
+      font-size: 1.35rem;
+      font-weight: 900;
+    }
+
+    .contract h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .contract p {
+      margin: 0;
+      color: #59535c;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .contract .state {
+      position: absolute;
+      top: 20px;
+      right: 18px;
+      padding: 3px 6px;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+    }
+
+    .rubric-callout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .note {
+      padding: 18px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      color: #514b55;
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+
+    .note strong {
+      color: var(--red);
+    }
+
+    .note:last-child {
+      background: var(--red-soft);
+    }
+
+    .rubric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .criterion {
+      display: grid;
+      grid-template-columns: 70px minmax(0, 1fr);
+      min-width: 0;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .weight {
+      display: grid;
+      place-items: center;
+      padding: 15px 8px;
+      border-right: 1px solid var(--ink);
+      background: var(--lime);
+      color: var(--ink);
+      font-size: 0.78rem;
+    }
+
+    .criterion:nth-child(2) .weight,
+    .criterion:nth-child(6) .weight {
+      background: var(--aqua);
+    }
+
+    .criterion:nth-child(3) .weight {
+      background: var(--lilac);
+    }
+
+    .criterion:nth-child(4) .weight,
+    .criterion:nth-child(7) .weight {
+      background: var(--red-soft);
+    }
+
+    .criterion-copy {
+      padding: 17px;
+    }
+
+    .criterion h3 {
+      margin: 0 0 6px;
+      font-size: 0.98rem;
+    }
+
+    .criterion p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.5;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+      gap: 12px;
+    }
+
+    .panel {
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .panel h3 {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0;
+      padding: 13px 16px;
+      border-bottom: 2px solid var(--ink);
+      font-size: 0.72rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .panel h3 span {
+      color: var(--red);
+    }
+
+    dl {
+      margin: 0;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: 100px minmax(0, 1fr);
+      gap: 14px;
+      padding: 13px 16px;
+      border-bottom: 1px dotted var(--rule);
+    }
+
+    .detail-row:last-child {
+      border-bottom: 0;
+    }
+
+    dt {
+      color: #534c56;
+    }
+
+    dd {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .tests {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .tests li {
+      display: grid;
+      grid-template-columns: 94px minmax(0, 1fr);
+      gap: 13px;
+      padding: 13px 16px;
+      border-bottom: 1px dotted var(--rule);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .tests li:last-child {
+      border-bottom: 0;
+    }
+
+    .state.contractual {
+      color: #28736f;
+    }
+
+    .state.pending {
+      color: var(--red);
+    }
+
+    .state.manual {
+      color: #6b4fb0;
+    }
+
+    .release-gates {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .gate {
+      min-width: 0;
+      padding: 22px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .gate-number {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 34px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: var(--red-soft);
+      font-weight: 900;
+    }
+
+    .gate h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .gate p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.79rem;
+      line-height: 1.5;
+    }
+
+    .final-verdict {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(180px, 0.65fr);
+      gap: 24px;
+      align-items: end;
+      padding: clamp(30px, 6vw, 62px);
+      border: 2px solid var(--ink);
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .final-verdict h2 {
+      margin: 0;
+      max-width: 800px;
+      font-size: clamp(2.35rem, 6vw, 5rem);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+    }
+
+    .final-verdict p {
+      max-width: 720px;
+      margin: 18px 0 0;
+      color: #d6d0da;
+      line-height: 1.6;
+    }
+
+    .verdict-mark {
+      padding-left: 20px;
+      border-left: 1px solid var(--white);
+    }
+
+    .verdict-mark strong {
+      display: block;
+      color: var(--lime);
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      line-height: 0.9;
+    }
+
+    .verdict-mark span {
+      display: block;
+      margin-top: 11px;
+      font-size: 0.66rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 2px 0;
+      color: #5f5963;
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .browser-proof {
+        width: min(100%, 680px);
+        margin-left: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .section-head,
+      .rubric-callout,
+      .matrix,
+      .final-verdict {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .section-head > p:last-child {
+        grid-column: 1;
+        margin-top: 0;
+      }
+
+      .status-strip,
+      .contract-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .status-cell:nth-child(2) {
+        border-right: 0;
+      }
+
+      .status-cell:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .contract:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .release-gates {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .gate:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .verdict-mark {
+        padding: 18px 0 0;
+        border-top: 1px solid var(--white);
+        border-left: 0;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .review {
+        padding: 14px;
+      }
+
+      .utility {
+        align-items: flex-start;
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+
+      .browser-proof {
+        box-shadow: 8px 8px 0 var(--ink);
+      }
+
+      .browser-canvas {
+        grid-template-columns: 44px minmax(0, 1fr);
+      }
+
+      .canvas-content {
+        padding: 16px;
+      }
+
+      .redline {
+        display: none;
+      }
+
+      .review-stamp {
+        right: 4px;
+      }
+
+      .status-strip,
+      .contract-grid,
+      .rubric-grid,
+      .release-gates {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .status-cell,
+      .status-cell:nth-child(2) {
+        border-right: 0;
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .status-cell:last-child {
+        border-bottom: 0;
+      }
+
+      .contract:last-child,
+      .gate:last-child {
+        grid-column: auto;
+      }
+
+      .detail-row,
+      .tests li {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 5px;
+      }
+
+      footer {
+        display: block;
+      }
+
+      footer span {
+        display: block;
+        margin-bottom: 5px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+
+      .review-stamp,
+      h1 .strike::after {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="review">
+      <header class="utility">
+        <span>Frontend Design / Interface Critique</span>
+        <span>Contract review · 30 July 2026</span>
+      </header>
+
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Benchmark review 4249aeb</p>
+          <h1>Show the <span class="strike">reasoning</span> behind the interface.</h1>
+          <p>This benchmark checks whether a frontend is specific to its brief, visually intentional, usable at real widths, and complete enough to deserve a release claim.</p>
+        </div>
+
+        <div class="browser-proof" aria-label="Annotated interface critique specimen">
+          <div class="browser-bar">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="address">review://subject-specific-interface</span>
+          </div>
+          <div class="browser-canvas">
+            <aside class="canvas-rail" aria-hidden="true">
+              <div class="rail-mark"></div>
+              <div class="rail-mark"></div>
+              <div class="rail-mark"></div>
+            </aside>
+            <div class="canvas-content">
+              <span class="spec-label">The hero is a thesis</span>
+              <h2 class="spec-headline">A page only this subject could own.</h2>
+              <p class="spec-copy">Real content, deliberate type, structural meaning and one justified aesthetic risk.</p>
+              <span class="spec-action">Review the direction</span>
+              <span class="redline redline-a">Subject evidence belongs here</span>
+              <span class="redline redline-b">Action names the outcome</span>
+            </div>
+          </div>
+          <div class="review-stamp">Contract inspected<br>App not executed</div>
+        </div>
+      </div>
+
+      <div class="status-strip" aria-label="Current verification status">
+        <div class="status-cell">
+          <strong>Ready</strong>
+          <span>skill package passed structural validation</span>
+        </div>
+        <div class="status-cell">
+          <strong>6 areas</strong>
+          <span>explicitly covered by the source contract</span>
+        </div>
+        <div class="status-cell">
+          <strong>0</strong>
+          <span>API keys or bundled executables required</span>
+        </div>
+        <div class="status-cell">
+          <strong>Not run</strong>
+          <span>representative frontend implementation</span>
+        </div>
+      </div>
+
+      <section aria-labelledby="contract-evidence">
+        <div class="section-head">
+          <p class="section-tag">Source evidence</p>
+          <h2 id="contract-evidence">Six requirements are written into the design contract</h2>
+          <p>These are verified source facts: the instruction explicitly requires them. They show what the skill asks an agent to do, but not whether a future interface actually satisfies the request.</p>
+        </div>
+
+        <div class="contract-grid">
+          <article class="contract">
+            <span class="state">Contract</span>
+            <span class="contract-code">01</span>
+            <h3>Subject grounding</h3>
+            <p>Name a concrete subject, its audience and the page’s single job before choosing a direction.</p>
+          </article>
+          <article class="contract">
+            <span class="state">Contract</span>
+            <span class="contract-code">02</span>
+            <h3>Distinctive direction</h3>
+            <p>Derive palette, typography and structure from the subject rather than a reusable visual default.</p>
+          </article>
+          <article class="contract">
+            <span class="state">Contract</span>
+            <span class="contract-code">03</span>
+            <h3>Design planning</h3>
+            <p>Define 4–6 named colors, at least two type roles, layout concepts and one memorable signature.</p>
+          </article>
+          <article class="contract">
+            <span class="state">Contract</span>
+            <span class="contract-code">04</span>
+            <h3>Self-critique</h3>
+            <p>Challenge generic choices before building, then critique the implementation again after the first pass.</p>
+          </article>
+          <article class="contract">
+            <span class="state">Contract</span>
+            <span class="contract-code">05</span>
+            <h3>Accessible baseline</h3>
+            <p>Support mobile widths, visible keyboard focus and reduced-motion preferences as a quality floor.</p>
+          </article>
+          <article class="contract">
+            <span class="state">Contract</span>
+            <span class="contract-code">06</span>
+            <h3>Interface writing</h3>
+            <p>Use active, consistent action language and make errors and empty states tell people what to do next.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="evaluation-rubric">
+        <div class="section-head">
+          <p class="section-tag">Review model</p>
+          <h2 id="evaluation-rubric">A seven-part scorecard for a real implementation</h2>
+          <p>The weights below are an illustrative evaluation rubric derived from the skill’s priorities. They are not scores from the package preflight and should only be applied after a representative app has been built and opened.</p>
+        </div>
+
+        <div class="rubric-callout">
+          <div class="note"><strong>Suggested scale:</strong> review each dimension from 0–5 and preserve written evidence for every rating. A release fails if responsive integrity or accessibility has a critical defect, regardless of the weighted total.</div>
+          <div class="note"><strong>Current score: not issued.</strong><br>No representative frontend was executed during this validation.</div>
+        </div>
+
+        <div class="rubric-grid">
+          <article class="criterion">
+            <span class="weight">20%</span>
+            <div class="criterion-copy">
+              <h3>Brief fidelity</h3>
+              <p>Subject, audience, single job and real content visibly shape the result.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">18%</span>
+            <div class="criterion-copy">
+              <h3>Visual distinctiveness</h3>
+              <p>The direction is memorable, justified and not transferable unchanged to another brief.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">15%</span>
+            <div class="criterion-copy">
+              <h3>Hierarchy &amp; structure</h3>
+              <p>Type, layout and structural devices encode real content relationships.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">15%</span>
+            <div class="criterion-copy">
+              <h3>Responsive integrity</h3>
+              <p>Content remains legible, ordered and operable from mobile through desktop.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">12%</span>
+            <div class="criterion-copy">
+              <h3>Accessibility</h3>
+              <p>Focus is visible, motion can reduce, controls are understandable and contrast supports reading.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">12%</span>
+            <div class="criterion-copy">
+              <h3>Implementation completeness</h3>
+              <p>Primary, empty, loading, error and success states behave consistently.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">8%</span>
+            <div class="criterion-copy">
+              <h3>Copy &amp; action clarity</h3>
+              <p>Labels name what users recognize; actions keep the same name through the flow.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="test-matrix">
+        <div class="section-head">
+          <p class="section-tag">Verification matrix</p>
+          <h2 id="test-matrix">Contract inspection is not browser proof</h2>
+          <p>The matrix makes that boundary explicit. “Contractual” means the requirement exists in the source. “Pending” means a built interface must still be exercised. “Manual” requires design judgment rather than a mechanical pass.</p>
+        </div>
+
+        <div class="matrix">
+          <article class="panel">
+            <h3>Recorded scope <span>Actual</span></h3>
+            <dl>
+              <div class="detail-row">
+                <dt>Upstream</dt>
+                <dd>Anthropic Skills commit <code>b29e7cf65e5cb78a5ac33d582270551bc74a14eb</code></dd>
+              </div>
+              <div class="detail-row">
+                <dt>Snapshot</dt>
+                <dd><code>4249aeb</code></dd>
+              </div>
+              <div class="detail-row">
+                <dt>Executed</dt>
+                <dd>30 July 2026</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Environment</dt>
+                <dd>Instruction-only skill; no API key or bundled executable dependency</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Evidence</dt>
+                <dd>Skill structure, agent metadata and instruction-contract inspection</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="panel">
+            <h3>Scenario coverage <span>Mixed state</span></h3>
+            <ul class="tests">
+              <li><span class="state contractual">Contractual</span><span><strong>Ambiguous brief:</strong> the skill requires choosing a concrete subject, audience and page job.</span></li>
+              <li><span class="state manual">Manual</span><span><strong>Distinctiveness:</strong> reviewers must decide whether the direction genuinely belongs to this subject.</span></li>
+              <li><span class="state pending">Pending</span><span><strong>Responsive:</strong> exercise the built UI at mobile, intermediate and desktop widths with real content.</span></li>
+              <li><span class="state pending">Pending</span><span><strong>Keyboard:</strong> traverse every control and confirm visible, logical focus order.</span></li>
+              <li><span class="state pending">Pending</span><span><strong>Reduced motion:</strong> verify that nonessential motion disables without hiding information.</span></li>
+              <li><span class="state pending">Pending</span><span><strong>Edge states:</strong> inspect empty, loading, error and success experiences for actionable copy.</span></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="release-gates">
+        <div class="section-head">
+          <p class="section-tag">Release decision</p>
+          <h2 id="release-gates">Three gates keep taste connected to evidence</h2>
+          <p>A high visual score cannot rescue a broken flow, and technical completeness cannot substitute for a subject-specific point of view. Release requires all three gates.</p>
+        </div>
+
+        <div class="release-gates">
+          <article class="gate">
+            <span class="gate-number">1</span>
+            <h3>Direction gate</h3>
+            <p>The design plan names its subject logic, tests itself against defaults and commits to one justified signature.</p>
+          </article>
+          <article class="gate">
+            <span class="gate-number">2</span>
+            <h3>Experience gate</h3>
+            <p>Primary and edge-state journeys are understandable, responsive and operable with keyboard and reduced motion.</p>
+          </article>
+          <article class="gate">
+            <span class="gate-number">3</span>
+            <h3>Evidence gate</h3>
+            <p>Screenshots, viewport checks and reviewer notes support the final claims; untested areas remain labeled.</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="final-verdict">
+        <div>
+          <h2>The design contract is ready. Implementation quality remains unscored.</h2>
+          <p>The source provides meaningful guidance for subject grounding, visual direction, typography, responsive behavior, accessibility and interface writing. A real frontend must still be built, opened and reviewed before claiming those outcomes were achieved.</p>
+        </div>
+        <div class="verdict-mark">
+          <strong>Ready</strong>
+          <span>for implementation<br>and app-level testing</span>
+        </div>
+      </div>
+
+      <footer>
+        <span>Benchmark type: instruction-contract audit + reusable interface review rubric.</span>
+        <span>License: Apache-2.0 · No API key required.</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

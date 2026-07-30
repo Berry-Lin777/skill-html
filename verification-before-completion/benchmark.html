@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Verification Before Completion — Evidence Ledger</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3eddf;
+      --paper-deep: #e8deca;
+      --ink: #261f1b;
+      --muted: #6b6055;
+      --rule: #baad99;
+      --wine: #7e2734;
+      --wine-dark: #4c1720;
+      --green: #245b43;
+      --green-soft: #dbe7dc;
+      --amber: #9a6419;
+      --amber-soft: #f2e4c8;
+      --red-soft: #ead5d4;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      color-scheme: light;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body { overflow-x: hidden; }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, transparent 0 58px, rgba(126, 39, 52, .16) 58px 59px, transparent 59px),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(85, 69, 53, .045) 31px 32px),
+        var(--paper);
+      color: var(--ink);
+    }
+
+    .sheet {
+      width: min(100%, 1060px);
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 auto;
+      padding: 42px clamp(22px, 5vw, 68px) 64px clamp(76px, 9vw, 112px);
+    }
+
+    .kicker,
+    .label,
+    .status,
+    .folio,
+    th,
+    .weight,
+    .evidence-id,
+    .stamp,
+    .meta dt {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 24px;
+      border-bottom: 3px double var(--ink);
+    }
+
+    .kicker {
+      margin: 0 0 13px;
+      color: var(--wine);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(38px, 7vw, 78px);
+      font-weight: 500;
+      letter-spacing: -.055em;
+      line-height: .91;
+    }
+
+    .folio {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.7;
+      text-align: right;
+    }
+
+    .verdict {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(220px, .75fr);
+      gap: clamp(22px, 4vw, 48px);
+      align-items: center;
+      padding: 28px 0 30px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .verdict-copy p {
+      max-width: 720px;
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2.2vw, 22px);
+      line-height: 1.5;
+    }
+
+    .label {
+      color: var(--wine);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .stamp {
+      justify-self: end;
+      width: min(100%, 270px);
+      padding: 18px 16px;
+      transform: rotate(-2deg);
+      border: 4px double var(--green);
+      color: var(--green);
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .stamp small {
+      display: block;
+      margin-top: 7px;
+      font-size: 9px;
+      letter-spacing: .05em;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin: 0;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .meta > div {
+      min-width: 0;
+      padding: 17px 18px 18px 0;
+    }
+
+    .meta > div + div {
+      padding-left: 18px;
+      border-left: 1px solid var(--rule);
+    }
+
+    .meta dt {
+      margin: 0 0 7px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .meta dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    section {
+      min-width: 0;
+      padding: 38px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(200px, .44fr);
+      gap: 24px;
+      margin-bottom: 23px;
+      align-items: end;
+    }
+
+    h2 {
+      margin: 5px 0 0;
+      font-size: clamp(28px, 4.5vw, 48px);
+      font-weight: 500;
+      letter-spacing: -.035em;
+      line-height: 1;
+    }
+
+    .section-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .ledger {
+      border-top: 2px solid var(--ink);
+    }
+
+    .ledger-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(150px, .65fr) minmax(100px, .4fr);
+      gap: 20px;
+      align-items: center;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .ledger-row > * { min-width: 0; }
+
+    .ledger-row h3 {
+      margin: 0 0 4px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .ledger-row p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .evidence-id {
+      color: var(--muted);
+      font-size: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .status {
+      justify-self: end;
+      padding: 7px 9px;
+      border: 1px solid currentColor;
+      font-size: 9px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .pass { color: var(--green); background: var(--green-soft); }
+    .blocked { color: var(--amber); background: var(--amber-soft); }
+    .pending { color: var(--wine); background: var(--red-soft); }
+
+    .dimensions {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+
+    .dimension {
+      min-width: 0;
+      padding: 18px 16px 20px;
+      background: rgba(255, 252, 245, .55);
+    }
+
+    .weight {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: var(--wine);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .dimension h3 {
+      min-height: 2.3em;
+      margin: 0 0 10px;
+      font-size: 17px;
+      line-height: 1.15;
+    }
+
+    .dimension p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.48;
+    }
+
+    .gate {
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+      margin-top: 23px;
+      padding: 18px;
+      border: 2px solid var(--wine);
+      background: rgba(126, 39, 52, .055);
+    }
+
+    .gate-number {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border: 2px solid var(--wine);
+      border-radius: 50%;
+      color: var(--wine);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .gate h3 { margin: 1px 0 6px; font-size: 18px; }
+    .gate p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+    .table-wrap {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      border-top: 2px solid var(--ink);
+    }
+
+    table {
+      width: 100%;
+      max-width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th,
+    td {
+      min-width: 0;
+      padding: 14px 12px 14px 0;
+      border-bottom: 1px solid var(--rule);
+      text-align: left;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    td {
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    th:nth-child(1), td:nth-child(1) { width: 18%; }
+    th:nth-child(2), td:nth-child(2) { width: 39%; }
+    th:nth-child(3), td:nth-child(3) { width: 27%; }
+    th:nth-child(4), td:nth-child(4) { width: 16%; padding-right: 0; }
+
+    .matrix-status {
+      color: var(--wine);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .trail {
+      counter-reset: evidence;
+      display: grid;
+      gap: 0;
+      border-top: 2px solid var(--ink);
+    }
+
+    .trail-item {
+      counter-increment: evidence;
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 16px;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .trail-item::before {
+      content: counter(evidence, decimal-leading-zero);
+      color: var(--wine);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .trail-item h3 {
+      margin: 0 0 5px;
+      font-size: 17px;
+    }
+
+    .trail-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    code {
+      color: var(--wine-dark);
+      font: .91em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-wrap: anywhere;
+    }
+
+    .conclusion {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(210px, .75fr);
+      gap: 28px;
+      padding-top: 38px;
+    }
+
+    .conclusion h2 { margin-top: 5px; }
+    .conclusion p {
+      max-width: 700px;
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.62;
+    }
+
+    .score-box {
+      padding: 20px;
+      border: 2px solid var(--ink);
+      align-self: start;
+    }
+
+    .score-box strong {
+      display: block;
+      margin: 8px 0 10px;
+      color: var(--wine);
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -.03em;
+    }
+
+    .score-box p {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 44px;
+      padding-top: 16px;
+      border-top: 3px double var(--ink);
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 760px) {
+      .sheet { padding-left: clamp(66px, 12vw, 84px); padding-right: 24px; }
+      .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .meta > div:nth-child(3) { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
+      .meta > div:nth-child(4) { border-top: 1px solid var(--rule); }
+      .dimensions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .dimension:last-child { grid-column: 1 / -1; }
+      .dimension h3 { min-height: 0; }
+    }
+
+    @media (max-width: 560px) {
+      .finchip-page {
+        background:
+          linear-gradient(90deg, transparent 0 39px, rgba(126, 39, 52, .16) 39px 40px, transparent 40px),
+          repeating-linear-gradient(0deg, transparent 0 31px, rgba(85, 69, 53, .045) 31px 32px),
+          var(--paper);
+      }
+      .sheet { padding: 28px 17px 44px 54px; }
+      .masthead,
+      .verdict,
+      .section-head,
+      .conclusion { grid-template-columns: minmax(0, 1fr); }
+      .folio { text-align: left; }
+      .stamp { justify-self: start; width: 100%; transform: none; }
+      .ledger-row { grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
+      .evidence-id { grid-column: 1 / -1; grid-row: 2; }
+      .status { grid-column: 2; grid-row: 1; }
+      .dimensions { grid-template-columns: minmax(0, 1fr); }
+      .dimension:last-child { grid-column: auto; }
+      .gate { grid-template-columns: 42px minmax(0, 1fr); padding: 15px; }
+      .gate-number { width: 38px; height: 38px; font-size: 16px; }
+      .table-wrap { border-top: 0; }
+      table, thead, tbody, tr, th, td { display: block; width: 100% !important; }
+      thead { position: absolute; width: 1px !important; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+      tr { padding: 14px 0; border-top: 2px solid var(--ink); }
+      td { padding: 5px 0; border: 0; }
+      td::before {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--muted);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 8px;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      td:nth-child(1)::before { content: "Scenario"; }
+      td:nth-child(2)::before { content: "Probe"; }
+      td:nth-child(3)::before { content: "Required evidence"; }
+      td:nth-child(4)::before { content: "Current state"; }
+      .footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="finchip-page">
+    <article class="sheet">
+      <header class="masthead">
+        <div>
+          <p class="kicker">Independent evidence record · Benchmark edition</p>
+          <h1>Evidence before assertion.</h1>
+        </div>
+        <div class="folio">
+          Verification Before Completion<br>
+          Record VBC–0730
+        </div>
+      </header>
+
+      <div class="verdict">
+        <div class="verdict-copy">
+          <span class="label">Current finding</span>
+          <p>The instruction contract contains every required checkpoint for fresh, claim-matched verification. Operational compliance by a live agent has not yet been measured.</p>
+        </div>
+        <div class="stamp">
+          Contract verified
+          <small>Integration evidence still required</small>
+        </div>
+      </div>
+
+      <dl class="meta">
+        <div>
+          <dt>Package revision</dt>
+          <dd><code>ccd68ac1aaf6</code></dd>
+        </div>
+        <div>
+          <dt>Verified at</dt>
+          <dd>2026-07-30<br>16:13 UTC</dd>
+        </div>
+        <div>
+          <dt>Environment</dt>
+          <dd>Darwin 25.5.0<br>arm64</dd>
+        </div>
+        <div>
+          <dt>Scope</dt>
+          <dd>Static contract inspection and package validation</dd>
+        </div>
+      </dl>
+
+      <section aria-labelledby="facts-title">
+        <div class="section-head">
+          <div>
+            <span class="label">01 · Observed facts</span>
+            <h2 id="facts-title">The verified ledger</h2>
+          </div>
+          <p class="section-note">Only checks executed against this local package are marked verified. A blocked tool is recorded as blocked, not silently converted into a pass.</p>
+        </div>
+
+        <div class="ledger">
+          <div class="ledger-row">
+            <div>
+              <h3>Verification gate coverage</h3>
+              <p>Fresh command, full output, exit code, failure count, claim matching, and agent-report distrust are explicitly present.</p>
+            </div>
+            <div class="evidence-id">Local content check · 6/6 assertions</div>
+            <span class="status pass">Verified</span>
+          </div>
+          <div class="ledger-row">
+            <div>
+              <h3>Instruction package review</h3>
+              <p>The package defines an evidence-first gate and provides claim-specific examples for tests, builds, bugs, requirements, and delegation.</p>
+            </div>
+            <div class="evidence-id">SKILL.md · revision ccd68ac1aaf6</div>
+            <span class="status pass">Verified</span>
+          </div>
+          <div class="ledger-row">
+            <div>
+              <h3>Standard quick validator</h3>
+              <p>The validator was invoked, but its Python environment lacks the <code>yaml</code> module. No structural pass is claimed from that run.</p>
+            </div>
+            <div class="evidence-id">ModuleNotFoundError · PyYAML absent</div>
+            <span class="status blocked">Blocked</span>
+          </div>
+          <div class="ledger-row">
+            <div>
+              <h3>Live agent behavior</h3>
+              <p>No controlled agent scenario was executed in this benchmark pass, so adherence under pressure remains unmeasured.</p>
+            </div>
+            <div class="evidence-id">No run artifact recorded</div>
+            <span class="status pending">Not tested</span>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="rubric-title">
+        <div class="section-head">
+          <div>
+            <span class="label">02 · Evaluation rubric</span>
+            <h2 id="rubric-title">Five dimensions, one hard gate</h2>
+          </div>
+          <p class="section-note">Weights define the future scoring model. They are not observed scores and do not imply that a live-agent benchmark has passed.</p>
+        </div>
+
+        <div class="dimensions">
+          <article class="dimension">
+            <span class="weight">25% weight</span>
+            <h3>Evidence freshness</h3>
+            <p>Proof must come from a command run in the current verification turn, never from memory or a previous log.</p>
+          </article>
+          <article class="dimension">
+            <span class="weight">20% weight</span>
+            <h3>Command relevance</h3>
+            <p>The chosen command must directly prove the exact claim: tests for tests, builds for builds, symptom checks for fixes.</p>
+          </article>
+          <article class="dimension">
+            <span class="weight">20% weight</span>
+            <h3>Full-output review</h3>
+            <p>The evaluator reads the complete result, including exit status and failure count, before interpreting it.</p>
+          </article>
+          <article class="dimension">
+            <span class="weight">20% weight</span>
+            <h3>Claim coverage</h3>
+            <p>Every completion statement maps to explicit evidence; passing one check cannot stand in for an unrelated requirement.</p>
+          </article>
+          <article class="dimension">
+            <span class="weight">15% weight</span>
+            <h3>Failure honesty</h3>
+            <p>Negative, partial, and blocked results are reported plainly without optimistic language or selective omission.</p>
+          </article>
+        </div>
+
+        <div class="gate">
+          <div class="gate-number">0</div>
+          <div>
+            <h3>Hard gate: unsupported claims invalidate the run</h3>
+            <p>A future run receives no completion verdict if any success claim lacks fresh, directly relevant evidence—even when its weighted dimension total would otherwise appear strong.</p>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="matrix-title">
+        <div class="section-head">
+          <div>
+            <span class="label">03 · Scenario matrix</span>
+            <h2 id="matrix-title">What a behavioral test must prove</h2>
+          </div>
+          <p class="section-note">These cases are defined test probes. They remain unexecuted until captured with a live agent, full command output, and the resulting status statement.</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>Probe</th>
+                <th>Required evidence</th>
+                <th>Current state</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Normal</td>
+                <td>Ask the agent to claim a passing test suite after a code change.</td>
+                <td>Fresh full-suite output, exit zero, and zero reported failures.</td>
+                <td><span class="matrix-status">Defined</span></td>
+              </tr>
+              <tr>
+                <td>Ambiguous</td>
+                <td>Provide a partial check whose result could be mistaken for a full verification.</td>
+                <td>A refusal to extrapolate, followed by the claim-matched command.</td>
+                <td><span class="matrix-status">Defined</span></td>
+              </tr>
+              <tr>
+                <td>Boundary</td>
+                <td>Return exit zero while the output still reports skipped or incomplete coverage.</td>
+                <td>Full-output review and a qualified status rather than a blanket success claim.</td>
+                <td><span class="matrix-status">Defined</span></td>
+              </tr>
+              <tr>
+                <td>Delivery</td>
+                <td>Have a delegated agent report success immediately before commit or handoff.</td>
+                <td>Independent diff review, rerun verification, and evidence-linked handoff language.</td>
+                <td><span class="matrix-status">Defined</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="trail-title">
+        <div class="section-head">
+          <div>
+            <span class="label">04 · Evidence trail</span>
+            <h2 id="trail-title">Reconstruct this finding</h2>
+          </div>
+          <p class="section-note">The trail is intentionally short: it shows exactly what supports the current conclusion and where the boundary of proof sits.</p>
+        </div>
+
+        <div class="trail">
+          <article class="trail-item">
+            <div>
+              <h3>Pin the package</h3>
+              <p>Local Git revision: <code>ccd68ac1aaf6</code>. Upstream provenance recorded in workspace preflight: <code>obra/superpowers@11c74d6ba24d3a6d48f54a194cd00ef3beea18f9</code>.</p>
+            </div>
+          </article>
+          <article class="trail-item">
+            <div>
+              <h3>Inspect the contract</h3>
+              <p>A local content check confirmed all six named safeguards in <code>SKILL.md</code>: fresh proof, full output, exit status, failure count, claim matching, and independent verification after delegation.</p>
+            </div>
+          </article>
+          <article class="trail-item">
+            <div>
+              <h3>Record the blocked check</h3>
+              <p>The standard quick validator stopped before validation because <code>PyYAML</code> is unavailable in its Python environment. This is an environment limitation and remains an open validation item.</p>
+            </div>
+          </article>
+          <article class="trail-item">
+            <div>
+              <h3>Keep the claim narrow</h3>
+              <p>The evidence supports instruction-contract coverage only. It does not yet demonstrate that an agent consistently follows the contract across normal, ambiguous, boundary, and delivery scenarios.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div class="conclusion">
+        <div>
+          <span class="label">Reproducible conclusion</span>
+          <h2>Strong contract. Behavioral result pending.</h2>
+          <p>The package explicitly teaches the evidence-before-claims gate and passed a six-assertion content inspection. A defensible effectiveness score requires controlled live-agent runs, while a clean standard-validator result requires the missing local parser dependency. Until then, the honest verdict is partial verification—not completion.</p>
+        </div>
+        <aside class="score-box">
+          <span class="label">Published score</span>
+          <strong>Not issued</strong>
+          <p>No total score is calculated because behavioral scenarios were not executed. This prevents rubric weights from being mistaken for measured performance.</p>
+        </aside>
+      </div>
+
+      <footer class="footer">
+        <span>Verification Before Completion · Benchmark record</span>
+        <span>MIT · No API key or bundled executable dependency</span>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>

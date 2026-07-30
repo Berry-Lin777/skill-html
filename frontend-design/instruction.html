@@ -1,0 +1,1041 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Instructions for turning product context into a distinctive, production-ready frontend with deliberate visual direction and implementation quality.">
+  <title>Frontend Design — Instruction</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #16141a;
+      --paper: #f6f6f2;
+      --violet: #7257ff;
+      --pink: #ff4f8b;
+      --orange: #ff6b35;
+      --yellow: #ffd84d;
+      --mint: #9ae7c4;
+      --cloud: #e7e4f0;
+      --white: #ffffff;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: light;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    img,
+    video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .page {
+      width: min(100%, 1180px);
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(16px, 4.5vw, 58px);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 10px 0 16px;
+      border-bottom: 3px solid var(--ink);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .topbar span:last-child {
+      color: var(--violet);
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+      gap: clamp(24px, 5vw, 64px);
+      align-items: center;
+      padding: clamp(38px, 7vw, 78px) 0 clamp(34px, 6vw, 68px);
+    }
+
+    .kicker,
+    .label {
+      margin: 0 0 14px;
+      color: var(--violet);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    li,
+    blockquote {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(52px, 9vw, 112px);
+      font-weight: 900;
+      letter-spacing: -0.078em;
+      line-height: 0.76;
+      text-transform: uppercase;
+    }
+
+    h1 .line {
+      display: block;
+    }
+
+    h1 .accent {
+      color: var(--pink);
+      font-style: italic;
+      letter-spacing: -0.09em;
+    }
+
+    .lede {
+      max-width: 680px;
+      margin: 30px 0 0;
+      font-size: clamp(17px, 2.3vw, 22px);
+      line-height: 1.45;
+    }
+
+    .direction-board {
+      position: relative;
+      min-width: 0;
+      padding: 18px;
+      border: 3px solid var(--ink);
+      background: var(--white);
+      box-shadow: 12px 12px 0 var(--yellow);
+    }
+
+    .board-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--ink);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .composition {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(70px, 0.6fr);
+      grid-template-rows: 100px 84px 64px;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .shape {
+      display: flex;
+      min-width: 0;
+      align-items: flex-end;
+      padding: 12px;
+      overflow: hidden;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      line-height: 1.15;
+      text-transform: uppercase;
+    }
+
+    .shape-a {
+      grid-row: span 2;
+      background: var(--violet);
+      color: var(--white);
+      font-size: clamp(19px, 3.2vw, 32px);
+      letter-spacing: -0.05em;
+    }
+
+    .shape-b {
+      background: var(--orange);
+    }
+
+    .shape-c {
+      align-items: center;
+      background: var(--mint);
+    }
+
+    .shape-d {
+      grid-column: 1 / -1;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .annotation {
+      position: absolute;
+      right: -12px;
+      bottom: -24px;
+      max-width: 160px;
+      padding: 9px 13px;
+      background: var(--pink);
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(-4deg);
+    }
+
+    .thesis {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: clamp(18px, 4vw, 44px);
+      align-items: center;
+      margin: 0;
+      padding: clamp(22px, 4vw, 42px);
+      border: 3px solid var(--ink);
+      background: var(--pink);
+    }
+
+    .thesis-mark {
+      font-size: clamp(44px, 8vw, 92px);
+      font-weight: 900;
+      letter-spacing: -0.08em;
+      line-height: 0.8;
+    }
+
+    .thesis p {
+      margin: 0;
+      font-size: clamp(23px, 4vw, 46px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.98;
+    }
+
+    section {
+      min-width: 0;
+      margin-top: clamp(60px, 9vw, 108px);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+      gap: clamp(24px, 5vw, 68px);
+      align-items: end;
+      padding-bottom: 20px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(38px, 6.2vw, 74px);
+      font-weight: 900;
+      letter-spacing: -0.065em;
+      line-height: 0.86;
+      text-transform: uppercase;
+    }
+
+    .intro {
+      max-width: 680px;
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .input-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .input-card {
+      min-width: 0;
+      min-height: 190px;
+      padding: 22px;
+      border: 2px solid var(--ink);
+      background: var(--white);
+    }
+
+    .input-card:nth-child(2) {
+      background: var(--yellow);
+    }
+
+    .input-card:nth-child(3) {
+      background: var(--mint);
+    }
+
+    .input-card b {
+      display: block;
+      margin-bottom: 30px;
+      color: var(--violet);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .input-card h3 {
+      margin: 0 0 8px;
+      font-size: 25px;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .input-card p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .prompt {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: clamp(20px, 4vw, 44px);
+      margin-top: 12px;
+      padding: clamp(24px, 5vw, 48px);
+      background: var(--violet);
+      color: var(--white);
+    }
+
+    .prompt h3 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    .prompt blockquote {
+      margin: 0;
+      font-size: clamp(18px, 2.7vw, 27px);
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .process {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .pass {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 36px);
+      border: 3px solid var(--ink);
+      background: var(--white);
+    }
+
+    .pass:nth-child(2) {
+      background: var(--cloud);
+    }
+
+    .pass-badge {
+      display: inline-block;
+      margin-bottom: 28px;
+      padding: 6px 9px;
+      background: var(--ink);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .pass h3 {
+      margin: 0 0 14px;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      text-transform: uppercase;
+    }
+
+    .pass > p {
+      margin: 0 0 24px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .pass ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: item;
+    }
+
+    .pass li {
+      display: grid;
+      grid-template-columns: 26px minmax(0, 1fr);
+      gap: 10px;
+      padding: 12px 0;
+      border-top: 1px solid var(--ink);
+      font-size: 13px;
+      line-height: 1.45;
+      counter-increment: item;
+    }
+
+    .pass li::before {
+      content: counter(item);
+      color: var(--pink);
+      font-weight: 900;
+    }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 28px;
+      border: 2px solid var(--ink);
+      background: var(--ink);
+    }
+
+    .decision {
+      min-width: 0;
+      padding: clamp(18px, 3vw, 28px);
+      background: var(--paper);
+    }
+
+    .decision:nth-child(2) {
+      background: var(--yellow);
+    }
+
+    .decision:nth-child(3) {
+      background: var(--mint);
+    }
+
+    .decision:nth-child(4) {
+      background: #ffc5d8;
+    }
+
+    .decision b {
+      display: block;
+      margin-bottom: 18px;
+      font-size: 17px;
+      text-transform: uppercase;
+    }
+
+    .decision p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .signature {
+      position: relative;
+      min-width: 0;
+      margin-top: 14px;
+      padding: clamp(28px, 6vw, 64px);
+      overflow: hidden;
+      background: var(--orange);
+    }
+
+    .signature::after {
+      position: absolute;
+      right: -55px;
+      bottom: -65px;
+      width: 210px;
+      height: 210px;
+      border: 38px solid var(--pink);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .signature p {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(28px, 5.4vw, 64px);
+      font-weight: 900;
+      letter-spacing: -0.055em;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .signature small {
+      position: relative;
+      z-index: 1;
+      display: block;
+      max-width: 650px;
+      margin-top: 22px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .deliverables {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .deliverable {
+      min-width: 0;
+      padding: clamp(20px, 4vw, 34px);
+      border: 2px solid var(--ink);
+      background: var(--white);
+    }
+
+    .deliverable span {
+      display: block;
+      margin-bottom: 14px;
+      color: var(--violet);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .deliverable h3 {
+      margin: 0 0 9px;
+      font-size: 25px;
+      letter-spacing: -0.035em;
+      line-height: 1;
+    }
+
+    .deliverable p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .fit {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .fit-card {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 36px);
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .fit-card.not {
+      background: var(--cloud);
+      color: var(--ink);
+    }
+
+    .fit-card h3 {
+      margin: 0 0 20px;
+      color: var(--yellow);
+      font-size: 28px;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .fit-card.not h3 {
+      color: var(--pink);
+    }
+
+    .fit-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fit-card li {
+      padding: 11px 0;
+      border-top: 1px solid currentColor;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .limits {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr);
+      gap: clamp(24px, 5vw, 60px);
+      margin-top: 28px;
+      padding: clamp(24px, 5vw, 48px);
+      border: 3px solid var(--ink);
+      background: var(--yellow);
+    }
+
+    .limits h3 {
+      margin: 0;
+      font-size: 25px;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .limits-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 28px;
+    }
+
+    .limit {
+      min-width: 0;
+    }
+
+    .limit b {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--violet);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .limit p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .closing {
+      margin-top: clamp(60px, 9vw, 108px);
+      padding: clamp(30px, 6vw, 66px);
+      background: var(--violet);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .closing p {
+      max-width: 880px;
+      margin: 0 auto;
+      font-size: clamp(34px, 7vw, 82px);
+      font-weight: 900;
+      letter-spacing: -0.07em;
+      line-height: 0.88;
+      text-transform: uppercase;
+    }
+
+    .closing span {
+      display: inline-block;
+      margin-top: 22px;
+      color: var(--yellow);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 0 6px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 700px) {
+      .hero,
+      .section-head {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .direction-board {
+        width: min(92%, 470px);
+        margin: 0 auto;
+      }
+
+      .input-strip,
+      .decision-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 500px) {
+      .page {
+        padding: 14px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        font-size: 9px;
+      }
+
+      h1 {
+        font-size: clamp(50px, 16vw, 74px);
+      }
+
+      .direction-board {
+        width: calc(100% - 12px);
+        box-shadow: 7px 7px 0 var(--yellow);
+      }
+
+      .annotation {
+        right: -3px;
+        bottom: -21px;
+      }
+
+      .thesis {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .thesis-mark {
+        font-size: 38px;
+      }
+
+      .input-strip,
+      .process,
+      .decision-grid,
+      .deliverables,
+      .fit,
+      .limits-list {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .prompt,
+      .limits {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .input-card {
+        min-height: 0;
+      }
+
+      .input-card b {
+        margin-bottom: 18px;
+      }
+
+      .signature::after {
+        right: -95px;
+        bottom: -110px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page">
+      <header class="topbar">
+        <span>Frontend Design</span>
+        <span>Instruction / From context to character</span>
+      </header>
+
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="kicker">Distinctive by design, production-ready by default</p>
+          <h1 id="page-title">
+            <span class="line">Give the</span>
+            <span class="line accent">brief</span>
+            <span class="line">a point of view.</span>
+          </h1>
+          <p class="lede">
+            Frontend Design turns product context into an intentional interface—one whose type,
+            hierarchy, language, motion, and responsive behavior belong to the subject instead of
+            a reusable template.
+          </p>
+        </div>
+
+        <aside class="direction-board" aria-label="Example visual direction board">
+          <div class="board-meta">
+            <span>Direction study</span>
+            <span>Selected / 01</span>
+          </div>
+          <div class="composition" aria-hidden="true">
+            <div class="shape shape-a">Subject<br>becomes<br>structure.</div>
+            <div class="shape shape-b">Type</div>
+            <div class="shape shape-c">Voice</div>
+            <div class="shape shape-d"><span>Hierarchy</span><span>→ Build</span></div>
+          </div>
+          <div class="annotation">One justified aesthetic risk</div>
+        </aside>
+      </section>
+
+      <div class="thesis">
+        <span class="thesis-mark">↳</span>
+        <p>The hero is a thesis, not a reserved slot for a headline and three stats.</p>
+      </div>
+
+      <section aria-labelledby="inputs-heading">
+        <div class="section-head">
+          <div>
+            <p class="label">What to provide</p>
+            <h2 id="inputs-heading">Start with meaning.</h2>
+          </div>
+          <p class="intro">
+            A useful brief gives the design something real to respond to. If the subject, audience,
+            or page goal is missing, the skill chooses one concrete interpretation and states it
+            before designing.
+          </p>
+        </div>
+
+        <div class="input-strip">
+          <article class="input-card">
+            <b>Subject</b>
+            <h3>What world is this from?</h3>
+            <p>The product, its materials, artifacts, vocabulary, and real content.</p>
+          </article>
+          <article class="input-card">
+            <b>Audience</b>
+            <h3>Who must understand it?</h3>
+            <p>The people using the page, their context, expectations, and level of familiarity.</p>
+          </article>
+          <article class="input-card">
+            <b>Single job</b>
+            <h3>What must the page achieve?</h3>
+            <p>The primary action or understanding the interface should make possible.</p>
+          </article>
+        </div>
+
+        <div class="prompt">
+          <h3>Recommended prompt</h3>
+          <blockquote>
+            Use Frontend Design to create a responsive launch page for an independent field-recording
+            archive. Its audience is documentary sound artists, and the page’s single job is to help
+            them discover and preview location recordings. Ground the visual language in field notes,
+            timestamps, weather observations, and acoustic texture. Explain the direction, critique
+            generic choices, then implement the finished interface.
+          </blockquote>
+        </div>
+      </section>
+
+      <section aria-labelledby="workflow-heading">
+        <div class="section-head">
+          <div>
+            <p class="label">The working method</p>
+            <h2 id="workflow-heading">Two passes. Two critiques.</h2>
+          </div>
+          <p class="intro">
+            The process separates direction from execution so generic decisions can be caught before
+            they harden into code, then checks the built result for quality and restraint.
+          </p>
+        </div>
+
+        <div class="process">
+          <article class="pass">
+            <span class="pass-badge">Pass A / Direction</span>
+            <h3>Brainstorm, compare, commit.</h3>
+            <p>Build a compact design system from the brief, then test whether it could belong to any other product.</p>
+            <ol>
+              <li>Name a palette of four to six purposeful colors.</li>
+              <li>Assign deliberate display, body, and utility type roles.</li>
+              <li>Compare layout ideas with prose and compact wireframes.</li>
+              <li>Choose one memorable signature element rooted in the subject.</li>
+              <li>Revise any choice that reads as a familiar AI-design default.</li>
+            </ol>
+          </article>
+
+          <article class="pass">
+            <span class="pass-badge">Pass B / Build</span>
+            <h3>Implement, inspect, remove.</h3>
+            <p>Follow the selected direction exactly, spending visual boldness where it earns its place.</p>
+            <ol>
+              <li>Build hierarchy, typography, language, and behavior together.</li>
+              <li>Match implementation complexity to the chosen vision.</li>
+              <li>Check selector interactions, spacing, and responsive states.</li>
+              <li>Protect keyboard focus and reduced-motion preferences.</li>
+              <li>Critique the finished page and remove one unnecessary flourish.</li>
+            </ol>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="decisions-heading">
+        <div class="section-head">
+          <div>
+            <p class="label">Design decisions</p>
+            <h2 id="decisions-heading">Every choice carries content.</h2>
+          </div>
+          <p class="intro">
+            The skill treats visual design and interface writing as one system. Nothing is added
+            merely because polished websites usually contain it.
+          </p>
+        </div>
+
+        <div class="decision-grid">
+          <article class="decision">
+            <b>Typography</b>
+            <p>Type roles create personality and hierarchy; they are not neutral containers for copy.</p>
+          </article>
+          <article class="decision">
+            <b>Structure</b>
+            <p>Rules, labels, numbers, and sections encode real relationships or sequence—or stay out.</p>
+          </article>
+          <article class="decision">
+            <b>Motion</b>
+            <p>One orchestrated moment can serve the subject better than scattered decorative effects.</p>
+          </article>
+          <article class="decision">
+            <b>Language</b>
+            <p>Plain, active, consistent words help users act; failure and empty states give direction.</p>
+          </article>
+        </div>
+
+        <div class="signature">
+          <p>Spend boldness in one place.</p>
+          <small>
+            The signature is a single memorable element that embodies the brief. Everything around
+            it stays disciplined enough to make that choice feel intentional.
+          </small>
+        </div>
+      </section>
+
+      <section aria-labelledby="outputs-heading">
+        <div class="section-head">
+          <div>
+            <p class="label">What the skill delivers</p>
+            <h2 id="outputs-heading">Direction you can build.</h2>
+          </div>
+          <p class="intro">
+            The output is not a mood-board-only concept. It connects the rationale to a responsive,
+            usable implementation in the requested frontend environment.
+          </p>
+        </div>
+
+        <div class="deliverables">
+          <article class="deliverable">
+            <span>Design rationale</span>
+            <h3>A subject-specific point of view</h3>
+            <p>A stated subject, audience, page job, aesthetic thesis, and justified signature decision.</p>
+          </article>
+          <article class="deliverable">
+            <span>Token direction</span>
+            <h3>Color, type, layout, and voice</h3>
+            <p>A compact system with named colors, clear type roles, layout logic, and writing register.</p>
+          </article>
+          <article class="deliverable">
+            <span>Implemented frontend</span>
+            <h3>Production-oriented interface code</h3>
+            <p>The page or component built in the project’s stack, using real content and deliberate structure.</p>
+          </article>
+          <article class="deliverable">
+            <span>Quality pass</span>
+            <h3>Responsive and interaction details</h3>
+            <p>Mobile behavior, focus visibility, reduced motion, spacing, selector integrity, and final self-critique.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="fit-heading">
+        <div class="section-head">
+          <div>
+            <p class="label">Best fit</p>
+            <h2 id="fit-heading">Use it when identity matters.</h2>
+          </div>
+          <p class="intro">
+            This skill adds the most value when a product needs a genuine visual position, especially
+            after generic proposals have failed to capture its subject.
+          </p>
+        </div>
+
+        <div class="fit">
+          <article class="fit-card">
+            <h3>Strong use cases</h3>
+            <ul>
+              <li>New landing pages, product surfaces, portfolios, and editorial experiences</li>
+              <li>Existing interfaces that feel interchangeable or visually unfocused</li>
+              <li>Briefs where typography, hierarchy, tone, and brand character matter</li>
+              <li>Frontends that need concept, critique, implementation, and responsive polish together</li>
+            </ul>
+          </article>
+          <article class="fit-card not">
+            <h3>Not the whole answer</h3>
+            <ul>
+              <li>It does not replace user research, product strategy, or accessibility auditing</li>
+              <li>It cannot infer unavailable brand assets, legal permissions, or hidden requirements</li>
+              <li>It should not override an explicit design system or visual direction in the brief</li>
+              <li>It is unnecessary when only a narrowly specified mechanical code edit is requested</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="limits-heading">
+        <div class="section-head">
+          <div>
+            <p class="label">Dependencies &amp; limits</p>
+            <h2 id="limits-heading">Context sets the ceiling.</h2>
+          </div>
+          <p class="intro">
+            Better decisions depend on access to the actual product brief, content, project code,
+            runtime constraints, and any existing design language.
+          </p>
+        </div>
+
+        <div class="limits">
+          <h3>Keep these boundaries visible</h3>
+          <div class="limits-list">
+            <article class="limit">
+              <b>Project stack</b>
+              <p>Implementation must follow the framework, component patterns, and build tools already in scope.</p>
+            </article>
+            <article class="limit">
+              <b>Assets &amp; rights</b>
+              <p>Fonts, images, marks, and other media still require suitable files and permission to use them.</p>
+            </article>
+            <article class="limit">
+              <b>Accessibility</b>
+              <p>Focus and reduced motion are a quality floor; full conformance still requires dedicated testing.</p>
+            </article>
+            <article class="limit">
+              <b>Validation</b>
+              <p>Final quality should be checked in the real browser, target widths, and production build environment.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <div class="closing">
+        <p>Specific beats polished-but-interchangeable.</p>
+        <span>Read the subject → choose a thesis → build the consequence</span>
+      </div>
+
+      <footer>
+        <span>Frontend Design / Instruction</span>
+        <span>Intentional · Responsive · Implementable</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

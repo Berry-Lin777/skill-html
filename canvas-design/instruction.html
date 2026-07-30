@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Canvas Design — Instruction</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3eddf;
+      --paper-deep: #e8ddc8;
+      --ink: #22201c;
+      --muted: #6d665c;
+      --red: #9f2f2a;
+      --blue: #245390;
+      --gold: #d79a31;
+      --rule: rgba(34, 32, 28, 0.19);
+      --soft-rule: rgba(34, 32, 28, 0.10);
+      --white: #fffdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      color-scheme: light;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      overflow-wrap: anywhere;
+    }
+
+    img,
+    video,
+    svg {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.82), transparent 25rem),
+        repeating-linear-gradient(0deg, rgba(34, 32, 28, 0.018) 0, rgba(34, 32, 28, 0.018) 1px, transparent 1px, transparent 5px),
+        var(--paper);
+      color: var(--ink);
+    }
+
+    .page-shell {
+      width: min(100%, 1040px);
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(20px, 4.7vw, 52px);
+    }
+
+    .eyebrow,
+    .section-number,
+    .label,
+    .file-type,
+    .tiny-note,
+    .step-number {
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .brand {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .edition {
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.72rem;
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(250px, 0.95fr);
+      gap: clamp(24px, 5vw, 64px);
+      align-items: center;
+      padding: clamp(36px, 8vw, 84px) 0 clamp(42px, 8vw, 82px);
+    }
+
+    .hero-copy,
+    .art-proof,
+    .section,
+    .split > *,
+    .workflow > *,
+    .deliverables > * {
+      min-width: 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--red);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 10ch;
+      margin-bottom: 24px;
+      font-size: clamp(3.1rem, 9.2vw, 7.4rem);
+      font-weight: 400;
+      line-height: 0.82;
+      letter-spacing: -0.065em;
+    }
+
+    .hero-lede {
+      max-width: 38rem;
+      margin: 0;
+      color: #4e4840;
+      font-size: clamp(1.03rem, 2.3vw, 1.34rem);
+      line-height: 1.55;
+    }
+
+    .art-proof {
+      position: relative;
+      padding: clamp(14px, 2.8vw, 25px);
+      background: #d8c9ae;
+      box-shadow: 12px 14px 0 rgba(34, 32, 28, 0.09);
+      transform: rotate(1.1deg);
+    }
+
+    .art-board {
+      position: relative;
+      min-height: 390px;
+      overflow: hidden;
+      border: 1px solid rgba(34, 32, 28, 0.35);
+      background: var(--white);
+    }
+
+    .art-board::before {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(115deg, transparent 0 26%, var(--red) 26% 44%, transparent 44%),
+        linear-gradient(20deg, transparent 0 63%, var(--blue) 63% 79%, transparent 79%);
+      content: "";
+    }
+
+    .art-circle {
+      position: absolute;
+      top: 12%;
+      right: 9%;
+      width: 41%;
+      aspect-ratio: 1;
+      border: 24px solid var(--gold);
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    .art-line {
+      position: absolute;
+      left: 8%;
+      bottom: 18%;
+      width: 71%;
+      height: 1px;
+      background: var(--ink);
+      transform: rotate(-8deg);
+      transform-origin: left;
+    }
+
+    .art-title {
+      position: absolute;
+      right: 8%;
+      bottom: 7%;
+      width: 7ch;
+      font-size: clamp(1.7rem, 5vw, 3.5rem);
+      font-style: italic;
+      line-height: 0.88;
+      text-align: right;
+    }
+
+    .art-index {
+      position: absolute;
+      top: 8%;
+      left: 7%;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .proof-caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 13px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.65rem;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .section {
+      padding: clamp(42px, 7.8vw, 80px) 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(72px, 0.22fr) minmax(0, 1fr);
+      gap: 20px;
+      margin-bottom: clamp(28px, 5vw, 48px);
+    }
+
+    .section-number {
+      color: var(--red);
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    h2 {
+      max-width: 18ch;
+      margin-bottom: 0;
+      font-size: clamp(2rem, 5.6vw, 4.6rem);
+      font-weight: 400;
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+    }
+
+    h3 {
+      font-size: 1.12rem;
+      line-height: 1.25;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(22px, 5vw, 58px);
+    }
+
+    .body-copy {
+      color: #504a42;
+      font-size: 1rem;
+      line-height: 1.72;
+    }
+
+    .body-copy p:last-child {
+      margin-bottom: 0;
+    }
+
+    .audience-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .audience-item {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 12px;
+      padding: 13px 0;
+      border-top: 1px solid var(--soft-rule);
+    }
+
+    .audience-item:first-child {
+      border-top-color: var(--ink);
+    }
+
+    .mark {
+      color: var(--red);
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 800;
+    }
+
+    .audience-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .step {
+      position: relative;
+      padding: 26px clamp(14px, 2.8vw, 25px) 28px;
+      border-left: 1px solid var(--rule);
+    }
+
+    .step:first-child {
+      border-left: 0;
+    }
+
+    .step-number {
+      display: inline-block;
+      margin-bottom: 42px;
+      color: var(--red);
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    .step h3 {
+      margin-bottom: 11px;
+      font-size: clamp(1.2rem, 2.7vw, 1.7rem);
+      font-weight: 400;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.58;
+    }
+
+    .step-accent {
+      position: absolute;
+      top: 27px;
+      right: 18px;
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+    }
+
+    .step:nth-child(2) .step-accent {
+      border-radius: 0;
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
+
+    .step:nth-child(3) .step-accent {
+      width: 26px;
+      height: 11px;
+      border-radius: 0;
+      border-color: var(--blue);
+      background: var(--blue);
+    }
+
+    .brief-sheet {
+      padding: clamp(22px, 4vw, 38px);
+      border: 1px solid var(--ink);
+      background: rgba(255, 253, 248, 0.62);
+    }
+
+    .brief-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 30px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .label {
+      color: var(--red);
+      font-size: 0.66rem;
+      font-weight: 800;
+    }
+
+    .brief-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px 26px;
+    }
+
+    .brief-field {
+      min-width: 0;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--soft-rule);
+    }
+
+    .brief-field strong {
+      display: block;
+      margin-bottom: 5px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.8rem;
+    }
+
+    .brief-field span {
+      color: var(--muted);
+      font-size: 0.87rem;
+      line-height: 1.45;
+    }
+
+    .prompt {
+      margin-top: 22px;
+      padding: 20px;
+      border-left: 5px solid var(--red);
+      background: var(--ink);
+      color: var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(0.86rem, 1.8vw, 1rem);
+      line-height: 1.68;
+    }
+
+    .prompt strong {
+      color: #f1c66f;
+    }
+
+    .deliverables {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .deliverable {
+      min-height: 220px;
+      padding: 22px;
+      border: 1px solid var(--rule);
+      background: var(--white);
+    }
+
+    .file-type {
+      display: inline-block;
+      margin-bottom: 50px;
+      padding: 5px 7px;
+      background: var(--ink);
+      color: var(--white);
+      font-size: 0.62rem;
+      font-weight: 800;
+    }
+
+    .deliverable:nth-child(2) .file-type {
+      background: var(--red);
+    }
+
+    .deliverable:nth-child(3) .file-type {
+      background: var(--blue);
+    }
+
+    .deliverable h3 {
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .deliverable p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .boundaries {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1px;
+      background: var(--ink);
+      border: 1px solid var(--ink);
+    }
+
+    .boundary {
+      padding: clamp(24px, 4vw, 38px);
+      background: var(--paper);
+    }
+
+    .boundary.is-not {
+      background: #e4d4c4;
+    }
+
+    .boundary h3 {
+      margin-bottom: 22px;
+      font-size: 1.5rem;
+      font-weight: 400;
+    }
+
+    .boundary ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .boundary li {
+      position: relative;
+      margin-top: 12px;
+      padding: 12px 0 0 24px;
+      border-top: 1px solid var(--soft-rule);
+      color: #514b43;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .boundary li::before {
+      position: absolute;
+      top: 12px;
+      left: 0;
+      color: var(--red);
+      content: "◆";
+      font-size: 0.6rem;
+    }
+
+    .rights-note {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+      gap: clamp(24px, 5vw, 56px);
+      align-items: start;
+      padding: clamp(26px, 5vw, 48px);
+      background: var(--red);
+      color: #fff8ec;
+    }
+
+    .rights-note h2 {
+      max-width: 9ch;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+    }
+
+    .rights-note p {
+      margin: 0;
+      color: rgba(255, 248, 236, 0.88);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .rights-note p + p {
+      margin-top: 13px;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--ink);
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-copy {
+        max-width: 590px;
+      }
+
+      h1 {
+        max-width: 9ch;
+      }
+
+      .art-proof {
+        width: min(100%, 470px);
+        transform: none;
+      }
+
+      .art-board {
+        min-height: 340px;
+      }
+
+      .section-heading {
+        grid-template-columns: 58px minmax(0, 1fr);
+      }
+
+      .workflow,
+      .deliverables {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+
+      .step:last-child,
+      .deliverable:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .step:nth-child(3) {
+        border-top: 1px solid var(--rule);
+        border-left: 0;
+      }
+
+      .rights-note {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .masthead,
+      .brief-header,
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .edition {
+        text-align: left;
+      }
+
+      .hero {
+        padding-top: 32px;
+      }
+
+      .art-board {
+        min-height: 290px;
+      }
+
+      .split,
+      .brief-grid,
+      .boundaries,
+      .workflow,
+      .deliverables {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .section-heading {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+      }
+
+      .step {
+        border-top: 1px solid var(--rule);
+        border-left: 0;
+      }
+
+      .step:first-child {
+        border-top: 0;
+      }
+
+      .step:last-child,
+      .deliverable:last-child {
+        grid-column: auto;
+      }
+
+      .deliverable {
+        min-height: 0;
+      }
+
+      .file-type {
+        margin-bottom: 32px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page-shell">
+      <header class="masthead">
+        <div class="brand">Canvas Design</div>
+        <div class="edition">Instruction / Static Art Atelier</div>
+      </header>
+
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">From a brief to an art object</p>
+          <h1 id="page-title">Make the idea visible.</h1>
+          <p class="hero-lede">Canvas Design turns a subtle creative brief into an original visual philosophy, then expresses it as a meticulously composed single-page artwork in PNG or PDF form.</p>
+        </div>
+
+        <div class="art-proof" aria-label="Abstract editorial artwork preview">
+          <div class="art-board">
+            <div class="art-circle" aria-hidden="true"></div>
+            <div class="art-line" aria-hidden="true"></div>
+            <span class="art-index">Study 01 / Quiet Orbit</span>
+            <span class="art-title">matter remembers</span>
+          </div>
+          <div class="proof-caption">
+            <span>Visual proof</span>
+            <span>Philosophy → Canvas</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="what-title">
+        <div class="section-heading">
+          <span class="section-number">01 / Purpose</span>
+          <h2 id="what-title">An atelier for original static work.</h2>
+        </div>
+        <div class="split">
+          <div class="body-copy">
+            <p>This skill is designed for posters, editorial art, cover concepts, visual statements, and other static pieces where atmosphere and composition matter more than dense explanation.</p>
+            <p>It does not begin with a template. It first names and articulates an aesthetic movement, giving form, color, rhythm, space, and hierarchy a coherent point of view. That philosophy becomes the creative brief for the finished canvas.</p>
+          </div>
+          <div class="audience-list" aria-label="Intended users">
+            <div class="audience-item">
+              <span class="mark">A</span>
+              <div><h3>Creative teams</h3><p>Explore a high-level visual direction before a campaign or identity expands.</p></div>
+            </div>
+            <div class="audience-item">
+              <span class="mark">B</span>
+              <div><h3>Writers and musicians</h3><p>Translate an intangible theme into an expressive cover, print, or cultural artifact.</p></div>
+            </div>
+            <div class="audience-item">
+              <span class="mark">C</span>
+              <div><h3>Independent makers</h3><p>Commission a polished, self-contained image without prescribing a rigid layout.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="workflow-title">
+        <div class="section-heading">
+          <span class="section-number">02 / Method</span>
+          <h2 id="workflow-title">Two creative acts, one coherent result.</h2>
+        </div>
+        <div class="workflow">
+          <article class="step">
+            <span class="step-number">Step 01</span>
+            <span class="step-accent" aria-hidden="true"></span>
+            <h3>Read the undertone</h3>
+            <p>Identify the quiet conceptual reference inside the request: the emotional or cultural thread that should be felt without being announced literally.</p>
+          </article>
+          <article class="step">
+            <span class="step-number">Step 02</span>
+            <span class="step-accent" aria-hidden="true"></span>
+            <h3>Write the philosophy</h3>
+            <p>Create a concise, named visual movement that defines form, space, color, scale, rhythm, composition, hierarchy, and the role of minimal text.</p>
+          </article>
+          <article class="step">
+            <span class="step-number">Step 03</span>
+            <span class="step-accent" aria-hidden="true"></span>
+            <h3>Express and refine</h3>
+            <p>Build the single-page canvas, then take a deliberate second pass to improve cohesion, spacing, typography, and craft instead of merely adding more decoration.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="input-title">
+        <div class="section-heading">
+          <span class="section-number">03 / Brief</span>
+          <h2 id="input-title">Give direction. Leave room for discovery.</h2>
+        </div>
+        <div class="brief-sheet">
+          <div class="brief-header">
+            <span class="label">Recommended inputs</span>
+            <span class="tiny-note">Specific enough to anchor / open enough to interpret</span>
+          </div>
+          <div class="brief-grid">
+            <div class="brief-field"><strong>Artifact</strong><span>Poster, cover, editorial artwork, gallery print, or another static piece.</span></div>
+            <div class="brief-field"><strong>Format</strong><span>Preferred PNG or PDF output, page ratio, and whether one or multiple pages are needed.</span></div>
+            <div class="brief-field"><strong>Concept</strong><span>A subject, phrase, memory, tension, or subtle reference to embed in the work.</span></div>
+            <div class="brief-field"><strong>Context</strong><span>Where the work will appear and what its audience should feel or notice.</span></div>
+            <div class="brief-field"><strong>Essential text</strong><span>Only the exact words that must appear; the composition remains overwhelmingly visual.</span></div>
+            <div class="brief-field"><strong>Constraints</strong><span>Required dimensions, safe margins, brand colors, licensed assets, or accessibility needs.</span></div>
+          </div>
+          <div class="prompt">
+            <strong>Try this prompt:</strong> “Use Canvas Design to create a vertical poster about the tension between memory and erosion. Let the reference to coastal tide marks remain subtle. Include only the words ‘What the water keeps.’ Deliver the visual philosophy as Markdown and the final artwork as a print-ready PNG.”
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="output-title">
+        <div class="section-heading">
+          <span class="section-number">04 / Delivery</span>
+          <h2 id="output-title">A rationale and a finished artifact.</h2>
+        </div>
+        <div class="deliverables">
+          <article class="deliverable">
+            <span class="file-type">.md</span>
+            <h3>Visual philosophy</h3>
+            <p>A named aesthetic movement expressed in four to six focused paragraphs, guiding the work without locking it into a template.</p>
+          </article>
+          <article class="deliverable">
+            <span class="file-type">.png</span>
+            <h3>Raster artwork</h3>
+            <p>A single-page, highly visual final image suitable for sharing, presentation, or downstream production.</p>
+          </article>
+          <article class="deliverable">
+            <span class="file-type">.pdf</span>
+            <h3>Document artwork</h3>
+            <p>An alternative single-page PDF, or a coordinated multi-page set when the request explicitly calls for a series.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="fit-title">
+        <div class="section-heading">
+          <span class="section-number">05 / Fit</span>
+          <h2 id="fit-title">Know when the canvas is the right medium.</h2>
+        </div>
+        <div class="boundaries">
+          <article class="boundary">
+            <h3>Excellent fit</h3>
+            <ul>
+              <li>Original posters, covers, prints, visual poems, and conceptual editorial art.</li>
+              <li>Briefs that benefit from abstraction, sophisticated restraint, and a subtle embedded reference.</li>
+              <li>Static work where composition, color, scale, rhythm, and typography carry the meaning.</li>
+              <li>A series of related pages built from one coherent philosophy when explicitly requested.</li>
+            </ul>
+          </article>
+          <article class="boundary is-not">
+            <h3>Choose another tool</h3>
+            <ul>
+              <li>Interactive websites, motion graphics, video, or animated experiences.</li>
+              <li>Dense reports, slide decks, long-form documents, or text-led information design.</li>
+              <li>Pixel-perfect imitation of a living artist, protected franchise, or copyrighted composition.</li>
+              <li>Production packaging or regulated artwork that requires legal, print, or accessibility certification.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="requirements-title">
+        <div class="section-heading">
+          <span class="section-number">06 / Studio notes</span>
+          <h2 id="requirements-title">The craft still needs a capable workspace.</h2>
+        </div>
+        <div class="split">
+          <div class="body-copy">
+            <h3>What the agent needs</h3>
+            <p>A file-capable environment that can compose and render a static canvas, save Markdown, and export a valid PNG or PDF. The bundled <strong>canvas-fonts</strong> directory offers a broad selection of licensed typefaces; any additional font or image must be acquired and used under appropriate terms.</p>
+          </div>
+          <div class="body-copy">
+            <h3>Review before delivery</h3>
+            <p>Check that all text is accurate and legible, nothing overlaps or leaves the canvas, margins are intentional, and the exported file opens correctly at the requested dimensions. Multi-page output is only produced when requested.</p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="rights-note" aria-labelledby="rights-title">
+        <h2 id="rights-title">Originality is a requirement.</h2>
+        <div>
+          <p>Canvas Design creates a new visual language from the brief; it is not a style-copying service. Do not request the replication of a named artist’s signature style, a protected character, an existing composition, or unlicensed brand assets.</p>
+          <p>You remain responsible for confirming rights to supplied text, logos, photographs, fonts, and references, and for completing any legal, trademark, accessibility, or print-production review required by the final use.</p>
+        </div>
+      </aside>
+
+      <section class="section">
+        <footer>
+          <span>Canvas Design / Instruction</span>
+          <span>Output: visual philosophy + PNG or PDF</span>
+        </footer>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

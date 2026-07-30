@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Canvas Design — Gallery Review Protocol</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --wall: #24352c;
+      --wall-deep: #18251f;
+      --mat: #f7f0df;
+      --mat-dim: #e8ddc8;
+      --ink: #24231f;
+      --muted: #6f695f;
+      --chalk: #fffaf0;
+      --coral: #ff765f;
+      --butter: #f4cf68;
+      --violet: #9c8ad8;
+      --mint: #9fcbaf;
+      --rule: #aaa08d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: dark;
+      background: var(--wall);
+      color: var(--chalk);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 78% 5%, rgba(159, 203, 175, 0.12), transparent 28rem),
+        linear-gradient(115deg, transparent 0 66%, rgba(0, 0, 0, 0.055) 66% 67%, transparent 67%),
+        var(--wall);
+      color: var(--chalk);
+    }
+
+    .gallery {
+      width: 100%;
+      max-width: 1140px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(22px, 5vw, 62px);
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 250, 240, 0.55);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .topline span:last-child {
+      color: var(--mint);
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(290px, 1.1fr);
+      gap: clamp(34px, 7vw, 92px);
+      align-items: center;
+      padding: clamp(48px, 9vw, 108px) 0;
+    }
+
+    .hero-copy,
+    .review-board,
+    section,
+    .proof-grid > *,
+    .rubric-grid > *,
+    .matrix > * {
+      min-width: 0;
+    }
+
+    .kicker,
+    .section-label,
+    .pin-label,
+    .status,
+    .weight,
+    dt {
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .kicker {
+      margin: 0 0 18px;
+      color: var(--butter);
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    dd {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3rem, 8.7vw, 7rem);
+      font-weight: 400;
+      line-height: 0.84;
+      letter-spacing: -0.06em;
+    }
+
+    .hero-copy > p:last-child {
+      max-width: 590px;
+      margin: 27px 0 0;
+      color: #d9dfd8;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.65;
+    }
+
+    .review-board {
+      position: relative;
+      padding: clamp(18px, 4vw, 36px);
+      background: var(--mat);
+      color: var(--ink);
+      box-shadow: 20px 22px 0 var(--wall-deep);
+      transform: rotate(1.2deg);
+    }
+
+    .review-board::before,
+    .review-board::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      width: 78px;
+      height: 18px;
+      background: rgba(244, 207, 104, 0.88);
+    }
+
+    .review-board::before {
+      top: -10px;
+      left: 14%;
+      transform: rotate(-4deg);
+    }
+
+    .review-board::after {
+      right: 12%;
+      bottom: -9px;
+      transform: rotate(3deg);
+    }
+
+    .pin-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--ink);
+      color: var(--muted);
+    }
+
+    .review-board h2 {
+      margin: 23px 0 18px;
+      max-width: 12ch;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3.7rem);
+      font-weight: 400;
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+
+    .board-verdict {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 15px;
+      align-items: end;
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .board-verdict p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .board-verdict strong {
+      color: #45644f;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.7rem;
+      font-weight: 400;
+      line-height: 0.85;
+    }
+
+    .truth-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid rgba(255, 250, 240, 0.5);
+      border-bottom: 1px solid rgba(255, 250, 240, 0.5);
+    }
+
+    .truth {
+      min-width: 0;
+      padding: 22px clamp(14px, 3vw, 26px);
+      border-right: 1px solid rgba(255, 250, 240, 0.3);
+    }
+
+    .truth:last-child {
+      border-right: 0;
+    }
+
+    .truth strong {
+      display: block;
+      margin-bottom: 7px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.5rem, 4vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1;
+      color: var(--butter);
+    }
+
+    .truth span {
+      display: block;
+      color: #d8dfda;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    section {
+      padding: clamp(48px, 8vw, 92px) 0;
+      border-bottom: 1px solid rgba(255, 250, 240, 0.42);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: clamp(20px, 5vw, 54px);
+      margin-bottom: 30px;
+      align-items: start;
+    }
+
+    .section-label {
+      margin: 7px 0 0;
+      color: var(--coral);
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      max-width: 800px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.1rem, 5.5vw, 4.3rem);
+      font-weight: 400;
+      line-height: 0.98;
+      letter-spacing: -0.045em;
+    }
+
+    .section-heading > p:last-child {
+      grid-column: 2;
+      max-width: 720px;
+      margin: -10px 0 0;
+      color: #cbd5ce;
+      line-height: 1.65;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .proof {
+      position: relative;
+      min-height: 235px;
+      padding: 24px;
+      background: var(--mat);
+      color: var(--ink);
+    }
+
+    .proof:nth-child(2) {
+      background: var(--butter);
+    }
+
+    .proof:nth-child(3) {
+      background: var(--violet);
+    }
+
+    .proof-index {
+      display: block;
+      margin-bottom: 52px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.25rem;
+      line-height: 1;
+    }
+
+    .proof h3 {
+      margin: 0 0 9px;
+      font-size: 1rem;
+    }
+
+    .proof p {
+      margin: 0;
+      color: #554f47;
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+
+    .proof:nth-child(3) p {
+      color: #332d43;
+    }
+
+    .proof .status {
+      position: absolute;
+      top: 23px;
+      right: 22px;
+      padding: 4px 7px;
+      border: 1px solid currentColor;
+    }
+
+    .rubric-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(220px, 0.85fr);
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .rubric-note,
+    .no-score {
+      padding: 20px;
+      border: 1px solid rgba(255, 250, 240, 0.48);
+      color: #d9dfdb;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .rubric-note strong,
+    .no-score strong {
+      color: var(--butter);
+    }
+
+    .no-score {
+      background: var(--wall-deep);
+    }
+
+    .rubric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .criterion {
+      display: grid;
+      grid-template-columns: 14px minmax(0, 1fr) auto;
+      gap: 15px;
+      align-items: start;
+      min-width: 0;
+      padding: 19px;
+      background: var(--mat);
+      color: var(--ink);
+    }
+
+    .swatch {
+      width: 14px;
+      height: 100%;
+      min-height: 64px;
+      background: var(--coral);
+    }
+
+    .criterion:nth-child(2) .swatch,
+    .criterion:nth-child(6) .swatch {
+      background: var(--butter);
+    }
+
+    .criterion:nth-child(3) .swatch,
+    .criterion:nth-child(7) .swatch {
+      background: var(--violet);
+    }
+
+    .criterion:nth-child(4) .swatch {
+      background: var(--mint);
+    }
+
+    .criterion h3 {
+      margin: 0 0 6px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+    }
+
+    .criterion p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.77rem;
+      line-height: 1.5;
+    }
+
+    .weight {
+      color: #4f463d;
+      white-space: nowrap;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+      gap: 15px;
+    }
+
+    .matrix-card {
+      background: var(--mat);
+      color: var(--ink);
+    }
+
+    .matrix-card h3 {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0;
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--ink);
+      font-size: 0.75rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .matrix-card h3 span {
+      color: #785c24;
+    }
+
+    dl {
+      margin: 0;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 105px minmax(0, 1fr);
+      gap: 15px;
+      padding: 14px 18px;
+      border-bottom: 1px dotted var(--rule);
+    }
+
+    .row:last-child {
+      border-bottom: 0;
+    }
+
+    dt {
+      color: #715b35;
+    }
+
+    dd {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+
+    .test-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .test-list li {
+      display: grid;
+      grid-template-columns: 94px minmax(0, 1fr);
+      gap: 15px;
+      padding: 14px 18px;
+      border-bottom: 1px dotted var(--rule);
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+
+    .test-list li:last-child {
+      border-bottom: 0;
+    }
+
+    .test-state {
+      align-self: start;
+      color: #376147;
+      font-size: 0.63rem;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .test-state.pending {
+      color: #9b3c30;
+    }
+
+    .test-state.inspected {
+      color: #896112;
+    }
+
+    .closing {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 210px;
+      gap: 25px;
+      align-items: end;
+      padding: clamp(32px, 6vw, 62px);
+      background: var(--coral);
+      color: var(--ink);
+    }
+
+    .closing h2 {
+      margin: 0;
+      max-width: 760px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.15rem, 5.6vw, 4.5rem);
+      font-weight: 400;
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+    }
+
+    .closing p {
+      margin: 17px 0 0;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    .decision {
+      padding-left: 20px;
+      border-left: 1px solid var(--ink);
+    }
+
+    .decision strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.4rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .decision span {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.66rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 18px;
+      color: #bdc9c1;
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .section-heading,
+      .rubric-intro,
+      .matrix,
+      .closing {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .section-heading > p:last-child {
+        grid-column: 1;
+        margin-top: 0;
+      }
+
+      .truth-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .truth:nth-child(2) {
+        border-right: 0;
+      }
+
+      .truth:nth-child(-n + 2) {
+        border-bottom: 1px solid rgba(255, 250, 240, 0.3);
+      }
+
+      .proof-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .proof:last-child {
+        grid-column: 1 / -1;
+        min-height: 190px;
+      }
+
+      .decision {
+        padding: 18px 0 0;
+        border-top: 1px solid var(--ink);
+        border-left: 0;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .gallery {
+        padding: 17px;
+      }
+
+      .topline {
+        align-items: flex-start;
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+
+      .review-board {
+        box-shadow: 10px 12px 0 var(--wall-deep);
+        transform: none;
+      }
+
+      .truth-strip,
+      .proof-grid,
+      .rubric-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .truth,
+      .truth:nth-child(2) {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 250, 240, 0.3);
+      }
+
+      .truth:last-child {
+        border-bottom: 0;
+      }
+
+      .proof:last-child {
+        grid-column: auto;
+      }
+
+      .criterion {
+        grid-template-columns: 10px minmax(0, 1fr);
+      }
+
+      .swatch {
+        width: 10px;
+      }
+
+      .weight {
+        grid-column: 2;
+      }
+
+      .row,
+      .test-list li {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 6px;
+      }
+
+      footer {
+        display: block;
+      }
+
+      footer span {
+        display: block;
+        margin-bottom: 6px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+
+      .review-board {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="gallery">
+      <header class="topline">
+        <span>Canvas Design / Gallery Review Protocol</span>
+        <span>Foundation audit · 30 July 2026</span>
+      </header>
+
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="kicker">Benchmark dossier 01</p>
+          <h1>Judge the art.<br>Audit the craft.</h1>
+          <p>A two-layer benchmark for a skill that first writes an original visual philosophy, then expresses it as a meticulously refined PNG or PDF art object.</p>
+        </div>
+
+        <aside class="review-board" aria-label="Current benchmark verdict">
+          <div class="pin-label">
+            <span>Foundation audit</span>
+            <span>Snapshot 3cdc538</span>
+          </div>
+          <h2>The materials are ready. Artwork review remains per output.</h2>
+          <div class="board-verdict">
+            <p>Package and font assets verified. No individual artwork was generated during this preflight, so no visual-quality score is claimed.</p>
+            <strong>Pass</strong>
+          </div>
+        </aside>
+      </div>
+
+      <div class="truth-strip" aria-label="Verified package facts">
+        <div class="truth">
+          <strong>54 / 54</strong>
+          <span>bundled TrueType font files decoded as font resources</span>
+        </div>
+        <div class="truth">
+          <strong>27</strong>
+          <span>bundled font-license files retained with the package</span>
+        </div>
+        <div class="truth">
+          <strong>0</strong>
+          <span>API keys required by the skill instruction workflow</span>
+        </div>
+        <div class="truth">
+          <strong>PNG + PDF</strong>
+          <span>declared final artwork delivery formats</span>
+        </div>
+      </div>
+
+      <section aria-labelledby="verified-foundation">
+        <div class="section-heading">
+          <p class="section-label">01 / Proven</p>
+          <h2 id="verified-foundation">A verified foundation, not a fictional masterpiece</h2>
+          <p>The preflight tested whether the skill package is structurally usable and whether its bundled typography resources are valid. These checks support creation; they do not prove the quality of a future composition.</p>
+        </div>
+
+        <div class="proof-grid">
+          <article class="proof">
+            <span class="status">Verified</span>
+            <span class="proof-index">A</span>
+            <h3>Package integrity</h3>
+            <p><code>SKILL.md</code>, agent metadata and relative references passed the shared structural checks.</p>
+          </article>
+          <article class="proof">
+            <span class="status">Verified</span>
+            <span class="proof-index">B</span>
+            <h3>Typography resources</h3>
+            <p>All 54 bundled <code>.ttf</code> files were recognized as TrueType font data.</p>
+          </article>
+          <article class="proof">
+            <span class="status">Retained</span>
+            <span class="proof-index">C</span>
+            <h3>Licensing context</h3>
+            <p>The Apache-2.0 skill license and bundled font license files remain in the distributable package.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="review-rubric">
+        <div class="section-heading">
+          <p class="section-label">02 / Review rubric</p>
+          <h2 id="review-rubric">Seven lenses for evaluating a finished art object</h2>
+          <p>The weights below are an illustrative, reusable review model derived from the skill’s stated design principles. They are not observed scores from the package preflight.</p>
+        </div>
+
+        <div class="rubric-intro">
+          <div class="rubric-note"><strong>Suggested use:</strong> score each dimension from 0–5 only after opening the final PNG or PDF at full size. Multiply by the listed weight, then preserve the reviewer’s notes alongside the result.</div>
+          <div class="no-score"><strong>Current artwork score: not issued.</strong><br>No representative canvas was generated in the recorded preflight, so a total would be invented evidence.</div>
+        </div>
+
+        <div class="rubric-grid">
+          <article class="criterion">
+            <span class="swatch"></span>
+            <div>
+              <h3>Conceptual subtlety</h3>
+              <p>The brief’s reference is felt in the work without becoming a literal illustration.</p>
+            </div>
+            <span class="weight">18%</span>
+          </article>
+          <article class="criterion">
+            <span class="swatch"></span>
+            <div>
+              <h3>Composition &amp; hierarchy</h3>
+              <p>Space, scale and focal order communicate before explanatory copy is needed.</p>
+            </div>
+            <span class="weight">18%</span>
+          </article>
+          <article class="criterion">
+            <span class="swatch"></span>
+            <div>
+              <h3>Craft precision</h3>
+              <p>Edges, alignment, repetition and finishing withstand close inspection.</p>
+            </div>
+            <span class="weight">18%</span>
+          </article>
+          <article class="criterion">
+            <span class="swatch"></span>
+            <div>
+              <h3>Visual philosophy fidelity</h3>
+              <p>The final canvas consistently expresses the movement defined in the manifesto.</p>
+            </div>
+            <span class="weight">16%</span>
+          </article>
+          <article class="criterion">
+            <span class="swatch"></span>
+            <div>
+              <h3>Typography as form</h3>
+              <p>Text remains sparse, intentional, legible and integrated into the composition.</p>
+            </div>
+            <span class="weight">12%</span>
+          </article>
+          <article class="criterion">
+            <span class="swatch"></span>
+            <div>
+              <h3>Originality &amp; restraint</h3>
+              <p>The work avoids direct artist imitation, decorative clutter and generic styling.</p>
+            </div>
+            <span class="weight">10%</span>
+          </article>
+          <article class="criterion">
+            <span class="swatch"></span>
+            <div>
+              <h3>Delivery integrity</h3>
+              <p>The file opens correctly, preserves margins and contains no clipped or overlapping elements.</p>
+            </div>
+            <span class="weight">8%</span>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="test-matrix">
+        <div class="section-heading">
+          <p class="section-label">03 / Test plan</p>
+          <h2 id="test-matrix">Separate machine checks from curatorial judgment</h2>
+          <p>A useful benchmark needs both. Automated gates protect the file; human review decides whether the result carries the depth, precision and visual intelligence promised by the skill.</p>
+        </div>
+
+        <div class="matrix">
+          <article class="matrix-card">
+            <h3>Recorded environment <span>Actual</span></h3>
+            <dl>
+              <div class="row">
+                <dt>Source</dt>
+                <dd>Anthropic Skills commit <code>b29e7cf65e5cb78a5ac33d582270551bc74a14eb</code></dd>
+              </div>
+              <div class="row">
+                <dt>Local snapshot</dt>
+                <dd><code>3cdc538</code></dd>
+              </div>
+              <div class="row">
+                <dt>Executed</dt>
+                <dd>30 July 2026</dd>
+              </div>
+              <div class="row">
+                <dt>Scope</dt>
+                <dd>Package structure, metadata, references and bundled font decoding</dd>
+              </div>
+              <div class="row">
+                <dt>Runtime</dt>
+                <dd>No API key; artwork generation depends on PNG/PDF tools available to the host agent</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="matrix-card">
+            <h3>Scenario matrix <span>Mixed status</span></h3>
+            <ul class="test-list">
+              <li><span class="test-state">Verified</span><span><strong>Normal / assets:</strong> all bundled TrueType resources decode.</span></li>
+              <li><span class="test-state">Verified</span><span><strong>Delivery / package:</strong> skill structure and linked files pass validation.</span></li>
+              <li><span class="test-state inspected">Inspected</span><span><strong>Ambiguous brief:</strong> the instruction requires a subtle conceptual thread and preserves creative room; this behavior was not executed.</span></li>
+              <li><span class="test-state inspected">Inspected</span><span><strong>Originality boundary:</strong> the instruction prohibits copying existing artists; no output-level similarity review was run.</span></li>
+              <li><span class="test-state pending">Pending</span><span><strong>Visual delivery:</strong> generate a representative PNG and PDF, then verify decoding, dimensions, margins and text containment.</span></li>
+              <li><span class="test-state pending">Pending</span><span><strong>Curatorial gate:</strong> two reviewers independently apply the seven-dimension rubric to the finished work.</span></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="acceptance-gates">
+        <div class="section-heading">
+          <p class="section-label">04 / Acceptance</p>
+          <h2 id="acceptance-gates">What must be true before calling a canvas complete</h2>
+          <p>The skill itself requires a refinement pass. The benchmark turns that intention into explicit, reviewable gates without pretending that aesthetic judgment is fully automated.</p>
+        </div>
+
+        <div class="proof-grid">
+          <article class="proof">
+            <span class="status">Gate 1</span>
+            <span class="proof-index">File</span>
+            <h3>Technical delivery</h3>
+            <p>PNG or PDF opens correctly; all content stays inside the canvas; no text or graphics overlap unintentionally.</p>
+          </article>
+          <article class="proof">
+            <span class="status">Gate 2</span>
+            <span class="proof-index">Form</span>
+            <h3>Visual expression</h3>
+            <p>The composition communicates through form, space, color and rhythm rather than explanatory paragraphs.</p>
+          </article>
+          <article class="proof">
+            <span class="status">Gate 3</span>
+            <span class="proof-index">Finish</span>
+            <h3>Second-pass craft</h3>
+            <p>Refinement improves cohesion and precision instead of adding decorative complexity for its own sake.</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="closing">
+        <div>
+          <h2>Foundation accepted. Artwork-level verdict deferred until a real canvas exists.</h2>
+          <p>The package is ready to support static design work: its structure validates, its 54 font resources decode, and no API key is required. Final quality still depends on host tools and a genuine output review.</p>
+        </div>
+        <div class="decision">
+          <strong>Ready</strong>
+          <span>with per-artwork<br>review required</span>
+        </div>
+      </div>
+
+      <footer>
+        <span>Benchmark type: package audit + reusable visual review protocol.</span>
+        <span>License: Apache-2.0; bundled font licenses retained.</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

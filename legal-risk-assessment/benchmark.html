@@ -1,0 +1,1191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Legal Risk Assessment — Review Board Benchmark</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --chamber: #30231f;
+      --chamber-deep: #211714;
+      --paper: #f4ead6;
+      --paper-dark: #e4d4b8;
+      --ink: #28211d;
+      --muted: #71665a;
+      --brass: #c7a45d;
+      --teal: #356767;
+      --green: #55775c;
+      --yellow: #d2ae47;
+      --orange: #c7713f;
+      --red: #9f3c36;
+      --rule: #a69477;
+      --chalk: #fff7e8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: dark;
+      background: var(--chamber);
+      color: var(--chalk);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(115deg, rgba(255, 247, 232, 0.025) 0 1px, transparent 1px 56px),
+        linear-gradient(25deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 72px),
+        var(--chamber);
+      color: var(--chalk);
+    }
+
+    .docket {
+      width: 100%;
+      max-width: 1140px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(20px, 4.8vw, 58px);
+    }
+
+    .docket-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      padding: 11px 0 15px;
+      border-bottom: 1px solid rgba(255, 247, 232, 0.56);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .docket-bar span:last-child {
+      color: var(--brass);
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(300px, 1.05fr);
+      gap: clamp(34px, 7vw, 86px);
+      align-items: center;
+      padding: clamp(48px, 9vw, 106px) 0;
+    }
+
+    .hero-copy,
+    .board-file,
+    section,
+    .facts > *,
+    .rubric > *,
+    .evidence-grid > * {
+      min-width: 0;
+    }
+
+    .eyebrow,
+    .section-label,
+    .file-meta,
+    .state,
+    .weight,
+    dt {
+      font-size: 0.67rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      margin: 0 0 17px;
+      color: var(--brass);
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    dd {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      max-width: 700px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3rem, 8vw, 6.7rem);
+      font-weight: 400;
+      line-height: 0.9;
+      letter-spacing: -0.055em;
+    }
+
+    .hero-copy > p:last-child {
+      max-width: 610px;
+      margin: 27px 0 0;
+      color: #ddd0c1;
+      font-size: clamp(1rem, 2.2vw, 1.22rem);
+      line-height: 1.65;
+    }
+
+    .board-file {
+      position: relative;
+      padding: clamp(20px, 4vw, 36px);
+      background: var(--paper);
+      color: var(--ink);
+      box-shadow: 17px 18px 0 var(--chamber-deep);
+    }
+
+    .board-file::before {
+      content: "REVIEW BOARD";
+      position: absolute;
+      top: -25px;
+      left: 24px;
+      padding: 7px 15px 6px;
+      border-radius: 7px 7px 0 0;
+      background: var(--teal);
+      color: var(--chalk);
+      font-size: 0.63rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    .file-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 13px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--ink);
+      color: var(--muted);
+    }
+
+    .board-file h2 {
+      margin: 24px 0 22px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3.7rem);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .finding {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 15px;
+      align-items: end;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .finding p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+
+    .finding strong {
+      color: var(--teal);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.45rem;
+      font-weight: 400;
+      line-height: 0.9;
+    }
+
+    .counsel-stamp {
+      position: absolute;
+      right: -14px;
+      bottom: -21px;
+      padding: 10px 13px;
+      border: 3px double var(--red);
+      background: var(--paper);
+      color: var(--red);
+      font-size: 0.64rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      line-height: 1.35;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(-4deg);
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border: 1px solid rgba(255, 247, 232, 0.54);
+    }
+
+    .fact {
+      padding: 20px;
+      border-right: 1px solid rgba(255, 247, 232, 0.35);
+    }
+
+    .fact:last-child {
+      border-right: 0;
+    }
+
+    .fact strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--brass);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 3.5vw, 2.5rem);
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .fact span {
+      display: block;
+      color: #dacfc2;
+      font-size: 0.76rem;
+      line-height: 1.5;
+    }
+
+    section {
+      padding: clamp(52px, 8.5vw, 98px) 0;
+      border-bottom: 1px solid rgba(255, 247, 232, 0.46);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 145px minmax(0, 1fr);
+      gap: clamp(20px, 5vw, 58px);
+      margin-bottom: 31px;
+    }
+
+    .section-label {
+      margin: 7px 0 0;
+      color: var(--brass);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      max-width: 840px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.3rem, 5.7vw, 4.6rem);
+      font-weight: 400;
+      line-height: 0.98;
+      letter-spacing: -0.045em;
+    }
+
+    .section-head > p:last-child {
+      grid-column: 2;
+      max-width: 750px;
+      margin: -10px 0 0;
+      color: #d7cabd;
+      line-height: 1.65;
+    }
+
+    .facts-board {
+      padding: clamp(18px, 4vw, 34px);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .facts-board-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 13px;
+      border-bottom: 2px solid var(--ink);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .facts-board-head span:last-child {
+      color: var(--teal);
+      text-align: right;
+    }
+
+    .source-facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .source-fact {
+      min-width: 0;
+      padding: 21px;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .source-fact:nth-child(3n) {
+      border-right: 0;
+    }
+
+    .source-fact:nth-last-child(-n + 3) {
+      border-bottom: 0;
+    }
+
+    .source-fact strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--teal);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+
+    .source-fact p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+
+    .matrix-frame {
+      padding: clamp(16px, 3vw, 28px);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .matrix-note {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 17px;
+      color: var(--muted);
+      font-size: 0.74rem;
+      line-height: 1.45;
+    }
+
+    .matrix-note strong {
+      color: var(--ink);
+    }
+
+    .risk-matrix {
+      display: grid;
+      grid-template-columns: minmax(62px, 1.15fr) repeat(5, minmax(36px, 1fr));
+      width: 100%;
+      max-width: 100%;
+      border-top: 1px solid var(--ink);
+      border-left: 1px solid var(--ink);
+    }
+
+    .risk-cell {
+      min-width: 0;
+      min-height: 58px;
+      display: grid;
+      place-items: center;
+      padding: 7px 4px;
+      border-right: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      text-align: center;
+      font-size: 0.76rem;
+      font-weight: 900;
+    }
+
+    .risk-cell.head,
+    .risk-cell.side {
+      background: var(--paper-dark);
+      color: var(--muted);
+      font-size: 0.57rem;
+      letter-spacing: 0.06em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .risk-cell.low {
+      background: #b9cfaa;
+    }
+
+    .risk-cell.medium {
+      background: #e6ce79;
+    }
+
+    .risk-cell.high {
+      background: #dda072;
+    }
+
+    .risk-cell.critical {
+      background: #c87973;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px 16px;
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: 0.68rem;
+    }
+
+    .legend span {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .legend i {
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--ink);
+    }
+
+    .rubric-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .notice {
+      padding: 18px;
+      border: 1px solid var(--brass);
+      color: #ded1c2;
+      font-size: 0.83rem;
+      line-height: 1.6;
+    }
+
+    .notice strong {
+      color: var(--brass);
+    }
+
+    .notice:last-child {
+      background: var(--chamber-deep);
+    }
+
+    .rubric {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .criterion {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .weight {
+      display: grid;
+      place-items: center;
+      padding: 16px 8px;
+      border-right: 1px solid var(--rule);
+      background: var(--paper-dark);
+      color: var(--red);
+      font-size: 0.78rem;
+    }
+
+    .criterion:nth-child(2) .weight,
+    .criterion:nth-child(5) .weight {
+      background: #cbd9cf;
+      color: var(--teal);
+    }
+
+    .criterion:nth-child(3) .weight,
+    .criterion:nth-child(6) .weight {
+      background: #ead49c;
+      color: #76580c;
+    }
+
+    .criterion-copy {
+      padding: 17px;
+    }
+
+    .criterion h3 {
+      margin: 0 0 6px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.08rem;
+      font-weight: 400;
+    }
+
+    .criterion p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.5;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+      gap: 12px;
+    }
+
+    .record {
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .record h3 {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 0;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--ink);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .record h3 span {
+      color: var(--teal);
+    }
+
+    dl {
+      margin: 0;
+    }
+
+    .record-row {
+      display: grid;
+      grid-template-columns: 102px minmax(0, 1fr);
+      gap: 14px;
+      padding: 13px 16px;
+      border-bottom: 1px dotted var(--rule);
+    }
+
+    .record-row:last-child {
+      border-bottom: 0;
+    }
+
+    dt {
+      color: #635641;
+    }
+
+    dd {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .tests {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .tests li {
+      display: grid;
+      grid-template-columns: 91px minmax(0, 1fr);
+      gap: 13px;
+      padding: 13px 16px;
+      border-bottom: 1px dotted var(--rule);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .tests li:last-child {
+      border-bottom: 0;
+    }
+
+    .state.verified {
+      color: var(--teal);
+    }
+
+    .state.inspected {
+      color: #876312;
+    }
+
+    .state.pending {
+      color: var(--red);
+    }
+
+    .gates {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .gate {
+      padding: 22px;
+      border-top: 5px solid var(--brass);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .gate:nth-child(2) {
+      border-color: var(--teal);
+    }
+
+    .gate:nth-child(3) {
+      border-color: var(--red);
+    }
+
+    .gate-mark {
+      display: block;
+      margin-bottom: 34px;
+      color: var(--red);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2rem;
+    }
+
+    .gate h3 {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+    }
+
+    .gate p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+
+    .verdict {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(190px, 0.65fr);
+      gap: 25px;
+      align-items: end;
+      padding: clamp(31px, 6vw, 62px);
+      background: var(--brass);
+      color: var(--ink);
+    }
+
+    .verdict h2 {
+      margin: 0;
+      max-width: 780px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.25rem, 5.7vw, 4.6rem);
+      font-weight: 400;
+      line-height: 0.97;
+      letter-spacing: -0.045em;
+    }
+
+    .verdict p {
+      max-width: 720px;
+      margin: 17px 0 0;
+      line-height: 1.6;
+    }
+
+    .verdict-side {
+      padding-left: 20px;
+      border-left: 1px solid var(--ink);
+    }
+
+    .verdict-side strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.55rem;
+      font-weight: 400;
+      line-height: 0.92;
+    }
+
+    .verdict-side span {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 17px;
+      color: #cbbeb0;
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .board-file {
+        width: min(100%, 680px);
+        margin-left: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .section-head,
+      .rubric-intro,
+      .evidence-grid,
+      .verdict {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .section-head > p:last-child {
+        grid-column: 1;
+        margin-top: 0;
+      }
+
+      .facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .fact:nth-child(2) {
+        border-right: 0;
+      }
+
+      .fact:nth-child(-n + 2) {
+        border-bottom: 1px solid rgba(255, 247, 232, 0.35);
+      }
+
+      .source-facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .source-fact:nth-child(3n) {
+        border-right: 1px solid var(--rule);
+      }
+
+      .source-fact:nth-child(2n) {
+        border-right: 0;
+      }
+
+      .source-fact:nth-last-child(-n + 3) {
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .source-fact:nth-last-child(-n + 2) {
+        border-bottom: 0;
+      }
+
+      .gates {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .gate:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .verdict-side {
+        padding: 18px 0 0;
+        border-top: 1px solid var(--ink);
+        border-left: 0;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .docket {
+        padding: 15px;
+      }
+
+      .docket-bar {
+        align-items: flex-start;
+      }
+
+      .hero {
+        padding-top: 48px;
+      }
+
+      .board-file {
+        box-shadow: 8px 9px 0 var(--chamber-deep);
+      }
+
+      .counsel-stamp {
+        right: 3px;
+      }
+
+      .facts,
+      .source-facts,
+      .rubric,
+      .gates {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .fact,
+      .fact:nth-child(2) {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 247, 232, 0.35);
+      }
+
+      .fact:last-child {
+        border-bottom: 0;
+      }
+
+      .source-fact,
+      .source-fact:nth-child(2n),
+      .source-fact:nth-child(3n),
+      .source-fact:nth-last-child(-n + 2) {
+        border-right: 0;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .source-fact:last-child {
+        border-bottom: 0;
+      }
+
+      .risk-matrix {
+        grid-template-columns: minmax(52px, 1.18fr) repeat(5, minmax(33px, 1fr));
+      }
+
+      .risk-cell {
+        min-height: 48px;
+        padding: 5px 2px;
+        font-size: 0.69rem;
+      }
+
+      .risk-cell.head,
+      .risk-cell.side {
+        font-size: 0.5rem;
+        letter-spacing: 0.02em;
+      }
+
+      .record-row,
+      .tests li {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 5px;
+      }
+
+      .gate:last-child {
+        grid-column: auto;
+      }
+
+      footer {
+        display: block;
+      }
+
+      footer span {
+        display: block;
+        margin-bottom: 6px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+
+      .counsel-stamp {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="docket">
+      <header class="docket-bar">
+        <span>Legal Risk Assessment / Review Board Docket</span>
+        <span>Framework audit · 30 July 2026</span>
+      </header>
+
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Docket LRA-F14F76C</p>
+          <h1>A disciplined rating needs more than a number.</h1>
+          <p>This benchmark reviews whether facts support severity and likelihood, the matrix math stays consistent, mitigations are actionable, and escalation reaches qualified counsel at the right moment.</p>
+        </div>
+
+        <aside class="board-file" aria-label="Framework review finding">
+          <div class="file-meta">
+            <span>Framework finding</span>
+            <span>Source inspected</span>
+          </div>
+          <h2>The triage framework is complete. No legal matter was adjudicated.</h2>
+          <div class="finding">
+            <p>Severity, likelihood, score bands, response levels, documentation fields and outside-counsel triggers are present in the source.</p>
+            <strong>Ready</strong>
+          </div>
+          <div class="counsel-stamp">Qualified legal review<br>still required</div>
+        </aside>
+      </div>
+
+      <div class="facts" aria-label="Verified framework facts">
+        <div class="fact">
+          <strong>5 × 5</strong>
+          <span>severity-by-likelihood source matrix</span>
+        </div>
+        <div class="fact">
+          <strong>4 bands</strong>
+          <span>low, medium, high and critical response levels</span>
+        </div>
+        <div class="fact">
+          <strong>10 parts</strong>
+          <span>defined formal risk-assessment memo structure</span>
+        </div>
+        <div class="fact">
+          <strong>0</strong>
+          <span>API keys required; zero counsel approvals claimed</span>
+        </div>
+      </div>
+
+      <section aria-labelledby="source-findings">
+        <div class="section-head">
+          <p class="section-label">Board finding A</p>
+          <h2 id="source-findings">What the source contract demonstrably contains</h2>
+          <p>These findings come from inspection of the actual skill and package validation. They establish the framework’s coverage, not the correctness of any future assessment.</p>
+        </div>
+
+        <div class="facts-board">
+          <div class="facts-board-head">
+            <span>Verified source findings</span>
+            <span>Contract-level evidence</span>
+          </div>
+          <div class="source-facts">
+            <article class="source-fact">
+              <strong>Severity rationale</strong>
+              <p>Five impact levels define financial, operational, reputational, regulatory and personal-liability considerations.</p>
+            </article>
+            <article class="source-fact">
+              <strong>Likelihood rationale</strong>
+              <p>Five probability levels reference precedent, triggering events and present or imminent conditions.</p>
+            </article>
+            <article class="source-fact">
+              <strong>Matrix calculation</strong>
+              <p>The risk score is explicitly calculated as severity multiplied by likelihood and mapped to four bands.</p>
+            </article>
+            <article class="source-fact">
+              <strong>Mitigation record</strong>
+              <p>The memo format captures options, effectiveness, effort, residual risk, monitoring, owners and deadlines.</p>
+            </article>
+            <article class="source-fact">
+              <strong>Escalation triggers</strong>
+              <p>Active litigation, government investigations, criminal exposure, securities and board matters require outside counsel.</p>
+            </article>
+            <article class="source-fact">
+              <strong>Professional boundary</strong>
+              <p>The skill expressly states that it assists legal workflows, does not give legal advice and requires qualified review.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="matrix-check">
+        <div class="section-head">
+          <p class="section-label">Board finding B</p>
+          <h2 id="matrix-check">The reference matrix is internally reproducible</h2>
+          <p>Each cell below is the product of its severity row and likelihood column. The colors represent the source score bands; they are not a rating for a real matter.</p>
+        </div>
+
+        <div class="matrix-frame">
+          <div class="matrix-note">
+            <span><strong>Rows:</strong> severity from 5 to 1</span>
+            <span><strong>Columns:</strong> likelihood from 1 to 5</span>
+          </div>
+          <div class="risk-matrix" aria-label="Severity by likelihood reference matrix">
+            <div class="risk-cell head">S × L</div>
+            <div class="risk-cell head">Remote<br>1</div>
+            <div class="risk-cell head">Unlikely<br>2</div>
+            <div class="risk-cell head">Possible<br>3</div>
+            <div class="risk-cell head">Likely<br>4</div>
+            <div class="risk-cell head">Almost<br>5</div>
+
+            <div class="risk-cell side">Critical<br>5</div>
+            <div class="risk-cell medium">5</div>
+            <div class="risk-cell high">10</div>
+            <div class="risk-cell high">15</div>
+            <div class="risk-cell critical">20</div>
+            <div class="risk-cell critical">25</div>
+
+            <div class="risk-cell side">High<br>4</div>
+            <div class="risk-cell low">4</div>
+            <div class="risk-cell medium">8</div>
+            <div class="risk-cell high">12</div>
+            <div class="risk-cell critical">16</div>
+            <div class="risk-cell critical">20</div>
+
+            <div class="risk-cell side">Moderate<br>3</div>
+            <div class="risk-cell low">3</div>
+            <div class="risk-cell medium">6</div>
+            <div class="risk-cell medium">9</div>
+            <div class="risk-cell high">12</div>
+            <div class="risk-cell high">15</div>
+
+            <div class="risk-cell side">Low<br>2</div>
+            <div class="risk-cell low">2</div>
+            <div class="risk-cell low">4</div>
+            <div class="risk-cell medium">6</div>
+            <div class="risk-cell medium">8</div>
+            <div class="risk-cell high">10</div>
+
+            <div class="risk-cell side">Negligible<br>1</div>
+            <div class="risk-cell low">1</div>
+            <div class="risk-cell low">2</div>
+            <div class="risk-cell low">3</div>
+            <div class="risk-cell low">4</div>
+            <div class="risk-cell medium">5</div>
+          </div>
+          <div class="legend" aria-label="Risk score legend">
+            <span><i style="background:#b9cfaa"></i> Low 1–4</span>
+            <span><i style="background:#e6ce79"></i> Medium 5–9</span>
+            <span><i style="background:#dda072"></i> High 10–15</span>
+            <span><i style="background:#c87973"></i> Critical 16–25</span>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="quality-rubric">
+        <div class="section-head">
+          <p class="section-label">Review rubric</p>
+          <h2 id="quality-rubric">Seven dimensions for a defensible assessment</h2>
+          <p>The weights below are an illustrative review model derived from the source framework. They are not observed scores and must only be applied to a real assessment reviewed by the appropriate legal professionals.</p>
+        </div>
+
+        <div class="rubric-intro">
+          <div class="notice"><strong>Suggested method:</strong> score each dimension from 0–5, preserve the supporting facts and reviewer notes, and treat escalation or legal-boundary failures as blocking defects regardless of total.</div>
+          <div class="notice"><strong>Current matter score: not issued.</strong><br>No legal scenario was executed, and no counsel approval was requested or obtained.</div>
+        </div>
+
+        <div class="rubric">
+          <article class="criterion">
+            <span class="weight">18%</span>
+            <div class="criterion-copy">
+              <h3>Fact capture</h3>
+              <p>Material facts, business context, dates, amounts, jurisdictions and uncertainties are recorded.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">16%</span>
+            <div class="criterion-copy">
+              <h3>Severity rationale</h3>
+              <p>The selected impact level is tied to specific financial, operational, reputational and regulatory consequences.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">16%</span>
+            <div class="criterion-copy">
+              <h3>Likelihood rationale</h3>
+              <p>Precedent, triggers and current conditions support the selected probability level.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">12%</span>
+            <div class="criterion-copy">
+              <h3>Matrix consistency</h3>
+              <p>Severity × likelihood equals the recorded score and maps to the correct response band.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">14%</span>
+            <div class="criterion-copy">
+              <h3>Mitigation actionability</h3>
+              <p>Recommended controls name owners, deadlines, effectiveness, effort and residual risk.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">14%</span>
+            <div class="criterion-copy">
+              <h3>Escalation correctness</h3>
+              <p>Mandatory and recommended counsel triggers are identified without delay or understatement.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">10%</span>
+            <div class="criterion-copy">
+              <h3>Legal boundary disclosure</h3>
+              <p>The output remains workflow assistance, identifies jurisdiction limits and requires qualified review.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="evidence-status">
+        <div class="section-head">
+          <p class="section-label">Evidence status</p>
+          <h2 id="evidence-status">Framework coverage is verified; matter outcomes are pending</h2>
+          <p>The record separates source inspection from tests that require a representative legal scenario and qualified human review.</p>
+        </div>
+
+        <div class="evidence-grid">
+          <article class="record">
+            <h3>Recorded environment <span>Actual</span></h3>
+            <dl>
+              <div class="record-row">
+                <dt>Upstream</dt>
+                <dd>Anthropic Knowledge Work Plugins commit <code>01a9cec39b961236e2d99fa2db9b22b534fa27a9</code></dd>
+              </div>
+              <div class="record-row">
+                <dt>Snapshot</dt>
+                <dd><code>f14f76c</code></dd>
+              </div>
+              <div class="record-row">
+                <dt>Executed</dt>
+                <dd>30 July 2026</dd>
+              </div>
+              <div class="record-row">
+                <dt>Scope</dt>
+                <dd>Structure, metadata, severity, likelihood, escalation, jurisdiction and qualified-counsel safeguards</dd>
+              </div>
+              <div class="record-row">
+                <dt>Runtime</dt>
+                <dd>No API key; local-text workflow; qualified professional review remains mandatory</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="record">
+            <h3>Scenario matrix <span>Mixed status</span></h3>
+            <ul class="tests">
+              <li><span class="state verified">Verified</span><span><strong>Calculation:</strong> source score ranges and 5×5 products are internally consistent.</span></li>
+              <li><span class="state verified">Verified</span><span><strong>Escalation:</strong> mandatory, strongly recommended and discretionary outside-counsel triggers are present.</span></li>
+              <li><span class="state inspected">Inspected</span><span><strong>Documentation:</strong> memo and register structures include rationale, mitigations, owners, monitoring and next steps.</span></li>
+              <li><span class="state pending">Pending</span><span><strong>Normal matter:</strong> execute a complete assessment and independently recompute its score and band.</span></li>
+              <li><span class="state pending">Pending</span><span><strong>Ambiguous facts:</strong> review how missing or disputed facts affect severity and likelihood confidence.</span></li>
+              <li><span class="state pending">Pending</span><span><strong>Professional review:</strong> qualified counsel confirms applicable law, jurisdiction and escalation.</span></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="acceptance-gates">
+        <div class="section-head">
+          <p class="section-label">Acceptance gates</p>
+          <h2 id="acceptance-gates">Three approvals—none of them automatic</h2>
+          <p>A mathematically correct score is not enough. A release-quality assessment must survive factual, operational and professional review.</p>
+        </div>
+
+        <div class="gates">
+          <article class="gate">
+            <span class="gate-mark">I</span>
+            <h3>Factual gate</h3>
+            <p>Rationales point to documented facts, uncertainty is visible, and the score can be independently recalculated.</p>
+          </article>
+          <article class="gate">
+            <span class="gate-mark">II</span>
+            <h3>Action gate</h3>
+            <p>Mitigation, owner, deadline, monitoring cadence, trigger events and residual risk are explicit.</p>
+          </article>
+          <article class="gate">
+            <span class="gate-mark">III</span>
+            <h3>Counsel gate</h3>
+            <p>Qualified legal professionals review the matter, applicable jurisdiction and required escalation before reliance.</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="verdict">
+        <div>
+          <h2>Accept the framework for structured triage—not as legal advice.</h2>
+          <p>The source offers a coherent severity-by-likelihood method, documentation structure and escalation playbook. Any assessment produced with it remains a starting point that must be adapted to organizational risk appetite and reviewed by qualified legal professionals.</p>
+        </div>
+        <div class="verdict-side">
+          <strong>Ready</strong>
+          <span>with mandatory<br>professional review</span>
+        </div>
+      </div>
+
+      <footer>
+        <span>Benchmark type: framework audit + illustrative assessment review rubric.</span>
+        <span>Apache-2.0 · No legal advice · No counsel approval claimed.</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

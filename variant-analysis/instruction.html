@@ -1,0 +1,1273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Instructions for turning a known vulnerability into progressively generalized ripgrep, Semgrep, or CodeQL patterns and triaged findings.">
+  <title>Variant Analysis — Instruction</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3f5ef;
+      --sheet: #ffffff;
+      --ink: #202128;
+      --muted: #63676f;
+      --line: #b8bcb6;
+      --violet: #5a3f9d;
+      --violet-soft: #ded7f1;
+      --lime: #d6f24d;
+      --lime-soft: #edf7b6;
+      --orange: #ed633e;
+      --orange-soft: #f7d0c5;
+      --cyan: #7bd5d4;
+      --cyan-soft: #d1eeee;
+      --graph: rgba(90, 63, 157, 0.09);
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: light;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    img,
+    video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(var(--graph) 1px, transparent 1px),
+        linear-gradient(90deg, var(--graph) 1px, transparent 1px),
+        var(--paper);
+      background-size: 28px 28px;
+      color: var(--ink);
+    }
+
+    .page {
+      width: min(100%, 1160px);
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(18px, 4.7vw, 60px);
+    }
+
+    .lab-strip {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 17px;
+      align-items: center;
+      padding: 11px 14px;
+      border: 2px solid var(--ink);
+      background: var(--lime);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .lab-strip .rule {
+      height: 2px;
+      background: var(--ink);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.03fr) minmax(290px, 0.97fr);
+      gap: clamp(28px, 6vw, 74px);
+      align-items: center;
+      padding: clamp(44px, 8vw, 92px) 0 clamp(42px, 7vw, 78px);
+    }
+
+    .eyebrow,
+    .section-label {
+      margin: 0 0 14px;
+      color: var(--violet);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    li,
+    blockquote,
+    code {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      max-width: 690px;
+      margin: 0;
+      font-size: clamp(55px, 9.5vw, 114px);
+      font-weight: 900;
+      letter-spacing: -0.085em;
+      line-height: 0.77;
+      text-transform: uppercase;
+    }
+
+    h1 span {
+      display: block;
+      color: var(--violet);
+      font-style: italic;
+    }
+
+    .lede {
+      max-width: 640px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2.3vw, 20px);
+      line-height: 1.58;
+    }
+
+    .specimen {
+      min-width: 0;
+      border: 2px solid var(--ink);
+      background: var(--sheet);
+      box-shadow: 10px 11px 0 var(--violet);
+    }
+
+    .specimen-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 14px;
+      border-bottom: 2px solid var(--ink);
+      background: var(--cyan-soft);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .pattern-level {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr) 80px;
+      gap: 12px;
+      align-items: center;
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .pattern-level:last-child {
+      border-bottom: 0;
+    }
+
+    .level-id {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--ink);
+      color: white;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .pattern-level:nth-child(3) .level-id {
+      background: var(--violet);
+    }
+
+    .pattern-level:nth-child(4) .level-id {
+      background: #3d7c7d;
+    }
+
+    .pattern-level:nth-child(5) .level-id {
+      background: var(--orange);
+    }
+
+    .pattern-level h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      line-height: 1.1;
+    }
+
+    .pattern-level p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .pattern-level code {
+      color: var(--violet);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 8px;
+      font-weight: 700;
+      line-height: 1.35;
+      text-align: right;
+    }
+
+    .root-cause {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: clamp(18px, 4vw, 40px);
+      align-items: center;
+      padding: clamp(22px, 4vw, 40px);
+      border: 2px solid var(--ink);
+      background: var(--violet-soft);
+    }
+
+    .root-cause strong {
+      padding: 9px 11px;
+      background: var(--violet);
+      color: white;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .root-cause p {
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: clamp(15px, 2.4vw, 22px);
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .root-cause em {
+      color: var(--violet);
+      font-style: normal;
+    }
+
+    section {
+      min-width: 0;
+      margin-top: clamp(64px, 10vw, 116px);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+      gap: clamp(24px, 5vw, 66px);
+      align-items: end;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    h2 {
+      max-width: 680px;
+      margin: 0;
+      font-size: clamp(40px, 6.3vw, 74px);
+      font-weight: 900;
+      letter-spacing: -0.07em;
+      line-height: 0.87;
+      text-transform: uppercase;
+    }
+
+    .section-intro {
+      max-width: 690px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .prereqs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 9px;
+      margin-top: 24px;
+    }
+
+    .prereq {
+      min-width: 0;
+      padding: clamp(19px, 3.5vw, 29px);
+      border: 2px solid var(--ink);
+      background: var(--sheet);
+    }
+
+    .prereq:nth-child(2) {
+      background: var(--lime-soft);
+    }
+
+    .prereq:nth-child(3) {
+      background: var(--cyan-soft);
+    }
+
+    .prereq b {
+      display: block;
+      margin-bottom: 19px;
+      color: var(--violet);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .prereq h3 {
+      margin: 0 0 9px;
+      font-size: 21px;
+      line-height: 1.05;
+    }
+
+    .prereq p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.52;
+    }
+
+    .prompt {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: clamp(22px, 4vw, 48px);
+      margin-top: 10px;
+      padding: clamp(24px, 5vw, 48px);
+      background: var(--ink);
+      color: white;
+    }
+
+    .prompt h3 {
+      margin: 0;
+      color: var(--lime);
+      font-size: 16px;
+      line-height: 1.15;
+      text-transform: uppercase;
+    }
+
+    .prompt blockquote {
+      margin: 0;
+      font-size: clamp(17px, 2.6vw, 24px);
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .process {
+      margin-top: 26px;
+      counter-reset: process;
+    }
+
+    .process-step {
+      display: grid;
+      grid-template-columns: 82px minmax(160px, 0.4fr) minmax(0, 1fr);
+      gap: clamp(12px, 3vw, 30px);
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+      counter-increment: process;
+    }
+
+    .process-step:first-child {
+      border-top: 1px solid var(--line);
+    }
+
+    .process-step::before {
+      content: "S" counter(process);
+      color: var(--violet);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+    }
+
+    .process-step h3 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.12;
+    }
+
+    .process-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.57;
+    }
+
+    .one-change {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 20px;
+      align-items: center;
+      margin-top: 22px;
+      padding: clamp(20px, 4vw, 34px);
+      border: 2px solid var(--violet);
+      background: var(--violet-soft);
+    }
+
+    .one-change span {
+      font-size: clamp(38px, 7vw, 74px);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .one-change p {
+      margin: 0;
+      font-size: clamp(18px, 3vw, 29px);
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .ladder {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 24px;
+      align-items: end;
+    }
+
+    .rung {
+      min-width: 0;
+      padding: 18px;
+      border: 2px solid var(--ink);
+      background: var(--sheet);
+    }
+
+    .rung:nth-child(2) {
+      padding-top: 28px;
+      background: var(--lime-soft);
+    }
+
+    .rung:nth-child(3) {
+      padding-top: 40px;
+      background: var(--cyan-soft);
+    }
+
+    .rung:nth-child(4) {
+      padding-top: 54px;
+      background: var(--orange-soft);
+    }
+
+    .rung b {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--violet);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .rung h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.08;
+    }
+
+    .rung p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .stop-rule {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: clamp(16px, 4vw, 38px);
+      align-items: center;
+      margin-top: 10px;
+      padding: clamp(22px, 4vw, 38px);
+      border: 3px solid var(--orange);
+      background: var(--orange-soft);
+      color: #6f2717;
+    }
+
+    .stop-rule .fp {
+      font-size: clamp(38px, 7vw, 76px);
+      font-weight: 900;
+      letter-spacing: -0.08em;
+      line-height: 0.9;
+    }
+
+    .stop-rule p {
+      margin: 0;
+      font-size: clamp(18px, 3vw, 29px);
+      font-weight: 850;
+      line-height: 1.16;
+    }
+
+    .stop-rule small {
+      max-width: 180px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 800;
+      line-height: 1.45;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 9px;
+      margin-top: 24px;
+    }
+
+    .tool {
+      min-width: 0;
+      padding: clamp(20px, 4vw, 32px);
+      border: 2px solid var(--ink);
+      background: var(--sheet);
+    }
+
+    .tool:nth-child(1) {
+      background: var(--lime-soft);
+    }
+
+    .tool:nth-child(2) {
+      background: var(--cyan-soft);
+    }
+
+    .tool:nth-child(3) {
+      background: var(--violet-soft);
+    }
+
+    .tool-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 25px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tool h3 {
+      margin: 0 0 10px;
+      font-size: 25px;
+    }
+
+    .tool p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .tool p + p {
+      margin-top: 11px;
+      padding-top: 11px;
+      border-top: 1px solid rgba(32,33,40,0.26);
+    }
+
+    .resource-note {
+      margin-top: 10px;
+      padding: 18px 20px;
+      border: 2px dashed var(--violet);
+      background: var(--sheet);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .resource-note strong {
+      color: var(--violet);
+    }
+
+    .outputs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      margin-top: 24px;
+    }
+
+    .output {
+      min-width: 0;
+      padding: clamp(21px, 4vw, 34px);
+      border-left: 6px solid var(--violet);
+      background: var(--sheet);
+    }
+
+    .output:nth-child(2) {
+      border-color: #4b9797;
+      background: var(--cyan-soft);
+    }
+
+    .output:nth-child(3) {
+      border-color: #9ab21b;
+      background: var(--lime-soft);
+    }
+
+    .output:nth-child(4) {
+      border-color: var(--orange);
+      background: var(--orange-soft);
+    }
+
+    .output span {
+      display: block;
+      margin-bottom: 13px;
+      color: var(--violet);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .output h3 {
+      margin: 0 0 9px;
+      font-size: 21px;
+      line-height: 1.08;
+    }
+
+    .output p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.52;
+    }
+
+    .finding-row {
+      display: grid;
+      grid-template-columns: 80px minmax(0, 1fr) repeat(3, minmax(70px, 0.3fr));
+      gap: 1px;
+      margin-top: 10px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+    }
+
+    .finding-row > div {
+      min-width: 0;
+      padding: 13px 10px;
+      background: var(--sheet);
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .finding-row .finding-id {
+      color: var(--violet);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 900;
+    }
+
+    .finding-row b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: 8px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .fit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      margin-top: 24px;
+    }
+
+    .fit-card {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 36px);
+      border: 2px solid var(--ink);
+      background: var(--sheet);
+    }
+
+    .fit-card.not {
+      background: var(--violet-soft);
+    }
+
+    .fit-card h3 {
+      margin: 0 0 18px;
+      font-size: 23px;
+      text-transform: uppercase;
+    }
+
+    .fit-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fit-card li {
+      position: relative;
+      padding: 9px 0 9px 23px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .fit-card li::before {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      content: "+";
+      color: var(--violet);
+      font-weight: 900;
+    }
+
+    .fit-card.not li::before {
+      content: "–";
+      color: var(--orange);
+    }
+
+    .limits {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: clamp(22px, 5vw, 58px);
+      margin-top: 24px;
+      padding: clamp(25px, 5vw, 48px);
+      background: var(--ink);
+      color: white;
+    }
+
+    .limits h3 {
+      margin: 0;
+      color: var(--lime);
+      font-size: 22px;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    .limit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 28px;
+    }
+
+    .limit {
+      min-width: 0;
+    }
+
+    .limit b {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--cyan);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .limit p {
+      margin: 0;
+      color: #d8dbdd;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .closing {
+      margin-top: clamp(64px, 10vw, 116px);
+      padding: clamp(30px, 6vw, 62px);
+      border: 3px solid var(--ink);
+      background: var(--lime);
+      text-align: center;
+    }
+
+    .closing p {
+      max-width: 880px;
+      margin: 0 auto;
+      font-size: clamp(32px, 6.4vw, 76px);
+      font-weight: 900;
+      letter-spacing: -0.07em;
+      line-height: 0.88;
+      text-transform: uppercase;
+    }
+
+    .closing span {
+      display: inline-block;
+      margin-top: 21px;
+      color: var(--violet);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 17px 0 3px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 700px) {
+      .hero,
+      .section-head {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .specimen {
+        width: min(95%, 500px);
+        margin: 0 auto;
+      }
+
+      .ladder {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: stretch;
+      }
+
+      .rung:nth-child(n) {
+        padding-top: 18px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .page {
+        padding: 11px;
+      }
+
+      .lab-strip {
+        grid-template-columns: minmax(0, 1fr) auto;
+        font-size: 8px;
+      }
+
+      .lab-strip .rule {
+        display: none;
+      }
+
+      h1 {
+        font-size: clamp(53px, 16vw, 74px);
+      }
+
+      .specimen {
+        width: calc(100% - 8px);
+        box-shadow: 6px 7px 0 var(--violet);
+      }
+
+      .pattern-level {
+        grid-template-columns: 40px minmax(0, 1fr);
+      }
+
+      .pattern-level code {
+        grid-column: 2;
+        text-align: left;
+      }
+
+      .root-cause,
+      .one-change {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .prereqs,
+      .ladder,
+      .tools,
+      .outputs,
+      .fit-grid,
+      .limit-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .prompt,
+      .limits {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .process-step {
+        grid-template-columns: 38px minmax(0, 1fr);
+      }
+
+      .process-step p {
+        grid-column: 2;
+      }
+
+      .stop-rule {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .stop-rule small {
+        max-width: none;
+        text-align: left;
+      }
+
+      .finding-row {
+        grid-template-columns: 60px minmax(0, 1fr);
+      }
+
+      .finding-row > div:nth-child(n+3) {
+        grid-column: 2;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page">
+      <header class="lab-strip">
+        <span>Variant Analysis</span>
+        <span class="rule" aria-hidden="true"></span>
+        <span>Instruction / Research Log</span>
+      </header>
+
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Known bug → systematic hunt</p>
+          <h1 id="page-title">One bug. <span>Search the family.</span></h1>
+          <p class="lede">
+            Variant Analysis turns a confirmed vulnerability’s root cause into an increasingly
+            general search pattern, reviews every new match, and delivers a triaged map of related
+            findings across the entire codebase.
+          </p>
+        </div>
+
+        <aside class="specimen" aria-label="Pattern abstraction specimen">
+          <div class="specimen-head">
+            <span>Abstraction specimen</span>
+            <span>One change / pass</span>
+          </div>
+          <article class="pattern-level">
+            <span class="level-id">L0</span>
+            <div><h3>Literal</h3><p>Known instance only</p></div>
+            <code>exact code</code>
+          </article>
+          <article class="pattern-level">
+            <span class="level-id">L1</span>
+            <div><h3>Variables</h3><p>Copy-paste family</p></div>
+            <code>$INPUT</code>
+          </article>
+          <article class="pattern-level">
+            <span class="level-id">L2</span>
+            <div><h3>Structure</h3><p>Related code shapes</p></div>
+            <code>pattern-inside</code>
+          </article>
+          <article class="pattern-level">
+            <span class="level-id">L3</span>
+            <div><h3>Semantics</h3><p>Source-to-sink property</p></div>
+            <code>taint flow</code>
+          </article>
+        </aside>
+      </section>
+
+      <div class="root-cause">
+        <strong>Root-cause statement</strong>
+        <p>This vulnerability exists because <em>[untrusted data]</em> reaches <em>[dangerous operation]</em> without <em>[required protection]</em>.</p>
+      </div>
+
+      <section aria-labelledby="prereq-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Prerequisites</p>
+            <h2 id="prereq-heading">Begin after discovery.</h2>
+          </div>
+          <p class="section-intro">
+            Variant analysis needs a known issue and enough understanding to describe why it is
+            vulnerable. It is not the first pass for an unfamiliar codebase.
+          </p>
+        </div>
+
+        <div class="prereqs">
+          <article class="prereq">
+            <b>Known issue</b>
+            <h3>A confirmed original</h3>
+            <p>Bug or vulnerability location, vulnerable code, expected protection, and evidence that the issue is real.</p>
+          </article>
+          <article class="prereq">
+            <b>Root cause</b>
+            <h3>Conditions, not symptoms</h3>
+            <p>Dangerous operation, attacker-controlled data, missing control, enabling context, and exploitability conditions.</p>
+          </article>
+          <article class="prereq">
+            <b>Search scope</b>
+            <h3>The complete codebase</h3>
+            <p>Repository root, relevant languages and frameworks, generated or test-code policy, and available analysis tools.</p>
+          </article>
+        </div>
+
+        <div class="prompt">
+          <h3>Recommended prompt</h3>
+          <blockquote>
+            Use Variant Analysis after this confirmed authorization bug. First state the root cause
+            and exploitability conditions. Create an exact pattern that matches only the original,
+            then generalize one element at a time across the entire repository. Run each pattern,
+            review every new match, track true and false positives, stop if the false-positive rate
+            exceeds roughly 50%, and return the final query plus triaged findings with location,
+            confidence, reachability, controllability, and priority.
+          </blockquote>
+        </div>
+      </section>
+
+      <section aria-labelledby="process-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Five-step process</p>
+            <h2 id="process-heading">Specific first. General only with evidence.</h2>
+          </div>
+          <p class="section-intro">
+            Each generalization is an experiment. The new matches decide whether the abstraction is
+            useful, should be filtered, or must be reverted.
+          </p>
+        </div>
+
+        <div class="process">
+          <article class="process-step">
+            <h3>Understand the original</h3>
+            <p>Identify the root cause, necessary control-flow and data-flow conditions, attacker control, missing validation, and what makes the path exploitable.</p>
+          </article>
+          <article class="process-step">
+            <h3>Create an exact match</h3>
+            <p>Start with a literal ripgrep or equivalent pattern and verify that it matches exactly one location: the known issue.</p>
+          </article>
+          <article class="process-step">
+            <h3>Identify abstraction points</h3>
+            <p>Separate meaningful constants, function families, argument positions, and required context from variable names and incidental syntax.</p>
+          </article>
+          <article class="process-step">
+            <h3>Iteratively generalize</h3>
+            <p>Change one element, run against the whole codebase, review every new result, measure false positives, then keep, filter, or revert the change.</p>
+          </article>
+          <article class="process-step">
+            <h3>Analyze and triage</h3>
+            <p>For each match, record file, line, function, confidence, reachability, input controllability, missing protection, impact, and priority.</p>
+          </article>
+        </div>
+
+        <div class="one-change">
+          <span>±1</span>
+          <p>Change one abstraction at a time. Otherwise you cannot tell which change introduced value—or noise.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="ladder-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Abstraction ladder</p>
+            <h2 id="ladder-heading">Climb only as far as the hunt needs.</h2>
+          </div>
+          <p class="section-intro">
+            The right level depends on the goal. Verification favors specificity; full assessment
+            may justify semantic flow analysis and a larger manual triage burden.
+          </p>
+        </div>
+
+        <div class="ladder">
+          <article class="rung">
+            <b>Level 0</b>
+            <h3>Exact match</h3>
+            <p>Confirm the original and establish a zero-noise baseline.</p>
+          </article>
+          <article class="rung">
+            <b>Level 1</b>
+            <h3>Variable abstraction</h3>
+            <p>Replace incidental names to find copy-paste variants.</p>
+          </article>
+          <article class="rung">
+            <b>Level 2</b>
+            <h3>Structural abstraction</h3>
+            <p>Generalize the surrounding code shape while retaining important context.</p>
+          </article>
+          <article class="rung">
+            <b>Level 3</b>
+            <h3>Semantic abstraction</h3>
+            <p>Model sources, sinks, barriers, and flow for broad coverage.</p>
+          </article>
+        </div>
+
+        <div class="stop-rule">
+          <span class="fp">≈50%</span>
+          <p>Default stop line: if false positives exceed roughly half the matches, revert or choose a different abstraction.</p>
+          <small>Automation needs much stricter precision than an analyst-led research hunt.</small>
+        </div>
+      </section>
+
+      <section aria-labelledby="tools-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Tool selection</p>
+            <h2 id="tools-heading">Use the lightest tool that can express the property.</h2>
+          </div>
+          <p class="section-intro">
+            Tool loyalty is an anti-pattern. A productive campaign can use ripgrep for recon,
+            Semgrep for fast structural iteration, then CodeQL only where cross-function flow matters.
+          </p>
+        </div>
+
+        <div class="tools">
+          <article class="tool">
+            <div class="tool-label"><span>Recon</span><span>Zero setup</span></div>
+            <h3>ripgrep</h3>
+            <p>Fast exact and surface searches across the repository. Ideal for the baseline, literal families, hotspots, and quick scope checks.</p>
+            <p>Text matching cannot prove data flow, reachability, or exploitability.</p>
+          </article>
+          <article class="tool">
+            <div class="tool-label"><span>Structure</span><span>No build</span></div>
+            <h3>Semgrep</h3>
+            <p>Readable structural rules, metavariables, exclusions, and taint mode. Useful on incomplete or non-building code.</p>
+            <p>Framework semantics, sanitizers, and complex interprocedural paths need careful modeling and review.</p>
+          </article>
+          <article class="tool">
+            <div class="tool-label"><span>Deep flow</span><span>Setup required</span></div>
+            <h3>CodeQL</h3>
+            <p>Best suited to cross-function and path-sensitive source-to-sink analysis when the required project database and language support are available.</p>
+            <p>Higher setup and query-modeling cost makes it a deliberate escalation, not the automatic first step.</p>
+          </article>
+        </div>
+
+        <div class="resource-note">
+          <strong>Included starting resources:</strong> Semgrep and CodeQL templates for Python,
+          JavaScript / TypeScript, Java, Go, and C / C++, plus a structured variant-analysis report
+          template. These are starting points: sources, sinks, barriers, frameworks, and exclusions
+          must be tailored to the actual root cause and codebase.
+        </div>
+      </section>
+
+      <section aria-labelledby="outputs-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Deliverables</p>
+            <h2 id="outputs-heading">A reproducible hunt, not a pile of matches.</h2>
+          </div>
+          <p class="section-intro">
+            The output preserves how the query evolved and why each result was classified, so another
+            analyst can reproduce the search and challenge its assumptions.
+          </p>
+        </div>
+
+        <div class="outputs">
+          <article class="output">
+            <span>Root-cause model</span>
+            <h3>Original vulnerability record</h3>
+            <p>Bug ID, code location, vulnerable operation, attacker-controlled input, missing protection, enabling context, and exploitability conditions.</p>
+          </article>
+          <article class="output">
+            <span>Search evolution</span>
+            <h3>Pattern ledger</h3>
+            <p>Each pattern version, tool, abstraction change, match count, true positives, false positives, filters, and decision to keep or revert.</p>
+          </article>
+          <article class="output">
+            <span>Reusable analysis</span>
+            <h3>Final query or rule</h3>
+            <p>The most useful ripgrep expression, Semgrep rule, or CodeQL query, with sources, sinks, barriers, scope, and known limitations documented.</p>
+          </article>
+          <article class="output">
+            <span>Triage</span>
+            <h3>Confirmed and rejected findings</h3>
+            <p>Locations, confidence, reachability, controllability, missing safeguards, severity or priority, and explanations for recurring false-positive patterns.</p>
+          </article>
+        </div>
+
+        <div class="finding-row" aria-label="Finding record fields">
+          <div class="finding-id">VA-01</div>
+          <div><b>Location</b>path · line · function</div>
+          <div><b>Confidence</b>High / Medium / Low</div>
+          <div><b>Exploitability</b>Reachable? Controlled?</div>
+          <div><b>Priority</b>Impact × exploitability</div>
+        </div>
+      </section>
+
+      <section aria-labelledby="fit-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Appropriate use</p>
+            <h2 id="fit-heading">A follow-on analysis skill.</h2>
+          </div>
+          <p class="section-intro">
+            Use it when one issue reveals a repeatable security property. Choose a different workflow
+            when the first job is understanding the system or discovering an initial vulnerability.
+          </p>
+        </div>
+
+        <div class="fit-grid">
+          <article class="fit-card">
+            <h3>Use it for</h3>
+            <ul>
+              <li>Hunting related instances after a vulnerability is confirmed</li>
+              <li>Checking whether a narrow fix missed variants elsewhere</li>
+              <li>Building and refining ripgrep, Semgrep, or CodeQL searches</li>
+              <li>Systematic audits centered on a known root-cause pattern</li>
+              <li>Expanding into related semantics, null edges, logic inversions, and documentation mismatches</li>
+            </ul>
+          </article>
+          <article class="fit-card not">
+            <h3>Do not use it for</h3>
+            <ul>
+              <li>Initial vulnerability discovery without a known pattern</li>
+              <li>General code review or deep comprehension of unfamiliar code</li>
+              <li>Treating every static match as a confirmed vulnerability</li>
+              <li>Searching only the module that contained the original bug</li>
+              <li>Authoring remediation guidance as the primary task</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="limits-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Dependencies &amp; limits</p>
+            <h2 id="limits-heading">Coverage is a claim that needs evidence.</h2>
+          </div>
+          <p class="section-intro">
+            Static patterns surface candidates. Confirmation still requires code context,
+            reachability analysis, input-control reasoning, sanitizer review, and sometimes runtime testing.
+          </p>
+        </div>
+
+        <div class="limits">
+          <h3>Keep these boundaries visible</h3>
+          <div class="limit-grid">
+            <article class="limit">
+              <b>Tool availability</b>
+              <p>ripgrep is the lightest path; Semgrep and CodeQL must be installed and configured. CodeQL generally needs a compatible database and language model.</p>
+            </article>
+            <article class="limit">
+              <b>Model accuracy</b>
+              <p>Generic source, sink, and sanitizer templates may be wrong for the application. Customize them before relying on results.</p>
+            </article>
+            <article class="limit">
+              <b>False negatives</b>
+              <p>Dynamic dispatch, reflection, generated code, framework magic, alternate languages, or misunderstood semantics can hide variants.</p>
+            </article>
+            <article class="limit">
+              <b>Finding status</b>
+              <p>A match is a review candidate. Confidence and priority do not replace exploitability validation or a full security assessment.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <div class="closing">
+        <p>Understand why. Search everywhere. Generalize carefully. Triage everything.</p>
+        <span>Root cause → exact match → one change → review → report</span>
+      </div>
+
+      <footer>
+        <span>Variant Analysis / Instruction</span>
+        <span>Generic enough to find · precise enough to trust</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

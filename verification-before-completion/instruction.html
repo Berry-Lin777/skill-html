@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Instructions for using Verification Before Completion to match every completion claim with fresh, complete evidence.">
+  <title>Verification Before Completion — Instruction</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3eedf;
+      --paper-deep: #e9e0ca;
+      --ink: #292820;
+      --muted: #676355;
+      --line: #b9ae91;
+      --green: #304f3d;
+      --green-soft: #dbe2d4;
+      --red: #9f3a2d;
+      --red-soft: #ead3ca;
+      --gold: #b58b3b;
+      --white: #fffdf6;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-synthesis: none;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: light;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    img,
+    video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(61, 55, 39, 0.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 100% 32px;
+      color: var(--ink);
+    }
+
+    .page {
+      width: min(100%, 1120px);
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(20px, 5vw, 68px);
+    }
+
+    .masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .masthead span:last-child {
+      color: var(--red);
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(270px, 0.72fr);
+      gap: clamp(28px, 6vw, 76px);
+      align-items: center;
+      padding: clamp(38px, 7vw, 86px) 0 clamp(34px, 6vw, 70px);
+    }
+
+    .eyebrow,
+    .section-label {
+      margin: 0 0 14px;
+      color: var(--red);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin: 0;
+      font-size: clamp(46px, 8vw, 100px);
+      font-weight: 500;
+      letter-spacing: -0.055em;
+      line-height: 0.86;
+    }
+
+    h1 em {
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    .lede {
+      max-width: 650px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: clamp(17px, 2.4vw, 21px);
+      line-height: 1.55;
+    }
+
+    .proof-slip {
+      position: relative;
+      min-width: 0;
+      padding: clamp(24px, 4vw, 38px);
+      border: 1px solid var(--line);
+      background: var(--white);
+      box-shadow: 10px 12px 0 var(--paper-deep);
+      transform: rotate(1.4deg);
+    }
+
+    .proof-slip::before {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 74px;
+      height: 74px;
+      border: 2px solid var(--red);
+      border-radius: 50%;
+      content: "VERIFIED";
+      color: var(--red);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      line-height: 74px;
+      text-align: center;
+      transform: rotate(-11deg);
+    }
+
+    .slip-kicker {
+      margin: 0 0 36px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .slip-claim {
+      max-width: 235px;
+      margin: 0 0 28px;
+      font-size: clamp(24px, 3.6vw, 38px);
+      line-height: 1.05;
+    }
+
+    .slip-row {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 10px;
+      padding: 11px 0;
+      border-top: 1px dotted var(--line);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .slip-row span:first-child {
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .verified {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .iron-law {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: clamp(18px, 4vw, 40px);
+      align-items: center;
+      margin: 0 0 clamp(60px, 9vw, 106px);
+      padding: clamp(22px, 4vw, 36px);
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      background: var(--red-soft);
+    }
+
+    .law-number {
+      color: var(--red);
+      font-size: clamp(46px, 7vw, 76px);
+      line-height: 1;
+    }
+
+    .iron-law p {
+      margin: 0;
+      font-size: clamp(22px, 4vw, 40px);
+      line-height: 1.08;
+    }
+
+    section {
+      min-width: 0;
+      margin-top: clamp(58px, 9vw, 104px);
+    }
+
+    h2 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(34px, 5.7vw, 62px);
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 0.98;
+    }
+
+    .section-intro {
+      max-width: 690px;
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .gate {
+      margin-top: 34px;
+      border-top: 1px solid var(--ink);
+      counter-reset: gate;
+    }
+
+    .gate-step {
+      display: grid;
+      grid-template-columns: 70px minmax(120px, 0.36fr) minmax(0, 1fr);
+      gap: clamp(12px, 3vw, 30px);
+      align-items: start;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+      counter-increment: gate;
+    }
+
+    .gate-step::before {
+      content: "0" counter(gate);
+      color: var(--red);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .gate-step h3 {
+      margin: 0;
+      font-size: clamp(21px, 3vw, 28px);
+      font-weight: 500;
+    }
+
+    .gate-step p {
+      margin: 0;
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .claim-ledger {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 34px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .claim-card {
+      min-width: 0;
+      padding: clamp(20px, 4vw, 32px);
+      background: var(--white);
+    }
+
+    .claim-card h3 {
+      margin: 0 0 18px;
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    .claim-card dl {
+      margin: 0;
+    }
+
+    .claim-card dt {
+      margin-top: 16px;
+      color: var(--red);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .claim-card dd {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .prompt-sheet {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+      gap: clamp(24px, 5vw, 58px);
+      margin-top: 34px;
+      padding: clamp(24px, 5vw, 48px);
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .prompt-sheet h3 {
+      margin: 0 0 10px;
+      font-size: 27px;
+      font-weight: 500;
+      line-height: 1.1;
+    }
+
+    .prompt-sheet .help {
+      margin: 0;
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .prompt {
+      min-width: 0;
+      margin: 0;
+      padding-left: 22px;
+      border-left: 3px solid var(--gold);
+      font-size: clamp(17px, 2.5vw, 23px);
+      line-height: 1.5;
+    }
+
+    .input-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .input-item {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 246, 0.5);
+    }
+
+    .input-item b {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--green);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .input-item span {
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .verdicts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .verdict {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 34px);
+      border-top: 5px solid var(--green);
+      background: var(--green-soft);
+    }
+
+    .verdict.fail {
+      border-color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .verdict .mark {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: var(--green);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .verdict.fail .mark {
+      color: var(--red);
+    }
+
+    .verdict h3 {
+      margin: 0 0 12px;
+      font-size: clamp(23px, 3.5vw, 32px);
+      font-weight: 500;
+    }
+
+    .verdict p,
+    .verdict ul {
+      margin: 0;
+      color: #46463c;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .verdict ul {
+      padding-left: 19px;
+    }
+
+    .verdict li + li {
+      margin-top: 7px;
+    }
+
+    .fit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(26px, 5vw, 56px);
+      margin-top: 34px;
+    }
+
+    .fit-column {
+      min-width: 0;
+      padding-top: 18px;
+      border-top: 2px solid var(--ink);
+    }
+
+    .fit-column h3 {
+      margin: 0 0 18px;
+      font-size: 25px;
+      font-weight: 500;
+    }
+
+    .fit-column ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fit-column li {
+      position: relative;
+      padding: 11px 0 11px 26px;
+      border-bottom: 1px dotted var(--line);
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .fit-column li::before {
+      position: absolute;
+      top: 14px;
+      left: 0;
+      content: "✓";
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .fit-column.caution li::before {
+      content: "—";
+      color: var(--red);
+    }
+
+    .limits {
+      margin-top: 34px;
+      padding: clamp(24px, 5vw, 46px);
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .limits h3 {
+      margin: 0 0 22px;
+      color: var(--paper);
+      font-size: clamp(25px, 4vw, 36px);
+      font-weight: 500;
+    }
+
+    .limits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: #6d695b;
+    }
+
+    .limit {
+      min-width: 0;
+      padding: 20px;
+      background: var(--ink);
+    }
+
+    .limit b {
+      display: block;
+      margin-bottom: 8px;
+      color: #e6bf74;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .limit span {
+      color: #d7d1bf;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .closing {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 22px;
+      align-items: end;
+      margin-top: clamp(58px, 9vw, 104px);
+      padding-top: 26px;
+      border-top: 1px solid var(--ink);
+    }
+
+    .closing p {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(26px, 4.4vw, 48px);
+      line-height: 1.05;
+    }
+
+    .seal {
+      display: grid;
+      width: 92px;
+      height: 92px;
+      place-items: center;
+      border: 2px solid var(--red);
+      border-radius: 50%;
+      color: var(--red);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      line-height: 1.25;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(-8deg);
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 54px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .proof-slip {
+        width: min(92%, 430px);
+        margin: 0 auto;
+      }
+
+      .input-list,
+      .limits-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .prompt-sheet {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .page {
+        padding: 18px;
+      }
+
+      .masthead {
+        align-items: flex-start;
+        font-size: 9px;
+      }
+
+      h1 {
+        font-size: clamp(44px, 15vw, 66px);
+      }
+
+      .proof-slip {
+        width: calc(100% - 8px);
+        box-shadow: 6px 7px 0 var(--paper-deep);
+        transform: none;
+      }
+
+      .proof-slip::before {
+        width: 62px;
+        height: 62px;
+        font-size: 8px;
+        line-height: 62px;
+      }
+
+      .slip-row {
+        grid-template-columns: 72px minmax(0, 1fr);
+      }
+
+      .iron-law {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .law-number {
+        font-size: 36px;
+      }
+
+      .gate-step {
+        grid-template-columns: 42px minmax(0, 1fr);
+      }
+
+      .gate-step p {
+        grid-column: 2;
+      }
+
+      .claim-ledger,
+      .verdicts,
+      .fit-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .closing {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .seal {
+        width: 78px;
+        height: 78px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page">
+      <header class="masthead">
+        <span>Verification Before Completion</span>
+        <span>Instruction / Evidence Protocol</span>
+      </header>
+
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Evidence before assertions</p>
+          <h1 id="page-title">Make “done” <em>provable.</em></h1>
+          <p class="lede">
+            This skill stops unsupported success claims at the moment they are about to be made.
+            It identifies the exact proof a claim needs, runs that proof fresh, reads the complete
+            result, and reports only what the evidence allows.
+          </p>
+        </div>
+
+        <aside class="proof-slip" aria-label="Example verified claim">
+          <p class="slip-kicker">Completion claim / 001</p>
+          <p class="slip-claim">“The production build succeeds.”</p>
+          <div class="slip-row"><span>Proof</span><strong>Full build command</strong></div>
+          <div class="slip-row"><span>Observed</span><strong>Exit code 0</strong></div>
+          <div class="slip-row"><span>Scope</span><strong>Current working tree</strong></div>
+          <div class="slip-row"><span>Verdict</span><strong class="verified">CLAIM SUPPORTED</strong></div>
+        </aside>
+      </section>
+
+      <div class="iron-law" aria-label="The iron law">
+        <span class="law-number">§01</span>
+        <p>No completion claim without fresh verification evidence.</p>
+      </div>
+
+      <section aria-labelledby="gate-heading">
+        <p class="section-label">The verification gate</p>
+        <h2 id="gate-heading">Five steps between confidence and a claim.</h2>
+        <p class="section-intro">
+          The gate runs immediately before any statement that work is complete, fixed, passing,
+          correct, or ready. Skipping a step means the claim has not been verified.
+        </p>
+
+        <div class="gate">
+          <article class="gate-step">
+            <h3>Identify</h3>
+            <p>Write the precise claim, then choose the command or checklist that directly proves it.</p>
+          </article>
+          <article class="gate-step">
+            <h3>Run</h3>
+            <p>Execute the full verification now, against the current state. Old output and partial checks do not qualify.</p>
+          </article>
+          <article class="gate-step">
+            <h3>Read</h3>
+            <p>Review the complete output, exit code, failure count, skipped checks, warnings, and tested scope.</p>
+          </article>
+          <article class="gate-step">
+            <h3>Match</h3>
+            <p>Ask whether the observed result supports this exact claim—not a nearby or weaker one.</p>
+          </article>
+          <article class="gate-step">
+            <h3>State</h3>
+            <p>If supported, make the claim with its evidence. If not, report the actual status and the gap.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="ledger-heading">
+        <p class="section-label">Claim-to-evidence ledger</p>
+        <h2 id="ledger-heading">Choose proof that matches the sentence.</h2>
+        <p class="section-intro">
+          Passing one kind of check never silently proves another. The skill keeps each claim tied
+          to its own evidence source.
+        </p>
+
+        <div class="claim-ledger">
+          <article class="claim-card">
+            <h3>Tests pass</h3>
+            <dl>
+              <dt>Required evidence</dt>
+              <dd>Fresh full test output with zero failures.</dd>
+              <dt>Does not prove it</dt>
+              <dd>A previous run, a passing linter, or “the change is small.”</dd>
+            </dl>
+          </article>
+          <article class="claim-card">
+            <h3>The build succeeds</h3>
+            <dl>
+              <dt>Required evidence</dt>
+              <dd>The complete build command finishing with exit code 0.</dd>
+              <dt>Does not prove it</dt>
+              <dd>Clean logs, type hints, or a successful formatting check.</dd>
+            </dl>
+          </article>
+          <article class="claim-card">
+            <h3>The bug is fixed</h3>
+            <dl>
+              <dt>Required evidence</dt>
+              <dd>A direct reproduction of the original symptom that now passes.</dd>
+              <dt>Does not prove it</dt>
+              <dd>Code was edited or a related test happened to pass.</dd>
+            </dl>
+          </article>
+          <article class="claim-card">
+            <h3>Requirements are met</h3>
+            <dl>
+              <dt>Required evidence</dt>
+              <dd>A line-by-line check against the stated requirements.</dd>
+              <dt>Does not prove it</dt>
+              <dd>A green test suite that does not cover the complete brief.</dd>
+            </dl>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="invoke-heading">
+        <p class="section-label">How to invoke it</p>
+        <h2 id="invoke-heading">Bring a claim, its context, and a way to prove it.</h2>
+        <p class="section-intro">
+          The skill is most useful at the final boundary: before a commit, handoff, pull request,
+          status update, or move to the next task.
+        </p>
+
+        <div class="prompt-sheet">
+          <div>
+            <h3>Recommended prompt</h3>
+            <p class="help">Keep the requested claim narrow enough to verify directly.</p>
+          </div>
+          <blockquote class="prompt">
+            Before I report this task complete, verify the claim that the release build succeeds
+            and all acceptance tests pass. Run the full relevant commands against the current
+            working tree, read all output, and report the claim only if the evidence supports it.
+            Otherwise, state the exact remaining failure.
+          </blockquote>
+        </div>
+
+        <div class="input-list" aria-label="Recommended inputs">
+          <div class="input-item">
+            <b>Claim</b>
+            <span>The exact status you intend to communicate.</span>
+          </div>
+          <div class="input-item">
+            <b>Scope</b>
+            <span>The repository, change, requirement list, or original symptom.</span>
+          </div>
+          <div class="input-item">
+            <b>Proof route</b>
+            <span>The authoritative command or acceptance procedure, when known.</span>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="outcome-heading">
+        <p class="section-label">What you receive</p>
+        <h2 id="outcome-heading">A supported claim—or an honest status report.</h2>
+        <div class="verdicts">
+          <article class="verdict">
+            <span class="mark">When evidence supports the claim</span>
+            <h3>A concise, attributable completion statement</h3>
+            <ul>
+              <li>The command or checklist that was run</li>
+              <li>The observed exit status and failure count</li>
+              <li>The scope and freshness of the evidence</li>
+              <li>The precise claim that the result supports</li>
+            </ul>
+          </article>
+          <article class="verdict fail">
+            <span class="mark">When evidence does not support the claim</span>
+            <h3>The actual state, without euphemism</h3>
+            <ul>
+              <li>The failing, incomplete, or ambiguous result</li>
+              <li>The exact evidence that contradicts the claim</li>
+              <li>Any unverified requirements or skipped checks</li>
+              <li>No “should,” “probably,” or implied success</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="fit-heading">
+        <p class="section-label">Where it fits</p>
+        <h2 id="fit-heading">Use it at the claim boundary—not as a substitute for judgment.</h2>
+        <div class="fit-grid">
+          <div class="fit-column">
+            <h3>Ideal moments</h3>
+            <ul>
+              <li>Before saying a bug is fixed or a task is complete</li>
+              <li>Before committing, pushing, opening a PR, or handing off</li>
+              <li>After a delegated agent reports success</li>
+              <li>Before moving from one delivery phase to the next</li>
+              <li>When a regression test needs a verified red-green cycle</li>
+            </ul>
+          </div>
+          <div class="fit-column caution">
+            <h3>Not a replacement for</h3>
+            <ul>
+              <li>Defining acceptance criteria or deciding product intent</li>
+              <li>Domain-specific security, legal, or production review</li>
+              <li>Tests that do not exist or cannot observe the real requirement</li>
+              <li>Exploratory updates that clearly make no success claim</li>
+              <li>Human approval where the delivery process requires it</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="limits-heading">
+        <p class="section-label">Dependencies &amp; limits</p>
+        <h2 id="limits-heading">The gate is only as strong as the available proof.</h2>
+        <div class="limits">
+          <h3>What this skill deliberately does not pretend to know</h3>
+          <div class="limits-grid">
+            <div class="limit">
+              <b>Tools</b>
+              <span>It relies on the project’s real test, build, lint, VCS, or acceptance commands; it does not invent authoritative checks.</span>
+            </div>
+            <div class="limit">
+              <b>Coverage</b>
+              <span>A green command proves only the scope it actually exercises. Untested requirements remain unverified.</span>
+            </div>
+            <div class="limit">
+              <b>Freshness</b>
+              <span>Evidence from an earlier state cannot support a claim about the current working tree or delivery.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="closing">
+        <p>Run the proof. Read the result. Then—and only then—sign the claim.</p>
+        <div class="seal" aria-label="Evidence first">Evidence<br>First</div>
+      </div>
+
+      <footer>
+        <span>Verification Before Completion / Instruction</span>
+        <span>Fresh · Complete · Claim-matched</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

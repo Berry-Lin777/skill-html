@@ -1,0 +1,1345 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Instructions for drafting customized responses to common legal inquiries with template controls, deadline checks, and escalation safeguards.">
+  <title>Legal Response — Instruction</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --canvas: #e9eef1;
+      --paper: #fffefa;
+      --ink: #18252b;
+      --muted: #617078;
+      --line: #afbbc0;
+      --blue: #185b78;
+      --blue-soft: #d7e8ef;
+      --coral: #ed654f;
+      --coral-soft: #f9d9d2;
+      --gold: #d8aa32;
+      --gold-soft: #f5e9bd;
+      --green: #24745c;
+      --green-soft: #d7ebe4;
+      --lavender: #e4def0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: light;
+      background: var(--canvas);
+      color: var(--ink);
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    img,
+    video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background: var(--canvas);
+      color: var(--ink);
+    }
+
+    .page {
+      width: min(100%, 1160px);
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(16px, 4vw, 50px);
+    }
+
+    .mailhead {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      padding: 13px 16px;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .mailhead .rule {
+      height: 1px;
+      background: var(--line);
+    }
+
+    .mailhead span:last-child {
+      color: var(--coral);
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(300px, 1.1fr);
+      gap: clamp(28px, 6vw, 74px);
+      align-items: center;
+      padding: clamp(44px, 8vw, 90px) 0 clamp(40px, 7vw, 78px);
+    }
+
+    .eyebrow,
+    .section-label {
+      margin: 0 0 14px;
+      color: var(--blue);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    li,
+    blockquote {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      max-width: 610px;
+      margin: 0;
+      font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+      font-size: clamp(53px, 9vw, 108px);
+      font-stretch: condensed;
+      font-weight: 800;
+      letter-spacing: -0.075em;
+      line-height: 0.79;
+    }
+
+    h1 em {
+      display: block;
+      color: var(--coral);
+      font-style: normal;
+    }
+
+    .lede {
+      max-width: 570px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2.3vw, 20px);
+      line-height: 1.6;
+    }
+
+    .draft {
+      min-width: 0;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      box-shadow: 10px 11px 0 var(--blue);
+    }
+
+    .draft-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 15px;
+      border-bottom: 1px solid var(--ink);
+      background: var(--blue-soft);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .draft-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 104px;
+      min-width: 0;
+    }
+
+    .letter {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 36px);
+      border-right: 1px solid var(--line);
+    }
+
+    .letter dl {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr);
+      gap: 7px 10px;
+      margin: 0 0 25px;
+      font-size: 10px;
+    }
+
+    .letter dt {
+      color: var(--muted);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .letter dd {
+      min-width: 0;
+      margin: 0;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .letter p {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 13px;
+      line-height: 1.62;
+    }
+
+    .letter p + p {
+      margin-top: 14px;
+    }
+
+    .blank {
+      padding: 1px 5px 2px;
+      background: var(--gold-soft);
+      color: #604b0f;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .margin-notes {
+      min-width: 0;
+      padding: 20px 11px;
+      background: #f4f7f7;
+    }
+
+    .margin-notes p {
+      margin: 0;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--coral);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .stop-line {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: clamp(16px, 4vw, 38px);
+      align-items: center;
+      padding: clamp(20px, 4vw, 34px);
+      border: 2px solid var(--coral);
+      background: var(--coral-soft);
+      color: #71271e;
+    }
+
+    .stop-line .stop {
+      display: grid;
+      width: 62px;
+      height: 62px;
+      place-items: center;
+      border: 2px solid var(--coral);
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .stop-line p {
+      margin: 0;
+      font-size: clamp(17px, 2.8vw, 25px);
+      font-weight: 750;
+      line-height: 1.25;
+    }
+
+    .stop-line small {
+      max-width: 190px;
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1.4;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    section {
+      min-width: 0;
+      margin-top: clamp(62px, 9vw, 108px);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+      gap: clamp(24px, 5vw, 66px);
+      align-items: end;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    h2 {
+      max-width: 690px;
+      margin: 0;
+      font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+      font-size: clamp(39px, 6vw, 70px);
+      font-stretch: condensed;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      line-height: 0.9;
+    }
+
+    .section-intro {
+      max-width: 680px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .category {
+      min-width: 0;
+      min-height: 130px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .category:nth-child(2),
+    .category:nth-child(7) {
+      background: var(--blue-soft);
+    }
+
+    .category:nth-child(4),
+    .category:nth-child(6) {
+      background: var(--gold-soft);
+    }
+
+    .category b {
+      display: block;
+      margin-bottom: 17px;
+      color: var(--blue);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .category h3 {
+      margin: 0 0 7px;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .category p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .category.custom {
+      border-style: dashed;
+      background: var(--lavender);
+    }
+
+    .intake {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .intake-card {
+      min-width: 0;
+      padding: clamp(19px, 3.5vw, 28px);
+      border-top: 4px solid var(--blue);
+      background: var(--paper);
+    }
+
+    .intake-card:nth-child(2) {
+      border-color: var(--gold);
+    }
+
+    .intake-card:nth-child(3) {
+      border-color: var(--coral);
+    }
+
+    .intake-card b {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--blue);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .intake-card h3 {
+      margin: 0 0 9px;
+      font-size: 21px;
+      line-height: 1.1;
+    }
+
+    .intake-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .prompt {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: clamp(22px, 4vw, 48px);
+      margin-top: 10px;
+      padding: clamp(24px, 5vw, 46px);
+      background: var(--blue);
+      color: white;
+    }
+
+    .prompt h3 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.15;
+      text-transform: uppercase;
+    }
+
+    .prompt blockquote {
+      margin: 0;
+      font-size: clamp(17px, 2.6vw, 24px);
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .workflow {
+      margin-top: 26px;
+      border-top: 1px solid var(--line);
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 70px minmax(150px, 0.4fr) minmax(0, 1fr);
+      gap: clamp(12px, 3vw, 30px);
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .step .num {
+      color: var(--coral);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+    }
+
+    .step h3 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.15;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .template-paths {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .path-card {
+      min-width: 0;
+      padding: clamp(20px, 4vw, 32px);
+      border: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .path-card.fallback {
+      background: var(--gold-soft);
+    }
+
+    .path-card span {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--blue);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .path-card h3 {
+      margin: 0 0 9px;
+      font-size: 22px;
+    }
+
+    .path-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .trigger-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .trigger {
+      min-width: 0;
+      padding: clamp(21px, 4vw, 33px);
+      border: 1px solid var(--coral);
+      background: var(--paper);
+    }
+
+    .trigger h3 {
+      margin: 0 0 13px;
+      color: #8c3023;
+      font-size: 19px;
+    }
+
+    .trigger ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .trigger li {
+      position: relative;
+      padding: 8px 0 8px 20px;
+      border-top: 1px solid #e7b1a9;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .trigger li::before {
+      position: absolute;
+      top: 9px;
+      left: 0;
+      content: "!";
+      color: var(--coral);
+      font-weight: 900;
+    }
+
+    .stop-protocol {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 10px;
+      border: 1px solid var(--coral);
+      background: var(--coral);
+    }
+
+    .stop-step {
+      min-width: 0;
+      padding: 18px 14px;
+      background: var(--coral-soft);
+    }
+
+    .stop-step b {
+      display: block;
+      margin-bottom: 8px;
+      color: #8c3023;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .stop-step p {
+      margin: 0;
+      color: #71342c;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .output {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(240px, 0.75fr);
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .response-card,
+    .follow-card {
+      min-width: 0;
+      padding: clamp(23px, 4vw, 38px);
+      background: var(--paper);
+    }
+
+    .response-card {
+      border: 1px solid var(--ink);
+    }
+
+    .follow-card {
+      background: var(--green-soft);
+    }
+
+    .response-card span,
+    .follow-card span {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--blue);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .response-card h3,
+    .follow-card h3 {
+      margin: 0 0 14px;
+      font-size: 24px;
+      line-height: 1.08;
+    }
+
+    .response-card ul,
+    .follow-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .response-card li,
+    .follow-card li {
+      padding: 9px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .review-ribbon {
+      margin-top: 10px;
+      padding: clamp(19px, 4vw, 31px);
+      border: 2px solid var(--coral);
+      background: var(--coral-soft);
+      color: #6d2920;
+      font-size: clamp(17px, 2.8vw, 26px);
+      font-weight: 800;
+      line-height: 1.25;
+      text-align: center;
+    }
+
+    .fit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .fit-card {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 36px);
+      border-top: 5px solid var(--green);
+      background: var(--paper);
+    }
+
+    .fit-card.not {
+      border-color: var(--coral);
+      background: var(--lavender);
+    }
+
+    .fit-card h3 {
+      margin: 0 0 17px;
+      font-size: 23px;
+    }
+
+    .fit-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fit-card li {
+      padding: 9px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .limits {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr);
+      gap: clamp(24px, 5vw, 58px);
+      margin-top: 26px;
+      padding: clamp(25px, 5vw, 48px);
+      background: var(--ink);
+      color: white;
+    }
+
+    .limits h3 {
+      margin: 0;
+      color: var(--gold-soft);
+      font-size: 23px;
+      line-height: 1.08;
+    }
+
+    .limit-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 26px;
+    }
+
+    .limit {
+      min-width: 0;
+    }
+
+    .limit b {
+      display: block;
+      margin-bottom: 6px;
+      color: #9dd6ea;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .limit p {
+      margin: 0;
+      color: #d8e0e2;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .connectors {
+      margin-top: 10px;
+      padding: clamp(20px, 4vw, 34px);
+      border: 1px dashed var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .connectors p {
+      margin: 0;
+      color: #294b59;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .connectors strong {
+      color: var(--blue);
+    }
+
+    .closing {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: end;
+      margin-top: clamp(62px, 9vw, 108px);
+      padding-top: 24px;
+      border-top: 1px solid var(--ink);
+    }
+
+    .closing p {
+      max-width: 770px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 5vw, 54px);
+      line-height: 1.03;
+    }
+
+    .review-mark {
+      padding: 11px 13px;
+      border: 2px solid var(--coral);
+      color: var(--coral);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      line-height: 1.35;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(-3deg);
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 50px;
+      padding: 15px 0 4px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 700px) {
+      .hero,
+      .section-head {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .draft {
+        width: min(95%, 520px);
+        margin: 0 auto;
+      }
+
+      .categories {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stop-protocol {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stop-step:last-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .page {
+        padding: 10px;
+      }
+
+      .mailhead {
+        grid-template-columns: minmax(0, 1fr) auto;
+        font-size: 8px;
+      }
+
+      .mailhead .rule {
+        display: none;
+      }
+
+      h1 {
+        font-size: clamp(51px, 16vw, 72px);
+      }
+
+      .draft {
+        width: calc(100% - 8px);
+        box-shadow: 6px 7px 0 var(--blue);
+      }
+
+      .draft-body {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .letter {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .margin-notes {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .margin-notes p {
+        padding: 4px;
+        border: 0;
+      }
+
+      .stop-line {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .stop-line small {
+        max-width: none;
+        text-align: left;
+      }
+
+      .categories,
+      .intake,
+      .template-paths,
+      .trigger-grid,
+      .output,
+      .fit-grid,
+      .limit-list {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .category {
+        min-height: 0;
+      }
+
+      .prompt,
+      .limits {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .step {
+        grid-template-columns: 38px minmax(0, 1fr);
+      }
+
+      .step p {
+        grid-column: 2;
+      }
+
+      .stop-protocol {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .stop-step:last-child {
+        grid-column: auto;
+      }
+
+      .closing {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .review-mark {
+        width: max-content;
+        max-width: 100%;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page">
+      <header class="mailhead">
+        <span>Legal Response</span>
+        <span class="rule" aria-hidden="true"></span>
+        <span>Instruction / Controlled Correspondence</span>
+      </header>
+
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Customized legal workflow drafts</p>
+          <h1 id="page-title">Reply with <em>guardrails.</em></h1>
+          <p class="lede">
+            Legal Response selects an approved template or a clear fallback structure, checks whether
+            the matter must stop for escalation, gathers the right facts, and produces a customized
+            reply with jurisdiction, deadline, review, and follow-up controls visible.
+          </p>
+        </div>
+
+        <aside class="draft" aria-label="Illustrative customized response">
+          <div class="draft-bar">
+            <span>Draft response</span>
+            <span>Review required</span>
+          </div>
+          <div class="draft-body">
+            <div class="letter">
+              <dl>
+                <dt>To</dt><dd><span class="blank">recipient_name</span></dd>
+                <dt>Re</dt><dd>Data request / <span class="blank">request_id</span></dd>
+              </dl>
+              <p>We received your request dated <span class="blank">request_date</span> concerning your personal data under <span class="blank">applicable_regulation</span>.</p>
+              <p>We will provide a substantive response by <span class="blank">verified_deadline</span>. If identity verification is required, we will explain the information needed and why.</p>
+            </div>
+            <div class="margin-notes" aria-label="Draft checks">
+              <p>✓ Correct category</p>
+              <p>✓ Jurisdiction checked</p>
+              <p>✓ Deadline verified</p>
+              <p>→ Counsel review</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <div class="stop-line">
+        <span class="stop">Stop</span>
+        <p>An escalation trigger means no ordinary templated response.</p>
+        <small>Alert → explain → recommend → counsel-review draft</small>
+      </div>
+
+      <section aria-labelledby="categories-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Supported inquiries</p>
+            <h2 id="categories-heading">One workflow, distinct legal contexts.</h2>
+          </div>
+          <p class="section-intro">
+            Choose an inquiry type when invoking the skill. If the category is ambiguous or omitted,
+            the skill should show the available options and ask before choosing a response path.
+          </p>
+        </div>
+
+        <div class="categories">
+          <article class="category">
+            <b>DSR</b>
+            <h3>Data subject requests</h3>
+            <p>Access, deletion, correction, portability, opt-out, acknowledgment, denial, or extension.</p>
+          </article>
+          <article class="category">
+            <b>Hold</b>
+            <h3>Discovery holds</h3>
+            <p>Initial notices, reminders, scope modifications, and releases.</p>
+          </article>
+          <article class="category">
+            <b>Vendor</b>
+            <h3>Vendor questions</h3>
+            <p>Contract status, amendments, certifications, audits, and insurance certificates.</p>
+          </article>
+          <article class="category">
+            <b>NDA</b>
+            <h3>NDA requests</h3>
+            <p>Standard forms, counterparty markup, declines, renewals, and extensions.</p>
+          </article>
+          <article class="category">
+            <b>Privacy</b>
+            <h3>Privacy inquiries</h3>
+            <p>Cookies, notices, sharing, children’s data, and cross-border transfers.</p>
+          </article>
+          <article class="category">
+            <b>Legal process</b>
+            <h3>Subpoenas</h3>
+            <p>Acknowledgments, objections, extensions, and cover letters—always with counsel review.</p>
+          </article>
+          <article class="category">
+            <b>Insurance</b>
+            <h3>Claim notifications</h3>
+            <p>Initial notice, supplemental information, and reservation-of-rights responses.</p>
+          </article>
+          <article class="category custom">
+            <b>Custom</b>
+            <h3>Approved team template</h3>
+            <p>A separately defined use case with variables, triggers, metadata, and follow-up actions.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="intake-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Required details</p>
+            <h2 id="intake-heading">A template never excuses missing facts.</h2>
+          </div>
+          <p class="section-intro">
+            Every response must use the correct names, dates, reference numbers, facts, law,
+            jurisdiction, deadline, signature block, and recipient-specific next steps.
+          </p>
+        </div>
+
+        <div class="intake">
+          <article class="intake-card">
+            <b>Identity &amp; matter</b>
+            <h3>Who, what, and which record?</h3>
+            <p>Recipient, requester or custodian, contact details, matter or request ID, agreement, policy, case, or claim reference.</p>
+          </article>
+          <article class="intake-card">
+            <b>Law &amp; timing</b>
+            <h3>Where, under what rule, by when?</h3>
+            <p>Applicable jurisdiction and regulation, date received, legally verified deadline, urgency, and any extension basis.</p>
+          </article>
+          <article class="intake-card">
+            <b>Substance &amp; audience</b>
+            <h3>What must this reply actually say?</h3>
+            <p>Specific facts, requested action, scope, relationship, sensitivity, desired next step, approver, signer, and contact channel.</p>
+          </article>
+        </div>
+
+        <div class="prompt">
+          <h3>Recommended prompt</h3>
+          <blockquote>
+            Use Legal Response for a data-subject-request acknowledgment. Before drafting, check all
+            universal and DSR-specific escalation triggers. Ask for any missing requester, request,
+            jurisdiction, regulation, receipt-date, identity-verification, and deadline details.
+            Load the configured template if available, verify the jurisdiction-specific timeline,
+            customize the tone for an external individual, and return a draft for qualified counsel
+            review with the escalation check and follow-up actions.
+          </blockquote>
+        </div>
+      </section>
+
+      <section aria-labelledby="workflow-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Controlled drafting workflow</p>
+            <h2 id="workflow-heading">Check permission before prose.</h2>
+          </div>
+          <p class="section-intro">
+            Escalation happens before customization. The skill does not finish a polished letter and
+            only then discover that the template should never have been used.
+          </p>
+        </div>
+
+        <div class="workflow">
+          <article class="step">
+            <span class="num">01</span>
+            <h3>Identify the inquiry</h3>
+            <p>Resolve the category and sub-category. Ask rather than guess when the request could follow more than one legal path.</p>
+          </article>
+          <article class="step">
+            <span class="num">02</span>
+            <h3>Load the template</h3>
+            <p>Check local settings such as <strong>legal.local.md</strong> or the team’s templates directory, then identify every required variable.</p>
+          </article>
+          <article class="step">
+            <span class="num">03</span>
+            <h3>Run escalation checks</h3>
+            <p>Apply universal triggers and the chosen category’s specific triggers before generating an ordinary response.</p>
+          </article>
+          <article class="step">
+            <span class="num">04</span>
+            <h3>Gather missing facts</h3>
+            <p>Collect names, dates, references, scope, jurisdiction, law, deadlines, signer, and category-specific details.</p>
+          </article>
+          <article class="step">
+            <span class="num">05</span>
+            <h3>Verify law and deadline</h3>
+            <p>Confirm that cited regulations, rights, terminology, and response timelines match the applicable jurisdiction and receipt date.</p>
+          </article>
+          <article class="step">
+            <span class="num">06</span>
+            <h3>Customize the draft</h3>
+            <p>Populate every variable, reflect the actual facts, adjust tone to audience and sensitivity, and state clear recipient next steps.</p>
+          </article>
+          <article class="step">
+            <span class="num">07</span>
+            <h3>Present for review</h3>
+            <p>Return the draft, escalation result, and follow-up list. Regulated communications and all subpoena responses require qualified counsel review.</p>
+          </article>
+        </div>
+
+        <div class="template-paths">
+          <article class="path-card">
+            <span>When a template exists</span>
+            <h3>Use the approved structure and metadata.</h3>
+            <p>Load its use case, variables, body, escalation triggers, follow-up actions, version, and last-reviewed date—then customize every required field.</p>
+          </article>
+          <article class="path-card fallback">
+            <span>When no template exists</span>
+            <h3>Say so; do not invent team approval.</h3>
+            <p>Provide a reasonable category-specific structure, offer to create a template, and route the new template through legal-team review before future reuse.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="triggers-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Escalation safeguards</p>
+            <h2 id="triggers-heading">Know when the template stops.</h2>
+          </div>
+          <p class="section-intro">
+            These are decision triggers, not optional warnings. Detection changes the output from a
+            routine response into a clearly labeled counsel-review draft and escalation recommendation.
+          </p>
+        </div>
+
+        <div class="trigger-grid">
+          <article class="trigger">
+            <h3>Universal triggers</h3>
+            <ul>
+              <li>Potential litigation, regulatory investigation, or criminal liability</li>
+              <li>Regulator, government agency, or law-enforcement sender</li>
+              <li>Possible binding commitment, waiver, or executive / Board involvement</li>
+              <li>Media attention, unprecedented handling, or conflicting jurisdictions</li>
+            </ul>
+          </article>
+          <article class="trigger">
+            <h3>DSR and privacy triggers</h3>
+            <ul>
+              <li>A minor, regulator, active employee dispute, or litigation-held data</li>
+              <li>Unusually broad scope, unique jurisdiction, or special-category data</li>
+              <li>Children’s data, biometric, genetic, health, or complex transfer issues</li>
+            </ul>
+          </article>
+          <article class="trigger">
+            <h3>Hold, vendor, and NDA triggers</h3>
+            <ul>
+              <li>Unclear or disputed preservation scope, related prior hold, or operational conflict</li>
+              <li>Dispute, threatened litigation, breach, waiver, regulation, or live negotiation impact</li>
+              <li>Competitor, classified information, M&amp;A, AI training data, or biometric subject matter</li>
+            </ul>
+          </article>
+          <article class="trigger">
+            <h3>Subpoena / legal process</h3>
+            <ul>
+              <li>Always requires individualized counsel review</li>
+              <li>Privilege, third-party data, cross-border production, or unreasonable timeline</li>
+              <li>Templates are starting frameworks, never final legal-process responses</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="stop-protocol" aria-label="Escalation stop protocol">
+          <article class="stop-step"><b>Stop</b><p>Do not generate an ordinary templated reply.</p></article>
+          <article class="stop-step"><b>Alert</b><p>Tell the user that a trigger was detected.</p></article>
+          <article class="stop-step"><b>Explain</b><p>Name the trigger and why it matters.</p></article>
+          <article class="stop-step"><b>Recommend</b><p>Identify the appropriate counsel or team path.</p></article>
+          <article class="stop-step"><b>Offer</b><p>Provide only a “DRAFT — FOR COUNSEL REVIEW” if useful.</p></article>
+        </div>
+      </section>
+
+      <section aria-labelledby="output-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Deliverables</p>
+            <h2 id="output-heading">A draft plus its control record.</h2>
+          </div>
+          <p class="section-intro">
+            The response itself is only one part of the output. The user also receives the escalation
+            result and operational steps required after review or sending.
+          </p>
+        </div>
+
+        <div class="output">
+          <article class="response-card">
+            <span>Generated response</span>
+            <h3>Recipient-ready structure, pending approval</h3>
+            <ul>
+              <li>Recipient, subject line, and response body</li>
+              <li>Correct names, facts, dates, references, law, and deadline</li>
+              <li>Audience-appropriate tone, caveats, contact, and next step</li>
+              <li>Visible draft status and any counsel-review marking</li>
+            </ul>
+          </article>
+          <article class="follow-card">
+            <span>Control record</span>
+            <h3>What happens next</h3>
+            <ul>
+              <li>Escalation check result</li>
+              <li>Required reviewer or approver</li>
+              <li>Calendar reminders and deadlines</li>
+              <li>Tracking, logging, and follow-up actions</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="review-ribbon">
+          Every generated response is shown to the user for review before sending; regulated communications require qualified legal review.
+        </div>
+      </section>
+
+      <section aria-labelledby="fit-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Appropriate use</p>
+            <h2 id="fit-heading">For repeatable inquiries—not automatic legal judgment.</h2>
+          </div>
+          <p class="section-intro">
+            The skill is valuable when the legal team has a known response category, a review path,
+            and enough facts to customize the draft safely.
+          </p>
+        </div>
+
+        <div class="fit-grid">
+          <article class="fit-card">
+            <h3>Well suited to</h3>
+            <ul>
+              <li>Routine inquiries covered by a current, approved team template</li>
+              <li>Gathering required variables and normalizing a response structure</li>
+              <li>Checking deadlines, escalation conditions, and follow-up steps</li>
+              <li>Creating a reviewable first draft for legal-team refinement</li>
+              <li>Building a new template specification for approval and future use</li>
+            </ul>
+          </article>
+          <article class="fit-card not">
+            <h3>Do not treat it as</h3>
+            <ul>
+              <li>Legal advice or a substitute for qualified, jurisdiction-specific analysis</li>
+              <li>Authority to send a response, make a commitment, waive rights, or disclose data</li>
+              <li>A final subpoena, litigation, regulatory, criminal, or Board-level response</li>
+              <li>Proof that a deadline or legal citation is correct without verification</li>
+              <li>A reason to place confidential or privileged information in unapproved tools</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="limits-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Dependencies &amp; limits</p>
+            <h2 id="limits-heading">The template and the law both change.</h2>
+          </div>
+          <p class="section-intro">
+            Safe use depends on current team-approved templates, accurate matter details, verified
+            jurisdictional rules, authorized systems, and human review.
+          </p>
+        </div>
+
+        <div class="limits">
+          <h3>Operational boundaries</h3>
+          <div class="limit-list">
+            <article class="limit">
+              <b>Template currency</b>
+              <p>Templates are living documents. Track version, approver, and last-reviewed date; update or retire them when law, policy, or practice changes.</p>
+            </article>
+            <article class="limit">
+              <b>Jurisdiction</b>
+              <p>Rights, terminology, deadlines, objections, and required notices must be verified for the actual jurisdiction and facts.</p>
+            </article>
+            <article class="limit">
+              <b>Confidentiality</b>
+              <p>Use approved channels and access controls. A privilege label alone does not establish privilege or authorize disclosure.</p>
+            </article>
+            <article class="limit">
+              <b>Final authority</b>
+              <p>The skill drafts and flags; qualified legal professionals decide, approve, and send regulated or consequential communications.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="connectors">
+          <p>
+            <strong>Connectors are optional and tool-agnostic.</strong> Email can be used to create a
+            draft, calendar to schedule deadline reminders, and approved chat, storage, CLM, CRM,
+            e-signature, office, or project systems to support the team workflow. The skill should
+            offer these actions only when the relevant connector is actually available; it must not
+            assume a named product or send automatically.
+          </p>
+        </div>
+      </section>
+
+      <div class="closing">
+        <p>A strong legal response says the right thing—and knows when not to say it yet.</p>
+        <div class="review-mark">Draft<br>Review<br>Release</div>
+      </div>
+
+      <footer>
+        <span>Legal Response / Instruction</span>
+        <span>Classify · Check · Customize · Review</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

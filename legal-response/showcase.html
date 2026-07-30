@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="A representative legal inquiry routed through deadline, jurisdiction, and escalation checks to a counsel-review draft.">
+  <title>Legal Response — Showcase</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --mint: #dff2e8;
+      --mint-deep: #a8d8c4;
+      --cream: #fff8de;
+      --paper: #fffef8;
+      --espresso: #35231d;
+      --muted: #75645d;
+      --red: #df4c43;
+      --red-deep: #8f2929;
+      --cobalt: #4655c7;
+      --yellow: #f1cc49;
+      --line: rgba(53, 35, 29, .26);
+      --white: #ffffff;
+      background: var(--mint);
+      color: var(--espresso);
+      font-family: "Trebuchet MS", "Avenir Next", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: light;
+      background: var(--mint);
+      color: var(--espresso);
+    }
+
+    body { overflow-x: hidden; }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 8% 0, rgba(255,255,255,.65) 0 9%, transparent 22%),
+        var(--mint);
+      color: var(--espresso);
+    }
+
+    .page {
+      width: min(100%, 1120px);
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(18px, 4.5vw, 56px);
+    }
+
+    .micro,
+    .tag,
+    .field,
+    .route-label,
+    .status,
+    .evidence-label,
+    .draft-mark {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      padding: 11px 0 16px;
+      border-bottom: 2px solid var(--espresso);
+    }
+
+    .masthead strong { font-size: 14px; }
+    .masthead .micro { color: var(--cobalt); text-align: right; }
+
+    .hero {
+      padding: clamp(42px, 7vw, 86px) 0 34px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    li,
+    blockquote,
+    code { overflow-wrap: anywhere; }
+
+    h1 {
+      max-width: 900px;
+      margin: 14px 0 0;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(52px, 10vw, 118px);
+      font-stretch: condensed;
+      font-weight: 900;
+      letter-spacing: -.075em;
+      line-height: .78;
+      text-transform: uppercase;
+    }
+
+    h1 span { color: var(--red); }
+
+    .tag {
+      display: inline-block;
+      padding: 7px 10px;
+      border: 2px solid var(--espresso);
+      border-radius: 999px;
+      background: var(--yellow);
+    }
+
+    .hero > p {
+      max-width: 720px;
+      margin: 27px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2.2vw, 21px);
+      line-height: 1.55;
+    }
+
+    .route {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 92px minmax(0, 1fr);
+      gap: 16px;
+      align-items: center;
+      padding: 34px 0 clamp(48px, 7vw, 76px);
+    }
+
+    .route-card {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 38px);
+      border: 2px solid var(--espresso);
+      background: var(--paper);
+    }
+
+    .route-card.inquiry {
+      border-radius: 16px 54px 16px 54px;
+      background: var(--cream);
+    }
+
+    .route-card.outcome {
+      border-radius: 54px 16px 54px 16px;
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .route-card h2 {
+      margin: 13px 0 0;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(28px, 5vw, 54px);
+      font-weight: 900;
+      letter-spacing: -.05em;
+      line-height: .93;
+      text-transform: uppercase;
+    }
+
+    .route-card p {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .route-card.outcome p { color: #ffe3df; }
+
+    .route-line {
+      position: relative;
+      height: 52px;
+      border-top: 8px solid var(--espresso);
+      border-right: 8px solid var(--espresso);
+      border-radius: 0 38px 0 0;
+    }
+
+    .route-line::before {
+      position: absolute;
+      left: -3px;
+      top: -16px;
+      width: 22px;
+      height: 22px;
+      border: 5px solid var(--espresso);
+      border-radius: 50%;
+      background: var(--yellow);
+      content: "";
+    }
+
+    .route-line::after {
+      position: absolute;
+      right: -14px;
+      bottom: -1px;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 16px solid var(--espresso);
+      content: "";
+    }
+
+    section {
+      min-width: 0;
+      padding: clamp(54px, 8vw, 92px) 0;
+      border-top: 2px solid var(--espresso);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, .45fr);
+      gap: 25px;
+      align-items: end;
+      margin-bottom: 30px;
+    }
+
+    .section-head h2 {
+      max-width: 800px;
+      margin: 12px 0 0;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(39px, 7vw, 78px);
+      font-weight: 900;
+      letter-spacing: -.06em;
+      line-height: .84;
+      text-transform: uppercase;
+    }
+
+    .section-head > p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .inquiry-board {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(280px, .68fr);
+      gap: 18px;
+    }
+
+    .inquiry-copy,
+    .intake-facts {
+      min-width: 0;
+      border: 2px solid var(--espresso);
+      background: var(--paper);
+    }
+
+    .inquiry-copy {
+      padding: clamp(24px, 4vw, 42px);
+      border-radius: 52px 16px 52px 16px;
+    }
+
+    blockquote {
+      margin: 14px 0 0;
+      font-size: clamp(24px, 4.4vw, 48px);
+      font-weight: 750;
+      letter-spacing: -.045em;
+      line-height: 1.06;
+    }
+
+    .representative {
+      margin: 22px 0 0;
+      padding-top: 17px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .intake-facts {
+      display: grid;
+      gap: 1px;
+      overflow: hidden;
+      border-radius: 16px 52px 16px 52px;
+      background: var(--espresso);
+    }
+
+    .intake-fact {
+      min-width: 0;
+      padding: 17px 19px;
+      background: var(--cream);
+    }
+
+    .intake-fact:nth-child(2) { background: var(--paper); }
+    .intake-fact:nth-child(3) { background: #d9ddd0; }
+    .intake-fact:nth-child(4) { background: #dedaf2; }
+
+    .intake-fact strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 14px;
+      line-height: 1.38;
+    }
+
+    .gaps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .gap-card {
+      min-width: 0;
+      min-height: 170px;
+      padding: 18px;
+      border: 2px dashed var(--espresso);
+      border-radius: 18px;
+      background: rgba(255,255,255,.46);
+    }
+
+    .gap-card h3 {
+      margin: 27px 0 8px;
+      font-size: 17px;
+      line-height: 1.1;
+    }
+
+    .gap-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.48;
+    }
+
+    .check-route {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      border: 2px solid var(--espresso);
+      background: var(--espresso);
+    }
+
+    .check {
+      position: relative;
+      min-width: 0;
+      padding: 20px 17px;
+      background: var(--paper);
+    }
+
+    .check + .check { border-left: 2px solid var(--espresso); }
+    .check:nth-child(2) { background: var(--cream); }
+    .check:nth-child(3) { background: #dedaf2; }
+    .check:nth-child(4) { background: #f5c7c2; }
+
+    .check:not(:last-child)::after {
+      position: absolute;
+      right: -9px;
+      top: 27px;
+      z-index: 2;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--espresso);
+      border-radius: 50%;
+      background: var(--yellow);
+      content: "";
+    }
+
+    .check .route-label {
+      display: block;
+      margin-bottom: 38px;
+      color: var(--cobalt);
+    }
+
+    .check h3 { margin: 0 0 8px; font-size: 18px; }
+
+    .check p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .check .status {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 5px 7px;
+      border: 1px solid var(--espresso);
+      background: var(--yellow);
+      color: var(--espresso);
+    }
+
+    .stop-panel {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) minmax(210px, .4fr);
+      gap: clamp(18px, 4vw, 38px);
+      align-items: center;
+      margin-top: 20px;
+      padding: clamp(22px, 4vw, 38px);
+      border: 3px solid var(--red-deep);
+      border-radius: 54px 16px 54px 16px;
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .stop-sign {
+      display: grid;
+      place-items: center;
+      width: 78px;
+      height: 78px;
+      border: 4px solid var(--white);
+      border-radius: 50%;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    .stop-panel h3 {
+      margin: 0 0 8px;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(29px, 4vw, 48px);
+      font-weight: 900;
+      letter-spacing: -.045em;
+      line-height: .92;
+      text-transform: uppercase;
+    }
+
+    .stop-panel p {
+      margin: 0;
+      color: #ffe5e1;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .escalate-to {
+      padding-left: 18px;
+      border-left: 1px solid rgba(255,255,255,.45);
+    }
+
+    .escalate-to strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .draft-workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(250px, .55fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .working-copy {
+      min-width: 0;
+      overflow: hidden;
+      border: 2px solid var(--espresso);
+      border-radius: 16px 54px 16px 54px;
+      background: var(--paper);
+    }
+
+    .working-copy-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-bottom: 2px solid var(--espresso);
+      background: var(--yellow);
+    }
+
+    .working-copy-head .draft-mark { color: var(--red-deep); }
+
+    .draft-content { padding: clamp(24px, 4vw, 42px); }
+
+    .draft-meta {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr);
+      gap: 8px 13px;
+      margin: 0 0 26px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .draft-meta dt {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .draft-meta dd {
+      min-width: 0;
+      margin: 0;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .draft-content > p {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .draft-content > p + p { margin-top: 16px; }
+
+    .draft-content ul {
+      margin: 15px 0;
+      padding-left: 23px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 13px;
+      line-height: 1.62;
+    }
+
+    .draft-content li + li { margin-top: 5px; }
+
+    .review-rail {
+      display: grid;
+      gap: 12px;
+    }
+
+    .review-note {
+      min-width: 0;
+      padding: 18px;
+      border: 2px solid var(--espresso);
+      background: var(--cream);
+    }
+
+    .review-note:nth-child(2) { background: #dedaf2; }
+    .review-note:nth-child(3) { background: #f5c7c2; }
+    .review-note:nth-child(4) { background: #d9ddd0; }
+
+    .review-note h3 {
+      margin: 8px 0 7px;
+      font-size: 16px;
+    }
+
+    .review-note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.48;
+    }
+
+    .followup {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 18px;
+      border: 2px solid var(--espresso);
+      background: var(--espresso);
+    }
+
+    .followup-item {
+      min-width: 0;
+      padding: 17px;
+      background: var(--paper);
+    }
+
+    .followup-item:nth-child(2) { background: var(--cream); }
+    .followup-item:nth-child(3) { background: #dedaf2; }
+    .followup-item:nth-child(4) { background: #d9ddd0; }
+
+    .followup-item strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 13px;
+      line-height: 1.38;
+    }
+
+    .boundary {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+      padding: clamp(24px, 4vw, 40px);
+      border: 2px solid var(--espresso);
+      border-radius: 52px 16px 52px 16px;
+      background: var(--paper);
+    }
+
+    .boundary-mark {
+      display: grid;
+      place-items: center;
+      width: 68px;
+      height: 68px;
+      border: 4px solid var(--red);
+      border-radius: 50%;
+      color: var(--red);
+      font-size: 32px;
+      font-weight: 900;
+    }
+
+    .boundary h3 {
+      margin: 0 0 11px;
+      font-size: clamp(22px, 3vw, 31px);
+      line-height: 1.1;
+    }
+
+    .boundary p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .evidence {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 18px;
+      overflow: hidden;
+      border: 2px solid var(--espresso);
+      background: var(--espresso);
+    }
+
+    .evidence-item {
+      min-width: 0;
+      padding: 16px;
+      background: var(--paper);
+    }
+
+    .evidence-item strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 20px 0 4px;
+      border-top: 2px solid var(--espresso);
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 790px) {
+      .route { grid-template-columns: minmax(0, 1fr) 60px minmax(0, 1fr); }
+      .check-route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .check + .check { border-left: 0; }
+      .check:nth-child(even) { border-left: 2px solid var(--espresso); }
+      .check:nth-child(n+3) { border-top: 2px solid var(--espresso); }
+      .check:nth-child(2)::after { display: none; }
+      .stop-panel { grid-template-columns: auto minmax(0, 1fr); }
+      .escalate-to {
+        grid-column: 1 / -1;
+        padding: 15px 0 0;
+        border-left: 0;
+        border-top: 1px solid rgba(255,255,255,.45);
+      }
+      .followup,
+      .evidence { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 590px) {
+      .page { padding: 16px; }
+      .masthead { align-items: flex-start; }
+      .route,
+      .section-head,
+      .inquiry-board,
+      .draft-workspace { grid-template-columns: minmax(0, 1fr); }
+      .route-line {
+        width: 58px;
+        height: 70px;
+        justify-self: center;
+        transform: rotate(90deg);
+      }
+      .gaps { grid-template-columns: minmax(0, 1fr); }
+      .gap-card { min-height: 0; }
+      .check-route { grid-template-columns: minmax(0, 1fr); }
+      .check + .check,
+      .check:nth-child(even) { border-left: 0; border-top: 2px solid var(--espresso); }
+      .check:not(:last-child)::after {
+        right: auto;
+        left: 27px;
+        top: auto;
+        bottom: -10px;
+      }
+      .stop-panel { grid-template-columns: minmax(0, 1fr); }
+      .stop-sign { width: 62px; height: 62px; }
+      .escalate-to { grid-column: auto; }
+      .followup,
+      .evidence { grid-template-columns: minmax(0, 1fr); }
+      .boundary { grid-template-columns: 48px minmax(0, 1fr); gap: 14px; }
+      .boundary-mark { width: 46px; height: 46px; font-size: 23px; }
+      footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="finchip-page">
+    <div class="page">
+      <header class="masthead">
+        <strong>Legal Response</strong>
+        <span class="micro">Showcase · Escalation-aware vendor inquiry</span>
+      </header>
+
+      <div class="hero">
+        <span class="tag">Inquiry routing result</span>
+        <h1>Not every inquiry should become a <span>template reply.</span></h1>
+        <p>This representative vendor incident request is customized only after jurisdiction, deadline, and escalation checks. The correct output is a counsel-review working draft—not a send-ready legal response.</p>
+      </div>
+
+      <div class="route" aria-label="Inquiry routed to escalation outcome">
+        <article class="route-card inquiry">
+          <span class="route-label">Incoming request</span>
+          <h2>“Confirm there is no reportable breach.”</h2>
+          <p>A vendor asks for approval of an external holding statement within 24 hours after suspected unauthorized access.</p>
+        </article>
+        <div class="route-line" aria-hidden="true"></div>
+        <article class="route-card outcome">
+          <span class="route-label">Correct outcome</span>
+          <h2>Stop template. Escalate.</h2>
+          <p>Potential breach, regulatory analysis, and a binding external statement require individualized counsel review.</p>
+        </article>
+      </div>
+
+      <section aria-labelledby="inquiry-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">Representative inquiry</span>
+            <h2 id="inquiry-title">The request contains urgency, not enough facts.</h2>
+          </div>
+          <p>The skill first identifies the inquiry as a vendor question with privacy implications, then gathers the information needed to assess whether any response is appropriate.</p>
+        </div>
+
+        <div class="inquiry-board">
+          <article class="inquiry-copy">
+            <span class="field">Message from vendor incident lead</span>
+            <blockquote>“We detected suspected unauthorized access to the shared support environment. Please confirm within 24 hours that no regulatory notification is required and approve the attached public statement.”</blockquote>
+            <p class="representative">This example was written for the Showcase. It is not a real incident record, legal determination, or communication from an actual vendor.</p>
+          </article>
+          <aside class="intake-facts">
+            <div class="intake-fact">
+              <span class="field">Inquiry type</span>
+              <strong>Vendor question + privacy incident</strong>
+            </div>
+            <div class="intake-fact">
+              <span class="field">Requested commitment</span>
+              <strong>Confirm notification status and approve public language</strong>
+            </div>
+            <div class="intake-fact">
+              <span class="field">Business deadline</span>
+              <strong>24 hours requested by vendor</strong>
+            </div>
+            <div class="intake-fact">
+              <span class="field">Matter reference</span>
+              <strong>LR-2026-017 · Demonstration only</strong>
+            </div>
+          </aside>
+        </div>
+
+        <div class="gaps">
+          <article class="gap-card">
+            <span class="field">Unknown jurisdiction</span>
+            <h3>Which laws apply?</h3>
+            <p>Affected people, their locations, data storage regions, and governing contract terms have not been confirmed.</p>
+          </article>
+          <article class="gap-card">
+            <span class="field">Unknown deadline</span>
+            <h3>What clock is running?</h3>
+            <p>The vendor’s 24-hour request is not presented as a statutory deadline. Legal timelines require jurisdiction and trigger analysis.</p>
+          </article>
+          <article class="gap-card">
+            <span class="field">Unknown incident scope</span>
+            <h3>What was accessed?</h3>
+            <p>Data categories, affected records, access duration, containment status, and forensic confidence are still missing.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="checks-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">Required checks</span>
+            <h2 id="checks-title">Four gates change the response.</h2>
+          </div>
+          <p>These checks occur before drafting. Once an escalation trigger appears, the workflow stops treating the matter as a routine templated inquiry.</p>
+        </div>
+
+        <div class="check-route">
+          <article class="check">
+            <span class="route-label">Identify</span>
+            <h3>Vendor + privacy</h3>
+            <p>The inquiry concerns a vendor relationship but also raises potential incident and regulatory questions.</p>
+            <span class="status">Classified</span>
+          </article>
+          <article class="check">
+            <span class="route-label">Jurisdiction</span>
+            <h3>Not established</h3>
+            <p>No law or regulator can be named until affected people, regions, and applicable agreements are verified.</p>
+            <span class="status">Open</span>
+          </article>
+          <article class="check">
+            <span class="route-label">Deadline</span>
+            <h3>Not calculated</h3>
+            <p>The 24-hour request is operational context. Any legal notification clock remains subject to counsel analysis.</p>
+            <span class="status">Open</span>
+          </article>
+          <article class="check">
+            <span class="route-label">Escalation</span>
+            <h3>Triggers found</h3>
+            <p>Potential breach, regulatory compliance, public communications, and a potentially binding commitment are present.</p>
+            <span class="status">Stop</span>
+          </article>
+        </div>
+
+        <div class="stop-panel">
+          <div class="stop-sign">STOP</div>
+          <div>
+            <h3>Do not issue the requested confirmation.</h3>
+            <p>The available facts do not support a “no notification required” statement or approval of public messaging. Preserve the matter, gather facts, and route it for individualized review.</p>
+          </div>
+          <div class="escalate-to">
+            <span class="micro">Recommended route</span>
+            <strong>Senior privacy counsel; consider specialist outside counsel if jurisdictional expertise is unavailable in-house.</strong>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="draft-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">Customized working draft</span>
+            <h2 id="draft-title">A holding response, clearly marked for counsel.</h2>
+          </div>
+          <p>The draft acknowledges receipt and requests facts without accepting the vendor’s conclusion, waiving rights, naming an unverified law, or promising a legal outcome.</p>
+        </div>
+
+        <div class="draft-workspace">
+          <article class="working-copy">
+            <div class="working-copy-head">
+              <span class="micro">Vendor incident holding response</span>
+              <span class="draft-mark">Draft — for counsel review only</span>
+            </div>
+            <div class="draft-content">
+              <dl class="draft-meta">
+                <dt>To</dt>
+                <dd>Vendor Incident Lead</dd>
+                <dt>Subject</dt>
+                <dd>Urgent information request — security incident LR-2026-017</dd>
+                <dt>Status</dt>
+                <dd>Not approved for sending</dd>
+              </dl>
+
+              <p>We acknowledge receipt of your notice regarding suspected unauthorized access to the shared support environment.</p>
+
+              <p>We are not in a position to confirm notification obligations or approve external communications at this stage. To support an urgent assessment, please provide the following information through the agreed secure channel:</p>
+
+              <ul>
+                <li>the incident timeline, detection method, current containment status, and known indicators of compromise;</li>
+                <li>the systems, records, data categories, affected individuals, and relevant countries or regions potentially involved;</li>
+                <li>available forensic findings, log-preservation status, and the identity of the investigation lead;</li>
+                <li>any contact with regulators, law enforcement, insurers, or affected individuals; and</li>
+                <li>the proposed external statement and all assumptions supporting it.</li>
+              </ul>
+
+              <p>Please preserve potentially relevant evidence and coordinate further incident communications through the designated legal and security contacts. Our acknowledgment does not approve the proposed statement, determine legal obligations, or waive any contractual or legal rights.</p>
+
+              <p>Regards,<br>Legal Incident Response Team</p>
+            </div>
+          </article>
+
+          <aside class="review-rail">
+            <article class="review-note">
+              <span class="field">Customization used</span>
+              <h3>Reference and subject</h3>
+              <p>The inquiry type, demonstration reference, requested commitment, and incident context appear in the draft.</p>
+            </article>
+            <article class="review-note">
+              <span class="field">Language withheld</span>
+              <h3>No legal conclusion</h3>
+              <p>The draft does not say whether any notification is required and does not cite an unverified regulation.</p>
+            </article>
+            <article class="review-note">
+              <span class="field">Rights preserved</span>
+              <h3>No waiver or approval</h3>
+              <p>Acknowledgment is separated from approval, obligation analysis, and any waiver of contractual or legal rights.</p>
+            </article>
+            <article class="review-note">
+              <span class="field">Human gate</span>
+              <h3>Counsel must review</h3>
+              <p>Qualified counsel must verify facts, applicable law, deadlines, privilege handling, recipients, and final wording.</p>
+            </article>
+          </aside>
+        </div>
+
+        <div class="followup">
+          <div class="followup-item">
+            <span class="field">Owner</span>
+            <strong>Senior privacy counsel</strong>
+          </div>
+          <div class="followup-item">
+            <span class="field">Fact collection</span>
+            <strong>Security incident lead + vendor</strong>
+          </div>
+          <div class="followup-item">
+            <span class="field">Tracking</span>
+            <strong>Open matter; preserve timestamps and decisions</strong>
+          </div>
+          <div class="followup-item">
+            <span class="field">Next review</span>
+            <strong>When initial incident scope is confirmed</strong>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="boundary-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">Review boundary</span>
+            <h2 id="boundary-title">Useful draft. Not legal advice. Not ready to send.</h2>
+          </div>
+          <p>This Showcase demonstrates the skill’s branching logic: inquiry identification, template decision, factual customization, deadline and jurisdiction checks, escalation, and a marked counsel-review output.</p>
+        </div>
+
+        <div class="boundary">
+          <div class="boundary-mark" aria-hidden="true">!</div>
+          <div>
+            <h3>No real incident, statutory deadline, jurisdiction, or counsel approval is represented.</h3>
+            <p>The scenario and draft are demonstration content. Qualified legal professionals must determine applicable law, calculate any legal deadline, protect privilege, select recipients, verify organizational policy, and approve every external communication.</p>
+          </div>
+        </div>
+
+        <div class="evidence">
+          <div class="evidence-item">
+            <span class="evidence-label">Package revision</span>
+            <strong><code>6e0e72c</code></strong>
+          </div>
+          <div class="evidence-item">
+            <span class="evidence-label">Contract coverage</span>
+            <strong>Templates, triggers, jurisdiction, deadlines, review</strong>
+          </div>
+          <div class="evidence-item">
+            <span class="evidence-label">Runtime boundary</span>
+            <strong>Local text needs no API; connectors optional</strong>
+          </div>
+          <div class="evidence-item">
+            <span class="evidence-label">License</span>
+            <strong>Apache-2.0</strong>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <span>Legal Response · Showcase</span>
+        <span>Representative content · Qualified legal review required</span>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

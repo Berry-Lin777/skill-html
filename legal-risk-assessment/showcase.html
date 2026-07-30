@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="A representative legal risk assessment from scenario intake through mitigation and escalation.">
+  <title>Legal Risk Assessment — Showcase</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --lavender: #e9e4f5;
+      --lavender-deep: #cfc5e5;
+      --paper: #fffdf8;
+      --ink: #172153;
+      --muted: #5f6686;
+      --cobalt: #2946a3;
+      --plum: #6e2047;
+      --orange: #ed764a;
+      --orange-soft: #ffd8c4;
+      --yellow: #f5cf5a;
+      --green: #5b8a68;
+      --line: rgba(23, 33, 83, .24);
+      --white: #ffffff;
+      background: var(--lavender);
+      color: var(--ink);
+      font-family: "Gill Sans", "Avenir Next", "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: light;
+      background: var(--lavender);
+      color: var(--ink);
+    }
+
+    body { overflow-x: hidden; }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 100% 0, rgba(255,255,255,.72) 0 9%, transparent 25%),
+        var(--lavender);
+      color: var(--ink);
+    }
+
+    .page {
+      width: min(100%, 1140px);
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(18px, 4.5vw, 58px);
+    }
+
+    .micro,
+    .tag,
+    .field-label,
+    .status,
+    .score-label,
+    .step-marker,
+    .evidence-label {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      padding: 11px 0 17px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .topbar strong {
+      font-size: 14px;
+      letter-spacing: -.01em;
+    }
+
+    .topbar .micro {
+      color: var(--cobalt);
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(300px, .72fr);
+      gap: clamp(28px, 5vw, 66px);
+      align-items: center;
+      padding: clamp(42px, 7vw, 86px) 0 34px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    li,
+    blockquote,
+    code,
+    dd,
+    dt { overflow-wrap: anywhere; }
+
+    .tag {
+      display: inline-block;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: var(--ink);
+    }
+
+    h1 {
+      max-width: 770px;
+      margin: 15px 0 0;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(48px, 8vw, 94px);
+      font-stretch: condensed;
+      font-weight: 900;
+      letter-spacing: -.065em;
+      line-height: .85;
+      text-transform: uppercase;
+    }
+
+    h1 span { color: var(--plum); }
+
+    .hero-copy > p {
+      max-width: 650px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2.15vw, 20px);
+      line-height: 1.55;
+    }
+
+    .score-orbit {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      aspect-ratio: 1;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow:
+        0 0 0 13px var(--lavender),
+        0 0 0 15px var(--ink);
+    }
+
+    .score-orbit::before,
+    .score-orbit::after {
+      position: absolute;
+      background: var(--ink);
+      content: "";
+    }
+
+    .score-orbit::before {
+      left: -15px;
+      right: -15px;
+      height: 2px;
+      transform: rotate(24deg);
+    }
+
+    .score-orbit::after {
+      top: -15px;
+      bottom: -15px;
+      width: 2px;
+      transform: rotate(24deg);
+    }
+
+    .score-core {
+      position: relative;
+      z-index: 1;
+      width: 68%;
+      padding: 22px 12px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: var(--paper);
+      text-align: center;
+    }
+
+    .score-core strong {
+      display: block;
+      margin: 4px 0;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(56px, 9vw, 105px);
+      font-weight: 900;
+      letter-spacing: -.07em;
+      line-height: .82;
+    }
+
+    .score-core b {
+      display: block;
+      color: var(--plum);
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .case-strip {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(120px, .4fr));
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      border-radius: 18px;
+      background: var(--ink);
+    }
+
+    .case-cell {
+      min-width: 0;
+      padding: 15px 17px;
+      background: var(--paper);
+    }
+
+    .case-cell + .case-cell { border-left: 1px solid var(--ink); }
+    .case-cell:first-child { background: var(--cobalt); color: var(--white); }
+
+    .case-cell span {
+      display: block;
+      margin-bottom: 5px;
+      opacity: .72;
+    }
+
+    .case-cell strong {
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    section {
+      min-width: 0;
+      padding: clamp(56px, 8vw, 94px) 0;
+      border-top: 2px solid var(--ink);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, .42fr);
+      gap: 26px;
+      align-items: end;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      max-width: 790px;
+      margin: 12px 0 0;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(39px, 6.6vw, 76px);
+      font-stretch: condensed;
+      font-weight: 900;
+      letter-spacing: -.055em;
+      line-height: .88;
+      text-transform: uppercase;
+    }
+
+    .section-intro {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .scenario {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(270px, .65fr);
+      gap: 18px;
+    }
+
+    .scenario-main,
+    .boundary-card {
+      min-width: 0;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .scenario-main {
+      padding: clamp(24px, 4vw, 44px);
+      border-radius: 50px 16px 50px 16px;
+    }
+
+    blockquote {
+      margin: 13px 0 0;
+      font-size: clamp(24px, 4.3vw, 47px);
+      font-weight: 700;
+      letter-spacing: -.045em;
+      line-height: 1.07;
+    }
+
+    .scenario-note {
+      margin: 24px 0 0;
+      padding-top: 17px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .scenario-facts {
+      display: grid;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      border-radius: 16px 50px 16px 50px;
+      background: var(--ink);
+    }
+
+    .scenario-fact {
+      min-width: 0;
+      padding: 18px 20px;
+      background: var(--orange-soft);
+    }
+
+    .scenario-fact:nth-child(2) { background: var(--paper); }
+    .scenario-fact:nth-child(3) { background: #ddd7ef; }
+
+    .scenario-fact strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .fact-box {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 38px);
+      border: 2px solid var(--ink);
+      border-radius: 16px;
+      background: var(--paper);
+    }
+
+    .fact-box:nth-child(2) {
+      background: #ddd7ef;
+      border-radius: 46px 16px 46px 16px;
+    }
+
+    .fact-box h3 {
+      margin: 10px 0 19px;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(27px, 4vw, 42px);
+      font-weight: 900;
+      letter-spacing: -.04em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .fact-box ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fact-box li {
+      position: relative;
+      padding: 12px 0 12px 27px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.48;
+    }
+
+    .fact-box li::before {
+      position: absolute;
+      left: 0;
+      top: 15px;
+      display: grid;
+      place-items: center;
+      width: 15px;
+      height: 15px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      color: var(--ink);
+      content: "✓";
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+    .fact-box:nth-child(2) li::before { content: "?"; background: var(--yellow); }
+
+    .analysis-route {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 54px minmax(0, 1fr) 54px minmax(0, .76fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .rating {
+      min-width: 0;
+      padding: 22px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .rating:nth-child(3) { background: #ddd7ef; }
+    .rating.result { background: var(--orange); color: var(--ink); }
+
+    .rating-number {
+      display: block;
+      margin: 24px 0 7px;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(65px, 10vw, 112px);
+      font-weight: 900;
+      letter-spacing: -.08em;
+      line-height: .7;
+    }
+
+    .rating h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .rating p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .rating.result p { color: #4d2416; }
+
+    .operator {
+      display: grid;
+      place-items: center;
+      font-family: "Arial Narrow", Arial, sans-serif;
+      font-size: 40px;
+      font-weight: 900;
+    }
+
+    .rationale {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .rationale-card {
+      min-width: 0;
+      padding: 22px;
+      border-left: 7px solid var(--orange);
+      background: rgba(255,255,255,.56);
+    }
+
+    .rationale-card:nth-child(2) { border-left-color: var(--violet, #6754b8); }
+
+    .rationale-card h3 { margin: 8px 0 10px; font-size: 18px; }
+
+    .rationale-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.52;
+    }
+
+    .deliverable {
+      display: grid;
+      grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .decision-panel {
+      min-width: 0;
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      border-radius: 44px 16px 44px 16px;
+      background: var(--paper);
+    }
+
+    .decision-head {
+      padding: 22px 24px;
+      background: var(--cobalt);
+      color: var(--white);
+    }
+
+    .decision-head h3 {
+      margin: 9px 0 0;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(32px, 5vw, 53px);
+      font-weight: 900;
+      letter-spacing: -.045em;
+      line-height: .92;
+      text-transform: uppercase;
+    }
+
+    .decision-fields {
+      margin: 0;
+      padding: 0 24px;
+    }
+
+    .decision-fields > div {
+      padding: 17px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .decision-fields > div:first-child { border-top: 0; }
+
+    .decision-fields dt {
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .decision-fields dd {
+      margin: 5px 0 0;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .action {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr) minmax(110px, .35fr);
+      gap: 16px;
+      align-items: center;
+      min-width: 0;
+      padding: 17px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .action:nth-child(2) { background: #ddd7ef; }
+    .action:nth-child(3) { background: var(--orange-soft); }
+    .action:nth-child(4) { background: #e0ecd9; }
+
+    .step-marker {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: var(--yellow);
+    }
+
+    .action h3 {
+      margin: 0 0 5px;
+      font-size: 16px;
+    }
+
+    .action p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .owner {
+      padding-left: 13px;
+      border-left: 1px solid var(--line);
+    }
+
+    .owner strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .escalation {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(260px, .85fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .escalation-main,
+    .residual {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 38px);
+      border: 2px solid var(--ink);
+    }
+
+    .escalation-main {
+      border-radius: 16px 50px 16px 50px;
+      background: var(--plum);
+      color: var(--white);
+    }
+
+    .escalation-main h3,
+    .residual h3 {
+      margin: 10px 0 14px;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(27px, 4vw, 43px);
+      font-weight: 900;
+      letter-spacing: -.04em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .escalation-main p {
+      margin: 0;
+      color: #edd9e4;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .residual {
+      background: var(--yellow);
+      text-align: center;
+    }
+
+    .residual strong {
+      display: block;
+      margin: 8px 0;
+      font-family: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      font-size: clamp(58px, 9vw, 92px);
+      font-weight: 900;
+      letter-spacing: -.07em;
+      line-height: .8;
+    }
+
+    .residual p {
+      margin: 0;
+      color: #5b4814;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .review-boundary {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+      padding: clamp(24px, 4vw, 40px);
+      border: 2px solid var(--ink);
+      border-radius: 50px 16px 50px 16px;
+      background: var(--paper);
+    }
+
+    .boundary-mark {
+      display: grid;
+      place-items: center;
+      width: 68px;
+      height: 68px;
+      border: 3px solid var(--plum);
+      border-radius: 50%;
+      color: var(--plum);
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .review-boundary h3 {
+      margin: 0 0 11px;
+      font-size: clamp(22px, 3vw, 31px);
+      line-height: 1.1;
+    }
+
+    .review-boundary p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .evidence {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 18px;
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      background: var(--ink);
+    }
+
+    .evidence-item {
+      min-width: 0;
+      padding: 16px;
+      background: var(--paper);
+    }
+
+    .evidence-item strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 20px 0 4px;
+      border-top: 2px solid var(--ink);
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 790px) {
+      .hero { grid-template-columns: minmax(0, 1fr) minmax(230px, .48fr); }
+      .case-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .case-cell:nth-child(3) { border-left: 0; border-top: 1px solid var(--ink); }
+      .case-cell:nth-child(4) { border-top: 1px solid var(--ink); }
+      .analysis-route {
+        grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+      }
+      .analysis-route .operator:nth-of-type(2) {
+        display: none;
+      }
+      .rating.result {
+        grid-column: 1 / -1;
+      }
+      .evidence { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 590px) {
+      .page { padding: 16px; }
+      .topbar { align-items: flex-start; }
+      .hero,
+      .section-head,
+      .scenario,
+      .split,
+      .rationale,
+      .deliverable,
+      .escalation { grid-template-columns: minmax(0, 1fr); }
+      .score-orbit {
+        width: min(72%, 290px);
+        justify-self: center;
+      }
+      .case-strip { grid-template-columns: minmax(0, 1fr); }
+      .case-cell + .case-cell { border-left: 0; border-top: 1px solid var(--ink); }
+      .analysis-route { grid-template-columns: minmax(0, 1fr); }
+      .operator { min-height: 34px; transform: rotate(90deg); }
+      .analysis-route .operator:nth-of-type(2) { display: grid; }
+      .rating.result { grid-column: auto; }
+      .action { grid-template-columns: 42px minmax(0, 1fr); }
+      .owner {
+        grid-column: 1 / -1;
+        padding: 12px 0 0;
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+      .review-boundary { grid-template-columns: 48px minmax(0, 1fr); gap: 14px; }
+      .boundary-mark { width: 46px; height: 46px; font-size: 24px; }
+      .evidence { grid-template-columns: minmax(0, 1fr); }
+      footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="finchip-page">
+    <div class="page">
+      <header class="topbar">
+        <strong>Legal Risk Assessment</strong>
+        <span class="micro">Showcase · Representative contract matter</span>
+      </header>
+
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <span class="tag">Risk triage result</span>
+          <h1 id="hero-title">From contract clause to <span>owned action.</span></h1>
+          <p>A structured assessment converts a broad concern into explicit facts, open assumptions, a reproducible score, practical mitigations, and the right escalation path.</p>
+        </div>
+        <div class="score-orbit" aria-label="Risk score 12, high risk">
+          <div class="score-core">
+            <span class="score-label">Risk score</span>
+            <strong>12</strong>
+            <b>High risk</b>
+          </div>
+        </div>
+      </section>
+
+      <div class="case-strip">
+        <div class="case-cell">
+          <span class="micro">Matter</span>
+          <strong>Enterprise SaaS data-protection indemnity</strong>
+        </div>
+        <div class="case-cell">
+          <span class="micro">Severity</span>
+          <strong>4 · High</strong>
+        </div>
+        <div class="case-cell">
+          <span class="micro">Likelihood</span>
+          <strong>3 · Possible</strong>
+        </div>
+        <div class="case-cell">
+          <span class="micro">Route</span>
+          <strong>Senior counsel</strong>
+        </div>
+      </div>
+
+      <section aria-labelledby="scenario-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">Representative input</span>
+            <h2 id="scenario-title">The scenario arrives incomplete.</h2>
+          </div>
+          <p class="section-intro">The skill does not hide missing context. It separates what the team knows from what qualified reviewers must confirm before a final legal position is approved.</p>
+        </div>
+
+        <div class="scenario">
+          <article class="scenario-main">
+            <span class="field-label">Business request</span>
+            <blockquote>“Can we sign the customer’s data-protection indemnity? It is uncapped, and the agreement is scheduled for signature in ten business days.”</blockquote>
+            <p class="scenario-note">This scenario is authored for demonstration. It is not a customer record, a legal opinion, or a statement that counsel approved the proposed rating.</p>
+          </article>
+          <aside class="scenario-facts">
+            <div class="scenario-fact">
+              <span class="field-label">Deal value</span>
+              <strong>$450,000 annual contract value</strong>
+            </div>
+            <div class="scenario-fact">
+              <span class="field-label">Clause posture</span>
+              <strong>No contractual cap applies to the indemnity</strong>
+            </div>
+            <div class="scenario-fact">
+              <span class="field-label">Data described</span>
+              <strong>Business contact details; scope needs confirmation</strong>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section aria-labelledby="facts-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">Facts and assumptions</span>
+            <h2 id="facts-title">Known is not the same as assumed.</h2>
+          </div>
+          <p class="section-intro">The rating is provisional because jurisdiction, insurance, and actual data categories may materially change both impact and probability.</p>
+        </div>
+
+        <div class="split">
+          <article class="fact-box">
+            <span class="field-label">Known for this exercise</span>
+            <h3>Working facts</h3>
+            <ul>
+              <li>The customer draft includes an uncapped indemnity tied to data-protection obligations.</li>
+              <li>The annual contract value is $450,000.</li>
+              <li>The stated processing purpose involves business contact details.</li>
+              <li>The target signature date is ten business days away.</li>
+            </ul>
+          </article>
+          <article class="fact-box">
+            <span class="field-label">Must be confirmed</span>
+            <h3>Open assumptions</h3>
+            <ul>
+              <li>Whether sensitive, regulated, or special-category data is in scope.</li>
+              <li>Governing law, affected jurisdictions, and regulatory requirements.</li>
+              <li>Applicable cyber-insurance scope, exclusions, and policy limits.</li>
+              <li>Customer-caused events, cooperation duties, and claim-control language.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="rating-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">Classification rationale</span>
+            <h2 id="rating-title">The score can be recalculated.</h2>
+          </div>
+          <p class="section-intro">The framework multiplies impact if the risk materializes by the probability it materializes. The number is a triage aid, not a substitute for legal judgment.</p>
+        </div>
+
+        <div class="analysis-route">
+          <article class="rating">
+            <span class="field-label">Severity</span>
+            <span class="rating-number">4</span>
+            <h3>High impact</h3>
+            <p>Uncapped exposure could exceed the commercial value of the deal and create operational, regulatory, and reputational consequences.</p>
+          </article>
+          <div class="operator" aria-hidden="true">×</div>
+          <article class="rating">
+            <span class="field-label">Likelihood</span>
+            <span class="rating-number">3</span>
+            <h3>Possible</h3>
+            <p>A claim is not expected as a certainty, but data incidents and contractual disputes are foreseeable triggering events.</p>
+          </article>
+          <div class="operator" aria-hidden="true">=</div>
+          <article class="rating result">
+            <span class="field-label">Risk level</span>
+            <span class="rating-number">12</span>
+            <h3>High risk</h3>
+            <p>Scores from 10 to 15 follow the framework’s High Risk route.</p>
+          </article>
+        </div>
+
+        <div class="rationale">
+          <article class="rationale-card">
+            <span class="field-label">Factors increasing risk</span>
+            <h3>No cap, broad trigger, unknown scope</h3>
+            <p>The indemnity is uncapped; the triggering language is described broadly; and data, jurisdiction, insurance, and claim-control details remain unresolved.</p>
+          </article>
+          <article class="rationale-card">
+            <span class="field-label">Factors limiting risk</span>
+            <h3>Defined use case and time to negotiate</h3>
+            <p>The known use case is currently limited to business contact data, no incident is reported, and the ten-business-day window permits targeted negotiation and review.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="deliverable-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">Assessment deliverable</span>
+            <h2 id="deliverable-title">Risk becomes a plan with names.</h2>
+          </div>
+          <p class="section-intro">The output carries the classification into specific actions, an accountable owner, a deadline, and trigger-based escalation instead of stopping at a colored score.</p>
+        </div>
+
+        <div class="deliverable">
+          <article class="decision-panel">
+            <div class="decision-head">
+              <span class="micro">Provisional decision record</span>
+              <h3>Do not approve as drafted</h3>
+            </div>
+            <dl class="decision-fields">
+              <div>
+                <dt>Risk level</dt>
+                <dd>High · 12 of 25</dd>
+              </div>
+              <div>
+                <dt>Primary owner</dt>
+                <dd>Lead commercial counsel</dd>
+              </div>
+              <div>
+                <dt>Decision deadline</dt>
+                <dd>Before contract signature</dd>
+              </div>
+              <div>
+                <dt>Review cadence</dt>
+                <dd>At each negotiation turn; weekly if unresolved</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd>Open · mitigation required</dd>
+              </div>
+            </dl>
+          </article>
+
+          <div class="actions">
+            <article class="action">
+              <span class="step-marker">01</span>
+              <div>
+                <h3>Define the exposure boundary</h3>
+                <p>Negotiate a clear cap or super-cap aligned to approved risk tolerance and confirmed insurance.</p>
+              </div>
+              <div class="owner">
+                <span class="field-label">Owner</span>
+                <strong>Commercial counsel</strong>
+              </div>
+            </article>
+            <article class="action">
+              <span class="step-marker">02</span>
+              <div>
+                <h3>Narrow the indemnity trigger</h3>
+                <p>Limit covered events, address causation and counterparty fault, and align defense and settlement control.</p>
+              </div>
+              <div class="owner">
+                <span class="field-label">Owner</span>
+                <strong>Commercial counsel</strong>
+              </div>
+            </article>
+            <article class="action">
+              <span class="step-marker">03</span>
+              <div>
+                <h3>Confirm the missing facts</h3>
+                <p>Validate data categories, jurisdictions, security obligations, insurance terms, and incident history.</p>
+              </div>
+              <div class="owner">
+                <span class="field-label">Owner</span>
+                <strong>Privacy + security</strong>
+              </div>
+            </article>
+            <article class="action">
+              <span class="step-marker">04</span>
+              <div>
+                <h3>Record the business decision</h3>
+                <p>Document accepted deviations, rationale, approver, residual risk, and the next review trigger.</p>
+              </div>
+              <div class="owner">
+                <span class="field-label">Owner</span>
+                <strong>Legal operations</strong>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="escalation">
+          <article class="escalation-main">
+            <span class="micro">Escalation route</span>
+            <h3>Senior counsel now; specialist review on trigger.</h3>
+            <p>Escalate the uncapped position to the Head of Legal or designated senior counsel before approval. Consider outside privacy counsel if the confirmed jurisdiction is unfamiliar, the data scope includes regulated categories, or a novel regulatory interpretation is required.</p>
+          </article>
+          <article class="residual">
+            <span class="field-label">Illustrative residual target</span>
+            <strong>6</strong>
+            <h3>Medium</h3>
+            <p>Severity 3 × likelihood 2 only if the proposed controls are adopted and their assumptions are verified. This is a target, not an observed result.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="boundary-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">Professional review boundary</span>
+            <h2 id="boundary-title">Structured triage is not legal advice.</h2>
+          </div>
+          <p class="section-intro">The final rating, mitigation posture, privilege treatment, jurisdiction analysis, and signature approval belong to qualified legal professionals using the organization’s own risk appetite.</p>
+        </div>
+
+        <div class="review-boundary">
+          <div class="boundary-mark" aria-hidden="true">!</div>
+          <div>
+            <h3>No counsel approval is claimed for this representative assessment.</h3>
+            <p>The scenario was created to demonstrate the skill’s severity-by-likelihood workflow. No governing law was researched, no confidential matter was analyzed, no outside counsel was engaged, and the output should not be used as a legal determination.</p>
+          </div>
+        </div>
+
+        <div class="evidence">
+          <div class="evidence-item">
+            <span class="evidence-label">Package revision</span>
+            <strong><code>f14f76c</code></strong>
+          </div>
+          <div class="evidence-item">
+            <span class="evidence-label">Framework source</span>
+            <strong>Severity × likelihood matrix in SKILL.md</strong>
+          </div>
+          <div class="evidence-item">
+            <span class="evidence-label">Runtime boundary</span>
+            <strong>No API key required</strong>
+          </div>
+          <div class="evidence-item">
+            <span class="evidence-label">License</span>
+            <strong>Apache-2.0</strong>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <span>Legal Risk Assessment · Showcase</span>
+        <span>Representative workflow · Qualified legal review required</span>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

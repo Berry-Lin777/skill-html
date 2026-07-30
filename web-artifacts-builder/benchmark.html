@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Web Artifacts Builder — Bundle Acceptance Record</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4eddf;
+      --paper-deep: #e8dcc7;
+      --ink: #25221d;
+      --muted: #716a60;
+      --rule: #a99b87;
+      --vermilion: #c43d27;
+      --vermilion-dark: #7c2118;
+      --olive: #4b5b39;
+      --olive-soft: #dbe0c7;
+      --amber-soft: #f1d69a;
+      --white: #fffaf0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      color-scheme: light;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(124, 33, 24, 0.035) 1px, transparent 1px) 0 0 / 44px 44px,
+        linear-gradient(rgba(124, 33, 24, 0.035) 1px, transparent 1px) 0 0 / 44px 44px,
+        var(--paper);
+      color: var(--ink);
+    }
+
+    .sheet {
+      width: 100%;
+      max-width: 1120px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(20px, 4vw, 52px);
+    }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: start;
+      padding-bottom: 20px;
+      border-bottom: 3px double var(--ink);
+    }
+
+    .eyebrow,
+    .folio,
+    .section-kicker,
+    .micro-label,
+    th {
+      font-size: 0.72rem;
+      line-height: 1.35;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .eyebrow {
+      margin: 0 0 13px;
+      color: var(--vermilion-dark);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.25rem, 7.8vw, 5.8rem);
+      font-weight: 500;
+      line-height: 0.88;
+      letter-spacing: -0.055em;
+    }
+
+    .folio {
+      display: grid;
+      gap: 9px;
+      min-width: 148px;
+      padding: 13px 15px;
+      border: 1px solid var(--ink);
+      background: var(--white);
+    }
+
+    .folio span {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+    }
+
+    .folio strong {
+      color: var(--ink);
+    }
+
+    .verdict {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(230px, 0.7fr);
+      gap: clamp(20px, 4vw, 48px);
+      align-items: center;
+      padding: clamp(28px, 5vw, 62px) 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .lede {
+      margin: 0 0 22px;
+      max-width: 720px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.25rem, 2.7vw, 2rem);
+      line-height: 1.3;
+    }
+
+    .lede em {
+      color: var(--vermilion-dark);
+      font-style: normal;
+    }
+
+    .verified-note {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      max-width: 690px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .verified-note::before {
+      content: "✓";
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--olive);
+      color: var(--white);
+      font-weight: 900;
+    }
+
+    .seal {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min(100%, 264px);
+      aspect-ratio: 1;
+      margin: 0 auto;
+      border: 2px solid var(--vermilion);
+      border-radius: 50%;
+      color: var(--vermilion-dark);
+      text-align: center;
+      transform: rotate(-4deg);
+    }
+
+    .seal::before,
+    .seal::after {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 1px dashed var(--vermilion);
+      border-radius: 50%;
+    }
+
+    .seal::after {
+      inset: 23px;
+      border-style: solid;
+    }
+
+    .seal-content {
+      position: relative;
+      z-index: 1;
+      width: 68%;
+    }
+
+    .seal strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.6rem, 4vw, 2.75rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .seal span {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.66rem;
+      line-height: 1.4;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .evidence-band {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-bottom: 1px solid var(--rule);
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .fact {
+      min-width: 0;
+      padding: clamp(18px, 3vw, 28px);
+      border-right: 1px solid rgba(255, 250, 240, 0.24);
+    }
+
+    .fact:last-child {
+      border-right: 0;
+    }
+
+    .fact strong {
+      display: block;
+      margin-bottom: 7px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 3.2vw, 2.25rem);
+      font-weight: 500;
+      line-height: 1;
+      color: #f6b249;
+    }
+
+    .fact span {
+      display: block;
+      color: #dfd6c7;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    section {
+      min-width: 0;
+      padding: clamp(34px, 6vw, 72px) 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      gap: clamp(20px, 5vw, 64px);
+      margin-bottom: 30px;
+      align-items: end;
+    }
+
+    .section-kicker {
+      margin: 0 0 10px;
+      color: var(--vermilion-dark);
+    }
+
+    h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3.75rem);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.035em;
+    }
+
+    .section-intro {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .binding-path {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid var(--ink);
+      background: var(--white);
+    }
+
+    .stage {
+      position: relative;
+      min-width: 0;
+      padding: 25px 22px 27px;
+      border-right: 1px solid var(--ink);
+    }
+
+    .stage:last-child {
+      border-right: 0;
+    }
+
+    .stage::after {
+      content: "→";
+      position: absolute;
+      z-index: 2;
+      right: -14px;
+      top: 26px;
+      display: grid;
+      place-items: center;
+      width: 27px;
+      height: 27px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      background: var(--paper);
+      font-weight: 900;
+    }
+
+    .stage:last-child::after {
+      display: none;
+    }
+
+    .stage-number {
+      display: block;
+      margin-bottom: 36px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.8rem;
+      color: var(--vermilion);
+    }
+
+    .stage h3 {
+      margin: 0 0 9px;
+      font-size: 1rem;
+    }
+
+    .stage p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+
+    .matrix-wrap {
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--ink);
+      background: var(--white);
+    }
+
+    table {
+      width: 100%;
+      max-width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th,
+    td {
+      min-width: 0;
+      padding: 15px 16px;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      text-align: left;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+
+    th:last-child,
+    td:last-child {
+      border-right: 0;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    th {
+      background: var(--paper-deep);
+      color: var(--vermilion-dark);
+    }
+
+    td {
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    td:first-child {
+      font-weight: 800;
+    }
+
+    .state {
+      display: inline-block;
+      padding: 4px 7px;
+      border: 1px solid currentColor;
+      font-size: 0.64rem;
+      line-height: 1.2;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .state.verified {
+      color: var(--olive);
+      background: var(--olive-soft);
+    }
+
+    .state.inspected {
+      color: #72500b;
+      background: var(--amber-soft);
+    }
+
+    .state.pending {
+      color: var(--vermilion-dark);
+      background: #f0c8bc;
+    }
+
+    .rubric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .rubric {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      min-width: 0;
+      padding: 18px;
+      border-top: 4px solid var(--ink);
+      background: var(--white);
+    }
+
+    .rubric-index {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.8rem;
+      color: var(--vermilion);
+    }
+
+    .rubric h3 {
+      margin: 0 0 5px;
+      font-size: 0.94rem;
+    }
+
+    .rubric p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .rubric-mark {
+      align-self: start;
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: var(--olive);
+    }
+
+    .rubric-mark.conditional {
+      color: #8c5b00;
+    }
+
+    .rubric-note {
+      margin: 18px 0 0;
+      padding-left: 15px;
+      border-left: 3px solid var(--vermilion);
+      color: var(--muted);
+      font-size: 0.83rem;
+      line-height: 1.6;
+    }
+
+    .ledger {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 22px;
+    }
+
+    .ledger-panel {
+      min-width: 0;
+      border: 1px solid var(--ink);
+      background: var(--white);
+    }
+
+    .ledger-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin: 0;
+      padding: 14px 17px;
+      border-bottom: 1px solid var(--ink);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .ledger-title span {
+      color: var(--vermilion-dark);
+    }
+
+    .evidence-list,
+    .limits-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .evidence-list li,
+    .limits-list li {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      gap: 12px;
+      padding: 15px 17px;
+      border-bottom: 1px dotted var(--rule);
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+
+    .evidence-list li:last-child,
+    .limits-list li:last-child {
+      border-bottom: 0;
+    }
+
+    .evidence-list strong,
+    .limits-list strong {
+      color: var(--vermilion-dark);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.05rem;
+    }
+
+    .conclusion {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(190px, 0.65fr);
+      gap: 24px;
+      align-items: end;
+      padding: clamp(28px, 5vw, 52px);
+      background: var(--vermilion-dark);
+      color: var(--white);
+    }
+
+    .conclusion .section-kicker {
+      color: #f6b249;
+    }
+
+    .conclusion h2 {
+      max-width: 690px;
+    }
+
+    .conclusion p {
+      margin: 18px 0 0;
+      max-width: 680px;
+      color: #eadbd0;
+      line-height: 1.65;
+    }
+
+    .gate-count {
+      text-align: right;
+    }
+
+    .gate-count strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.5rem, 9vw, 6.6rem);
+      font-weight: 500;
+      line-height: 0.85;
+      color: #f6b249;
+    }
+
+    .gate-count span {
+      display: block;
+      margin-top: 12px;
+      font-size: 0.7rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0 0;
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 760px) {
+      .masthead,
+      .verdict,
+      .section-head,
+      .ledger,
+      .conclusion {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .folio {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .seal {
+        width: min(76%, 250px);
+      }
+
+      .evidence-band {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .fact:nth-child(2) {
+        border-right: 0;
+      }
+
+      .fact:nth-child(-n + 2) {
+        border-bottom: 1px solid rgba(255, 250, 240, 0.24);
+      }
+
+      .binding-path {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stage:nth-child(2) {
+        border-right: 0;
+      }
+
+      .stage:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .stage:nth-child(2)::after {
+        display: none;
+      }
+
+      .rubric-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .gate-count {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 510px) {
+      .sheet {
+        padding: 16px;
+      }
+
+      h1 {
+        font-size: clamp(2.3rem, 15vw, 3.55rem);
+      }
+
+      .evidence-band,
+      .binding-path {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .fact,
+      .fact:nth-child(2) {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 250, 240, 0.24);
+      }
+
+      .fact:last-child {
+        border-bottom: 0;
+      }
+
+      .stage,
+      .stage:nth-child(2) {
+        border-right: 0;
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .stage:last-child {
+        border-bottom: 0;
+      }
+
+      .stage::after {
+        display: none;
+      }
+
+      .stage-number {
+        margin-bottom: 16px;
+      }
+
+      .rubric {
+        grid-template-columns: 35px minmax(0, 1fr);
+      }
+
+      .rubric-mark {
+        grid-column: 2;
+      }
+
+      .matrix-wrap {
+        border: 0;
+        background: transparent;
+      }
+
+      table,
+      tbody,
+      tr,
+      td {
+        display: block;
+        width: 100%;
+      }
+
+      thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      tr {
+        margin-bottom: 12px;
+        border: 1px solid var(--ink);
+        background: var(--white);
+      }
+
+      td {
+        padding: 10px 12px;
+        border-right: 0;
+        border-bottom: 1px dotted var(--rule);
+      }
+
+      td::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 4px;
+        color: var(--vermilion-dark);
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 900;
+      }
+
+      footer {
+        display: block;
+      }
+
+      footer span {
+        display: block;
+        margin-bottom: 6px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+
+      .seal {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="sheet">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">Web Artifacts Builder / Quality Record</p>
+          <h1>One workspace.<br>One portable HTML.</h1>
+        </div>
+        <div class="folio" aria-label="Test record details">
+          <span>Record <strong>WAB-0730</strong></span>
+          <span>Executed <strong>30 Jul 2026</strong></span>
+          <span>Snapshot <strong>174c623</strong></span>
+          <span>License <strong>Apache-2.0</strong></span>
+        </div>
+      </header>
+
+      <div class="verdict">
+        <div>
+          <p class="lede">The complete scaffold-to-bundle path was executed successfully, producing a <em>self-contained React artifact</em> with no external runtime asset references.</p>
+          <p class="verified-note">This verdict is grounded in a recorded full initialization and Parcel bundling smoke test. Operational prerequisites remain visible rather than being folded into an inflated score.</p>
+        </div>
+        <div class="seal" aria-label="Ready with runtime conditions">
+          <div class="seal-content">
+            <strong>Ready</strong>
+            <span>with documented<br>runtime conditions</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="evidence-band" aria-label="Verified headline facts">
+        <div class="fact">
+          <strong>241,280</strong>
+          <span>bytes in the recorded bundled HTML output</span>
+        </div>
+        <div class="fact">
+          <strong>0</strong>
+          <span>external runtime asset references found in the output scan</span>
+        </div>
+        <div class="fact">
+          <strong>2 / 2</strong>
+          <span>primary execution gates passed: initialize and bundle</span>
+        </div>
+        <div class="fact">
+          <strong>Node 18+</strong>
+          <span>declared minimum runtime for project initialization</span>
+        </div>
+      </div>
+
+      <section aria-labelledby="proof-path">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">01 / Executed path</p>
+            <h2 id="proof-path">From source tree to sealed artifact</h2>
+          </div>
+          <p class="section-intro">The benchmark follows the actual product contract: create a modern multi-component frontend workspace, build it, inline its assets, and inspect the delivered file.</p>
+        </div>
+
+        <div class="binding-path">
+          <article class="stage">
+            <span class="stage-number">I</span>
+            <h3>Initialize</h3>
+            <p>React, TypeScript and Vite workspace creation completed in the recorded smoke run.</p>
+          </article>
+          <article class="stage">
+            <span class="stage-number">II</span>
+            <h3>Configure</h3>
+            <p>Tailwind, path aliases, the shadcn/ui component archive and Parcel configuration were applied.</p>
+          </article>
+          <article class="stage">
+            <span class="stage-number">III</span>
+            <h3>Build + inline</h3>
+            <p>Parcel built the project without source maps; html-inline assembled the single-file result.</p>
+          </article>
+          <article class="stage">
+            <span class="stage-number">IV</span>
+            <h3>Inspect</h3>
+            <p>The final bundle size was measured and its external runtime asset references were scanned.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="test-matrix">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">02 / Test matrix</p>
+            <h2 id="test-matrix">What was—and was not—proven</h2>
+          </div>
+          <p class="section-intro">“Verified” means an executed result exists in the preflight record. “Inspected” means the behavior is present in source but was not separately exercised. Pending rows define useful follow-up work.</p>
+        </div>
+
+        <div class="matrix-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 20%">Scenario</th>
+                <th style="width: 31%">Acceptance gate</th>
+                <th style="width: 17%">State</th>
+                <th style="width: 32%">Evidence or boundary</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Scenario">Normal / scaffold</td>
+                <td data-label="Acceptance gate">A complete React + Vite project initializes successfully.</td>
+                <td data-label="State"><span class="state verified">Verified</span></td>
+                <td data-label="Evidence or boundary">Full initialization completed in the recorded preflight smoke test.</td>
+              </tr>
+              <tr>
+                <td data-label="Scenario">Delivery / bundle</td>
+                <td data-label="Acceptance gate">The project becomes one shareable HTML file.</td>
+                <td data-label="State"><span class="state verified">Verified</span></td>
+                <td data-label="Evidence or boundary">Parcel and html-inline produced a 241,280-byte bundle.</td>
+              </tr>
+              <tr>
+                <td data-label="Scenario">Portability / assets</td>
+                <td data-label="Acceptance gate">No external runtime asset is required by the delivered file.</td>
+                <td data-label="State"><span class="state verified">Verified</span></td>
+                <td data-label="Evidence or boundary">The output scan found no external runtime asset references.</td>
+              </tr>
+              <tr>
+                <td data-label="Scenario">Compatibility / Vite icon</td>
+                <td data-label="Acceptance gate">Current Vite template icons do not survive as external references.</td>
+                <td data-label="State"><span class="state verified">Verified</span></td>
+                <td data-label="Evidence or boundary">Template cleanup was fixed to remove the current <code>/favicon.svg</code> link before the successful smoke run.</td>
+              </tr>
+              <tr>
+                <td data-label="Scenario">Boundary / missing entry</td>
+                <td data-label="Acceptance gate">Bundling stops clearly when <code>package.json</code> or <code>index.html</code> is missing.</td>
+                <td data-label="State"><span class="state inspected">Inspected</span></td>
+                <td data-label="Evidence or boundary">Explicit guards exist in the bundling script; their failure messages were not separately executed in this record.</td>
+              </tr>
+              <tr>
+                <td data-label="Scenario">Experience / rendered UI</td>
+                <td data-label="Acceptance gate">A generated application behaves correctly across user journeys and viewports.</td>
+                <td data-label="State"><span class="state pending">Pending</span></td>
+                <td data-label="Evidence or boundary">Visual and interaction testing is optional in the skill contract and was outside this packaging smoke test.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="quality-rubric">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">03 / Evaluation rubric</p>
+            <h2 id="quality-rubric">Six dimensions, no synthetic total</h2>
+          </div>
+          <p class="section-intro">The rubric explains how acceptance is judged. It is not a substitute for observed evidence, so this page reports gate states rather than manufacturing a percentage score.</p>
+        </div>
+
+        <div class="rubric-grid">
+          <article class="rubric">
+            <span class="rubric-index">A</span>
+            <div>
+              <h3>Scaffold integrity</h3>
+              <p>Expected React, TypeScript, Vite and styling configuration is created.</p>
+            </div>
+            <span class="rubric-mark">Passed</span>
+          </article>
+          <article class="rubric">
+            <span class="rubric-index">B</span>
+            <div>
+              <h3>Build completion</h3>
+              <p>Parcel resolves the project and emits a production build without source maps.</p>
+            </div>
+            <span class="rubric-mark">Passed</span>
+          </article>
+          <article class="rubric">
+            <span class="rubric-index">C</span>
+            <div>
+              <h3>Single-file delivery</h3>
+              <p>The finished experience is emitted as one inspectable HTML artifact.</p>
+            </div>
+            <span class="rubric-mark">Passed</span>
+          </article>
+          <article class="rubric">
+            <span class="rubric-index">D</span>
+            <div>
+              <h3>Runtime asset independence</h3>
+              <p>The delivered HTML does not depend on external runtime asset references.</p>
+            </div>
+            <span class="rubric-mark">Passed</span>
+          </article>
+          <article class="rubric">
+            <span class="rubric-index">E</span>
+            <div>
+              <h3>Package structure</h3>
+              <p>Skill metadata, relative references and distributable files pass structural checks.</p>
+            </div>
+            <span class="rubric-mark">Passed</span>
+          </article>
+          <article class="rubric">
+            <span class="rubric-index">F</span>
+            <div>
+              <h3>First-run portability</h3>
+              <p>Initialization depends on local tooling and live package installation.</p>
+            </div>
+            <span class="rubric-mark conditional">Conditional</span>
+          </article>
+        </div>
+        <p class="rubric-note"><strong>Gate rule:</strong> A–E must pass for packaging acceptance. Dimension F remains conditional until dependencies are already installed or registry access is available. UI-specific quality requires a separate artifact-level test.</p>
+      </section>
+
+      <section aria-labelledby="evidence-ledger">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">04 / Evidence ledger</p>
+            <h2 id="evidence-ledger">Traceable proof, visible limits</h2>
+          </div>
+          <p class="section-intro">The record distinguishes source inspection, actual execution and environmental constraints so that the conclusion can be independently recomputed.</p>
+        </div>
+
+        <div class="ledger">
+          <article class="ledger-panel">
+            <h3 class="ledger-title">Evidence trail <span>5 entries</span></h3>
+            <ol class="evidence-list">
+              <li><strong>01</strong><span>Upstream source pinned to Anthropic Skills commit <code>b29e7cf65e5cb78a5ac33d582270551bc74a14eb</code>.</span></li>
+              <li><strong>02</strong><span>Skill Creator structural validation and agent metadata checks passed.</span></li>
+              <li><strong>03</strong><span>Full React/Vite initialization completed successfully.</span></li>
+              <li><strong>04</strong><span>Parcel build and html-inline bundling completed successfully.</span></li>
+              <li><strong>05</strong><span>Output measured at 241,280 bytes; external runtime asset scan returned no references.</span></li>
+            </ol>
+          </article>
+
+          <article class="ledger-panel">
+            <h3 class="ledger-title">Conditions &amp; risks <span>4 items</span></h3>
+            <ul class="limits-list">
+              <li><strong>A</strong><span>Node.js 18 or newer is required. The script selects a Node-18-compatible Vite release when needed.</span></li>
+              <li><strong>B</strong><span>pnpm is required; the initializer attempts a global npm installation when it is absent.</span></li>
+              <li><strong>C</strong><span>npm registry access is required for initialization and bundling dependencies. The first install is comparatively heavy.</span></li>
+              <li><strong>D</strong><span>This packaging run proves build delivery, not the usability, accessibility or responsiveness of every application created with the skill.</span></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <div class="conclusion">
+        <div>
+          <p class="section-kicker">Recomputable conclusion</p>
+          <h2>Accept for rich artifact packaging, with the toolchain conditions disclosed.</h2>
+          <p>Five required packaging dimensions are supported by executed or structural evidence. First-run portability is conditional on Node.js, pnpm and registry access; application-level visual testing remains a separate responsibility.</p>
+        </div>
+        <div class="gate-count">
+          <strong>5+1</strong>
+          <span>five passed gates<br>one conditional dimension</span>
+        </div>
+      </div>
+
+      <footer>
+        <span>Benchmark scope: initialization, build, inlining, packaging inspection.</span>
+        <span>Recorded environment: Darwin arm64 · Node 25.2.1 · pnpm 10.23.0.</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Systematic Debugging — Instruction</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3eddf;
+      --paper-deep: #e8deca;
+      --ink: #28251f;
+      --muted: #675f53;
+      --rule: #c7baa3;
+      --red: #a43c2f;
+      --red-dark: #70251e;
+      --green: #3d5c48;
+      --white: #fffdf8;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    body {
+      line-height: 1.55;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(62, 49, 33, 0.035) 1px, transparent 1px) 0 0 / 100% 34px,
+        var(--paper);
+      color: var(--ink);
+    }
+
+    .page-shell {
+      width: 100%;
+      max-width: 1120px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(18px, 4vw, 54px);
+    }
+
+    .case-header {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(220px, .55fr);
+      gap: clamp(22px, 4vw, 48px);
+      align-items: end;
+      width: 100%;
+      min-width: 0;
+      padding: clamp(28px, 5vw, 62px);
+      background: var(--white);
+      border: 1px solid var(--rule);
+      box-shadow: 0 12px 30px rgba(66, 48, 26, .12);
+    }
+
+    .case-header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 9px;
+      height: 100%;
+      background: var(--red);
+    }
+
+    .eyebrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: 0 0 20px;
+      color: var(--red-dark);
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "SD";
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border: 2px solid var(--red);
+      border-radius: 50%;
+      font-size: .65rem;
+      letter-spacing: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 20px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.55rem, 7vw, 5.6rem);
+      line-height: .94;
+      letter-spacing: -.055em;
+    }
+
+    .dek {
+      max-width: 700px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: clamp(1.03rem, 2vw, 1.28rem);
+      line-height: 1.6;
+    }
+
+    .iron-law {
+      min-width: 0;
+      padding: 20px;
+      border: 2px solid var(--red);
+      color: var(--red-dark);
+      transform: rotate(-1.2deg);
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .iron-law small {
+      display: block;
+      margin-bottom: 8px;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+    }
+
+    .iron-law strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+      line-height: 1.2;
+    }
+
+    .outcome-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: 100%;
+      min-width: 0;
+      margin: 20px 0 clamp(46px, 7vw, 86px);
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .outcome {
+      min-width: 0;
+      padding: 18px 20px;
+      border-right: 1px solid #5d5549;
+    }
+
+    .outcome:last-child {
+      border-right: 0;
+    }
+
+    .outcome span {
+      display: block;
+      margin-bottom: 5px;
+      color: #ccbda6;
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .outcome strong {
+      font-size: .98rem;
+    }
+
+    .section {
+      width: 100%;
+      min-width: 0;
+      margin-top: clamp(48px, 7vw, 88px);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+
+    .section-number {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--red);
+      font-size: 1.8rem;
+      font-style: italic;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.85rem, 4.5vw, 3.2rem);
+      line-height: 1.06;
+      letter-spacing: -.035em;
+    }
+
+    .fit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .fit-card {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 34px);
+      border-top: 5px solid var(--green);
+      background: var(--white);
+    }
+
+    .fit-card.no {
+      border-color: var(--red);
+      background: #eee4d3;
+    }
+
+    .fit-card h3 {
+      margin-bottom: 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+    }
+
+    .plain-list {
+      display: grid;
+      gap: 11px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .plain-list li {
+      position: relative;
+      min-width: 0;
+      padding-left: 22px;
+      color: var(--muted);
+    }
+
+    .plain-list li::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .no .plain-list li::before {
+      content: "×";
+      color: var(--red);
+    }
+
+    .pipeline {
+      position: relative;
+      display: grid;
+      gap: 0;
+      width: 100%;
+      min-width: 0;
+      border: 1px solid var(--rule);
+      background: var(--white);
+    }
+
+    .phase {
+      display: grid;
+      grid-template-columns: minmax(115px, .28fr) minmax(0, 1fr);
+      min-width: 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .phase:last-child {
+      border-bottom: 0;
+    }
+
+    .phase-label {
+      min-width: 0;
+      padding: clamp(20px, 4vw, 34px);
+      background: var(--paper-deep);
+      border-right: 1px solid var(--rule);
+    }
+
+    .phase-label b {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--red);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .phase-label span {
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .phase-copy {
+      min-width: 0;
+      padding: clamp(20px, 4vw, 34px);
+    }
+
+    .phase-copy h3 {
+      margin-bottom: 7px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+    }
+
+    .phase-copy p {
+      margin-bottom: 14px;
+      color: var(--muted);
+    }
+
+    .microsteps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .microsteps li {
+      max-width: 100%;
+      padding: 6px 10px;
+      border: 1px solid var(--rule);
+      background: #faf6ed;
+      font-size: .79rem;
+      font-weight: 700;
+    }
+
+    .boundary-sheet {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+      gap: clamp(20px, 4vw, 42px);
+      width: 100%;
+      min-width: 0;
+      padding: clamp(24px, 5vw, 46px);
+      background: var(--green);
+      color: #fffaf0;
+    }
+
+    .boundary-sheet h2 {
+      color: #fffaf0;
+    }
+
+    .boundary-sheet p {
+      color: #d9e0d6;
+    }
+
+    .handoff {
+      min-width: 0;
+      padding: 18px 20px;
+      border: 1px dashed #a8bbab;
+      background: rgba(255, 255, 255, .06);
+    }
+
+    .handoff + .handoff {
+      margin-top: 12px;
+    }
+
+    .handoff b {
+      display: block;
+      margin-bottom: 5px;
+      font-size: .8rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .handoff span {
+      color: #e4e9e1;
+      font-size: .92rem;
+    }
+
+    .prompt-sheet {
+      width: 100%;
+      min-width: 0;
+      padding: clamp(26px, 5vw, 54px);
+      border: 1px solid var(--rule);
+      background: var(--white);
+      box-shadow: 8px 8px 0 var(--paper-deep);
+    }
+
+    .prompt-label {
+      margin-bottom: 16px;
+      color: var(--red-dark);
+      font-size: .71rem;
+      font-weight: 900;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    blockquote {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.12rem, 2.5vw, 1.5rem);
+      line-height: 1.55;
+    }
+
+    .input-grid,
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      width: 100%;
+      min-width: 0;
+      margin-top: 20px;
+    }
+
+    .note {
+      min-width: 0;
+      padding: 20px;
+      background: var(--white);
+      border-left: 3px solid var(--rule);
+    }
+
+    .note b {
+      display: block;
+      margin-bottom: 6px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.08rem;
+    }
+
+    .note p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: .91rem;
+    }
+
+    .result-card {
+      min-width: 0;
+      padding: 22px;
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .result-card span {
+      display: block;
+      margin-bottom: 10px;
+      color: #ccbda6;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .result-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.23rem;
+    }
+
+    .result-card p {
+      margin-bottom: 0;
+      color: #ddd5c8;
+      font-size: .9rem;
+    }
+
+    .stop-card {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      width: 100%;
+      min-width: 0;
+      padding: clamp(24px, 4vw, 38px);
+      background: var(--red);
+      color: #fffaf5;
+    }
+
+    .stop-mark {
+      display: grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+      border: 3px solid currentColor;
+      border-radius: 50%;
+      font-size: 1.65rem;
+      font-weight: 900;
+    }
+
+    .stop-card h3 {
+      margin-bottom: 7px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.5rem;
+    }
+
+    .stop-card p {
+      margin-bottom: 0;
+      color: #f1ddd8;
+    }
+
+    .fine-print {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      width: 100%;
+      min-width: 0;
+      margin-top: 18px;
+    }
+
+    .fine-print article {
+      min-width: 0;
+      padding-top: 16px;
+      border-top: 2px solid var(--rule);
+    }
+
+    .fine-print h3 {
+      margin-bottom: 7px;
+      font-size: .86rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .fine-print p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    .footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 24px;
+      justify-content: space-between;
+      margin-top: clamp(50px, 8vw, 96px);
+      padding: 24px 0 4px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: .79rem;
+    }
+
+    @media (max-width: 680px) {
+      .page-shell {
+        padding: 14px;
+      }
+
+      .case-header,
+      .boundary-sheet {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .case-header {
+        padding: 28px 24px 24px 30px;
+      }
+
+      .iron-law {
+        max-width: 280px;
+      }
+
+      .outcome-strip {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .outcome {
+        border-right: 0;
+        border-bottom: 1px solid #5d5549;
+      }
+
+      .outcome:last-child {
+        border-bottom: 0;
+      }
+
+      .fit-grid,
+      .input-grid,
+      .output-grid,
+      .fine-print {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .phase {
+        grid-template-columns: minmax(86px, .27fr) minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 430px) {
+      h1 {
+        font-size: 2.42rem;
+      }
+
+      .phase {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .phase-label {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 15px 18px;
+        border-right: 0;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .phase-label b {
+        margin-bottom: 0;
+        font-size: 1.55rem;
+      }
+
+      .phase-copy {
+        padding: 20px 18px;
+      }
+
+      .stop-card {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="page-shell">
+      <header class="case-header">
+        <div>
+          <p class="eyebrow">Instruction file · evidence-first debugging</p>
+          <h1>Find the cause before you touch the fix.</h1>
+          <p class="dek">Systematic Debugging turns a failing test, production bug, build error, performance problem, or integration mystery into a traceable investigation—so the final change addresses the origin, not the visible symptom.</p>
+        </div>
+        <aside class="iron-law">
+          <small>The iron law</small>
+          <strong>No fixes without root-cause investigation first.</strong>
+        </aside>
+      </header>
+
+      <section class="outcome-strip" aria-label="Core outcomes">
+        <div class="outcome">
+          <span>First deliverable</span>
+          <strong>A reproducible failure with preserved evidence</strong>
+        </div>
+        <div class="outcome">
+          <span>Decision point</span>
+          <strong>One explicit hypothesis tested in isolation</strong>
+        </div>
+        <div class="outcome">
+          <span>Final proof</span>
+          <strong>A source-level fix verified against the failure</strong>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <span class="section-number">01</span>
+          <h2>Bring a mystery worth investigating.</h2>
+        </div>
+        <div class="fit-grid">
+          <article class="fit-card">
+            <h3>Use this skill when</h3>
+            <ul class="plain-list">
+              <li>A test, build, deployment, integration, or production behavior fails.</li>
+              <li>The issue is intermittent, environment-specific, or hidden behind several components.</li>
+              <li>Previous “obvious” fixes did not work, or time pressure is encouraging guesses.</li>
+              <li>A bad value appears deep in a call stack and its origin is unclear.</li>
+              <li>Flaky tests depend on arbitrary sleeps instead of observable conditions.</li>
+            </ul>
+          </article>
+          <article class="fit-card no">
+            <h3>Do not use it to</h3>
+            <ul class="plain-list">
+              <li>Skip investigation and request a patch based only on the visible error.</li>
+              <li>Bundle unrelated cleanup or refactoring into a root-cause fix.</li>
+              <li>Claim certainty when the failure cannot be reproduced or the evidence is incomplete.</li>
+              <li>Replace domain experts, production access, logs, or the project’s own test tooling.</li>
+              <li>Keep stacking fixes after three failed attempts without discussing the architecture.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <span class="section-number">02</span>
+          <h2>Follow four gates. Never jump ahead.</h2>
+        </div>
+        <div class="pipeline">
+          <article class="phase">
+            <div class="phase-label">
+              <b>1</b>
+              <span>Investigate</span>
+            </div>
+            <div class="phase-copy">
+              <h3>Establish what happened and where it diverged.</h3>
+              <p>Read the entire error, reproduce the failure, inspect recent changes, collect data at component boundaries, and trace suspicious values backward to their source.</p>
+              <ul class="microsteps">
+                <li>Read stack traces</li>
+                <li>Record exact steps</li>
+                <li>Inspect diffs</li>
+                <li>Instrument boundaries</li>
+                <li>Trace data backward</li>
+              </ul>
+            </div>
+          </article>
+          <article class="phase">
+            <div class="phase-label">
+              <b>2</b>
+              <span>Compare</span>
+            </div>
+            <div class="phase-copy">
+              <h3>Find the pattern before changing the code.</h3>
+              <p>Locate a working analogue, read its reference implementation completely, list every difference, and identify the dependencies and assumptions that make it work.</p>
+              <ul class="microsteps">
+                <li>Find working examples</li>
+                <li>Read references fully</li>
+                <li>List all differences</li>
+                <li>Map dependencies</li>
+              </ul>
+            </div>
+          </article>
+          <article class="phase">
+            <div class="phase-label">
+              <b>3</b>
+              <span>Test</span>
+            </div>
+            <div class="phase-copy">
+              <h3>State one theory and change one variable.</h3>
+              <p>Write a specific “X because Y” hypothesis, design the smallest discriminating test, and use its result to confirm the cause or form a new hypothesis.</p>
+              <ul class="microsteps">
+                <li>One hypothesis</li>
+                <li>One variable</li>
+                <li>Minimal test</li>
+                <li>Record the result</li>
+              </ul>
+            </div>
+          </article>
+          <article class="phase">
+            <div class="phase-label">
+              <b>4</b>
+              <span>Implement</span>
+            </div>
+            <div class="phase-copy">
+              <h3>Prove the failure, fix its source, then verify.</h3>
+              <p>Create the smallest failing test, implement one focused change, rerun the relevant and surrounding tests, and confirm that the original behavior—not merely an adjacent symptom—is resolved.</p>
+              <ul class="microsteps">
+                <li>Failing test first</li>
+                <li>Single source-level fix</li>
+                <li>Regression check</li>
+                <li>Document evidence</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section boundary-sheet">
+        <div>
+          <p class="eyebrow" style="color:#d9e0d6">Multi-component systems</p>
+          <h2>Interrogate every handoff.</h2>
+          <p>For a chain such as CI → build → signing or client → API → service → database, log what enters and exits each boundary. Run once, locate the first broken transfer, then focus the investigation there.</p>
+        </div>
+        <div>
+          <div class="handoff">
+            <b>Boundary record</b>
+            <span>Input value, output value, relevant configuration, environment, timestamp, and execution context.</span>
+          </div>
+          <div class="handoff">
+            <b>Trace question</b>
+            <span>Where was this invalid value created, and which caller supplied it?</span>
+          </div>
+          <div class="handoff">
+            <b>Exit condition</b>
+            <span>Evidence identifies the failing component and explains why its behavior differs from the working path.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <span class="section-number">03</span>
+          <h2>Ask with enough context to investigate.</h2>
+        </div>
+        <div class="prompt-sheet">
+          <p class="prompt-label">Recommended prompt</p>
+          <blockquote>“Use Systematic Debugging to investigate this failure before proposing a fix. Reproduce it, preserve the complete error, trace data across component boundaries, compare the broken path with a working example, and state one testable root-cause hypothesis. Do not modify code until the evidence supports that hypothesis.”</blockquote>
+        </div>
+        <div class="input-grid">
+          <article class="note">
+            <b>Failure evidence</b>
+            <p>Full error text, stack trace, logs, failing command, expected behavior, and actual behavior.</p>
+          </article>
+          <article class="note">
+            <b>Reproduction context</b>
+            <p>Exact steps, frequency, environment, relevant inputs, and whether the failure is deterministic.</p>
+          </article>
+          <article class="note">
+            <b>Change history</b>
+            <p>Recent commits, dependency or configuration changes, and known differences between environments.</p>
+          </article>
+          <article class="note">
+            <b>Access boundaries</b>
+            <p>State what may be inspected or changed and identify sensitive values that must be redacted from logs.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <span class="section-number">04</span>
+          <h2>Receive an evidence-backed case file.</h2>
+        </div>
+        <div class="output-grid">
+          <article class="result-card">
+            <span>Record A</span>
+            <strong>Reproduction brief</strong>
+            <p>Exact trigger, environment, expected result, observed result, and consistency notes.</p>
+          </article>
+          <article class="result-card">
+            <span>Record B</span>
+            <strong>Evidence trail</strong>
+            <p>Relevant errors, boundary observations, data-flow trace, recent changes, and working comparisons.</p>
+          </article>
+          <article class="result-card">
+            <span>Record C</span>
+            <strong>Tested hypothesis</strong>
+            <p>A specific cause, the smallest test that isolates it, and the observed result.</p>
+          </article>
+          <article class="result-card">
+            <span>Record D</span>
+            <strong>Fix and verification plan</strong>
+            <p>A failing regression test, one focused change, commands to rerun, and remaining risks or unknowns.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="stop-card">
+          <div class="stop-mark">3+</div>
+          <div>
+            <h3>Three failed fixes are an architecture signal.</h3>
+            <p>Stop adding patches. If each attempt exposes new coupling, shared state, or symptoms elsewhere, discuss whether the underlying pattern is sound before attempting another change.</p>
+          </div>
+        </div>
+        <div class="fine-print">
+          <article>
+            <h3>Supporting techniques</h3>
+            <p>The package includes backward root-cause tracing, defense-in-depth validation, condition-based waiting, and a shell utility for locating a polluting test.</p>
+          </article>
+          <article>
+            <h3>Operational limits</h3>
+            <p>The skill guides investigation; it still needs project access, executable tests, trustworthy telemetry, and human judgment for architectural decisions.</p>
+          </article>
+          <article>
+            <h3>Safe evidence</h3>
+            <p>Instrument only what is necessary. Redact credentials and personal data, and remove temporary diagnostic logging after the investigation.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Systematic Debugging · Instruction</span>
+        <span>Root cause → pattern → hypothesis → verified fix</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

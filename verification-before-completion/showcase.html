@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="A real evidence-first walkthrough of Verification Before Completion.">
+  <title>Verification Before Completion — Showcase</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --canvas: #f7f6f0;
+      --ink: #171713;
+      --muted: #625f56;
+      --line: #171713;
+      --lime: #d9f35a;
+      --coral: #ff795f;
+      --violet: #9381ff;
+      --sky: #9bd9f6;
+      --cream: #fff7d6;
+      --white: #fffefa;
+      --soft: #e8e6dd;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: light;
+      background: var(--canvas);
+      color: var(--ink);
+    }
+
+    body { overflow-x: hidden; }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background: var(--canvas);
+      color: var(--ink);
+    }
+
+    .page {
+      width: min(100%, 1120px);
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(18px, 4vw, 54px);
+    }
+
+    .micro,
+    .tag,
+    .stage-no,
+    .state,
+    .evidence-key,
+    .run-label,
+    .claim-id {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      padding: 12px 0 18px;
+      border-bottom: 3px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      font-weight: 800;
+    }
+
+    .brand-mark {
+      flex: 0 0 auto;
+      width: 21px;
+      height: 21px;
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 5px 0 0 var(--coral);
+    }
+
+    .topline .micro:last-child {
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(270px, .7fr);
+      gap: clamp(28px, 5vw, 68px);
+      align-items: end;
+      padding: clamp(42px, 7vw, 86px) 0 34px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    code { overflow-wrap: anywhere; }
+
+    h1 {
+      max-width: 760px;
+      margin: 9px 0 0;
+      font-size: clamp(45px, 8.8vw, 104px);
+      letter-spacing: -.075em;
+      line-height: .85;
+    }
+
+    h1 span {
+      position: relative;
+      display: inline-block;
+      z-index: 0;
+    }
+
+    h1 span::after {
+      position: absolute;
+      left: -.02em;
+      right: -.06em;
+      bottom: -.02em;
+      z-index: -1;
+      height: .2em;
+      background: var(--lime);
+      content: "";
+      transform: rotate(-1.4deg);
+    }
+
+    .hero-note {
+      padding: 18px;
+      border: 3px solid var(--ink);
+      background: var(--cream);
+      box-shadow: 8px 8px 0 var(--ink);
+      transform: rotate(1deg);
+    }
+
+    .hero-note p {
+      margin: 8px 0 0;
+      font-size: clamp(17px, 2.3vw, 22px);
+      font-weight: 700;
+      line-height: 1.28;
+    }
+
+    .transformation {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 58px minmax(0, 1fr);
+      gap: 14px;
+      align-items: stretch;
+      padding: 24px 0 42px;
+    }
+
+    .claim-card,
+    .verdict-card {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 38px);
+      border: 3px solid var(--ink);
+    }
+
+    .claim-card { background: var(--coral); }
+    .verdict-card { background: var(--lime); }
+
+    .claim-card blockquote,
+    .verdict-card blockquote {
+      margin: 16px 0 0;
+      font-size: clamp(25px, 4.2vw, 45px);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.03;
+    }
+
+    .arrow {
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-size: 42px;
+      font-weight: 900;
+    }
+
+    .verdict-card .state {
+      display: inline-block;
+      padding: 6px 8px;
+      border: 2px solid var(--ink);
+      background: var(--white);
+    }
+
+    .section {
+      min-width: 0;
+      padding: clamp(44px, 7vw, 78px) 0;
+      border-top: 3px solid var(--ink);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(210px, .45fr);
+      gap: 24px;
+      margin-bottom: 28px;
+      align-items: end;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 9px;
+      border: 2px solid var(--ink);
+      background: var(--violet);
+    }
+
+    h2 {
+      max-width: 760px;
+      margin: 12px 0 0;
+      font-size: clamp(35px, 6.4vw, 68px);
+      letter-spacing: -.055em;
+      line-height: .92;
+    }
+
+    .section-intro {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .stages {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0;
+      border: 3px solid var(--ink);
+      background: var(--ink);
+    }
+
+    .stage {
+      min-width: 0;
+      padding: 18px 15px 20px;
+      background: var(--white);
+    }
+
+    .stage + .stage { border-left: 2px solid var(--ink); }
+    .stage:nth-child(2) { background: var(--cream); }
+    .stage:nth-child(3) { background: #e9e3ff; }
+    .stage:nth-child(4) { background: #e0f3fb; }
+    .stage:nth-child(5) { background: #e9f3bb; }
+
+    .stage-no {
+      display: block;
+      margin-bottom: 35px;
+      color: var(--muted);
+    }
+
+    .stage h3 {
+      margin: 0 0 9px;
+      font-size: 18px;
+      letter-spacing: -.025em;
+    }
+
+    .stage p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.46;
+    }
+
+    .claim-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .claim-row {
+      display: grid;
+      grid-template-columns: 68px minmax(0, 1.05fr) minmax(180px, .85fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 17px;
+      border: 3px solid var(--ink);
+      background: var(--white);
+    }
+
+    .claim-row:nth-child(2) { background: var(--cream); }
+    .claim-row:nth-child(3) { background: #eeeaff; }
+
+    .claim-id {
+      display: grid;
+      place-items: center;
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      background: var(--sky);
+      font-size: 12px;
+    }
+
+    .claim-text strong,
+    .proof-text strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+
+    .claim-text span,
+    .proof-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .state {
+      justify-self: end;
+      padding: 7px 9px;
+      border: 2px solid var(--ink);
+      white-space: nowrap;
+    }
+
+    .supported { background: var(--lime); }
+    .blocked { background: #ffd55e; }
+    .untested { background: var(--coral); }
+
+    .run-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .run-card {
+      min-width: 0;
+      border: 3px solid var(--ink);
+      background: var(--white);
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+
+    .run-card:nth-child(2) { background: var(--cream); }
+    .run-card:nth-child(3) { background: #e8e4ff; }
+    .run-card:nth-child(4) { background: #e2f3fa; }
+
+    .run-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 15px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .run-card-body { padding: 18px; }
+
+    .run-card h3 {
+      margin: 0 0 15px;
+      font-size: 21px;
+      letter-spacing: -.03em;
+    }
+
+    .command,
+    .output {
+      margin: 0;
+      padding: 13px;
+      border: 2px solid var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .command { background: var(--ink); color: var(--white); }
+    .output { margin-top: 10px; background: var(--white); color: var(--ink); }
+
+    .output strong { color: #205d32; }
+    .output .fail { color: #9b261b; font-weight: 800; }
+
+    .interpretation {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .not-terminal {
+      display: inline-block;
+      margin-top: 11px;
+      padding: 4px 6px;
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .decision {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, .55fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .decision-main {
+      padding: clamp(24px, 4vw, 40px);
+      border: 3px solid var(--ink);
+      background: var(--lime);
+    }
+
+    .decision-main h2 {
+      max-width: 780px;
+      margin-top: 15px;
+    }
+
+    .decision-main p {
+      max-width: 760px;
+      margin: 19px 0 0;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .decision-aside {
+      display: grid;
+      gap: 12px;
+    }
+
+    .decision-chip {
+      padding: 17px;
+      border: 3px solid var(--ink);
+      background: var(--white);
+    }
+
+    .decision-chip:nth-child(2) { background: var(--cream); }
+    .decision-chip:nth-child(3) { background: var(--coral); }
+
+    .decision-chip strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 20px 0 4px;
+      border-top: 3px solid var(--ink);
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 780px) {
+      .hero { grid-template-columns: minmax(0, 1fr); }
+      .hero-note { max-width: 520px; }
+      .stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stage + .stage { border-left: 0; }
+      .stage:nth-child(even) { border-left: 2px solid var(--ink); }
+      .stage:nth-child(n+3) { border-top: 2px solid var(--ink); }
+      .stage:last-child { grid-column: 1 / -1; }
+      .claim-row { grid-template-columns: 58px minmax(0, 1fr) auto; }
+      .proof-text { grid-column: 2 / -1; }
+    }
+
+    @media (max-width: 590px) {
+      .page { padding: 16px; }
+      .topline { align-items: flex-start; }
+      .brand { font-size: 13px; }
+      .transformation,
+      .section-head,
+      .decision { grid-template-columns: minmax(0, 1fr); }
+      .arrow { min-height: 34px; transform: rotate(90deg); }
+      .hero-note { transform: none; box-shadow: 5px 5px 0 var(--ink); }
+      .stages { grid-template-columns: minmax(0, 1fr); }
+      .stage + .stage,
+      .stage:nth-child(even) { border-left: 0; border-top: 2px solid var(--ink); }
+      .stage:last-child { grid-column: auto; }
+      .stage-no { margin-bottom: 14px; }
+      .claim-row { grid-template-columns: 50px minmax(0, 1fr); gap: 12px; }
+      .claim-id { width: 42px; height: 42px; }
+      .proof-text { grid-column: 1 / -1; }
+      .state { grid-column: 1 / -1; justify-self: stretch; text-align: center; }
+      .run-board { grid-template-columns: minmax(0, 1fr); }
+      .run-card { box-shadow: 5px 5px 0 var(--ink); }
+      .foot { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="finchip-page">
+    <div class="page">
+      <header class="topline">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Verification Before Completion</span>
+        </div>
+        <span class="micro">Showcase · Evidence run 0730</span>
+      </header>
+
+      <section class="hero">
+        <div>
+          <span class="micro">Input → evidence → honest language</span>
+          <h1>Turn “done” into <span>proven.</span></h1>
+        </div>
+        <aside class="hero-note">
+          <span class="micro">What this run demonstrates</span>
+          <p>A broad completion claim is decomposed, tested, read in full, and narrowed to exactly what the evidence supports.</p>
+        </aside>
+      </section>
+
+      <div class="transformation" aria-label="Claim transformation">
+        <article class="claim-card">
+          <span class="micro">Representative incoming claim</span>
+          <blockquote>“This skill package is ready and verified.”</blockquote>
+        </article>
+        <div class="arrow" aria-hidden="true">→</div>
+        <article class="verdict-card">
+          <span class="state">Evidence-matched verdict</span>
+          <blockquote>“Contract checks pass; full completion is withheld.”</blockquote>
+        </article>
+      </div>
+
+      <section class="section" aria-labelledby="gate-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">The gate</span>
+            <h2 id="gate-title">A claim cannot skip the middle.</h2>
+          </div>
+          <p class="section-intro">The skill inserts five required decisions between confidence and a completion statement. Every stage narrows the wording to observable facts.</p>
+        </div>
+
+        <div class="stages">
+          <article class="stage">
+            <span class="stage-no">01 · Identify</span>
+            <h3>Split the claim</h3>
+            <p>Separate contract coverage, package validation, and live behavioral compliance.</p>
+          </article>
+          <article class="stage">
+            <span class="stage-no">02 · Select</span>
+            <h3>Match proof</h3>
+            <p>Choose a command that directly tests each individual assertion.</p>
+          </article>
+          <article class="stage">
+            <span class="stage-no">03 · Run</span>
+            <h3>Make it fresh</h3>
+            <p>Execute now. Historical output and confidence do not count.</p>
+          </article>
+          <article class="stage">
+            <span class="stage-no">04 · Read</span>
+            <h3>Keep the failure</h3>
+            <p>Review full output, exit status, missing dependencies, and untested areas.</p>
+          </article>
+          <article class="stage">
+            <span class="stage-no">05 · State</span>
+            <h3>Say only this</h3>
+            <p>Publish the narrowest conclusion supported by the collected evidence.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="map-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">Claim map</span>
+            <h2 id="map-title">One sentence hid three claims.</h2>
+          </div>
+          <p class="section-intro">Treating “ready and verified” as a single unit would conceal a blocked validator and an untested behavioral question.</p>
+        </div>
+
+        <div class="claim-stack">
+          <article class="claim-row">
+            <span class="claim-id">C1</span>
+            <div class="claim-text">
+              <strong>Required safeguards are present</strong>
+              <span>Fresh proof, full-output review, exit status, failure count, claim matching, and independent delegation checks.</span>
+            </div>
+            <div class="proof-text">
+              <strong>Direct content assertion</strong>
+              <span>Six named safeguards inspected in the current package revision.</span>
+            </div>
+            <span class="state supported">Supported</span>
+          </article>
+
+          <article class="claim-row">
+            <span class="claim-id">C2</span>
+            <div class="claim-text">
+              <strong>The standard package validator passes</strong>
+              <span>A clean validator result would support a structural-validity statement.</span>
+            </div>
+            <div class="proof-text">
+              <strong>Standard quick validator</strong>
+              <span>Invocation stopped because its Python environment lacks PyYAML.</span>
+            </div>
+            <span class="state blocked">Blocked</span>
+          </article>
+
+          <article class="claim-row">
+            <span class="claim-id">C3</span>
+            <div class="claim-text">
+              <strong>A live agent follows the rule under pressure</strong>
+              <span>This requires controlled normal, ambiguous, boundary, and handoff scenarios.</span>
+            </div>
+            <div class="proof-text">
+              <strong>No live scenario artifact</strong>
+              <span>The current run did not execute a behavioral agent evaluation.</span>
+            </div>
+            <span class="state untested">Untested</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="evidence-title">
+        <div class="section-head">
+          <div>
+            <span class="tag">Run evidence</span>
+            <h2 id="evidence-title">The output stays attached.</h2>
+          </div>
+          <p class="section-intro">These are text records from the local verification run, not terminal screenshots or recreated chat windows. The failing output remains visible because it changes the verdict.</p>
+        </div>
+
+        <div class="run-board">
+          <article class="run-card">
+            <div class="run-top">
+              <span class="run-label">Evidence A</span>
+              <span class="state supported">Exit 0</span>
+            </div>
+            <div class="run-card-body">
+              <h3>Contract assertion check</h3>
+              <pre class="command">Inspect the current SKILL.md for six named verification safeguards.</pre>
+              <pre class="output"><strong>fresh proof command: PASS
+full output review: PASS
+exit code verification: PASS
+failure count review: PASS
+claim evidence match: PASS
+agent report distrust: PASS
+
+claims_checked: 6
+claims_passed: 6</strong></pre>
+              <p class="interpretation">Supports C1 only: the instruction contract explicitly contains all six safeguards.</p>
+              <span class="not-terminal">Plain evidence record · not a terminal image</span>
+            </div>
+          </article>
+
+          <article class="run-card">
+            <div class="run-top">
+              <span class="run-label">Evidence B</span>
+              <span class="state blocked">Blocked</span>
+            </div>
+            <div class="run-card-body">
+              <h3>Standard validator attempt</h3>
+              <pre class="command">python3 …/skill-creator/scripts/quick_validate.py skill-github/verification-before-completion</pre>
+              <pre class="output"><span class="fail">ModuleNotFoundError:
+No module named 'yaml'</span></pre>
+              <p class="interpretation">Does not support C2. The validator did not reach a structural verdict, so no validator pass can be claimed.</p>
+              <span class="not-terminal">Failure retained in the public conclusion</span>
+            </div>
+          </article>
+
+          <article class="run-card">
+            <div class="run-top">
+              <span class="run-label">Evidence C</span>
+              <span class="state supported">Exit 0</span>
+            </div>
+            <div class="run-card-body">
+              <h3>Revision pin</h3>
+              <pre class="command">git rev-parse --short=12 HEAD</pre>
+              <pre class="output"><strong>ccd68ac1aaf6</strong></pre>
+              <p class="interpretation">Binds the inspected content to a reproducible local package revision.</p>
+              <span class="not-terminal">Observed 2026-07-30 · Darwin arm64</span>
+            </div>
+          </article>
+
+          <article class="run-card">
+            <div class="run-top">
+              <span class="run-label">Evidence D</span>
+              <span class="state untested">No run</span>
+            </div>
+            <div class="run-card-body">
+              <h3>Behavioral compliance</h3>
+              <pre class="command">Required artifact:
+controlled live-agent scenario matrix</pre>
+              <pre class="output">No scenario output recorded.</pre>
+              <p class="interpretation">C3 remains untested. Contract quality is not presented as measured agent adherence.</p>
+              <span class="not-terminal">Manual scenario evidence required</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="verdict-title">
+        <div class="decision">
+          <article class="decision-main">
+            <span class="tag">Final verdict</span>
+            <h2 id="verdict-title">Contract verified. Completion withheld.</h2>
+            <p>The fresh evidence proves that the package teaches all six required verification safeguards at revision <code>ccd68ac1aaf6</code>. It does not prove a standard-validator pass or live-agent adherence. The original broad claim is therefore narrowed rather than repeated.</p>
+          </article>
+          <aside class="decision-aside">
+            <div class="decision-chip">
+              <span class="evidence-key">Supported</span>
+              <strong>Instruction contract coverage</strong>
+            </div>
+            <div class="decision-chip">
+              <span class="evidence-key">Blocked</span>
+              <strong>Standard structural validator</strong>
+            </div>
+            <div class="decision-chip">
+              <span class="evidence-key">Untested</span>
+              <strong>Live-agent compliance</strong>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <span>Verification Before Completion · Showcase</span>
+        <span>Evidence before claims, always · MIT</span>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

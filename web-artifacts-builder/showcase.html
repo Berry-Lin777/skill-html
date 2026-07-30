@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Web Artifacts Builder — Showcase</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f6f0e4;
+      --ink: #25231f;
+      --muted: #6f695f;
+      --rule: rgba(37, 35, 31, 0.2);
+      --tomato: #e95c36;
+      --leaf: #195d50;
+      --acid: #d7ef4c;
+      --cream: #fffaf0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      min-width: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      overflow-x: hidden;
+      color-scheme: light;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      line-height: 1.5;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .finchip-page {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(230px, 0.82fr);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .mast-copy {
+      padding: clamp(30px, 7vw, 82px) clamp(20px, 6vw, 72px);
+    }
+
+    .kicker,
+    .eyebrow {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .kicker {
+      display: inline-block;
+      padding: 7px 9px 6px;
+      background: var(--acid);
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 24px 0 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(44px, 8.8vw, 112px);
+      font-weight: 400;
+      letter-spacing: -0.065em;
+      line-height: 0.86;
+    }
+
+    .standfirst {
+      max-width: 620px;
+      margin: 0;
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(17px, 2.2vw, 23px);
+      line-height: 1.55;
+    }
+
+    .mast-art {
+      position: relative;
+      min-height: 430px;
+      overflow: hidden;
+      background: var(--tomato);
+    }
+
+    .shape {
+      position: absolute;
+      display: block;
+    }
+
+    .shape-one {
+      width: 110%;
+      aspect-ratio: 1;
+      top: -42%;
+      left: -54%;
+      border-radius: 50%;
+      background: var(--leaf);
+    }
+
+    .shape-two {
+      width: 95%;
+      aspect-ratio: 1;
+      right: -44%;
+      bottom: -42%;
+      border-radius: 50%;
+      background: #efc99e;
+    }
+
+    .shape-three {
+      width: 34%;
+      aspect-ratio: 1;
+      top: 26%;
+      left: 48%;
+      border: clamp(16px, 3vw, 34px) solid #f7df55;
+      border-radius: 50%;
+    }
+
+    .case-number {
+      position: absolute;
+      right: 20px;
+      bottom: 6px;
+      color: rgba(37, 35, 31, 0.78);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(78px, 13vw, 164px);
+      line-height: 1;
+    }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-bottom: 1px solid var(--ink);
+      background: var(--cream);
+    }
+
+    .route-step {
+      position: relative;
+      padding: 18px clamp(16px, 3vw, 30px) 21px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .route-step:last-child {
+      border-right: 0;
+    }
+
+    .route-step span {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--tomato);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 22px;
+    }
+
+    .route-step strong {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .route-step small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .section {
+      padding: clamp(34px, 6vw, 72px) clamp(18px, 6vw, 72px);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: clamp(22px, 4vw, 42px);
+    }
+
+    h2 {
+      max-width: 680px;
+      margin: 7px 0 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(33px, 5.2vw, 64px);
+      font-weight: 400;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .section-index {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      white-space: nowrap;
+    }
+
+    .brief {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      gap: clamp(22px, 6vw, 72px);
+    }
+
+    .brief-label {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 210px;
+      padding: 22px;
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .brief-label .big-quote {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 74px;
+      line-height: 0.6;
+    }
+
+    .brief-label p {
+      margin: 0;
+      color: #d8d0c2;
+      font-size: 12px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    blockquote {
+      margin: 0;
+      padding: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(24px, 3.6vw, 42px);
+      line-height: 1.22;
+      letter-spacing: -0.025em;
+    }
+
+    blockquote em {
+      color: var(--tomato);
+      font-style: normal;
+    }
+
+    .constraints {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 26px;
+    }
+
+    .constraint {
+      padding: 7px 10px;
+      border: 1px solid var(--rule);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .blueprint {
+      background: #f1e9d9;
+    }
+
+    .blueprint-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .blueprint-card {
+      position: relative;
+      display: flex;
+      min-height: 168px;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      padding: 20px;
+      border: 1px solid var(--ink);
+      background: var(--cream);
+    }
+
+    .blueprint-card:nth-child(1) {
+      grid-column: span 5;
+      background: var(--tomato);
+    }
+
+    .blueprint-card:nth-child(2) {
+      grid-column: span 3;
+      background: var(--acid);
+    }
+
+    .blueprint-card:nth-child(3) {
+      grid-column: span 4;
+      background: var(--leaf);
+      color: white;
+    }
+
+    .blueprint-card:nth-child(4) {
+      grid-column: span 4;
+    }
+
+    .blueprint-card:nth-child(5) {
+      grid-column: span 5;
+      background: #efc99e;
+    }
+
+    .blueprint-card:nth-child(6) {
+      grid-column: span 3;
+      background: var(--ink);
+      color: white;
+    }
+
+    .module-id {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 31px;
+      line-height: 1;
+    }
+
+    .blueprint-card h3 {
+      max-width: 240px;
+      margin: 22px 0 4px;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+
+    .blueprint-card p {
+      margin: 0;
+      color: currentColor;
+      font-size: 11px;
+      line-height: 1.45;
+      opacity: 0.78;
+    }
+
+    .output-section {
+      background: var(--cream);
+    }
+
+    .output-frame {
+      position: relative;
+      padding: clamp(9px, 1.8vw, 17px);
+      border: 1px solid var(--ink);
+      background: #d7d1c5;
+      box-shadow: 12px 12px 0 var(--tomato);
+    }
+
+    .output-frame img {
+      aspect-ratio: 1280 / 900;
+      object-fit: cover;
+      object-position: top;
+      border: 1px solid rgba(37, 35, 31, 0.22);
+      background: #ddd6ca;
+    }
+
+    .output-caption {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      margin-top: 28px;
+    }
+
+    .output-caption p {
+      max-width: 700px;
+      margin: 0;
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(16px, 2vw, 21px);
+      line-height: 1.55;
+    }
+
+    .artifact-stamp {
+      padding: 12px 14px;
+      border: 1px solid var(--ink);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .evidence {
+      background: var(--leaf);
+      color: #fffdf5;
+    }
+
+    .evidence .section-index,
+    .evidence .eyebrow {
+      color: #b9d9d0;
+    }
+
+    .ledger {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid rgba(255, 255, 255, 0.45);
+      border-left: 1px solid rgba(255, 255, 255, 0.45);
+    }
+
+    .ledger-item {
+      padding: 22px 18px;
+      border-right: 1px solid rgba(255, 255, 255, 0.45);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+    }
+
+    .ledger-item .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--acid);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--acid);
+    }
+
+    .ledger-item strong {
+      display: block;
+      margin-top: 34px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(20px, 2.8vw, 31px);
+      font-weight: 400;
+      line-height: 1.05;
+    }
+
+    .ledger-item p {
+      margin: 8px 0 0;
+      color: #c7ddd7;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .evidence-note {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+      margin-top: 24px;
+      color: #c7ddd7;
+      font-size: 12px;
+    }
+
+    .evidence-note strong {
+      padding: 4px 7px;
+      background: var(--acid);
+      color: var(--ink);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .handoff {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(200px, 0.36fr);
+      gap: clamp(22px, 5vw, 60px);
+      align-items: end;
+      background: var(--tomato);
+    }
+
+    .handoff h2 {
+      max-width: 780px;
+      margin: 0;
+    }
+
+    .deliverable {
+      padding: 18px;
+      border: 1px solid var(--ink);
+      background: var(--cream);
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+
+    .deliverable span {
+      display: block;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .deliverable strong {
+      display: block;
+      margin-top: 5px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      font-weight: 400;
+    }
+
+    .deliverable small {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 17px clamp(18px, 6vw, 72px);
+      background: var(--ink);
+      color: #d8d0c2;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 700px) {
+      .masthead {
+        grid-template-columns: minmax(0, 1.1fr) minmax(150px, 0.65fr);
+      }
+
+      .mast-art {
+        min-height: 360px;
+      }
+
+      .route-step small {
+        display: none;
+      }
+
+      .brief {
+        grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr);
+        gap: 20px;
+      }
+
+      .brief-label {
+        min-height: 180px;
+      }
+
+      .blueprint-card:nth-child(1),
+      .blueprint-card:nth-child(2),
+      .blueprint-card:nth-child(3),
+      .blueprint-card:nth-child(4),
+      .blueprint-card:nth-child(5),
+      .blueprint-card:nth-child(6) {
+        grid-column: span 6;
+      }
+
+      .ledger {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 500px) {
+      .masthead {
+        grid-template-columns: 1fr;
+      }
+
+      .mast-copy {
+        padding-bottom: 36px;
+      }
+
+      .mast-art {
+        min-height: 270px;
+      }
+
+      .route {
+        grid-template-columns: 1fr;
+      }
+
+      .route-step {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        align-items: center;
+        padding: 11px 18px;
+        border-right: 0;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .route-step:last-child {
+        border-bottom: 0;
+      }
+
+      .route-step span {
+        grid-row: 1 / span 2;
+        margin: 0;
+      }
+
+      .brief {
+        grid-template-columns: 1fr;
+      }
+
+      .brief-label {
+        min-height: 128px;
+      }
+
+      .section-title,
+      .output-caption {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .section-title {
+        display: flex;
+      }
+
+      .output-caption {
+        display: flex;
+      }
+
+      .artifact-stamp {
+        text-align: left;
+      }
+
+      .handoff {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .section {
+        padding-right: 15px;
+        padding-left: 15px;
+      }
+
+      .blueprint-grid {
+        gap: 8px;
+      }
+
+      .blueprint-card {
+        min-height: 150px;
+        padding: 15px;
+      }
+
+      .blueprint-card h3 {
+        font-size: 13px;
+      }
+
+      .ledger-item {
+        padding: 17px 13px;
+      }
+
+      .evidence-note {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <header class="masthead">
+      <div class="mast-copy">
+        <p class="kicker">Showcase · Real bundle run</p>
+        <h1>From brief to one portable artifact.</h1>
+        <p class="standfirst">A multi-section museum interface becomes a polished React experience, then leaves the workshop as one self-contained HTML file.</p>
+      </div>
+      <div class="mast-art" aria-hidden="true">
+        <span class="shape shape-one"></span>
+        <span class="shape shape-two"></span>
+        <span class="shape shape-three"></span>
+        <span class="case-number">01</span>
+      </div>
+    </header>
+
+    <div class="route" aria-label="Showcase transformation">
+      <div class="route-step">
+        <span>01</span>
+        <strong>Creative brief</strong>
+        <small>Intent and constraints</small>
+      </div>
+      <div class="route-step">
+        <span>02</span>
+        <strong>React system</strong>
+        <small>Components and responsive layout</small>
+      </div>
+      <div class="route-step">
+        <span>03</span>
+        <strong>Single HTML</strong>
+        <small>Assets and runtime inlined</small>
+      </div>
+    </div>
+
+    <main>
+      <section class="section">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">The representative input</p>
+            <h2>A compact brief with a real design problem.</h2>
+          </div>
+          <span class="section-index">INPUT / 01</span>
+        </div>
+
+        <div class="brief">
+          <div class="brief-label">
+            <span class="big-quote">“</span>
+            <p>Prompt used for this local showcase run</p>
+          </div>
+          <div>
+            <blockquote>
+              Build a responsive museum collection interface called <em>Field Notes</em>. Give it an editorial identity, featured exhibition story, collection filters, and three artwork cards. Make the result feel curated rather than templated.
+            </blockquote>
+            <div class="constraints" aria-label="Input constraints">
+              <span class="constraint">Responsive</span>
+              <span class="constraint">Multi-section</span>
+              <span class="constraint">Component-based</span>
+              <span class="constraint">Single-file handoff</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section blueprint">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">The extracted build plan</p>
+            <h2>One visual system, six working modules.</h2>
+          </div>
+          <span class="section-index">PLAN / 02</span>
+        </div>
+
+        <div class="blueprint-grid">
+          <article class="blueprint-card">
+            <span class="module-id">A</span>
+            <div>
+              <h3>Editorial masthead</h3>
+              <p>Issue badge, display headline, narrative lead, and exhibition artwork.</p>
+            </div>
+          </article>
+          <article class="blueprint-card">
+            <span class="module-id">B</span>
+            <div>
+              <h3>Collection tools</h3>
+              <p>Search affordance and filter states.</p>
+            </div>
+          </article>
+          <article class="blueprint-card">
+            <span class="module-id">C</span>
+            <div>
+              <h3>Artwork cards</h3>
+              <p>Reusable Card components with title, artist, year, and medium.</p>
+            </div>
+          </article>
+          <article class="blueprint-card">
+            <span class="module-id">D</span>
+            <div>
+              <h3>shadcn/ui primitives</h3>
+              <p>Badge, Button, Card, and CardContent drawn from the packaged component set.</p>
+            </div>
+          </article>
+          <article class="blueprint-card">
+            <span class="module-id">E</span>
+            <div>
+              <h3>Responsive composition</h3>
+              <p>Two-column story becomes a single reading flow; artwork cards stack on narrow screens.</p>
+            </div>
+          </article>
+          <article class="blueprint-card">
+            <span class="module-id">F</span>
+            <div>
+              <h3>Bundle target</h3>
+              <p>Parcel build followed by full asset inlining.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section output-section">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">The bundled result</p>
+            <h2>A complete interface—not a wireframe.</h2>
+          </div>
+          <span class="section-index">OUTPUT / 03</span>
+        </div>
+
+        <figure style="margin:0">
+          <div class="output-frame">
+            <img
+              src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/web-artifacts-builder/showcase/bundle-preview.png"
+              width="1280"
+              height="900"
+              alt="Real browser screenshot of the locally bundled Field Notes museum collection interface">
+          </div>
+          <figcaption class="output-caption">
+            <p>The finished bundle preserves the editorial hierarchy, geometric exhibition art, navigation, collection tools, and reusable work cards in a directly openable HTML document.</p>
+            <div class="artifact-stamp">Real local preview<br>Chrome · 1280 × 900</div>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="section evidence">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">Run evidence</p>
+            <h2>What was actually executed.</h2>
+          </div>
+          <span class="section-index">VERIFIED / 2026-07-30</span>
+        </div>
+
+        <div class="ledger">
+          <article class="ledger-item">
+            <span class="status"><span class="status-dot"></span> Passed</span>
+            <strong>Project initialization</strong>
+            <p>The packaged initializer completed with Node.js 25.2.1 and pnpm 10.23.0.</p>
+          </article>
+          <article class="ledger-item">
+            <span class="status"><span class="status-dot"></span> Passed</span>
+            <strong>React component build</strong>
+            <p>TypeScript source used packaged UI primitives and Lucide icons.</p>
+          </article>
+          <article class="ledger-item">
+            <span class="status"><span class="status-dot"></span> Passed</span>
+            <strong>Parcel + inline</strong>
+            <p>The skill’s bundle script completed and produced one HTML document.</p>
+          </article>
+          <article class="ledger-item">
+            <span class="status"><span class="status-dot"></span> Verified</span>
+            <strong>281,445 bytes</strong>
+            <p>Exact size of the fresh showcase bundle, measured after asset inlining.</p>
+          </article>
+        </div>
+
+        <div class="evidence-note">
+          <strong>Scope note</strong>
+          <span>The screenshot above is the browser-rendered output of this run, not a simulated terminal or mock conversation. The generated artifact contains its app code and styles inline; npm-registry access is still required during project setup and first-time dependency installation.</span>
+        </div>
+      </section>
+
+      <section class="section handoff">
+        <div>
+          <p class="eyebrow">The handoff</p>
+          <h2>Complex on the inside. One file at delivery.</h2>
+        </div>
+        <div class="deliverable">
+          <span>Generated artifact</span>
+          <strong>bundle.html</strong>
+          <small>React · TypeScript · Tailwind · shadcn/ui · Parcel</small>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Web Artifacts Builder · Showcase 01</span>
+      <span>Representative local run · No API key required</span>
+    </footer>
+  </div>
+</body>
+</html>

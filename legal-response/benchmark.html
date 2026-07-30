@@ -1,0 +1,1162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Legal Response — Correspondence Release Review</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --dispatch: #a85f49;
+      --dispatch-deep: #754234;
+      --paper: #f5ead2;
+      --paper-deep: #dfccaa;
+      --ink: #28283b;
+      --muted: #74695d;
+      --blue: #315d91;
+      --teal: #397674;
+      --mustard: #d2a94d;
+      --red: #a83f3d;
+      --green: #58795c;
+      --rule: #a89172;
+      --cream: #fff5e2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: dark;
+      background: var(--dispatch);
+      color: var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 3%, rgba(255, 245, 226, 0.11), transparent 27rem),
+        repeating-linear-gradient(135deg, rgba(117, 66, 52, 0.08) 0 2px, transparent 2px 24px),
+        var(--dispatch);
+      color: var(--cream);
+    }
+
+    .mailroom {
+      width: 100%;
+      max-width: 1140px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(20px, 4.7vw, 58px);
+    }
+
+    .dispatch-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 19px;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 245, 226, 0.66);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .dispatch-bar span:last-child {
+      color: #f3d98d;
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(300px, 1.1fr);
+      gap: clamp(34px, 7vw, 86px);
+      align-items: center;
+      padding: clamp(50px, 9vw, 106px) 0;
+    }
+
+    .hero-copy,
+    .envelope,
+    section,
+    .source-grid > *,
+    .rubric-grid > *,
+    .evidence-grid > * {
+      min-width: 0;
+    }
+
+    .eyebrow,
+    .section-label,
+    .postal-code,
+    .state,
+    .weight,
+    dt {
+      font-size: 0.66rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      margin: 0 0 17px;
+      color: #f4d683;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    dd {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      max-width: 710px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.1rem, 8vw, 6.8rem);
+      font-weight: 400;
+      line-height: 0.88;
+      letter-spacing: -0.055em;
+    }
+
+    .hero-copy > p:last-child {
+      max-width: 620px;
+      margin: 27px 0 0;
+      color: #f0ded3;
+      font-size: clamp(1rem, 2.2vw, 1.22rem);
+      line-height: 1.65;
+    }
+
+    .envelope {
+      position: relative;
+      min-height: 390px;
+      padding: clamp(22px, 4vw, 38px);
+      background:
+        linear-gradient(150deg, transparent 0 50%, rgba(40, 40, 59, 0.08) 50.2% 50.7%, transparent 51%),
+        linear-gradient(30deg, transparent 0 50%, rgba(40, 40, 59, 0.08) 50.2% 50.7%, transparent 51%),
+        var(--paper);
+      color: var(--ink);
+      box-shadow: 16px 17px 0 var(--dispatch-deep);
+    }
+
+    .envelope::before {
+      content: "";
+      position: absolute;
+      inset: 13px;
+      border: 1px dashed var(--rule);
+      pointer-events: none;
+    }
+
+    .postal-code {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--ink);
+      color: var(--muted);
+    }
+
+    .envelope h2 {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+      margin: 30px 0 21px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3.65rem);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .release-row {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: end;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .release-row p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+
+    .release-row strong {
+      color: var(--teal);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 0.9;
+    }
+
+    .stamp {
+      position: absolute;
+      z-index: 3;
+      right: -16px;
+      bottom: -24px;
+      padding: 11px 14px;
+      border: 3px double var(--red);
+      background: var(--paper);
+      color: var(--red);
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      line-height: 1.35;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(-5deg);
+    }
+
+    .headline-facts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border: 1px solid rgba(255, 245, 226, 0.62);
+    }
+
+    .headline-fact {
+      padding: 20px;
+      border-right: 1px solid rgba(255, 245, 226, 0.4);
+    }
+
+    .headline-fact:last-child {
+      border-right: 0;
+    }
+
+    .headline-fact strong {
+      display: block;
+      margin-bottom: 7px;
+      color: #f4d683;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 3.7vw, 2.5rem);
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .headline-fact span {
+      display: block;
+      color: #efdbd0;
+      font-size: 0.76rem;
+      line-height: 1.5;
+    }
+
+    section {
+      padding: clamp(53px, 8.5vw, 100px) 0;
+      border-bottom: 1px solid rgba(255, 245, 226, 0.54);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 148px minmax(0, 1fr);
+      gap: clamp(20px, 5vw, 58px);
+      margin-bottom: 31px;
+    }
+
+    .section-label {
+      margin: 7px 0 0;
+      color: #f4d683;
+    }
+
+    .section-head h2 {
+      max-width: 840px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.3rem, 5.8vw, 4.7rem);
+      font-weight: 400;
+      line-height: 0.96;
+      letter-spacing: -0.047em;
+    }
+
+    .section-head > p:last-child {
+      grid-column: 2;
+      max-width: 750px;
+      margin: -9px 0 0;
+      color: #efdbd0;
+      line-height: 1.65;
+    }
+
+    .sorting-card {
+      padding: clamp(18px, 4vw, 34px);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .sorting-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding-bottom: 13px;
+      border-bottom: 2px solid var(--ink);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .sorting-head span:last-child {
+      color: var(--blue);
+      text-align: right;
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .source-check {
+      padding: 21px;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .source-check:nth-child(3n) {
+      border-right: 0;
+    }
+
+    .source-check:nth-last-child(-n + 3) {
+      border-bottom: 0;
+    }
+
+    .source-check strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--blue);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.24rem;
+      font-weight: 400;
+    }
+
+    .source-check p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .route-step {
+      position: relative;
+      min-width: 0;
+      padding: 22px 18px;
+      border-right: 1px solid var(--ink);
+    }
+
+    .route-step:last-child {
+      border-right: 0;
+    }
+
+    .route-step::after {
+      content: "→";
+      position: absolute;
+      z-index: 2;
+      top: 20px;
+      right: -13px;
+      display: grid;
+      place-items: center;
+      width: 25px;
+      height: 25px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      background: var(--mustard);
+      font-weight: 900;
+    }
+
+    .route-step:last-child::after {
+      display: none;
+    }
+
+    .route-number {
+      display: block;
+      margin-bottom: 39px;
+      color: var(--red);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.8rem;
+    }
+
+    .route-step h3 {
+      margin: 0 0 7px;
+      font-size: 0.95rem;
+    }
+
+    .route-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.73rem;
+      line-height: 1.5;
+    }
+
+    .rubric-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .notice {
+      padding: 18px;
+      border: 1px solid #f4d683;
+      color: #f0ded3;
+      font-size: 0.83rem;
+      line-height: 1.6;
+    }
+
+    .notice strong {
+      color: #f4d683;
+    }
+
+    .notice:last-child {
+      background: var(--dispatch-deep);
+    }
+
+    .rubric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .criterion {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .weight {
+      display: grid;
+      place-items: center;
+      padding: 16px 8px;
+      border-right: 1px solid var(--rule);
+      background: var(--paper-deep);
+      color: var(--red);
+      font-size: 0.78rem;
+    }
+
+    .criterion:nth-child(2) .weight,
+    .criterion:nth-child(5) .weight {
+      background: #c4d7d2;
+      color: var(--teal);
+    }
+
+    .criterion:nth-child(3) .weight,
+    .criterion:nth-child(6) .weight {
+      background: #ead493;
+      color: #75580f;
+    }
+
+    .criterion-copy {
+      padding: 17px;
+    }
+
+    .criterion h3 {
+      margin: 0 0 6px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+    }
+
+    .criterion p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.5;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+      gap: 12px;
+    }
+
+    .record {
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .record h3 {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 0;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--ink);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .record h3 span {
+      color: var(--blue);
+    }
+
+    dl {
+      margin: 0;
+    }
+
+    .record-row {
+      display: grid;
+      grid-template-columns: 102px minmax(0, 1fr);
+      gap: 14px;
+      padding: 13px 16px;
+      border-bottom: 1px dotted var(--rule);
+    }
+
+    .record-row:last-child {
+      border-bottom: 0;
+    }
+
+    dt {
+      color: #635747;
+    }
+
+    dd {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .tests {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .tests li {
+      display: grid;
+      grid-template-columns: 91px minmax(0, 1fr);
+      gap: 13px;
+      padding: 13px 16px;
+      border-bottom: 1px dotted var(--rule);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .tests li:last-child {
+      border-bottom: 0;
+    }
+
+    .state.verified {
+      color: var(--teal);
+    }
+
+    .state.inspected {
+      color: #86600e;
+    }
+
+    .state.pending {
+      color: var(--red);
+    }
+
+    .release-gates {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .gate {
+      padding: 22px;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .gate-mark {
+      display: inline-grid;
+      place-items: center;
+      min-width: 52px;
+      height: 30px;
+      margin-bottom: 37px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--mustard);
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .gate:nth-child(2) .gate-mark {
+      background: #b8d6cf;
+    }
+
+    .gate:nth-child(3) .gate-mark {
+      background: #e3b8ad;
+    }
+
+    .gate h3 {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+    }
+
+    .gate p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+
+    .verdict {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(190px, 0.65fr);
+      gap: 25px;
+      align-items: end;
+      padding: clamp(31px, 6vw, 62px);
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .verdict h2 {
+      max-width: 790px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.3rem, 5.7vw, 4.65rem);
+      font-weight: 400;
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+    }
+
+    .verdict p {
+      max-width: 720px;
+      margin: 17px 0 0;
+      color: #ded6d8;
+      line-height: 1.6;
+    }
+
+    .verdict-side {
+      padding-left: 20px;
+      border-left: 1px solid var(--cream);
+    }
+
+    .verdict-side strong {
+      display: block;
+      color: #f4d683;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 0.92;
+    }
+
+    .verdict-side span {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 17px;
+      color: #f0dcd0;
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .envelope {
+        width: min(100%, 680px);
+        margin-left: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .section-head,
+      .rubric-intro,
+      .evidence-grid,
+      .verdict {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .section-head > p:last-child {
+        grid-column: 1;
+        margin-top: 0;
+      }
+
+      .headline-facts,
+      .source-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .headline-fact:nth-child(2) {
+        border-right: 0;
+      }
+
+      .headline-fact:nth-child(-n + 2) {
+        border-bottom: 1px solid rgba(255, 245, 226, 0.4);
+      }
+
+      .source-check:nth-child(3n) {
+        border-right: 1px solid var(--rule);
+      }
+
+      .source-check:nth-child(2n) {
+        border-right: 0;
+      }
+
+      .source-check:nth-last-child(-n + 3) {
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .source-check:nth-last-child(-n + 2) {
+        border-bottom: 0;
+      }
+
+      .route {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .route-step:nth-child(2),
+      .route-step:nth-child(4) {
+        border-right: 0;
+      }
+
+      .route-step:nth-child(-n + 4) {
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .route-step:nth-child(2)::after,
+      .route-step:nth-child(4)::after {
+        display: none;
+      }
+
+      .route-step:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .release-gates {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .gate:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .verdict-side {
+        padding: 18px 0 0;
+        border-top: 1px solid var(--cream);
+        border-left: 0;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .mailroom {
+        padding: 15px;
+      }
+
+      .dispatch-bar {
+        align-items: flex-start;
+      }
+
+      .envelope {
+        min-height: 0;
+        box-shadow: 8px 9px 0 var(--dispatch-deep);
+      }
+
+      .stamp {
+        right: 3px;
+      }
+
+      .headline-facts,
+      .source-grid,
+      .route,
+      .rubric-grid,
+      .release-gates {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .headline-fact,
+      .headline-fact:nth-child(2) {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 245, 226, 0.4);
+      }
+
+      .headline-fact:last-child {
+        border-bottom: 0;
+      }
+
+      .source-check,
+      .source-check:nth-child(2n),
+      .source-check:nth-child(3n),
+      .source-check:nth-last-child(-n + 2) {
+        border-right: 0;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .source-check:last-child {
+        border-bottom: 0;
+      }
+
+      .route-step,
+      .route-step:nth-child(2),
+      .route-step:nth-child(4) {
+        border-right: 0;
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .route-step:last-child {
+        grid-column: auto;
+        border-bottom: 0;
+      }
+
+      .route-step::after {
+        display: none;
+      }
+
+      .record-row,
+      .tests li {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 5px;
+      }
+
+      .gate:last-child {
+        grid-column: auto;
+      }
+
+      footer {
+        display: block;
+      }
+
+      footer span {
+        display: block;
+        margin-bottom: 6px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+
+      .stamp {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="finchip-page">
+    <main class="mailroom">
+      <header class="dispatch-bar">
+        <span>Legal Response / Correspondence Release Review</span>
+        <span>Workflow audit · 30 July 2026</span>
+      </header>
+
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Registered review LR-6E0E72C</p>
+          <h1>Verify the route before the reply leaves the outbox.</h1>
+          <p>This benchmark asks whether the inquiry was classified correctly, essential facts and deadlines were captured, escalation triggers stopped unsafe templating, and every draft remains clearly routed to qualified review.</p>
+        </div>
+
+        <aside class="envelope" aria-label="Correspondence workflow finding">
+          <div class="postal-code">
+            <span>Quality-control finding</span>
+            <span>Source inspected</span>
+          </div>
+          <h2>The drafting workflow is complete. No response was approved or sent.</h2>
+          <div class="release-row">
+            <p>Classification, template fallback, escalation, customization, jurisdiction, deadlines and follow-up are present in the source contract.</p>
+            <strong>Ready</strong>
+          </div>
+          <div class="stamp">Draft workflow only<br>counsel review required</div>
+        </aside>
+      </div>
+
+      <div class="headline-facts" aria-label="Verified workflow facts">
+        <div class="headline-fact">
+          <strong>8</strong>
+          <span>accepted inquiry-type entry points including custom</span>
+        </div>
+        <div class="headline-fact">
+          <strong>5 actions</strong>
+          <span>stop, alert, explain, recommend and offer counsel-review draft</span>
+        </div>
+        <div class="headline-fact">
+          <strong>7 families</strong>
+          <span>documented response categories with tailored elements</span>
+        </div>
+        <div class="headline-fact">
+          <strong>0</strong>
+          <span>API keys required for local text; zero approvals claimed</span>
+        </div>
+      </div>
+
+      <section aria-labelledby="source-checks">
+        <div class="section-head">
+          <p class="section-label">Sorting record</p>
+          <h2 id="source-checks">What the actual workflow contract requires</h2>
+          <p>These checks are verified by source inspection and package validation. They prove that safeguards are specified, not that a future draft will automatically satisfy them.</p>
+        </div>
+
+        <div class="sorting-card">
+          <div class="sorting-head">
+            <span>Verified source controls</span>
+            <span>Contract-level evidence</span>
+          </div>
+          <div class="source-grid">
+            <article class="source-check">
+              <strong>Inquiry classification</strong>
+              <p>Ambiguous requests trigger clarification and a list of supported categories rather than silent guessing.</p>
+            </article>
+            <article class="source-check">
+              <strong>Template fallback</strong>
+              <p>Missing templates are disclosed; the workflow offers template creation or a reasonable category-specific structure.</p>
+            </article>
+            <article class="source-check">
+              <strong>Escalation stop</strong>
+              <p>Litigation, regulators, waivers, criminal exposure, media, novel matters and jurisdiction conflicts block templated replies.</p>
+            </article>
+            <article class="source-check">
+              <strong>Required details</strong>
+              <p>Names, dates, reference numbers, specific facts, applicable law, deadlines, signatures and contact information are required.</p>
+            </article>
+            <article class="source-check">
+              <strong>Jurisdiction &amp; timing</strong>
+              <p>Regulations, rights, terminology and response dates must be verified for the applicable jurisdiction.</p>
+            </article>
+            <article class="source-check">
+              <strong>Counsel boundary</strong>
+              <p>Every output is a draft for review; subpoenas always require individualized counsel review.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="routing-sequence">
+        <div class="section-head">
+          <p class="section-label">Routing sequence</p>
+          <h2 id="routing-sequence">Five release checks before a draft can move forward</h2>
+          <p>This quality-review route condenses the full workflow into five control points. If an escalation trigger appears at the screen stage, normal templating stops and the item is rerouted for counsel review.</p>
+        </div>
+
+        <div class="route">
+          <article class="route-step">
+            <span class="route-number">01</span>
+            <h3>Classify</h3>
+            <p>Identify the inquiry type or ask for clarification.</p>
+          </article>
+          <article class="route-step">
+            <span class="route-number">02</span>
+            <h3>Screen</h3>
+            <p>Detect universal and category-specific escalation triggers.</p>
+          </article>
+          <article class="route-step">
+            <span class="route-number">03</span>
+            <h3>Gather</h3>
+            <p>Collect the facts, jurisdiction, regulation and deadline.</p>
+          </article>
+          <article class="route-step">
+            <span class="route-number">04</span>
+            <h3>Customize</h3>
+            <p>Populate the right template and tune tone to audience and urgency.</p>
+          </article>
+          <article class="route-step">
+            <span class="route-number">05</span>
+            <h3>Review</h3>
+            <p>Present the draft, escalation check and follow-up actions before sending.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="review-rubric">
+        <div class="section-head">
+          <p class="section-label">Quality rubric</p>
+          <h2 id="review-rubric">Seven dimensions for correspondence release</h2>
+          <p>The weights below are an illustrative review model derived from the workflow’s priorities. They are not observed scores and must only be applied to a real draft with qualified legal review.</p>
+        </div>
+
+        <div class="rubric-intro">
+          <div class="notice"><strong>Suggested method:</strong> score each dimension from 0–5 and attach the underlying prompt, draft, escalation result and reviewer notes. Escalation or counsel-label failures block release regardless of total.</div>
+          <div class="notice"><strong>Current draft score: not issued.</strong><br>No representative response was executed, approved or sent in this preflight.</div>
+        </div>
+
+        <div class="rubric-grid">
+          <article class="criterion">
+            <span class="weight">14%</span>
+            <div class="criterion-copy">
+              <h3>Inquiry classification</h3>
+              <p>The chosen category and sub-category match the actual request and audience.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">14%</span>
+            <div class="criterion-copy">
+              <h3>Required-detail completeness</h3>
+              <p>Names, dates, facts, references, contacts and category-specific elements are populated.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">16%</span>
+            <div class="criterion-copy">
+              <h3>Jurisdiction &amp; deadline checks</h3>
+              <p>Applicable law, terminology, rights and response date are verified rather than assumed.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">18%</span>
+            <div class="criterion-copy">
+              <h3>Escalation detection</h3>
+              <p>Universal and category-specific triggers stop templating and route the matter correctly.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">14%</span>
+            <div class="criterion-copy">
+              <h3>Template customization</h3>
+              <p>Specific facts, audience, relationship, sensitivity and urgency shape the response.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">14%</span>
+            <div class="criterion-copy">
+              <h3>Counsel-review labeling</h3>
+              <p>The response stays a draft and heightened matters are conspicuously marked for counsel review.</p>
+            </div>
+          </article>
+          <article class="criterion">
+            <span class="weight">10%</span>
+            <div class="criterion-copy">
+              <h3>Audit trail &amp; follow-up</h3>
+              <p>The escalation check, owner, reminders, logging and post-response actions remain traceable.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="evidence-status">
+        <div class="section-head">
+          <p class="section-label">Evidence status</p>
+          <h2 id="evidence-status">Safeguards are present; correspondence outcomes are untested</h2>
+          <p>The record separates checks proven in the source from scenarios that require a representative inquiry, generated draft and qualified human review.</p>
+        </div>
+
+        <div class="evidence-grid">
+          <article class="record">
+            <h3>Recorded environment <span>Actual</span></h3>
+            <dl>
+              <div class="record-row">
+                <dt>Upstream</dt>
+                <dd>Anthropic Knowledge Work Plugins commit <code>01a9cec39b961236e2d99fa2db9b22b534fa27a9</code></dd>
+              </div>
+              <div class="record-row">
+                <dt>Snapshot</dt>
+                <dd><code>6e0e72c</code></dd>
+              </div>
+              <div class="record-row">
+                <dt>Executed</dt>
+                <dd>30 July 2026</dd>
+              </div>
+              <div class="record-row">
+                <dt>Scope</dt>
+                <dd>Structure, template selection, escalation, jurisdiction, deadlines, counsel language and connector reference packaging</dd>
+              </div>
+              <div class="record-row">
+                <dt>Runtime</dt>
+                <dd>No API key for local text; email, calendar and other connections are optional enhancements</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="record">
+            <h3>Scenario matrix <span>Mixed status</span></h3>
+            <ul class="tests">
+              <li><span class="state verified">Verified</span><span><strong>Ambiguous type:</strong> source requires clarification and presents the available categories.</span></li>
+              <li><span class="state verified">Verified</span><span><strong>Subpoena:</strong> source always requires counsel review and treats templates as starting points.</span></li>
+              <li><span class="state inspected">Inspected</span><span><strong>No template:</strong> source discloses the gap and offers creation or a default structure.</span></li>
+              <li><span class="state pending">Pending</span><span><strong>Deadline:</strong> execute a dated regulated inquiry and independently verify the calculated response date.</span></li>
+              <li><span class="state pending">Pending</span><span><strong>Customization:</strong> scan a generated draft for unresolved placeholders and missing required facts.</span></li>
+              <li><span class="state pending">Pending</span><span><strong>Professional review:</strong> qualified counsel confirms applicable law, language, escalation and authorization to send.</span></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="release-gates">
+        <div class="section-head">
+          <p class="section-label">Release gates</p>
+          <h2 id="release-gates">A correct template is only one-third of the decision</h2>
+          <p>A response can move toward release only when the route, content and authorization are all supported by evidence.</p>
+        </div>
+
+        <div class="release-gates">
+          <article class="gate">
+            <span class="gate-mark">Route</span>
+            <h3>Classification gate</h3>
+            <p>The inquiry is categorized correctly, escalation checks are complete and unsafe templating has stopped.</p>
+          </article>
+          <article class="gate">
+            <span class="gate-mark">Content</span>
+            <h3>Accuracy gate</h3>
+            <p>Facts, jurisdiction, regulation, deadline, recipient instructions and follow-up actions are verified.</p>
+          </article>
+          <article class="gate">
+            <span class="gate-mark">Release</span>
+            <h3>Authorization gate</h3>
+            <p>Qualified legal professionals review the draft and determine whether, how and by whom it may be sent.</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="verdict">
+        <div>
+          <h2>Accept the workflow for drafting—never as automatic authority to send.</h2>
+          <p>The source provides a careful route from inquiry classification through escalation, customization and follow-up. Every generated response remains workflow assistance rather than legal advice and must be reviewed by qualified legal professionals before release.</p>
+        </div>
+        <div class="verdict-side">
+          <strong>Ready</strong>
+          <span>for drafting with<br>mandatory review</span>
+        </div>
+      </div>
+
+      <footer>
+        <span>Benchmark type: workflow audit + illustrative correspondence release rubric.</span>
+        <span>Apache-2.0 · No legal approval claimed · Nothing sent.</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Algorithmic Art — Instructions</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #231f19;
+      --paper: #f4ecd9;
+      --paper-bright: #fffaf0;
+      --carmine: #b63d2f;
+      --persimmon: #ea794e;
+      --moss: #657743;
+      --plum: #694054;
+      --rule: #cdbf9f;
+      --quiet: #6c6558;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color-scheme: light;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    img,
+    svg {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    code,
+    .eyebrow,
+    .label,
+    .index,
+    .meta,
+    .pill,
+    .micro {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .finchip-page {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 5%, rgba(234, 121, 78, .11), transparent 23rem),
+        linear-gradient(90deg, rgba(35, 31, 25, .035) 1px, transparent 1px),
+        var(--paper);
+      background-size: auto, 42px 100%, auto;
+      color: var(--ink);
+    }
+
+    .page-shell {
+      width: min(100%, 1120px);
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 auto;
+      padding: clamp(18px, 4vw, 54px);
+    }
+
+    .masthead {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .brand {
+      font-size: clamp(.78rem, 2vw, .94rem);
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .meta {
+      min-width: 0;
+      max-width: 100%;
+      color: var(--quiet);
+      font-size: .72rem;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+      gap: clamp(24px, 5vw, 66px);
+      align-items: center;
+      padding: clamp(34px, 7vw, 82px) 0 clamp(38px, 6vw, 70px);
+    }
+
+    .hero-copy,
+    .hero-art,
+    .section,
+    .card,
+    .workflow-step,
+    .output {
+      min-width: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 16px;
+      color: var(--carmine);
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 26px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 9ch;
+      margin-bottom: 22px;
+      font-size: clamp(3.2rem, 9vw, 7.3rem);
+      font-weight: 400;
+      letter-spacing: -.065em;
+      line-height: .83;
+    }
+
+    h1 em {
+      color: var(--carmine);
+      font-weight: 400;
+    }
+
+    .lede {
+      max-width: 38rem;
+      margin-bottom: 26px;
+      color: #403a32;
+      font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+      line-height: 1.5;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 7px 10px;
+      border: 1px solid var(--rule);
+      background: rgba(255, 250, 240, .5);
+      color: #514a3f;
+      font-size: .69rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .specimen {
+      position: relative;
+      width: min(100%, 580px);
+      max-width: 100%;
+      margin-left: auto;
+      padding: clamp(12px, 2.5vw, 24px);
+      border: 1px solid var(--ink);
+      background: var(--paper-bright);
+      box-shadow: 13px 13px 0 rgba(105, 64, 84, .18);
+    }
+
+    .specimen::before,
+    .specimen::after {
+      position: absolute;
+      z-index: 2;
+      width: 14px;
+      height: 14px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      background: var(--persimmon);
+      content: "";
+      animation: drift 4.8s ease-in-out infinite alternate;
+    }
+
+    .specimen::before {
+      top: 12%;
+      right: -8px;
+    }
+
+    .specimen::after {
+      bottom: 18%;
+      left: -8px;
+      animation-delay: -2s;
+    }
+
+    .specimen-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 11px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .micro {
+      color: var(--quiet);
+      font-size: .65rem;
+    }
+
+    .art-frame {
+      aspect-ratio: 1 / 1;
+      margin-top: 13px;
+      overflow: hidden;
+      border: 1px solid #8f836e;
+      background: #e6d6b5;
+    }
+
+    .art-frame svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .specimen-foot {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding-top: 11px;
+    }
+
+    .specimen-foot span {
+      min-width: 0;
+      color: var(--quiet);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: clamp(.56rem, 1.4vw, .67rem);
+      overflow-wrap: anywhere;
+    }
+
+    .specimen-foot strong {
+      display: block;
+      color: var(--ink);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .section {
+      padding: clamp(40px, 7vw, 78px) 0;
+      border-top: 1px solid var(--ink);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, .38fr) minmax(0, 1fr);
+      gap: clamp(20px, 5vw, 60px);
+      margin-bottom: clamp(28px, 5vw, 48px);
+    }
+
+    .index {
+      color: var(--carmine);
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+    }
+
+    h2 {
+      max-width: 15ch;
+      margin-bottom: 12px;
+      font-size: clamp(2rem, 5.3vw, 4rem);
+      font-weight: 400;
+      letter-spacing: -.045em;
+      line-height: .98;
+    }
+
+    .section-intro {
+      max-width: 49rem;
+      margin: 0;
+      color: var(--quiet);
+      font-size: 1.03rem;
+    }
+
+    .use-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+    }
+
+    .card {
+      padding: clamp(20px, 4vw, 36px);
+      background: var(--paper-bright);
+    }
+
+    .card:nth-child(2) {
+      background: #ede4cd;
+    }
+
+    .card h3 {
+      margin-bottom: 18px;
+      font-size: 1.35rem;
+      font-weight: 400;
+    }
+
+    .clean-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .clean-list li {
+      position: relative;
+      padding: 11px 0 11px 21px;
+      border-top: 1px solid var(--rule);
+      color: #484136;
+    }
+
+    .clean-list li::before {
+      position: absolute;
+      top: 17px;
+      left: 2px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--moss);
+      content: "";
+    }
+
+    .card.caution .clean-list li::before {
+      border: 1px solid var(--carmine);
+      background: transparent;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .workflow-step {
+      position: relative;
+      padding: 24px clamp(14px, 2.5vw, 24px) 28px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .workflow-step:last-child {
+      border-right: 0;
+    }
+
+    .step-no {
+      display: block;
+      margin-bottom: 42px;
+      color: var(--persimmon);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 1.65rem;
+    }
+
+    .workflow-step h3 {
+      margin-bottom: 9px;
+      font-size: 1.05rem;
+    }
+
+    .workflow-step p {
+      margin: 0;
+      color: var(--quiet);
+      font-size: .88rem;
+    }
+
+    .prompt-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+      gap: clamp(24px, 5vw, 56px);
+      align-items: start;
+    }
+
+    .input-notes {
+      padding-top: 8px;
+    }
+
+    .input-notes p {
+      color: var(--quiet);
+    }
+
+    .prompt {
+      position: relative;
+      min-width: 0;
+      padding: clamp(22px, 4.5vw, 42px);
+      border-left: 6px solid var(--persimmon);
+      background: var(--plum);
+      color: #fff8ea;
+      box-shadow: 10px 10px 0 rgba(35, 31, 25, .12);
+    }
+
+    .prompt .label {
+      display: block;
+      margin-bottom: 18px;
+      color: #f7bc95;
+    }
+
+    .prompt p {
+      margin: 0;
+      font-size: clamp(1.08rem, 2.4vw, 1.42rem);
+      line-height: 1.55;
+    }
+
+    .prompt code {
+      color: #fff;
+      font-size: .9em;
+      overflow-wrap: anywhere;
+    }
+
+    .outputs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(12px, 2.5vw, 24px);
+    }
+
+    .output {
+      position: relative;
+      min-height: 190px;
+      padding: 22px;
+      border: 1px solid var(--ink);
+      background: var(--paper-bright);
+    }
+
+    .output:nth-child(2) {
+      margin-top: 28px;
+      background: #e5e7cc;
+    }
+
+    .output:nth-child(3) {
+      margin-top: 56px;
+      background: #edd4c3;
+    }
+
+    .file-type {
+      display: inline-block;
+      margin-bottom: 42px;
+      padding: 4px 7px;
+      background: var(--ink);
+      color: var(--paper-bright);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .7rem;
+    }
+
+    .output h3 {
+      margin-bottom: 8px;
+      font-size: 1.25rem;
+      font-weight: 400;
+    }
+
+    .output p {
+      margin: 0;
+      color: var(--quiet);
+      font-size: .9rem;
+    }
+
+    .limits {
+      display: grid;
+      grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
+      gap: clamp(24px, 6vw, 70px);
+      align-items: start;
+    }
+
+    .dependency-stamp {
+      padding: 28px;
+      border: 2px solid var(--carmine);
+      color: var(--carmine);
+      text-align: center;
+      transform: rotate(-1deg);
+    }
+
+    .dependency-stamp strong {
+      display: block;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 400;
+      letter-spacing: -.03em;
+    }
+
+    .dependency-stamp span {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .71rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .limit-list {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .limit-row {
+      display: grid;
+      grid-template-columns: 8rem minmax(0, 1fr);
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .limit-row strong {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .72rem;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .limit-row span {
+      color: var(--quiet);
+      font-size: .92rem;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 24px 0 8px;
+      border-top: 1px solid var(--ink);
+      color: var(--quiet);
+      font-size: .78rem;
+    }
+
+    .footer strong {
+      color: var(--ink);
+    }
+
+    @keyframes drift {
+      from {
+        transform: translateY(-4px);
+        opacity: .65;
+      }
+      to {
+        transform: translateY(5px);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .specimen {
+        margin-right: auto;
+      }
+
+      .section-heading,
+      .prompt-wrap,
+      .limits {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .workflow-step:nth-child(2) {
+        border-right: 0;
+      }
+
+      .workflow-step:nth-child(-n+2) {
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .outputs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .output:nth-child(2),
+      .output:nth-child(3) {
+        margin-top: 0;
+      }
+
+      .output:nth-child(3) {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-shell {
+        padding: 16px 24px 16px 16px;
+      }
+
+      .masthead {
+        align-items: flex-start;
+      }
+
+      .meta {
+        max-width: 9rem;
+        font-size: .62rem;
+      }
+
+      h1 {
+        font-size: clamp(3.15rem, 17vw, 4.7rem);
+      }
+
+      .use-grid,
+      .workflow,
+      .outputs {
+        grid-template-columns: 1fr;
+      }
+
+      .specimen {
+        width: calc(100% - 12px);
+        margin-right: 12px;
+      }
+
+      .specimen-foot {
+        gap: 4px;
+      }
+
+      .specimen-foot span {
+        font-size: .54rem;
+        line-height: 1.35;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .workflow-step {
+        border-right: 0;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .workflow-step:last-child {
+        border-bottom: 0;
+      }
+
+      .output:nth-child(3) {
+        grid-column: auto;
+      }
+
+      .limit-row {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+
+      .footer {
+        display: grid;
+        gap: 8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="finchip-page">
+    <div class="page-shell">
+      <header class="masthead">
+        <div class="brand">Algorithmic Art</div>
+        <div class="meta">Instruction / Generative systems / p5.js</div>
+      </header>
+
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <div class="eyebrow">A living artwork, not a filter</div>
+          <h1 id="page-title">Give an idea a <em>system.</em></h1>
+          <p class="lede">Turn a subtle creative concept into an original generative movement, then express it as reproducible p5.js art with meaningful controls and seed-based variation.</p>
+          <div class="pill-row" aria-label="Core capabilities">
+            <span class="pill">Seeded variation</span>
+            <span class="pill">Interactive parameters</span>
+            <span class="pill">Original algorithms</span>
+          </div>
+        </div>
+
+        <div class="hero-art">
+          <figure class="specimen" aria-label="Conceptual specimen showing a seeded generative composition">
+            <div class="specimen-head">
+              <span class="label">System specimen</span>
+              <span class="micro">Seed 12,345</span>
+            </div>
+            <div class="art-frame">
+              <svg viewBox="0 0 600 600" role="img" aria-label="Abstract field of orbiting marks representing controlled seeded variation">
+                <rect width="600" height="600" fill="#e8d9b8"/>
+                <circle cx="300" cy="300" r="220" fill="none" stroke="#2d2922" stroke-width="2" stroke-dasharray="2 11"/>
+                <circle cx="300" cy="300" r="155" fill="none" stroke="#b63d2f" stroke-width="3" stroke-dasharray="34 8 8 19"/>
+                <circle cx="300" cy="300" r="88" fill="#fff8e9" stroke="#2d2922" stroke-width="2"/>
+                <g fill="none" stroke-linecap="round">
+                  <path d="M68 336 C138 91 414 55 536 254 C623 397 461 563 280 521 C122 484 120 266 245 196 C370 126 483 244 425 358 C372 462 206 432 190 319 C175 213 312 167 376 248 C431 317 340 393 267 353 C206 320 240 241 306 236" stroke="#694054" stroke-width="12" opacity=".8"/>
+                  <path d="M84 402 C155 502 263 531 378 493 C517 447 560 286 482 169 C410 62 229 47 131 143 C37 236 51 377 152 447" stroke="#657743" stroke-width="5"/>
+                  <path d="M113 258 C199 120 417 111 501 277 C572 417 408 538 261 476 C142 425 127 278 220 202" stroke="#ea794e" stroke-width="8" stroke-dasharray="3 18"/>
+                </g>
+                <g fill="#b63d2f">
+                  <circle cx="87" cy="336" r="10"/><circle cx="159" cy="149" r="7"/><circle cx="330" cy="91" r="12"/>
+                  <circle cx="499" cy="210" r="8"/><circle cx="507" cy="407" r="11"/><circle cx="348" cy="515" r="6"/>
+                  <circle cx="164" cy="462" r="9"/><circle cx="218" cy="261" r="7"/><circle cx="389" cy="312" r="10"/>
+                </g>
+                <g fill="#2d2922">
+                  <circle cx="300" cy="300" r="9"/><circle cx="279" cy="331" r="4"/><circle cx="327" cy="267" r="5"/>
+                </g>
+              </svg>
+            </div>
+            <figcaption class="specimen-foot">
+              <span><strong>Constant</strong>system rules</span>
+              <span><strong>Variable</strong>seed + parameters</span>
+              <span><strong>Result</strong>repeatable edition</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="fit-title">
+        <div class="section-heading">
+          <div class="index">01 / FIT</div>
+          <div>
+            <h2 id="fit-title">When the idea needs behavior.</h2>
+            <p class="section-intro">Use the Skill when the visual should emerge from rules, forces, fields, repetition, or controlled chance—not when a fixed composition is already fully specified.</p>
+          </div>
+        </div>
+
+        <div class="use-grid">
+          <article class="card">
+            <h3>Strong fit</h3>
+            <ul class="clean-list">
+              <li>Generative and algorithmic artwork</li>
+              <li>Flow fields, particles, recursive systems, and organic growth</li>
+              <li>Reproducible editions that change by seed</li>
+              <li>Art that benefits from interactive parameter exploration</li>
+            </ul>
+          </article>
+          <article class="card caution">
+            <h3>Choose another tool</h3>
+            <ul class="clean-list">
+              <li>Pixel-perfect reproduction of an existing artist’s work</li>
+              <li>Conventional photo editing or image retouching</li>
+              <li>A static logo with no computational behavior</li>
+              <li>Offline-only delivery without replacing the p5.js CDN dependency</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="workflow-title">
+        <div class="section-heading">
+          <div class="index">02 / METHOD</div>
+          <div>
+            <h2 id="workflow-title">From premise to living code.</h2>
+            <p class="section-intro">The Skill separates the artistic thesis from implementation so that every control, force, and visual relationship has a reason to exist.</p>
+          </div>
+        </div>
+
+        <div class="workflow" aria-label="Four-stage workflow">
+          <article class="workflow-step">
+            <span class="step-no">1</span>
+            <h3>Read the signal</h3>
+            <p>Find the subtle conceptual thread in the request without turning it into a literal illustration.</p>
+          </article>
+          <article class="workflow-step">
+            <span class="step-no">2</span>
+            <h3>Name the movement</h3>
+            <p>Write a concise, four-to-six paragraph algorithmic philosophy grounded in emergence and mathematical relationships.</p>
+          </article>
+          <article class="workflow-step">
+            <span class="step-no">3</span>
+            <h3>Build the system</h3>
+            <p>Express the philosophy in p5.js using seeded randomness, carefully tuned behavior, and an original algorithm.</p>
+          </article>
+          <article class="workflow-step">
+            <span class="step-no">4</span>
+            <h3>Open exploration</h3>
+            <p>Connect essential parameters, seed navigation, regeneration, reset, and PNG export in the required viewer structure.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="prompt-title">
+        <div class="section-heading">
+          <div class="index">03 / INPUT</div>
+          <div>
+            <h2 id="prompt-title">Brief the feeling. Leave room for emergence.</h2>
+            <p class="section-intro">A useful request supplies a conceptual seed, the desired behavior or atmosphere, and any practical constraints. It does not need to prescribe an algorithm.</p>
+          </div>
+        </div>
+
+        <div class="prompt-wrap">
+          <div class="input-notes">
+            <h3>Include what matters</h3>
+            <p>Describe the idea, intended emotional register, whether the work should evolve or settle, and any palette or delivery needs. Mention a subject as reference material, not an artist to imitate.</p>
+            <div class="pill-row">
+              <span class="pill">Concept</span>
+              <span class="pill">Atmosphere</span>
+              <span class="pill">Behavior</span>
+              <span class="pill">Constraints</span>
+            </div>
+          </div>
+          <blockquote class="prompt">
+            <span class="label">Recommended prompt</span>
+            <p><code>Use $algorithmic-art to create an original seeded generative artwork about a memory gradually losing its edges. Let the system feel quiet at first and increasingly turbulent, with a restrained mineral palette. Deliver the philosophy and an interactive browser artifact.</code></p>
+          </blockquote>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="delivery-title">
+        <div class="section-heading">
+          <div class="index">04 / DELIVERY</div>
+          <div>
+            <h2 id="delivery-title">A thesis, an engine, an edition.</h2>
+            <p class="section-intro">The output is designed to remain understandable and explorable: the written intent explains the system, while the artifact makes its variations tangible.</p>
+          </div>
+        </div>
+
+        <div class="outputs">
+          <article class="output">
+            <span class="file-type">.MD</span>
+            <h3>Algorithmic philosophy</h3>
+            <p>A named computational movement describing its processes, relationships, evolution, and aesthetic logic.</p>
+          </article>
+          <article class="output">
+            <span class="file-type">.HTML</span>
+            <h3>Interactive viewer</h3>
+            <p>A browser artifact built from the bundled viewer template, with the p5.js algorithm and controls embedded inline.</p>
+          </article>
+          <article class="output">
+            <span class="file-type">.JS / PNG</span>
+            <h3>Code and captures</h3>
+            <p>The generative logic can be delivered as source, while the viewer supports exporting selected seed results as PNG.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="limits-title">
+        <div class="section-heading">
+          <div class="index">05 / CONDITIONS</div>
+          <div>
+            <h2 id="limits-title">What the system relies on.</h2>
+            <p class="section-intro">The Skill is intentionally opinionated about reproducibility, originality, and its viewer foundation. These boundaries are part of the product.</p>
+          </div>
+        </div>
+
+        <div class="limits">
+          <div class="dependency-stamp">
+            <span>Primary runtime</span>
+            <strong>p5.js 1.7.0</strong>
+            <span>loaded from a public CDN</span>
+          </div>
+          <div class="limit-list">
+            <div class="limit-row">
+              <strong>Connectivity</strong>
+              <span>The generated viewer expects browser access to the p5.js CDN. Offline use requires packaging that dependency separately.</span>
+            </div>
+            <div class="limit-row">
+              <strong>Reproducibility</strong>
+              <span>Both <code>randomSeed()</code> and <code>noiseSeed()</code> must receive the current seed before the system is initialized.</span>
+            </div>
+            <div class="limit-row">
+              <strong>Viewer contract</strong>
+              <span>The bundled viewer structure, seed controls, actions, and interface branding remain fixed; the algorithm and meaningful parameters are the creative surface.</span>
+            </div>
+            <div class="limit-row">
+              <strong>Originality</strong>
+              <span>Create an original computational language. Do not copy a living or identifiable artist’s signature style.</span>
+            </div>
+            <div class="limit-row">
+              <strong>Performance</strong>
+              <span>Particle counts and expensive calculations should be tuned for smooth browser execution; complexity is not a substitute for composition.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span><strong>Algorithmic Art</strong> · Instruction page</span>
+        <span>Apache-2.0 · Browser + p5.js</span>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>
