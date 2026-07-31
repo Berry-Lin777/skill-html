@@ -660,6 +660,28 @@
         transition: none !important;
       }
     }
+    .studio-run {
+      padding: clamp(50px, 8vw, 96px) 0;
+      border-top: 1px solid var(--ink);
+    }
+    .studio-run-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, .4fr); gap: 26px; align-items: end; margin-bottom: 26px; }
+    .studio-run-head h2 { margin: 8px 0 0; font-size: clamp(38px, 7vw, 74px); font-weight: 400; letter-spacing: -.05em; line-height: .92; }
+    .studio-run-head p { margin: 0; color: var(--muted); font: 13px/1.6 "Helvetica Neue", Arial, sans-serif; }
+    .studio-run video,
+    .studio-run img { display: block; width: 100%; max-width: 100%; height: auto; }
+    .studio-run video { aspect-ratio: 1280 / 544; object-fit: contain; background: #171410; }
+    .studio-run-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+    .studio-run figure { min-width: 0; margin: 0; border-top: 1px solid var(--ink); padding-top: 10px; }
+    .studio-run figcaption { margin-top: 8px; color: var(--muted); font: 11px/1.45 "Helvetica Neue", Arial, sans-serif; }
+    .final-plate { display: grid; grid-template-columns: minmax(0, .42fr) minmax(0, 1fr); gap: 18px; align-items: start; margin-top: 20px; padding: 18px; background: #171410; color: #f7f0df; }
+    .final-plate img { max-height: 720px; object-fit: contain; }
+    .final-plate h3 { margin: 0 0 10px; font-size: clamp(25px, 4vw, 42px); font-weight: 400; }
+    .final-plate p { margin: 0; color: #c9bca9; font: 13px/1.6 "Helvetica Neue", Arial, sans-serif; }
+    @media (max-width: 700px) {
+      .studio-run-head,
+      .final-plate { grid-template-columns: minmax(0, 1fr); }
+      .studio-run-grid { grid-template-columns: minmax(0, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -818,6 +840,28 @@
     </section>
 
     <div class="shell">
+      <section class="studio-run" aria-labelledby="studio-run-title">
+        <header class="studio-run-head">
+          <div>
+            <div class="label">Real agent run</div>
+            <h2 id="studio-run-title">Brief, philosophy, canvas, delivered.</h2>
+          </div>
+          <p>The following media records a real Canvas Design execution, including tool inspection, authored philosophy, rendering work, and the finished AURAE plate.</p>
+        </header>
+        <video controls preload="metadata" playsinline>
+          <source src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/canvas-design/run-evidence-0731/run-video.mp4" type="video/mp4">
+        </video>
+        <div class="studio-run-grid">
+          <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/canvas-design/run-evidence-0731/run-01.webp" width="1800" height="1019" alt="Real Canvas Design run showing script creation and visual iteration"><figcaption>Rendering code was authored and corrected against the requested visual direction.</figcaption></figure>
+          <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/canvas-design/run-evidence-0731/run-02.webp" width="1800" height="1024" alt="Real Canvas Design run showing completed files and delivery summary"><figcaption>The run produced the plate PNG, a print-ready PDF, and the design philosophy Markdown.</figcaption></figure>
+          <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/canvas-design/run-evidence-0731/run-03.webp" width="1800" height="870" alt="Real Canvas Design run showing skill reading and philosophy authoring"><figcaption>The agent read the Skill, inspected available tools and fonts, then wrote the measured-radiance philosophy.</figcaption></figure>
+        </div>
+        <div class="final-plate">
+          <img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/canvas-design/run-evidence-0731/final-artwork.webp" width="1286" height="1800" alt="Final AURAE Latent Beauty Plate produced by the real Canvas Design run">
+          <div><div class="label">Final artifact</div><h3>AURAE — Latent Beauty Map</h3><p>This is the actual static artwork generated during the recorded run, not the illustrative “Tidal Index” composition above.</p></div>
+        </div>
+      </section>
+
       <section class="evidence" aria-labelledby="evidence-title">
         <header class="evidence-head">
           <div>
@@ -825,8 +869,8 @@
             <h2 id="evidence-title">What is verified now.</h2>
           </div>
           <p>
-            Evidence is separated from the illustrative transformation above. No terminal
-            screenshot, output file, or host-agent execution is fabricated for this page.
+            The real run is separated from the illustrative “Tidal Index” transformation above.
+            Screenshots, video, and the final AURAE plate are direct artifacts from the supplied execution.
           </p>
         </header>
 
@@ -852,16 +896,15 @@
             <h3>PNG / PDF rendering</h3>
             <p>
               No API key is required, but final image or PDF creation depends on the
-              tools available to the host agent. A representative canvas run was not
-              captured as evidence for this showcase.
+              tools available to the host agent. This Showcase now includes a completed
+              run with both PNG and PDF delivery recorded.
             </p>
           </article>
         </div>
 
         <div class="honesty">
-          <strong>Evidence boundary:</strong> “Tidal Index” is a clearly labeled showcase
-          reconstruction of the skill’s documented two-step method. It proves the page’s
-          presentation concept, not a completed external renderer invocation.
+          <strong>Evidence boundary:</strong> “Tidal Index” is the page’s illustrative concept study.
+          The AURAE media directly above is the separately identified real execution evidence.
         </div>
       </section>
 

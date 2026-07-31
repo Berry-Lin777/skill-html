@@ -764,6 +764,21 @@
         scroll-behavior: auto !important;
       }
     }
+    .assessment-run { margin-top: clamp(34px, 6vw, 66px); padding: clamp(22px, 4vw, 38px); border: 2px solid var(--ink); border-radius: 16px 50px 16px 50px; background: #e8e2f2; }
+    .assessment-run-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: end; margin-bottom: 20px; }
+    .assessment-run-head h2 { margin: 8px 0 0; font-size: clamp(32px, 5vw, 55px); line-height: .98; }
+    .assessment-run-badge { padding: 9px 12px; border-radius: 999px; background: var(--plum); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .assessment-run video,
+    .assessment-run img { display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid var(--ink); background: var(--paper); }
+    .assessment-run video { aspect-ratio: 2416 / 1440; object-fit: contain; background: var(--ink); }
+    .assessment-run-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+    .assessment-run figure { min-width: 0; margin: 0; }
+    .assessment-run figcaption { margin-top: 7px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    @media (max-width: 700px) {
+      .assessment-run-head,
+      .assessment-run-grid { grid-template-columns: minmax(0, 1fr); }
+      .assessment-run-badge { justify-self: start; }
+    }
   </style>
 </head>
 <body>
@@ -1021,6 +1036,21 @@
         </div>
       </section>
 
+      <section class="assessment-run" aria-labelledby="assessment-run-title">
+        <div class="assessment-run-head">
+          <div><span class="tag">Real Claude Code execution</span><h2 id="assessment-run-title">The agreement was scored clause by clause.</h2></div>
+          <span class="assessment-run-badge">Run captured</span>
+        </div>
+        <video controls preload="metadata" playsinline>
+          <source src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/legal-risk-assessment/run-evidence-0731/run-video.mp4" type="video/mp4">
+        </video>
+        <div class="assessment-run-grid">
+          <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/legal-risk-assessment/run-evidence-0731/run-01.webp" width="1455" height="1247" alt="Real Legal Risk Assessment run showing the contract prompt and generated risk table"><figcaption>The user supplied a vendor agreement and requested the Skill’s severity-by-likelihood assessment.</figcaption></figure>
+          <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/legal-risk-assessment/run-evidence-0731/run-02.webp" width="1404" height="1145" alt="Real Legal Risk Assessment output showing clause ratings and mitigation actions"><figcaption>Indemnity, insurance, IP, compliance, termination, subcontracting, and dispute clauses received separate rationales and controls.</figcaption></figure>
+          <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/legal-risk-assessment/run-evidence-0731/run-03.webp" width="1436" height="1163" alt="Real Legal Risk Assessment output showing additional risk classifications"><figcaption>The resulting register records current scores, risk bands, and concrete mitigation language for review.</figcaption></figure>
+        </div>
+      </section>
+
       <section aria-labelledby="boundary-title">
         <div class="section-head">
           <div>
@@ -1033,8 +1063,8 @@
         <div class="review-boundary">
           <div class="boundary-mark" aria-hidden="true">!</div>
           <div>
-            <h3>No counsel approval is claimed for this representative assessment.</h3>
-            <p>The scenario was created to demonstrate the skill’s severity-by-likelihood workflow. No governing law was researched, no confidential matter was analyzed, no outside counsel was engaged, and the output should not be used as a legal determination.</p>
+            <h3>The assessment run is real; counsel approval is still not claimed.</h3>
+            <p>The supplied execution demonstrates the Skill’s severity-by-likelihood workflow on an agreement. No governing-law conclusion, outside-counsel engagement, or final legal determination is implied by displaying the run.</p>
           </div>
         </div>
 

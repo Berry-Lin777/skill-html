@@ -687,6 +687,16 @@
         scroll-behavior: auto !important;
       }
     }
+    .real-matter-run { margin-top: clamp(34px, 6vw, 62px); padding: clamp(22px, 4vw, 36px); border: 2px solid var(--espresso); border-radius: 18px 54px 18px 54px; background: #dfeee7; }
+    .real-matter-run h2 { margin: 8px 0 14px; font-size: clamp(31px, 5vw, 54px); line-height: .98; }
+    .real-matter-run > p { max-width: 760px; margin: 0 0 20px; color: var(--muted); }
+    .real-matter-run video,
+    .real-matter-run img { display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid var(--espresso); background: var(--paper); }
+    .real-matter-run video { aspect-ratio: 2416 / 1440; object-fit: contain; background: var(--espresso); }
+    .real-matter-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+    .real-matter-grid figure { min-width: 0; margin: 0; }
+    .real-matter-grid figcaption { margin-top: 7px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    @media (max-width: 650px) { .real-matter-grid { grid-template-columns: minmax(0, 1fr); } }
   </style>
 </head>
 <body>
@@ -907,6 +917,19 @@
         </div>
       </section>
 
+      <section class="real-matter-run" aria-labelledby="real-matter-run-title">
+        <span class="tag">Real Claude Code execution</span>
+        <h2 id="real-matter-run-title">A vendor delay inquiry became a counsel-review draft.</h2>
+        <p>The supplied run shows the Skill loading the agreement context, recognizing the potential-breach escalation trigger, and producing a clearly marked draft for legal review.</p>
+        <video controls preload="metadata" playsinline>
+          <source src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/legal-response/run-evidence-0731/run-video.mp4" type="video/mp4">
+        </video>
+        <div class="real-matter-grid">
+          <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/legal-response/run-evidence-0731/run-01.webp" width="1416" height="1230" alt="Real Legal Response run showing the user request and counsel-review draft"><figcaption>The run classified the inquiry and issued a draft explicitly marked for legal review.</figcaption></figure>
+          <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/legal-response/run-evidence-0731/run-02.webp" width="1382" height="905" alt="Real Legal Response output showing the tailored corrective-action request"><figcaption>The generated response requests status, affected-goods scope, a revised delivery date, and a recovery plan without waiving rights.</figcaption></figure>
+        </div>
+      </section>
+
       <section aria-labelledby="boundary-title">
         <div class="section-head">
           <div>
@@ -919,8 +942,8 @@
         <div class="boundary">
           <div class="boundary-mark" aria-hidden="true">!</div>
           <div>
-            <h3>No real incident, statutory deadline, jurisdiction, or counsel approval is represented.</h3>
-            <p>The scenario and draft are demonstration content. Qualified legal professionals must determine applicable law, calculate any legal deadline, protect privilege, select recipients, verify organizational policy, and approve every external communication.</p>
+            <h3>A real drafting run is shown, but no counsel approval or send is represented.</h3>
+            <p>The supplied matter and generated draft are execution evidence. Qualified legal professionals must still determine applicable law, calculate any legal deadline, protect privilege, select recipients, verify organizational policy, and approve every external communication.</p>
           </div>
         </div>
 

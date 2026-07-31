@@ -811,6 +811,21 @@
         scroll-behavior: auto !important;
       }
     }
+    .build-diary { margin-top: clamp(34px, 6vw, 66px); padding: clamp(20px, 4vw, 34px); border: 2px solid var(--spruce); border-radius: 30px 8px 30px 8px; background: #e8e2cf; }
+    .build-diary-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: end; margin-bottom: 20px; }
+    .build-diary-head h2 { margin: 6px 0 0; font-size: clamp(32px, 5.8vw, 58px); line-height: .95; }
+    .build-diary-status { padding: 9px 12px; border-radius: 999px; background: var(--leaf); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .build-diary video,
+    .build-diary img { display: block; width: 100%; max-width: 100%; height: auto; border-radius: 14px; }
+    .build-diary video { aspect-ratio: 1280 / 696; object-fit: contain; background: var(--spruce); }
+    .build-diary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+    .build-diary figure { min-width: 0; margin: 0; }
+    .build-diary figcaption { margin-top: 7px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    @media (max-width: 700px) {
+      .build-diary-head,
+      .build-diary-grid { grid-template-columns: minmax(0, 1fr); }
+      .build-diary-status { justify-self: start; }
+    }
   </style>
 </head>
 <body>
@@ -982,13 +997,28 @@
         </div>
       </section>
 
+      <section class="build-diary" aria-labelledby="build-diary-title">
+        <div class="build-diary-head">
+          <div><span class="eyebrow">Real Claude Code run</span><h2 id="build-diary-title">The interface was designed, built, and opened.</h2></div>
+          <span class="build-diary-status">Execution captured</span>
+        </div>
+        <video controls preload="metadata" playsinline>
+          <source src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/frontend-design/run-evidence-0731/run-video.mp4" type="video/mp4">
+        </video>
+        <div class="build-diary-grid">
+          <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/frontend-design/run-evidence-0731/run-01.webp" width="1800" height="1004" alt="Real Frontend Design run showing the generated project opened in a browser"><figcaption>The agent completed the project and opened the local interface for visual review.</figcaption></figure>
+          <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/frontend-design/run-evidence-0731/run-02.webp" width="1800" height="1188" alt="Real Frontend Design run showing structured visual options and implementation planning"><figcaption>The run translated the brief into named visual systems, interaction details, and responsive behavior.</figcaption></figure>
+          <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/frontend-design/run-evidence-0731/run-03.webp" width="1800" height="936" alt="Real Frontend Design run showing Skill execution and project creation"><figcaption>The Skill was read before implementation, then the project structure and interface files were created.</figcaption></figure>
+        </div>
+      </section>
+
       <section class="content" aria-labelledby="evidence-title">
         <div class="section-heading">
           <div>
             <span class="eyebrow">Evidence boundary</span>
             <h2 id="evidence-title">What this page proves—and what it does not.</h2>
           </div>
-          <p>No fake terminal, mock agent conversation, or invented performance score is used. The result is evaluated against the actual instruction contract and its visible output.</p>
+          <p>The run media above is a real Claude Code execution supplied for this Skill. The styled Nightjar interface remains a separate Showcase study and no performance score is invented.</p>
         </div>
 
         <div class="boundary">
@@ -1009,7 +1039,7 @@
               <li>No live reservation backend or product data is connected.</li>
               <li>The controls are static Showcase elements, not functioning form submissions.</li>
               <li>No external framework build or application integration was run.</li>
-              <li>No separate live-agent generation session is represented as evidence.</li>
+              <li>The supplied run demonstrates generation and local opening, but does not prove a deployed production backend.</li>
             </ul>
           </article>
         </div>

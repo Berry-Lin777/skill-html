@@ -469,6 +469,35 @@
         transition-duration: .01ms !important;
       }
     }
+    .live-run {
+      margin-top: clamp(42px, 7vw, 74px);
+      padding: clamp(22px, 4vw, 38px);
+      border: 1px solid var(--rule);
+      background: #ede6d3;
+    }
+
+    .live-run-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .live-run-head h2 { margin: 6px 0 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 5vw, 54px); font-weight: 500; }
+    .live-run-badge { padding: 8px 10px; background: var(--leaf); color: #fff; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+    .live-run video,
+    .live-run img { display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid var(--rule); background: #111; }
+    .live-run video { aspect-ratio: 2416 / 1440; object-fit: contain; }
+    .live-run-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+    .live-run figure { min-width: 0; margin: 0; }
+    .live-run figcaption { margin-top: 8px; color: var(--muted); font-size: 12px; }
+
+    @media (max-width: 620px) {
+      .live-run-head,
+      .live-run-grid { grid-template-columns: minmax(0, 1fr); }
+      .live-run-badge { justify-self: start; }
+    }
   </style>
 </head>
 <body>
@@ -620,6 +649,29 @@
         </div>
       </section>
 
+      <section class="live-run" aria-labelledby="live-run-title">
+        <div class="live-run-head">
+          <div>
+            <p class="section-index">04 / Real run</p>
+            <h2 id="live-run-title">Codex produced the artwork and opened the result.</h2>
+          </div>
+          <span class="live-run-badge">Real execution evidence</span>
+        </div>
+        <video controls preload="metadata" playsinline>
+          <source src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/algorithmic-art/run-evidence-0731/run-video.mp4" type="video/mp4">
+        </video>
+        <div class="live-run-grid">
+          <figure>
+            <img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/algorithmic-art/run-evidence-0731/run-01.webp" width="1487" height="751" alt="Real Codex run showing the Algorithmic Art request and generated interactive result">
+            <figcaption>The completed seeded artwork opened beside the original English request.</figcaption>
+          </figure>
+          <figure>
+            <img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/algorithmic-art/run-evidence-0731/run-02.webp" width="1800" height="1054" alt="Real interactive Algorithmic Art output with seed and parameter controls">
+            <figcaption>The generated viewer exposes the seed, mist density, mountain complexity, flow speed, and variation controls.</figcaption>
+          </figure>
+        </div>
+      </section>
+
       <section class="section" aria-labelledby="evidence-title">
         <div class="section-head">
           <p class="section-index">04 / Evidence</p>
@@ -647,7 +699,7 @@
             <p>Generated viewers use p5.js from a public CDN by default. No API key is required, but the standard artifact is not fully offline.</p>
           </article>
         </div>
-        <p class="evidence-note"><strong>Evidence boundary:</strong> this page does not claim that “Herbarium Drift” was executed by Claude or Codex. It is a transparent showcase composition derived from the documented method; the verified statements above come from the local package preflight.</p>
+        <p class="evidence-note"><strong>Evidence boundary:</strong> the media above is a real Codex run of this Skill. “Herbarium Drift” remains the page’s separate illustrative concept study; the executed run used a different mist-and-mountain prompt and produced the viewer shown above.</p>
       </section>
 
       <footer class="final-line">

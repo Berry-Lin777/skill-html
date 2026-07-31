@@ -684,6 +684,14 @@
         transition: none !important;
       }
     }
+    .capture-reel { margin-top: 26px; }
+    .capture-reel video,
+    .capture-reel img { display: block; width: 100%; max-width: 100%; height: auto; }
+    .capture-reel video { aspect-ratio: 1280 / 688; object-fit: contain; background: var(--ink); }
+    .capture-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+    .capture-grid figure { min-width: 0; margin: 0; padding: 10px; border: 1px solid var(--ink); background: var(--paper); }
+    .capture-grid figcaption { margin-top: 8px; color: var(--muted); font-size: 11px; line-height: 1.45; }
+    @media (max-width: 700px) { .capture-grid { grid-template-columns: minmax(0, 1fr); } }
   </style>
 </head>
 <body>
@@ -860,9 +868,20 @@
           </article>
         </div>
 
+        <div class="capture-reel" aria-label="Real Web Artifacts Builder execution media">
+          <video controls preload="metadata" playsinline>
+            <source src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/web-artifacts-builder/run-evidence-0731/run-video.mp4" type="video/mp4">
+          </video>
+          <div class="capture-grid">
+            <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/web-artifacts-builder/run-evidence-0731/run-01.webp" width="1800" height="901" alt="Real Web Artifacts Builder run showing the requested React application and build instructions"><figcaption>The run begins from the Skill and a concrete multi-component React artifact brief.</figcaption></figure>
+            <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/web-artifacts-builder/run-evidence-0731/run-02.webp" width="1290" height="683" alt="Real browser view of the generated Web Artifacts Builder output"><figcaption>The generated interface was opened in a browser as a complete artifact.</figcaption></figure>
+            <figure><img src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/web-artifacts-builder/run-evidence-0731/run-03.webp" width="1800" height="880" alt="Real Web Artifacts Builder execution showing project initialization and component plan"><figcaption>The agent initialized the project, inspected available components, and implemented the planned experience.</figcaption></figure>
+          </div>
+        </div>
+
         <div class="evidence-note">
           <strong>Scope note</strong>
-          <span>The screenshot above is the browser-rendered output of this run, not a simulated terminal or mock conversation. The generated artifact contains its app code and styles inline; npm-registry access is still required during project setup and first-time dependency installation.</span>
+          <span>The original browser preview and the supplied execution media above are real run evidence, not simulated terminal or mock conversation. The generated artifact contains its app code and styles inline; npm-registry access is still required during project setup and first-time dependency installation.</span>
         </div>
       </section>
 
