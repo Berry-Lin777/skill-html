@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Pindou Skill — From photo to bead sheet</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f7efe3;
+      --sheet: #fffaf1;
+      --ink: #211610;
+      --muted: #705646;
+      --coral: #e2553d;
+      --butter: #f0b429;
+      --jade: #1f7d64;
+      --denim: #3a6fa0;
+      --line: #dcc8ae;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      width: 100%; max-width: 100%; min-width: 0; margin: 0;
+      background: var(--paper); color: var(--ink);
+    }
+    body { overflow-x: hidden; }
+    img { display: block; max-width: 100%; height: auto; }
+    .finchip-page {
+      width: 100%; max-width: 100%; min-width: 0; overflow-x: hidden;
+      background-color: var(--paper);
+      background-image: repeating-linear-gradient(90deg, transparent 0 17px, rgba(33,22,16,.05) 17px 18px);
+      color: var(--ink);
+      font-family: "Avenir Next Condensed", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    }
+    .wrap { width: 100%; max-width: 1080px; min-width: 0; margin: 0 auto; padding: 22px 18px 56px; }
+    .mast {
+      display: flex; justify-content: space-between; gap: 12px; align-items: center;
+      padding-bottom: 12px; border-bottom: 2px solid var(--ink);
+    }
+    .brand { font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: 13px; }
+    .meta { font: 700 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; overflow-wrap: anywhere; }
+    .kicker { font: 800 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--coral); }
+    h1 { font-size: clamp(30px, 6vw, 54px); line-height: .98; letter-spacing: -.035em; margin: 10px 0 12px; }
+    h2 { font-size: clamp(24px, 3.8vw, 36px); line-height: 1.05; margin: 8px 0 10px; }
+    .lede { color: var(--muted); font-size: 17px; max-width: 40rem; }
+    .hero { padding: 22px 0 8px; }
+    .prompt {
+      margin: 16px 0 0; padding: 14px 16px; background: var(--ink); color: #fff4e6;
+      border-radius: 16px; font: 600 14px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+      white-space: pre-wrap; overflow-wrap: anywhere;
+    }
+    section { margin: 38px 0; }
+    .copy { color: var(--muted); max-width: 40rem; }
+    .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    figure { margin: 0; min-width: 0; background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 18px; overflow: hidden; }
+    figure img { width: 100%; }
+    .photo { aspect-ratio: 960 / 1504; object-fit: cover; background: #111; }
+    .pixel { aspect-ratio: 1100 / 1065; object-fit: contain; background: #111; }
+    .pattern { aspect-ratio: 760 / 1144; object-fit: contain; background: #fff; }
+    .lphoto { aspect-ratio: 401 / 370; object-fit: cover; }
+    .lpixel { aspect-ratio: 571 / 571; object-fit: contain; background: #f3f3f3; }
+    .lpattern { aspect-ratio: 445 / 451; object-fit: contain; background: #fff; }
+    figcaption { padding: 11px 12px 13px; font-size: 13px; }
+    figcaption strong { display: block; }
+    figcaption span { color: var(--muted); }
+    .spec { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .spec article { min-width: 0; padding: 14px 14px 12px; background: var(--sheet); border: 1.5px dashed var(--ink); border-radius: 16px; }
+    .spec h3 { margin-bottom: 8px; font-size: 16px; }
+    .spec ul { margin: 0; padding-left: 18px; color: var(--muted); }
+    .spec li + li { margin-top: 5px; }
+    .why { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .why article { min-width: 0; padding: 14px; background: var(--sheet); border-top: 5px solid var(--coral); border-radius: 0 0 14px 14px; }
+    .why article:nth-child(2) { border-top-color: var(--jade); }
+    .why article:nth-child(3) { border-top-color: var(--denim); }
+    .why h3 { margin-bottom: 6px; font-size: 16px; }
+    .why p { margin: 0; color: var(--muted); font-size: 13px; }
+    .evidence { display: grid; gap: 14px; }
+    .ev {
+      display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 12px;
+      padding: 12px; background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 18px;
+    }
+    .ev img { width: 100%; border-radius: 12px; }
+    .ev h3 { margin-bottom: 6px; }
+    .ev p { margin: 0 0 8px; color: var(--muted); font-size: 14px; }
+    .flag { display: inline-block; padding: 3px 8px; border-radius: 999px; background: #e8f4ee; color: var(--jade); font: 800 10px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .05em; text-transform: uppercase; }
+    .flag.open { background: #f4ead8; color: #8a5a20; }
+    .mark { width: 120px; max-width: 28%; float: right; margin: 0 0 8px 12px; border-radius: 12px; }
+    footer {
+      display: flex; justify-content: space-between; gap: 16px;
+      margin-top: 36px; padding-top: 14px; border-top: 2px solid var(--ink);
+      font-size: 12px; color: var(--muted); clear: both;
+    }
+    @media (max-width: 700px) {
+      .ev { grid-template-columns: 1fr; }
+      .why { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 500px) {
+      .wrap { padding-inline: 14px; }
+      .mast { flex-direction: column; align-items: flex-start; }
+      .flow, .spec { grid-template-columns: 1fr; }
+      .mark { float: none; width: 96px; margin: 0 0 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="finchip-page">
+  <main class="wrap">
+    <header class="mast">
+      <div class="brand">Pindou Skill · Showcase</div>
+      <div class="meta">Two official runs · cat + latte</div>
+    </header>
+
+    <section class="hero">
+      <div class="kicker">Input → judgment → sheet</div>
+      <h1>The same pipeline, two crafts that do not look alike.</h1>
+      <p class="lede">A keep-background cat and a white-background latte. Both start as a photo, pause on a gridded pixel draft, then become a numbered MARD sheet. These are published repository results, cropped so every readable caption on this page is English.</p>
+      <div class="prompt">Use pindou-skill on this cat photo.
+Cartoon. About 36×36. Keep the black backdrop. Max 18 colors.
+Keep the green eyes and pink inner ears. Pause at the pixel grid,
+then print the pattern and the shopping list.</div>
+    </section>
+
+    <section>
+      <div class="kicker">Run A · Cat</div>
+      <h2>Photo stays dark. The sheet keeps every bead, including the backdrop.</h2>
+      <p class="copy">Official teaser caption: keep background · 18 colors · 1,075 beads. The pixel draft is the approval surface. The coded sheet is what you print.</p>
+      <div class="flow">
+        <figure>
+          <img class="photo" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/pindou-skill/showcase/cat-photo.webp" width="960" height="1504" alt="Source photo of a white cat with brown patches on a black backdrop">
+          <figcaption><strong>1. Input</strong><span>Local photo. Subject plus a backdrop the user wanted to keep.</span></figcaption>
+        </figure>
+        <figure>
+          <img class="pixel" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/pindou-skill/showcase/cat-pixel.webp" width="1100" height="1065" alt="AI-drawn pixel cat on a numbered grid with solid black cells around the body">
+          <figcaption><strong>2. Judgment</strong><span>Visible grid, flattened fur, green eyes held. This is the STOP frame.</span></figcaption>
+        </figure>
+        <figure>
+          <img class="pattern" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/pindou-skill/showcase/cat-pattern.webp" width="760" height="1144" alt="Final printable cat pattern with a MARD color code in each bead cell">
+          <figcaption><strong>3. Delivery</strong><span>Each cell carries a palette code. This is the print file, not a restyled photo.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <div class="kicker">What the skill locked</div>
+      <h2>A brief the scripts can actually execute.</h2>
+      <div class="spec">
+        <article>
+          <h3>Spoken decisions → spec.json</h3>
+          <ul>
+            <li>style: cartoon</li>
+            <li>background_mode: keep</li>
+            <li>max_colors: 18</li>
+            <li>palette_id: mard_221</li>
+            <li>preserve_features: green eyes, pink inner ears, brown ear patches</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Why this run proves the keep-background path</h3>
+          <ul>
+            <li>Black cells stay part of the kit instead of being punched out</li>
+            <li>Face landmarks survive the snap instead of melting into one beige</li>
+            <li>The sheet is coded, not just posterized — you can buy H19 / M7 / B11</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="kicker">Run B · Latte</div>
+      <h2>Same tail of the pipeline. Opposite background rule.</h2>
+      <p class="copy">Official teaser caption: white background · 14 colors · 542 beads. Empty cells around the mug are not sold as white beads. That is the solid / remove contract working on a second subject.</p>
+      <div class="flow">
+        <figure>
+          <img class="lphoto" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/pindou-skill/showcase/latte-photo.webp" width="401" height="370" alt="Source photo of a latte with leaf foam in a black mug">
+          <figcaption><strong>1. Input</strong><span>A cafe still. Hard mug edge, warm foam, small highlight shapes.</span></figcaption>
+        </figure>
+        <figure>
+          <img class="lpixel" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/pindou-skill/showcase/latte-pixel.webp" width="571" height="571" alt="AI pixel mug with heart foam on a pale grid">
+          <figcaption><strong>2. Judgment</strong><span>Flat cells, readable handle, foam reduced to a few cream tones.</span></figcaption>
+        </figure>
+        <figure>
+          <img class="lpattern" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/pindou-skill/showcase/latte-pattern.webp" width="445" height="451" alt="30 by 30 latte bead pattern with codes such as H7, G5, and A11">
+          <figcaption><strong>3. Delivery</strong><span>30×30 coded grid. H7 for the mug body, G5 / A11 / H1 for the foam.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <div class="kicker">What the two runs prove together</div>
+      <h2>Not a one-subject filter.</h2>
+      <div class="why">
+        <article><h3>Branching background</h3><p>Cat keeps the backdrop as beads. Latte leaves the field empty. Both follow the same mask rule from quantize.py.</p></article>
+        <article><h3>Color budget</h3><p>18 vs 14 max colors. The latte sheet spends most of the kit on H7 / H6 / G5 / A11 instead of inventing extra greys.</p></article>
+        <article><h3>Same handoff files</h3><p>Both runs exist to become pattern.png, pattern.svg, and bom.csv — not a gallery image with a fake grid overlay.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="kicker">Run evidence</div>
+      <h2>Published artifacts, not a mocked agent log.</h2>
+      <img class="mark" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/pindou-skill/brand/pixel-cat-mark.webp" width="640" height="501" alt="Pixel cat mark from the official Pindou Skill logo">
+      <p class="copy">These frames come from CIawevy/pindou-skill assets (teaser_v2.webp and teaser_latte.webp). Chinese caption bars were cropped off. This HTML package did not rerun edit.py or generate.py inside Claude or Codex, so it does not claim a dual-agent pass.</p>
+      <div class="evidence">
+        <article class="ev">
+          <img class="pattern" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/pindou-skill/showcase/cat-pattern.webp" width="760" height="1144" alt="Official keep-background cat pattern used as run evidence">
+          <div>
+            <span class="flag">Official repo artifact</span>
+            <h3>Cat sheet · keep background</h3>
+            <p>Source: assets/teaser_v2.webp. Result: coded pattern with 18 colors and 1,075 beads. Validator in this package: visual match to the published teaser, not a local script rerun.</p>
+            <p>Preview: pattern cells carry MARD codes. Preview opened from the cropped official sheet.</p>
+          </div>
+        </article>
+        <article class="ev">
+          <img class="lpattern" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/pindou-skill/showcase/latte-pattern.webp" width="445" height="451" alt="Official white-background latte pattern used as second run evidence">
+          <div>
+            <span class="flag">Official repo artifact</span>
+            <h3>Latte sheet · white background</h3>
+            <p>Source: assets/teaser_latte.webp. Result: 14 colors, 542 beads, empty field around the mug. Same extract → snap → render tail as the cat.</p>
+            <p>Preview: 30×30 numbered grid with H7 mug body. BOM sidebar cropped because it used Chinese names.</p>
+          </div>
+        </article>
+        <article class="ev">
+          <img class="pixel" src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/pindou-skill/showcase/cat-pixel.webp" width="1100" height="1065" alt="Official AI pixel grid that sits between the photo and the coded sheet">
+          <div>
+            <span class="flag open">Local agent rerun not executed</span>
+            <h3>No Claude / Codex console shot</h3>
+            <p>There is no fabricated terminal. The missing evidence is a live session that writes outputs/&lt;run_name&gt;/ and opens pattern.png after svg_to_grid.py. That check stays unmarked until someone runs it.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <span>Pindou Skill showcase · official teasers only</span>
+      <span>Cat 18 / 1,075 · Latte 14 / 542 · MARD 221</span>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
