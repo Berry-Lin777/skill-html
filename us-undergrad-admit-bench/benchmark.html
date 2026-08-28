@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>US Undergrad Admit Bench — Benchmark</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --sheet: #efe4cf;
+      --rule: #4a1c28;
+      --ink: #1f160f;
+      --muted: #635244;
+      --ok: #245c38;
+      --okbg: #dcead9;
+      --hold: #7a4a10;
+      --holdbg: #f3e2b8;
+      --no: #7a1f1a;
+      --nobg: #f4d4d0;
+      --paper: #fffaf1;
+      --line: #d2c0a4;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      width: 100%; max-width: 100%; min-width: 0; margin: 0;
+      background: var(--sheet); color: var(--ink);
+      color-scheme: light; overflow-x: hidden;
+    }
+    body { font: 15px/1.45 "Avenir Next", "Gill Sans", "Segoe UI", sans-serif; }
+    .finchip-page {
+      width: 100%; max-width: 100%; min-width: 0;
+      background: var(--sheet); color: var(--ink); overflow-x: hidden;
+    }
+    .ledger { width: 100%; max-width: 100%; min-width: 0; padding: 14px 12px 36px; }
+    @media (min-width: 700px) { .ledger { padding: 18px 16px 44px; } }
+    img { display: block; max-width: 100%; height: auto; }
+    h1, h2, p { margin: 0; overflow-wrap: anywhere; }
+    .head {
+      border-bottom: 6px double var(--rule);
+      padding-bottom: 12px;
+    }
+    .head .k {
+      font: 700 11px/1 "Avenir Next", sans-serif;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--rule);
+    }
+    .head h1 {
+      font: 700 clamp(24px, 5vw, 34px)/1.15 Palatino, Georgia, serif;
+      margin: 6px 0 6px;
+    }
+    .head p { color: var(--muted); font-size: 14px; max-width: 42em; }
+    .stamps {
+      display: grid; gap: 8px; min-width: 0; margin-top: 12px;
+    }
+    @media (min-width: 700px) { .stamps { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+    @media (max-width: 699px) { .stamps { grid-template-columns: 1fr 1fr; } }
+    .stamp {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 10px;
+      min-width: 0;
+    }
+    .stamp i {
+      display: block;
+      font: 700 26px/1 Palatino, Georgia, serif;
+      color: var(--rule);
+      font-style: normal;
+    }
+    .stamp span { display: block; margin-top: 4px; font-size: 11px; color: var(--muted); }
+    .block {
+      margin-top: 14px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 12px;
+      min-width: 0;
+    }
+    .block h2 {
+      font: 700 18px/1.25 Palatino, Georgia, serif;
+      color: var(--rule);
+      margin-bottom: 8px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; }
+    th, td { border: 1px solid var(--line); padding: 7px 8px; text-align: left; vertical-align: top; min-width: 0; }
+    th { background: #ead8b4; color: var(--ink); }
+    td { background: #fff; color: var(--muted); }
+    .pass { display: inline-block; background: var(--okbg); color: var(--ok); font-weight: 700; padding: 1px 6px; }
+    .review { display: inline-block; background: var(--holdbg); color: var(--hold); font-weight: 700; padding: 1px 6px; }
+    .fail { display: inline-block; background: var(--nobg); color: var(--no); font-weight: 700; padding: 1px 6px; }
+    .shot { margin-top: 10px; border: 1px solid var(--line); background: #e8d7b6; min-width: 0; }
+    .shot img { width: 100%; aspect-ratio: 1600 / 832; }
+    .shot figcaption { padding: 8px 10px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
+    .note { margin-top: 8px; font-size: 13px; color: var(--muted); }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+    .block, .stamp { animation: fade .4s ease both; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+</head>
+<body>
+<div class="finchip-page">
+  <div class="ledger">
+    <header class="head">
+      <div class="k">Benchmark · registrar’s ledger</div>
+      <h1>What was actually checked</h1>
+      <p>
+        Package <code>us-undergrad-admit-bench</code> at git <code>96ce465</code>.
+        Script runs on 2026-08-21 and 2026-08-25, plus a second pass of the
+        validator cases after the financial / SAT / tracker fixes.
+        This page does not invent a total score.
+      </p>
+    </header>
+
+    <div class="stamps">
+      <div class="stamp"><i>6</i><span>Positive admit-band run with HTML</span></div>
+      <div class="stamp"><i>5</i><span>Negative SAT / stage cases, no HTML</span></div>
+      <div class="stamp"><i>3</i><span>Finance / tracker / internship copy gates</span></div>
+      <div class="stamp"><i>0</i><span>Agent-window dual-host screenshots on file</span></div>
+    </div>
+
+    <section class="block">
+      <h2>Claim → test</h2>
+      <table>
+        <thead>
+          <tr><th>Claim in SKILL.md</th><th>How it was tested</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Place SAT on official 25/50/75 bands and write HTML</td>
+            <td>Ran <code>node scripts/compare-admit-band.mjs</code> on SAT 1410 (690 / 720). Wrote <code>reports/admit-band-2026-08-21.html</code> and <code>2026-08-25.html</code>.</td>
+            <td><span class="pass">Verified</span></td>
+          </tr>
+          <tr>
+            <td>Refuse invented SAT bands</td>
+            <td>Named UC San Diego, Washington, San Jose State: chips read “No official SAT/ACT band.” Purdue printed 1200 / 1350 / 1480 and 50th–75th.</td>
+            <td><span class="pass">Verified</span></td>
+          </tr>
+          <tr>
+            <td>Catalog counts from the federal file</td>
+            <td>Scorecard release 2026-06-10: 1944 campuses, 928 with SAT bands. SAT 1410: ≥25th 876 · ≥median 834 · ≥75th 754 · inside middle 50: 133.</td>
+            <td><span class="pass">Verified</span></td>
+          </tr>
+          <tr>
+            <td>Illegal SAT / graduate stage must not write HTML</td>
+            <td>Math 850, total mismatch, GPA-only, empty <code>--school</code>, <code>stage: graduate</code> all exited non-zero and wrote no HTML (UB-001).</td>
+            <td><span class="pass">Verified</span></td>
+          </tr>
+          <tr>
+            <td>Echo SAT parts so swapped Math/EBRW is visible</td>
+            <td>Success log printed <code>SAT 1410 = Math 720 + EBRW 690</code> (UB-002).</td>
+            <td><span class="pass">Verified</span></td>
+          </tr>
+          <tr>
+            <td>Tracker writes <code>data/tracker-additions/</code>, not leftover <code>batch/</code></td>
+            <td>Old TSV in <code>batch/</code> only warned. A probe row in <code>data/tracker-additions/</code> merged, then moved to <code>.merged/</code> (UB-004).</td>
+            <td><span class="pass">Verified</span></td>
+          </tr>
+          <tr>
+            <td>2026–27 official Direct / PLUS rates; work-study is not cash at bill</td>
+            <td>Rules use Direct 6.52% and Parent PLUS 9.07%. Sample COA 80k / gift 28k / work-study 3k → Net Price and cash-due both $52,000 (UB-005, UB-007).</td>
+            <td><span class="pass">Verified</span></td>
+          </tr>
+          <tr>
+            <td>International / F-1 federal aid marked unavailable</td>
+            <td>Same sample letter: Pell, work-study, Direct labeled unavailable before any loan math (UB-006).</td>
+            <td><span class="pass">Verified</span></td>
+          </tr>
+          <tr>
+            <td>Named-school A–J from official pages</td>
+            <td>UT Austin CS report 2026-08-21 fetched freshman / CS / COA pages. Campus Match, CS rate missing, auto-admit top 5% vs profile top 10%.</td>
+            <td><span class="pass">Verified</span></td>
+          </tr>
+          <tr>
+            <td>Named scholarship score</td>
+            <td>Coca-Cola Scholars 2026-08-21: Phase 1 no essay, deadline 2026-09-30 17:00 ET, Fit 3/5, citizenship not proven from profile.</td>
+            <td><span class="pass">Verified</span></td>
+          </tr>
+          <tr>
+            <td>Claude and Codex both exercised in a captured window</td>
+            <td>Local Cursor / Codex sessions produced the reports. Separate dual-host screenshots were not saved into this HTML pack.</td>
+            <td><span class="review">Not captured</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="block">
+      <h2>Matrix</h2>
+      <table>
+        <thead>
+          <tr><th>Scene</th><th>Input</th><th>Expected gate</th><th>Result</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Normal</td><td>SAT 1410 + Purdue</td><td>HTML, 50th–75th chip</td><td><span class="pass">Pass</span></td></tr>
+          <tr><td>Normal / test-optional campuses</td><td>UCSD, UW, SJSU</td><td>No invented band</td><td><span class="pass">Pass</span></td></tr>
+          <tr><td>Fuzzy</td><td>Same school named twice</td><td>Deduped to named=1</td><td><span class="pass">Pass</span></td></tr>
+          <tr><td>Boundary</td><td>Illegal SAT or graduate stage</td><td>Exit 1, no HTML</td><td><span class="pass">Pass</span></td></tr>
+          <tr><td>Delivery</td><td>Open the HTML locally</td><td>Cream report, disclaimer first</td><td><span class="pass">Pass</span></td></tr>
+          <tr><td>Host UI</td><td>Claude + Codex window shots</td><td>Side-by-side evidence</td><td><span class="review">Pending</span></td></tr>
+        </tbody>
+      </table>
+      <figure class="shot">
+        <img
+          src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/us-undergrad-admit-bench/showcase/catalog-cards.webp"
+          alt="Catalog placement cards showing 876, 834, 754, and 133 for SAT 1410"
+          width="1600" height="832">
+        <figcaption>Evidence: catalog cards from the 2026-08-21 HTML. Counts are positions in the Scorecard file, not a recommendation list.</figcaption>
+      </figure>
+    </section>
+
+    <section class="block">
+      <h2>Limits and risks</h2>
+      <p class="note">
+        Bands are campus-wide first-year undergraduates. They are not major-specific.
+        Scorecard has no official high-school GPA band. Internship mode does not search
+        summer programs; the student must name one. Pipeline is an agent checklist, not
+        a one-click runner. This ledger is reproducible from the reports and the
+        validator log in the 2026-08-25 session. It is not a marketing score out of 100.
+      </p>
+    </section>
+  </div>
+</div>
+</body>
+</html>

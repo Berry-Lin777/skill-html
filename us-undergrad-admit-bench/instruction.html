@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>US Undergrad Admit Bench — Instruction</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --cover: #4a1c28;
+      --leaf: #f4e6cc;
+      --paper: #fff8ea;
+      --ink: #24160f;
+      --muted: #6b5344;
+      --gold: #b8893a;
+      --tape: #ead6a8;
+      --pin: #c43c22;
+      --band: #2f6a45;
+      --line: #d8c3a0;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      width: 100%; max-width: 100%; min-width: 0; margin: 0;
+      background: var(--leaf); color: var(--ink);
+      color-scheme: light;
+      overflow-x: hidden;
+    }
+    body {
+      font: 16px/1.5 "Palatino Linotype", Palatino, "Iowan Old Style", Georgia, serif;
+    }
+    .finchip-page {
+      width: 100%; max-width: 100%; min-width: 0;
+      background: var(--leaf);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+    .folio {
+      width: 100%; max-width: 100%; min-width: 0;
+      padding: 14px 12px 36px;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    h1, h2, h3, p { margin: 0; overflow-wrap: anywhere; }
+    .mast {
+      background: var(--cover);
+      color: #f8ead4;
+      padding: 16px 14px 18px;
+      min-width: 0;
+    }
+    .mast .mark {
+      font: 700 11px/1 "Avenir Next", "Gill Sans", sans-serif;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #e3c27a;
+    }
+    .mast h1 {
+      font: italic 700 clamp(26px, 6vw, 38px)/1.12 Palatino, Georgia, serif;
+      margin: 8px 0 8px;
+      color: #fff8ea;
+    }
+    .mast p { font-size: 15px; color: #f0d9b6; max-width: 40em; }
+    .score-tape {
+      margin-top: 14px;
+      background: var(--tape);
+      color: var(--ink);
+      padding: 10px 10px 12px;
+      min-width: 0;
+    }
+    .score-tape .lbl {
+      display: flex; justify-content: space-between; gap: 8px;
+      font: 700 10px/1 "Avenir Next", "Gill Sans", sans-serif;
+      letter-spacing: .08em; text-transform: uppercase; color: #6a4a16;
+    }
+    .rail {
+      position: relative;
+      height: 14px;
+      margin: 10px 0 8px;
+      background:
+        linear-gradient(#c43c22, #c43c22) 0 / 28% 100% no-repeat,
+        linear-gradient(#b8893a, #b8893a) 28% / 36% 100% no-repeat,
+        linear-gradient(#2f6a45, #2f6a45) 64% / 36% 100% no-repeat;
+    }
+    .pin {
+      position: absolute; left: 62%; top: -5px;
+      width: 10px; height: 24px; margin-left: -5px;
+      background: var(--cover);
+      transform: rotate(12deg);
+    }
+    .score-tape .note {
+      font: 12px/1.35 "Avenir Next", "Gill Sans", sans-serif;
+      color: #5a4030;
+    }
+    .leaf {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--cover);
+      padding: 14px;
+      margin-top: 12px;
+      min-width: 0;
+    }
+    .leaf h2 {
+      font: italic 700 22px/1.2 Palatino, Georgia, serif;
+      color: var(--cover);
+      margin-bottom: 8px;
+    }
+    .leaf h3 {
+      font: 700 13px/1.3 "Avenir Next", "Gill Sans", sans-serif;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #7a2430;
+      margin: 12px 0 4px;
+    }
+    .leaf p, .leaf li { color: var(--muted); font-size: 14px; }
+    .leaf ul, .leaf ol { margin: 6px 0 0; padding-left: 1.2em; }
+    .leaf li { margin: .35em 0; }
+    .pair {
+      display: grid; gap: 10px; min-width: 0;
+    }
+    @media (min-width: 700px) {
+      .folio { padding: 18px 16px 44px; }
+      .pair { grid-template-columns: 1fr 1fr; }
+    }
+    .slip {
+      background: #f3e4c8;
+      border: 1px dashed #b8893a;
+      padding: 10px 12px;
+      min-width: 0;
+    }
+    .slip b { display: block; color: var(--ink); margin-bottom: 4px; }
+    .slip span { font-size: 13px; color: var(--muted); }
+    .prompt {
+      font: 13px/1.45 "Avenir Next", "Gill Sans", sans-serif;
+      background: #2a1b14;
+      color: #f6e6c8;
+      padding: 12px;
+      margin-top: 8px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .shot {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      background: #efe0c2;
+      min-width: 0;
+    }
+    .shot img { width: 100%; aspect-ratio: 1600 / 676; }
+    .shot.hero-shot img { aspect-ratio: 1600 / 1469; }
+    .shot figcaption {
+      padding: 8px 10px;
+      font: 12px/1.4 "Avenir Next", "Gill Sans", sans-serif;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+    .tabs {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;
+    }
+    .tab {
+      background: var(--cover);
+      color: #f8ead4;
+      font: 700 11px/1 "Avenir Next", "Gill Sans", sans-serif;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 7px 9px;
+    }
+    .arrow { color: #b8893a; font-size: 12px; align-self: center; }
+    .caution {
+      border-left: 4px solid var(--pin);
+      background: #f8e4d4;
+      padding: 10px 12px;
+      margin-top: 10px;
+      color: #6a2a1c;
+      font-size: 13px;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+    .mast, .leaf { animation: rise .45s ease both; }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="finchip-page">
+  <div class="folio">
+    <header class="mast">
+      <div class="mark">Instruction · High school → U.S. bachelor’s</div>
+      <h1>See where the SAT sits. Then keep the folder honest.</h1>
+      <p>
+        Name a school. The skill places your SAT or ACT on official College Scorecard
+        admitted-class bands, writes the calibration HTML, and can continue into a
+        named-school report, essay draft, scholarship score, or aid-letter math.
+        It never states an admission probability.
+      </p>
+      <div class="score-tape" aria-hidden="true">
+        <div class="lbl"><span>25th</span><span>50th</span><span>75th</span></div>
+        <div class="rail"><i class="pin"></i></div>
+        <div class="note">Example from a live run: SAT 1410 on Purdue’s published 1200 / 1350 / 1480 band lands in the 50th–75th chip. That is a class-range position, not a chance.</div>
+      </div>
+    </header>
+
+    <figure class="shot">
+      <img
+        src="https://pub-c80eae4822aa45b48ca253380ca7dd89.r2.dev/us-undergrad-admit-bench/showcase/named-schools.webp"
+        alt="Named-school table placing SAT 1410 on UC San Diego, University of Washington, Purdue, and San Jose State"
+        width="1600" height="676">
+      <figcaption>Live admit-band HTML, 2026-08-21. Purdue is the only named campus in this list with an official SAT band. UC San Diego, Washington, and San Jose State are marked “no official SAT/ACT band” instead of inventing numbers.</figcaption>
+    </figure>
+
+    <section class="leaf">
+      <h2>Who it is for</h2>
+      <div class="pair">
+        <div class="slip">
+          <b>Use it</b>
+          <span>A high-school student applying to first-year U.S. bachelor’s programs who can name schools, a scholarship, or an aid letter and wants a local planning folder.</span>
+        </div>
+        <div class="slip">
+          <b>Skip it</b>
+          <span>Graduate admissions, “find me schools,” Common App autofill, Fastweb crawling, or anyone asking for a percent chance of getting in.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="leaf">
+      <h2>What you walk away with</h2>
+      <ul>
+        <li><strong>Admit-band HTML</strong> — SAT/ACT vs Scorecard 25 / 50 / 75, plus a catalog count. Never a probability.</li>
+        <li><strong>Named-school A–J</strong> — Reach / Match / Safety from campus-wide bands, with missing CS-specific rates left blank.</li>
+        <li><strong>Side playbooks</strong> — essays from real material only, a named scholarship score, aid-letter cash math, compare, tracker, deadlines.</li>
+      </ul>
+      <div class="tabs" aria-hidden="true">
+        <span class="tab">Facts in</span><span class="arrow">→</span>
+        <span class="tab">Write profile.yml</span><span class="arrow">→</span>
+        <span class="tab">Run admit-band</span><span class="arrow">→</span>
+        <span class="tab">Open the HTML</span><span class="arrow">→</span>
+        <span class="tab">Offer one A–J</span>
+      </div>
+    </section>
+
+    <section class="leaf">
+      <h2>How to start</h2>
+      <p>Load the skill in this folder. Dump facts in ordinary language. You do not need to say “copy the example,” “run the script,” or “do not give a probability.”</p>
+      <h3>Recommended first prompt</h3>
+      <div class="prompt">I’m a high-school student in San Jose, CA, class of 2027, applying to U.S. bachelor’s CS. Unweighted GPA 3.78, weighted 4.21, about top 15%. SAT 1410 (EBRW 690, Math 720). We can pay about $30,000 a year. I’m not an international student.
+
+Activities, only these: Girls Who Code president for 3 years; school-paper tech editor for 2 years; school math team, state qualifier, no national award.
+
+Look at UC San Diego, University of Washington, Purdue, and San Jose State first.</div>
+      <p style="margin-top:10px">On that message the skill should write <code>config/profile.yml</code> from what you gave, run <code>scripts/compare-admit-band.mjs</code>, open the HTML, and say where each named school sits. SAT plus one school name is enough. GPA and budget are not blockers.</p>
+      <div class="caution">Loans are not aid. Work-study is earned later and does not reduce cash due at the bill. Campus admit rates are school-wide; a major such as CS can be harder.</div>
+    </section>
+
+    <section class="leaf">
+      <h2>Inputs, outputs, limits</h2>
+      <h3>You provide</h3>
+      <ul>
+        <li>Stage: high school → first-year bachelor’s</li>
+        <li>SAT or ACT, and at least one named college, scholarship, or aid letter</li>
+        <li>Only facts you actually have. Missing material stays blank.</li>
+      </ul>
+      <h3>The folder writes</h3>
+      <ul>
+        <li><code>reports/admit-band-YYYY-MM-DD.html</code> and the JSON twin</li>
+        <li><code>reports/{###}-{slug}-{date}.md</code> for a full school write-up</li>
+        <li>Local <code>essays/</code>, <code>data/applications.md</code>, <code>data/deadlines.md</code></li>
+      </ul>
+      <h3>It will not</h3>
+      <ul>
+        <li>Search College Scorecard / Fastweb / Handshake / Common App for you</li>
+        <li>Invent SAT bands when Scorecard has none (UC campuses often show this)</li>
+        <li>Click Submit on any application</li>
+        <li>Evaluate a master’s or PhD file</li>
+      </ul>
+      <p style="margin-top:10px">MIT, derived from student-ops. Scorecard figures remain U.S. Department of Education data. Student files stay on the machine — do not commit <code>config/profile.yml</code>.</p>
+    </section>
+  </div>
+</div>
+</body>
+</html>
