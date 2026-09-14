@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>OpenNIW Petition Suite — NIW 使用教程（中文）</title>
+<style>
+
+:root{
+  color-scheme:light;
+  --ink:#121820;
+  --ink2:#2a3340;
+  --muted:#66707c;
+  --desk:#e6e8eb;
+  --paper:#ffffff;
+  --line:#c8ced6;
+  --line2:#e4e8ed;
+  --accent:#1a4d5c;
+  --accent-soft:#eef5f7;
+  --warn:#6a4b1f;
+  --warn-bg:#f8f3ea;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Songti SC","Noto Serif SC",Georgia,serif;
+  --sans:"Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,.finch-page{
+  margin:0;min-width:0;
+  background:var(--desk);color:var(--ink);
+  font:15px/1.65 var(--sans);
+}
+.finchip-page{
+  width:100%;max-width:100%;min-width:0;
+  background-color:var(--desk);
+  background-image:linear-gradient(180deg,#dde1e6 0%,var(--desk) 22%,var(--desk) 100%);
+  color:var(--ink);
+}
+.wrap{width:100%;max-width:880px;margin:0 auto;padding:20px 12px 56px}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3,p{margin:0;overflow-wrap:break-word}
+a{color:var(--accent);text-underline-offset:2px}
+code{
+  font:12.5px/1.4 var(--mono);
+  background:var(--accent-soft);
+  border:1px solid #d5e3e7;
+  padding:.08em .32em;
+}
+
+/* One continuous formal sheet */
+.doc{
+  width:100%;max-width:100%;min-width:0;
+  background:var(--paper);
+  color:var(--ink);
+  border:1px solid var(--line);
+  box-shadow:0 1px 0 rgba(18,24,32,.03), 0 22px 48px rgba(18,24,32,.07);
+  padding:28px 22px 36px;
+  counter-reset:exhibit;
+}
+@media(min-width:700px){
+  .doc{padding:40px 48px 52px}
+}
+
+/* Letterhead */
+.mast{
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px 20px;
+  padding-bottom:14px;margin-bottom:22px;
+  border-bottom:2px solid var(--ink);
+}
+.mast-left{min-width:0}
+.mast .org{
+  font:700 11px/1.2 var(--sans);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+}
+.mast .docname{
+  margin-top:6px;font:500 12.5px/1.35 var(--serif);color:var(--ink2);
+}
+@media(min-width:560px){
+  .mast .org,.mast .docname{white-space:nowrap}
+}
+.mast-right{text-align:right;font:12px/1.45 var(--mono);color:var(--muted)}
+.mast-right strong{display:block;color:var(--ink);font-weight:700;letter-spacing:.04em}
+
+.hero{padding:0;border:0;background:transparent;min-width:0}
+.brand-row{display:none}
+h1{
+  font:650 clamp(22px,3.4vw,28px)/1.25 var(--serif);
+  letter-spacing:-.02em;color:var(--ink);
+  margin:0 0 12px;
+}
+.lede{
+  color:var(--ink2);font-size:15px;max-width:46em;line-height:1.7;
+  padding-bottom:16px;border-bottom:1px solid var(--line2);
+}
+.meta{
+  display:flex;flex-wrap:wrap;gap:6px 18px;margin:16px 0 0;
+  padding:10px 0 2px;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:transparent;
+}
+.meta span{
+  display:inline;padding:0;font-size:12.5px;color:var(--ink2);
+  border:0;margin:0;white-space:nowrap;
+}
+.note,.warn{
+  margin-top:12px;padding:11px 14px;font-size:13px;line-height:1.6;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  border-left:0;border-right:0;background:transparent;
+}
+.note{border-left:2px solid var(--accent);padding-left:12px;color:var(--ink2);background:var(--accent-soft)}
+.warn{border-left:2px solid var(--warn);padding-left:12px;color:var(--warn);background:var(--warn-bg)}
+.red-note{
+  margin-top:16px;padding:12px 14px;font-size:13px;line-height:1.65;font-weight:600;
+  border-left:3px solid #b3261e;background:#fff0ef;color:#b3261e;
+}
+
+/* Formal TOC with leaders */
+.toc{
+  margin:28px 0 8px;border:0;background:transparent;min-width:0;
+  padding-top:8px;border-top:1px solid var(--ink);
+}
+.toc-head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  padding:12px 0 10px;border-bottom:1px solid var(--line2);
+  background:transparent;
+  font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li{border-bottom:1px dotted #c5ccd4}
+.toc li:last-child{border-bottom:1px solid var(--line2)}
+.toc a{
+  display:grid;grid-template-columns:2.2em minmax(0,1fr) auto;
+  align-items:baseline;gap:8px 10px;
+  text-decoration:none;color:var(--ink);padding:10px 0;min-width:0;
+}
+.toc a:hover .t{color:var(--accent)}
+.toc .n{font:700 12px/1.2 var(--mono);color:var(--accent)}
+.toc .t{font:600 14px/1.35 var(--serif);color:var(--ink)}
+.toc .d{font:12px/1.35 var(--sans);color:var(--muted);text-align:right}
+@media(min-width:640px){
+  .toc .t,.toc .d{white-space:nowrap}
+}
+@media(max-width:520px){
+  .toc a{grid-template-columns:2em 1fr}
+  .toc .d{grid-column:2;text-align:left}
+}
+
+/* Continuous sections — no cards */
+.step{
+  margin-top:8px;padding:30px 0 10px;min-width:0;
+  background:transparent;border:0;border-top:1px solid var(--line2);
+}
+.step:first-of-type{border-top:1px solid var(--ink)}
+.step-head{
+  display:grid;grid-template-columns:3rem 1fr;gap:10px 16px;align-items:start;
+  padding-bottom:0;margin-bottom:14px;border:0;
+}
+.step .num{
+  font:650 28px/1 var(--serif);color:var(--accent);
+  letter-spacing:-.03em;padding-top:1px;
+}
+.step h2{
+  font:650 clamp(18px,3vw,23px)/1.28 var(--serif);
+  color:var(--ink);letter-spacing:-.015em;padding-top:4px;
+}
+@media(min-width:700px){.step h2{white-space:nowrap}}
+.facts{
+  display:grid;gap:0;margin:0 0 16px;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:#fbfcfd;
+}
+@media(min-width:700px){.facts{grid-template-columns:1fr 1fr}}
+.facts > div{padding:14px 16px;min-width:0}
+.facts > div + div{border-top:1px solid var(--line2)}
+@media(min-width:700px){
+  .facts > div + div{border-top:0;border-left:1px solid var(--line2)}
+}
+.facts dt{
+  margin:0 0 6px;font:700 10px/1 var(--sans);
+  letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+}
+.facts dd{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.6}
+.facts ol{margin:4px 0 0;padding-left:1.15em;color:var(--ink2);font-size:13.5px}
+.facts li{margin:.35em 0}
+
+.prompt-wrap{margin:0 0 16px}
+.prompt-label{
+  font:700 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px;white-space:nowrap;
+}
+.prompt{
+  margin:0;padding:14px 16px;
+  background:#f7f8f9;color:var(--ink);
+  border:1px solid var(--line);border-left:3px solid var(--ink);
+  font:13px/1.6 var(--mono);white-space:pre-wrap;overflow: visible;
+}
+
+.shot{
+  width:74%;max-width:620px;min-width:0;
+  margin:20px auto 0;border:0;background:transparent;overflow:visible;
+}
+.shot:first-child{margin-top:0}
+.bezel{
+  background:#171d24;
+  border:1px solid #0b0f14;
+  border-radius:20px;
+  padding:0 14px 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.1),
+    0 18px 36px rgba(18,24,32,.2);
+}
+.bezel-bar{
+  display:flex;align-items:center;gap:7px;
+  position:relative;
+  height:40px;
+  margin:0 -14px 12px;
+  padding:0 14px;
+  background:linear-gradient(180deg,#2d3640,#1e262e);
+  border-bottom:1px solid #3d4854;
+  border-radius:19px 19px 0 0;
+}
+.bezel-bar i{
+  display:block;width:12px;height:12px;border-radius:50%;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.25);
+}
+.bezel-bar i:nth-child(1){background:radial-gradient(circle at 32% 30%,#ff9d98,#ff5f57 68%)}
+.bezel-bar i:nth-child(2){background:radial-gradient(circle at 32% 30%,#ffe08a,#febc2e 68%)}
+.bezel-bar i:nth-child(3){background:radial-gradient(circle at 32% 30%,#7aed8a,#28c840 68%)}
+.bezel-bar::after{
+  content:"openniw · walkthrough";
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  min-width:46%;max-width:64%;
+  padding:6px 14px;
+  background:#10151a;
+  border:1px solid #3a4450;
+  border-radius:999px;
+  font:600 10px/1.2 var(--mono);
+  color:#e4ebf0;
+  text-align:center;
+  letter-spacing:.03em;
+  white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.pair .bezel-bar::after{content:"preview"}
+.bezel-screen{
+  padding:7px;
+  background:linear-gradient(180deg,#f4f7f9,#e6ebf0);
+  border-radius:10px;
+  box-shadow:inset 0 0 0 1px rgba(18,24,32,.08);
+}
+.bezel-screen img{
+  width:100%;height:auto;display:block;
+  border-radius:5px;
+}
+.bezel-stand{
+  height:30px;
+  position:relative;
+  margin-top:4px;
+}
+.bezel-stand::before{
+  content:"";
+  position:absolute;left:50%;top:0;
+  width:16px;height:15px;margin-left:-8px;
+  background:linear-gradient(180deg,#b7c0c8,#7d8791);
+  border-radius:0 0 3px 3px;
+  box-shadow:inset 1px 0 0 rgba(255,255,255,.22);
+}
+.bezel-stand::after{
+  content:"";
+  position:absolute;left:50%;bottom:0;
+  width:46%;height:9px;margin-left:-23%;
+  background:linear-gradient(180deg,#eef2f5,#c5ced6);
+  border-radius:3px 3px 11px 11px;
+  box-shadow:0 4px 10px rgba(18,24,32,.14);
+}
+.pair .bezel-stand{display:none}
+.shot figcaption{
+  margin-top:8px;padding:0 2px;
+  font-size:11.5px;color:var(--muted);
+  background:transparent;border:0;
+  font-family:var(--mono);line-height:1.45;text-align:center;
+}
+.shot figcaption::before{
+  counter-increment:exhibit;
+  content:"Exhibit " counter(exhibit, decimal-leading-zero) " · ";
+  color:var(--accent);font-weight:700;letter-spacing:.02em;
+}
+html[lang="zh-CN"] .shot figcaption::before{
+  content:"附图 " counter(exhibit, decimal-leading-zero) " · ";
+}
+.stack{display:grid;gap:14px}
+@media(min-width:700px){.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}}
+.pair .shot{width:100%;max-width:none;margin-top:0}
+
+.mode-board{
+  margin:0 0 16px;min-width:0;
+  display:grid;grid-template-columns:1fr;gap:10px;
+}
+@media(min-width:640px){.mode-board{grid-template-columns:1fr 1fr}}
+.mode-card{
+  min-width:0;
+  background:#fbfcfd;
+  border:1px solid var(--line);
+  padding:14px 14px 13px;
+}
+.mode-card.is-pick{border-top:4px solid var(--accent);background:var(--accent-soft)}
+.mode-card:not(.is-pick){border-top:4px solid var(--line)}
+.mode-tag{
+  font:700 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);white-space:nowrap;margin-bottom:8px;
+}
+.mode-card h3{
+  font:650 17px/1.2 var(--serif);color:var(--ink);margin:0 0 8px;
+  white-space:nowrap;
+}
+.mode-card p{margin:0;font-size:13.5px;line-height:1.55;color:var(--ink2)}
+.mode-foot{
+  grid-column:1/-1;
+  margin:0;padding:10px 12px;
+  background:#f7f8f9;border:1px solid var(--line);
+  font-size:13px;line-height:1.5;color:var(--ink2);
+}
+
+.end{
+  margin-top:12px;padding:30px 0 8px;min-width:0;
+  background:transparent;border:0;border-top:2px solid var(--ink);
+}
+.end h2{
+  font:650 clamp(20px,3.4vw,26px)/1.25 var(--serif);
+  margin:0 0 10px;color:var(--ink);
+}
+.end .lead{color:var(--ink2);font-size:14.5px;margin:0 0 16px;max-width:46em;line-height:1.65}
+.end h3{
+  font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin:18px 0 8px;
+  padding-top:12px;border-top:1px solid var(--line2);
+}
+.end ol,.end ul{margin:0;padding-left:1.2em;color:var(--ink2);font-size:13.5px}
+.end li{margin:.4em 0;line-height:1.55}
+.end .path{
+  font:12.5px/1.55 var(--mono);background:#f7f8f9;color:var(--ink);
+  border:1px solid var(--line);border-left:3px solid var(--ink);
+  padding:12px 14px;margin-top:10px;overflow: visible;white-space:pre-wrap;
+}
+
+.foot{
+  margin-top:28px;padding-top:14px;border-top:1px solid var(--line);
+  font:11.5px/1.55 var(--mono);color:var(--muted);
+}
+.foot code{font-size:11px;border:0;background:transparent;padding:0}
+
+
+.deliverable{
+  margin:8px 0 18px;padding:22px 20px 20px;
+  border:1px solid var(--ink);background:#fbfcfd;min-width:0;
+}
+.deliverable .eyebrow{
+  font:700 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:10px;
+}
+.deliverable .title{
+  font:650 clamp(24px,4.4vw,32px)/1.15 var(--serif);
+  letter-spacing:-.02em;color:var(--ink);margin:0 0 10px;
+}
+@media(min-width:640px){.deliverable .title,.deliverable .eyebrow{white-space:nowrap}}
+.deliverable .pathline{
+  font:650 15px/1.4 var(--mono);color:var(--accent);
+  margin:0 0 12px;word-break:break-all;
+}
+.deliverable .blurb{
+  margin:0;font-size:14.5px;line-height:1.65;color:var(--ink2);max-width:46em;
+}
+.deliverable .follow{
+  margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line2);
+  font-size:13.5px;color:var(--ink2);line-height:1.55;
+}
+.deliverable .follow strong{color:var(--ink)}
+.end .deliverable{margin-top:0;margin-bottom:20px}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+.finch-inline-508{margin-top:12px}
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fff;color:#202020;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}
+.finch-page{background-color:var(--desk);color:var(--ink)}
+</style></head>
+<body><div class="finch-page">
+<div class="finchip-page"><div class="wrap">
+<div class="doc">
+<div class="mast">
+<div class="mast-left">
+<div class="org">OpenNIW Petition Suite</div>
+<div class="docname">NIW 操作备忘录 · 使用教程</div>
+</div>
+<div class="mast-right">
+<strong>DOC · WALKTHROUGH</strong>
+    Cursor Agent · ZH<br/>
+    Stage I–III · PES draft
+  </div>
+</div>
+<header class="hero">
+<div class="brand-row">
+<div class="brand">OpenNIW Petition Suite<em>NIW walkthrough</em></div>
+<div class="lang">ZH · Cursor</div>
+</div>
+<h1>全流程申请 NIW / EB‑1A / O‑1 美国身份的完整教程</h1>
+<p class="lede">本案例来自 <strong>Cursor</strong>：Intake → Benchmark → 评估 → 冻结 endeavor → 补证据 → 写出 <code>pes.md</code>。跟着做，你会拿到第一份 PES 草稿。</p>
+<div class="meta">
+<span>运行环境：Cursor Agent</span>
+<span>Skill：openniw-petition-suite</span>
+<span>演示身份：Alex Rivera（合成）</span>
+<span>止于 Stage III · PES 草稿</span>
+</div>
+<div class="note">先在 FinChip 购买并下载 <a href="https://finchip.ai/skills/openniw-petition-suite-finchip" rel="noopener" target="_blank">openniw-petition-suite-finchip</a>，用 Cursor 打开该文件夹再跟做。这是自助起草流程，不是法律意见，也不预测获批。</div>
+<div class="warn">截图来自一次完整的 Cursor 中文演示，数字和链接都是演示数据；真实案件请用你自己的材料。</div>
+</header>
+<nav aria-label="目录" class="toc">
+<div class="toc-head"><span>流程索引</span><span>10 步 + 收尾</span></div>
+<ol>
+<li><a href="#s01"><span class="n">01</span><span class="t">开始 NIW</span><span class="d">在 Cursor 激活 NIW</span></a></li>
+<li><a href="#s02"><span class="n">02</span><span class="t">终端和桌面怎么选</span><span class="d">先看清区别</span></a></li>
+<li><a href="#s03"><span class="n">03</span><span class="t">填 Intake</span><span class="d">链接与基本情况</span></a></li>
+<li><a href="#s04"><span class="n">04</span><span class="t">回 Cursor</span><span class="d">档案 + Benchmark</span></a></li>
+<li><a href="#s05"><span class="n">05</span><span class="t">看对比</span><span class="d">同行百分位</span></a></li>
+<li><a href="#s06"><span class="n">06</span><span class="t">生成评估报告</span><span class="d">Stage I</span></a></li>
+<li><a href="#s07"><span class="n">07</span><span class="t">冻结 endeavor</span><span class="d">原句锁定</span></a></li>
+<li><a href="#s08"><span class="n">08</span><span class="t">收集证据</span><span class="d">缺什么一目了然</span></a></li>
+<li><a href="#s09"><span class="n">09</span><span class="t">论文与材料查漏补缺</span><span class="d">可执行性</span></a></li>
+<li><a href="#s10"><span class="n">10</span><span class="t">交付第一份文书</span><span class="d">最终交付物</span></a></li>
+<li><a href="#end"><span class="n">—</span><span class="t">最终交付物</span><span class="d">围绕 pes.md 修改</span></a></li>
+</ol>
+</nav>
+<section class="step" id="s01">
+<div class="step-head"><div class="num">01</div><h2>开始 NIW</h2></div>
+<dl class="facts">
+<div><dt>作用</dt><dd>告诉 Cursor Agent 你要做 NIW，它才会进入 NIW 区并准备建案。</dd></div>
+<div><dt>你做什么</dt><dd><ol><li>用 Cursor 打开已下载的 skill 文件夹</li><li>新建 Agent 对话，粘贴下面这句话</li></ol></dd></div>
+</dl>
+<div class="prompt-wrap"><div class="prompt-label">发给 Cursor</div><div class="prompt">我已经把这个移民 skill 下载到当前文件夹了。我想准备 NIW（国家利益豁免）材料，请从这一步开始带我做。</div></div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="开场：Agent 确认进入 NIW 区，并让你选「终端 / 桌面」" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/a0e25ee99640a6f989fbc9f078007d84d17d248e37735-a0e25ee99640.jpg" width="649"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>开场：Agent 确认进入 NIW 区，并让你选「终端 / 桌面」</figcaption></figure>
+</section><section class="step" id="s02">
+<div class="step-head"><div class="num">02</div><h2>终端和桌面怎么选</h2></div>
+<dl class="facts">
+<div><dt>作用</dt><dd>Agent 会问你用哪种界面。两种写出的材料一样，差别只在窗口怎么摆。Cursor 用户默认选「终端」即可。</dd></div>
+<div><dt>你做什么</dt><dd><ol><li>先看清下面区别</li><li>回复：终端</li><li>系统浏览器会打开 Intake；没有就按 Cursor 里给的本地链接打开</li></ol></dd></div>
+</dl>
+<div aria-label="终端模式与桌面模式对照" class="mode-board" role="img">
+<article class="mode-card is-pick">
+<div class="mode-tag">本教程默认</div>
+<h3>终端模式</h3>
+<p>Cursor 对话写材料，系统浏览器填 Intake / 表单。两个窗口来回切，不需要额外安装。</p>
+</article>
+<article class="mode-card">
+<div class="mode-tag">可选窗口</div>
+<h3>桌面模式</h3>
+<p>OpenNIW 自带 Electron 小程序（<code>optional/desktop/</code>），左右分屏。只改窗口怎么摆，不提高文书质量。</p>
+</article>
+<p class="mode-foot">两边材料相同，都写进同一个 <code>niw-case/</code>。演示和日常用 Cursor 时，选终端即可。</p>
+</div>
+<div class="prompt-wrap"><div class="prompt-label">发给 Cursor</div><div class="prompt">终端</div></div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="选终端后：案卷已建好，并给出本地 Intake 链接" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/18e4cf1ac979be195ba9f46ba8bdcb644b95074e07694-18e4cf1ac979.jpg" width="565"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>选终端后：案卷已建好，并给出本地 Intake 链接</figcaption></figure>
+</section><section class="step" id="s03">
+<div class="step-head"><div class="num">03</div><h2>填 Intake：链接 + 基本情况</h2></div>
+<dl class="facts">
+<div><dt>作用</dt><dd>用链接和基本字段把履历灌进案卷，避免把论文列表整段手打进聊天。</dd></div>
+<div><dt>你做什么</dt><dd><ol><li>粘贴 Scholar / 主页 / LinkedIn / 其他链接</li><li>上传简历（可选）</li><li>填职位、学位、领域、是否在美</li><li>点 Done</li></ol></dd></div>
+</dl>
+<div class="stack pair"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="空 Intake：先出现的收集页" height="1715" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/065f3a04599206798b0af8d80c1e6eee9bbafacfce7fa-065f3a045992.jpg" width="1100"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>空 Intake：先出现的收集页</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="填完后的 Intake（演示身份）" height="1715" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/3ba700d4257512afc48ed2dba2e814aed544f775e01fa-3ba700d42575.jpg" width="1100"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>填完后的 Intake（演示身份）</figcaption></figure></div>
+</section><section class="step" id="s04">
+<div class="step-head"><div class="num">04</div><h2>回到 Cursor：生成档案并打开对比页</h2></div>
+<dl class="facts">
+<div><dt>作用</dt><dd>浏览器完成交接后，Cursor Agent 读取 Intake，写出 <code>profile.md</code>，再打开同行对比（Benchmark）。</dd></div>
+<div><dt>你做什么</dt><dd><ol><li>看到「Now return to your agent」就回到 Cursor 对话</li><li>发一句：网页上我填完了，已经点了 Done</li><li>可按需补充姓名/学位/论文数等（演示案可写假数据）</li></ol></dd></div>
+</dl>
+<div class="prompt-wrap"><div class="prompt-label">发给 Cursor</div><div class="prompt">网页上我填完了，已经点了 Done。
+
+补充一下（演示用）：姓名 Alex Rivera；PhD Environmental Data Science，2019；independent consultant；方向 climate risk / coastal flood modeling；论文约 18 篇，引用约 210。</div></div>
+<div class="stack"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Intake 完成页：提示回到 Agent" height="856" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/0beeeb482383c76ded05c71335e2a67bf18f614691c2e-0beeeb482383.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Intake 完成页：提示回到 Agent</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Cursor：档案已写好，并打开 Benchmark" height="757" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/217a35c8ba8234a391ecf8268195d326f41abc13c7409-217a35c8ba82.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Cursor：档案已写好，并打开 Benchmark</figcaption></figure></div>
+</section><section class="step" id="s05">
+<div class="step-head"><div class="num">05</div><h2>看 Benchmark，点 Done</h2></div>
+<dl class="facts">
+<div><dt>作用</dt><dd>把你的论文/引用放进已批准公开案池里看相对位置；这是校准，不是获批概率。</dd></div>
+<div><dt>你做什么</dt><dd><ol><li>核对领域、论文数、引用数</li><li>看分布图与百分位</li><li>点 Done — return to the agent</li></ol></dd></div>
+</dl>
+<div class="prompt-wrap"><div class="prompt-label">发给 Cursor</div><div class="prompt">对比页我看了，已经点了 Done。</div></div>
+<div class="stack"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Benchmark：与已批准案卷的同行对比" height="3145" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/609292a43af0a706602cee26089e600ee9804dc005d1f-609292a43af0.jpg" width="1100"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Benchmark：与已批准案卷的同行对比</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="对比完成：回到 Agent" height="1046" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/260cc6561e2c784763bb13d401c233c0a65a286ec9021-260cc6561e2c.jpg" width="1100"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>对比完成：回到 Agent</figcaption></figure></div>
+</section><section class="step" id="s06">
+<div class="step-head"><div class="num">06</div><h2>生成 Stage I 的评估报告</h2></div>
+<dl class="facts">
+<div><dt>作用</dt><dd>Cursor Agent 把缺口与三项要件的现状写进 <code>evaluation.md</code>，决定要不要继续冻结 endeavor。</dd></div>
+<div><dt>你做什么</dt><dd><ol><li>阅读评估摘要</li><li>要继续就回复：继续</li></ol></dd></div>
+</dl>
+<div class="prompt-wrap"><div class="prompt-label">发给 Cursor</div><div class="prompt">继续</div></div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Stage I 完成：评估已写入，询问是否进入 II·a" height="938" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/593787c0cdb58fe2af4571d6f1013c2aefebdb4c013c4-593787c0cdb5.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Stage I 完成：评估已写入，询问是否进入 II·a</figcaption></figure>
+</section><section class="step" id="s07">
+<div class="step-head"><div class="num">07</div><h2>起草并冻结 Proposed Endeavor</h2></div>
+<dl class="facts">
+<div><dt>作用</dt><dd>后面所有文书都要原句引用这句 endeavor；冻结前改，冻结后尽量别改。</dd></div>
+<div><dt>你做什么</dt><dd><ol><li>看 Cursor 给的草案</li><li>在选项里选一句（演示选 B）</li><li>确认冻结</li></ol></dd></div>
+</dl>
+<div class="note">提示：Skill 里说的「冻结」就是锁定的意思——这句 endeavor 定下来之后，后面的文书都会照这句原话写，不会再改动。</div>
+<div class="prompt-wrap"><div class="prompt-label">发给 Cursor</div><div class="prompt">选 B，冻结。</div></div>
+<div class="stack"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="II·a：endeavor 草案与可执行性评分" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/eac1aa3a0e8fb1a278a41cbab6319972ee3b63b7278e4-eac1aa3a0e8f.jpg" width="926"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>II·a：endeavor 草案与可执行性评分</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="给出 A/B/C 选项供你选定" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/9b108e34163c118e3d016e242dcc8cd03667a9b488b70-9b108e34163c.jpg" width="878"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>给出 A/B/C 选项供你选定</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="已冻结：后续文书将原句引用" height="933" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/44e4168f4596dcd02745d1649f6f67f2dc3d441270cad-44e4168f4596.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>已冻结：后续文书将原句引用</figcaption></figure></div>
+</section><section class="step" id="s08">
+<div class="step-head"><div class="num">08</div><h2>收集证据</h2></div>
+<dl class="facts">
+<div><dt>作用</dt><dd>证据清单就是列出这个案子还缺哪些证明材料（推荐信、获奖证明、媒体报道等），列成一张清单，后面补材料有目标，不会盲找。</dd></div>
+<div><dt>你做什么</dt><dd><ol><li>回复继续（进入 II·b）</li><li>保存 Cursor 给出的证据清单</li></ol></dd></div>
+</dl>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="II·b：个性化证据清单" height="1022" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/1af45ec601c8482eaad3322cf28346f6c9bc87e4a65d4-1af45ec601c8.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>II·b：个性化证据清单</figcaption></figure>
+</section><section class="step" id="s09">
+<div class="step-head"><div class="num">09</div><h2>论文和其他材料查漏补缺</h2></div>
+<dl class="facts">
+<div><dt>作用</dt><dd>论文数影响对比百分位；means（资金/合作/试点）决定 endeavor 是否“做得到”。没有 LOI 也可以先诚实写「尚未具备」。</dd></div>
+<div><dt>你做什么</dt><dd><ol><li>按 Agent 要求粘贴论文列表，或选路径 B（无 PDF）</li><li>用几句话说明资金、合作、试点现状</li><li>让它按真实论文数重算 benchmark</li></ol></dd></div>
+</dl>
+<div class="prompt-wrap"><div class="prompt-label">发给 Cursor</div><div class="prompt">执行手段（演示）：
+- 自费独立顾问时间；本地算力
+- 计划开源沿海水质/洪水筛选模型
+- 县级试点在谈，尚无 LOI / 正式协议
+请按论文数=8 重算 benchmark。</div></div>
+<div class="stack"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="论文获取：有 PDF / 仅列表 / 稍后补" height="886" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/c6ad3d90bc2d4c7134c271cb8baf25ac7514578f174d6-c6ad3d90bc2d.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>论文获取：有 PDF / 仅列表 / 稍后补</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Cursor 追问执行手段（means）" height="933" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/c144b6a925f87e88479b854faead533b2df5bff6b48e7-c144b6a925f8.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Cursor 追问执行手段（means）</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="写入 means 备注，并按 8 篇论文重算百分位" height="986" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/4a11b5a81779014eb57e40a22e973bc05dfb609c757c9-4a11b5a81779.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>写入 means 备注，并按 8 篇论文重算百分位</figcaption></figure></div>
+</section><section class="step" id="s10">
+<div class="step-head"><div class="num">10</div><h2>最终交付第一份正式文书</h2></div>
+<dl class="facts">
+<div><dt>作用</dt><dd>PES（Proposed Endeavor Statement）是第一份正式文书，用来说明你要做什么、为什么有公共价值、准备怎样执行。它是政策钩子 + 项目计划 + <code>[TODO]</code> 组成的草稿，还不是整包终稿，但已经是可审阅的交付物。</dd></div>
+<div><dt>你做什么</dt><dd><ol><li>回复：进入 Stage III 起草</li><li>打开 <code>niw-case/documents/pes.md</code></li><li>先核对 §1–§2，再逐段填 <code>[TODO]</code></li></ol></dd></div>
+</dl>
+<div class="prompt-wrap"><div class="prompt-label">发给 Cursor</div><div class="prompt">进入 Stage III 起草</div></div>
+<div class="deliverable">
+<div class="eyebrow">Final deliverable · 本教程最终交付物</div>
+<div class="title">最终交付第一份正式文书</div>
+<div class="pathline">niw-case/documents/pes.md</div>
+<p class="blurb">PES 是申请材料的第一份正式文书，用来把你的 Proposed Endeavor、项目计划、政策依据和执行方式写清楚，下面是预览。后面补事实、改段落，都改这一份 <code>pes.md</code>，不用另开新文档。</p>
+<p class="follow"><strong>注意：</strong>它是可审阅的自助草稿（含 <code>[TODO]</code>），不是整包终稿，也不是可直接递交 USCIS 的文件。支持信、Petition Letter、填表属于下一步。</p>
+</div>
+<div class="stack"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Stage III：pes.md 已写好（标注：下载后即可使用）" height="822" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-zh/2ae8e7e57e17091ab5bcdf0e650175632ac19b5e482f3-2ae8e7e57e17.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Stage III：pes.md 已写好（标注：下载后即可使用）</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="最终交付物：niw-case/documents/pes.md" height="4277" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/9a4897071f11beaadf4546226c7ed5945ace567a2eb26-9a4897071f11.jpg" width="900"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>最终交付物预览：niw-case/documents/pes.md（后续修改围绕这份文件）</figcaption></figure></div>
+</section>
+<section class="end" id="end">
+<div class="deliverable">
+<div class="eyebrow">Result · 到这里为止</div>
+<div class="title">最终交付第一份正式文书</div>
+<div class="pathline">niw-case/documents/pes.md</div>
+<p class="blurb">前面的 Intake、Benchmark、评估、冻结 endeavor、补证据，都是在为这份 PES 打基础。PES 写清楚了你要做的事、为什么符合国家利益、准备怎样执行，律师和你自己都可以拿它作为后续文书的核心依据。</p>
+<p class="follow"><strong>后续怎么改：</strong>直接改 <code>pes.md</code> 里的政策钩子、项目计划、means、<code>[TODO]</code>；endeavor 句子变了，先重新冻结，再让 Cursor 同步改 PES。案卷里其他文件（profile / evaluation / checklist）是支撑材料，不是交付物本身。</p>
+</div>
+<h3>围绕 pes.md 修改</h3>
+<ol>
+<li>在 Cursor 打开 <code>niw-case/documents/pes.md</code>，直接改正文；或对 Agent 说：「改 PES §2……」「把 §3 第三个项目改成……」</li>
+<li>若要改 endeavor 原句：先冻结新句子，再要求「按新 endeavor 重写 PES」</li>
+<li>论文数 / means 变化：先更新案卷与 benchmark，再让 Agent 把校准结果写回 PES 相关段落</li>
+</ol>
+<h3>想重跑怎么做</h3>
+<ol>
+<li><strong>只重写交付物：</strong>同一 <code>niw-case/</code> 续聊：「从 Stage III 重写 pes.md」</li>
+<li><strong>整案重来：</strong>备份并改名旧 <code>niw-case/</code>，新开 Cursor Agent，从步骤 01 重新开始</li>
+<li><strong>换真人材料：</strong>Intake 用你自己的链接与事实；把 PES 里所有 <code>[TODO]</code> 换成真实信息后再继续后面阶段</li>
+</ol>
+<div class="path">备份示例：mv niw-case niw-case-demo-2026-08-11
+然后新开 Cursor Agent，重新说：我想准备 NIW 材料，请从这一步开始带我做。</div>
+<div class="note finch-inline-508">提醒：OpenNIW / 本 skill 是本地自助起草工具，不是律师意见，也不预测获批。正式递交前请自行核对或咨询持牌移民律师。</div>
+<div class="red-note">以上是 PES 的文书生成详细教程。如果想起草全套文书，包括 Petition Letter、推荐信，并按真实获批案卷的结构组织材料，请在 prompt 开头表述出你的需求。</div>
+</section>
+<footer class="foot">
+<p>演示环境：Cursor Agent · 终端模式（Cursor + 系统浏览器）。截图本地备份：<code>output/skill-smoke-tests/openniw-petition-suite/tutorial-niw-zh/screenshots/</code></p>
+</footer>
+</div>
+</div></div>
+</div></body>
+</html>

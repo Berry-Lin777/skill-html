@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>Apply for U.S. status with AI · Full-flow Skill for NIW / EB-1A / O-1</title>
+<style>
+:root{
+  color-scheme:light;
+  --ink:#14110f;
+  --ink2:#3a342f;
+  --muted:#7a7168;
+  --bg:#f3efe8;
+  --paper:#fffcf7;
+  --line:#ddd4c8;
+  --line2:#ebe4da;
+  --green:#1f6b4a;
+  --green-soft:#e7f3ec;
+  --amber:#8a5a12;
+  --amber-soft:#f7efe2;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,.finch-page{
+  margin:0;min-width:0;
+  background:var(--bg);color:var(--ink);
+  font:15.5px/1.7 var(--sans);
+}
+.finchip-page{
+  width:100%;max-width:100%;min-width:0;
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(circle at 88% 0%,rgba(31,107,74,.08),transparent 38%),
+    linear-gradient(180deg,#e8e2d8 0%,var(--bg) 26%,var(--bg) 100%);
+  color:var(--ink);
+}
+.wrap{width:100%;max-width:860px;margin:0 auto;padding:18px 12px 48px}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3,p{margin:0;overflow-wrap:break-word}
+a{color:var(--green);text-underline-offset:2px}
+code{
+  font:12.5px/1.4 var(--mono);
+  background:var(--green-soft);
+  border:1px solid #c9e2d4;
+  padding:.08em .32em;
+}
+
+.sheet{
+  width:100%;max-width:100%;min-width:0;
+  background:var(--paper);
+  border:1px solid var(--line);
+  box-shadow:0 18px 42px rgba(20,17,15,.07);
+  padding:26px 18px 36px;
+}
+@media(min-width:700px){.sheet{padding:36px 42px 48px}}
+
+.kicker{
+  font:700 11px/1.2 var(--sans);
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--green);
+}
+h1{
+  margin-top:10px;
+  font:650 clamp(28px,5vw,40px)/1.18 var(--serif);
+  letter-spacing:-.02em;
+  
+}
+.lede{
+  margin-top:14px;
+  font-size:16.5px;line-height:1.75;
+  color:var(--ink2);
+}
+.save{
+  margin-top:18px;
+  display:inline-block;
+  padding:10px 14px;
+  background:var(--ink);color:#fff;
+  font:650 14px/1.35 var(--sans);
+}
+.fine{
+  margin-top:12px;
+  font-size:12.5px;line-height:1.55;color:var(--muted);
+}
+
+.divider{
+  margin:28px 0 0;
+  border:0;border-top:1px solid var(--line);
+}
+
+.block{margin-top:28px;min-width:0}
+.block h2{
+  font:650 clamp(22px,3.6vw,28px)/1.25 var(--serif);
+  margin-bottom:10px;
+}
+.block h3{
+  font:650 16.5px/1.35 var(--sans);
+  color:var(--ink);
+  margin-top:22px;margin-bottom:8px;
+}
+.block p{color:var(--ink2);max-width:44em}
+.block p + p{margin-top:10px}
+
+.shot{
+  margin-top:14px;
+  border:1px solid var(--line);
+  background:#fff;
+  overflow:hidden;
+}
+.shot img{width:100%}
+.shot figcaption{
+  padding:10px 12px;
+  font-size:12.5px;color:var(--muted);
+  border-top:1px solid var(--line2);
+  background:#faf7f2;
+}
+
+.table-wrap{
+  margin-top:14px;
+  border:1px solid var(--line);
+  overflow:hidden;
+  background:#fff;
+}
+table{
+  width:100%;border-collapse:collapse;
+  font-size:13.5px;
+}
+th,td{
+  padding:11px 12px;
+  text-align:left;vertical-align:top;
+  border-top:1px solid var(--line2);
+}
+th{
+  background:var(--green-soft);
+  color:var(--ink);
+  font-weight:700;
+  border-top:0;
+}
+td:first-child{font-weight:650;color:var(--ink);white-space:nowrap}
+@media(max-width:520px){
+  td:first-child{white-space:normal}
+}
+
+.callout{
+  margin-top:14px;
+  padding:12px 14px;
+  background:var(--amber-soft);
+  border-left:3px solid var(--amber);
+  color:var(--amber);
+  font-size:13.5px;line-height:1.6;
+}
+.soft{
+  margin-top:14px;
+  padding:12px 14px;
+  background:var(--green-soft);
+  border-left:3px solid var(--green);
+  color:var(--ink2);
+  font-size:13.5px;line-height:1.6;
+}
+
+.foot{
+  margin-top:24px;
+  font-size:12px;color:var(--muted);line-height:1.55;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+}
+
+/* approved monitor frame */
+.shot{width:74%;max-width:620px;margin:22px auto 0;border:0!important;background:transparent!important;overflow:visible!important;box-shadow:none!important;min-width:0}
+.grid .shot,.pair .shot{width:100%;max-width:none;margin-top:0}
+
+.bezel{background:#1b1a18;border:1px solid #0c0b0a;border-radius:20px;padding:0 14px 16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 18px 36px rgba(20,17,15,.2)}
+.bezel-bar{display:flex;align-items:center;gap:7px;position:relative;height:40px;margin:0 -14px 12px;padding:0 14px;background:linear-gradient(180deg,#2f2c28,#221f1c);border-bottom:1px solid #3f3b36;border-radius:19px 19px 0 0}
+.bezel-bar::after{background:#12110f;border:1px solid #3a3631;color:#e4dccf}
+.bezel-screen{padding:7px;background:linear-gradient(180deg,#f8f3ea,#efe6d8);border-radius:10px;box-shadow:inset 0 0 0 1px rgba(20,17,15,.08)}
+.bezel-stand::before{background:linear-gradient(180deg,#b7b09f,#7d776c)}
+.bezel-stand::after{background:linear-gradient(180deg,#f3ece1,#cfc6b6);box-shadow:0 4px 10px rgba(20,17,15,.14)}
+
+.bezel-bar i{display:block;width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.bezel-bar i:nth-child(1){background:radial-gradient(circle at 32% 30%,#ff9d98,#ff5f57 68%)}
+.bezel-bar i:nth-child(2){background:radial-gradient(circle at 32% 30%,#ffe08a,#febc2e 68%)}
+.bezel-bar i:nth-child(3){background:radial-gradient(circle at 32% 30%,#7aed8a,#28c840 68%)}
+.bezel-bar::after{content:"openniw · preview";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:46%;max-width:64%;padding:6px 14px;border-radius:999px;font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-align:center;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pair .bezel-bar::after,.grid .bezel-bar::after{content:"preview"}
+.bezel-screen img{width:100%;height:auto!important;display:block;border-radius:5px;object-fit:contain}
+.bezel-stand{height:30px;position:relative;margin-top:4px}
+.bezel-stand::before{content:"";position:absolute;left:50%;top:0;width:16px;height:15px;margin-left:-8px;border-radius:0 0 3px 3px;box-shadow:inset 1px 0 0 rgba(255,255,255,.2)}
+.bezel-stand::after{content:"";position:absolute;left:50%;bottom:0;width:46%;height:9px;margin-left:-23%;border-radius:3px 3px 11px 11px}
+.pair .bezel-stand,.grid .bezel-stand{display:none}
+.shot figcaption{margin-top:8px;padding:0 2px;border:0!important;background:transparent!important;text-align:center}
+.bezel-screen{position:relative}
+.bezel-screen .tag{z-index:2}
+.io-board,.type-board,.file-board,.form-board,.mode-board,.check-board{margin-top:16px;min-width:0}
+.io-board{padding:14px 12px 10px;background:linear-gradient(rgba(200,200,200,.28) 1px,transparent 1px) 0 0/100% 26px,#f6f4ef;border:1px solid var(--line,var(--l,#ddd4c8));border-radius:12px}
+.io-head{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;margin-bottom:10px;font:700 11px/1 var(--sans,sans-serif);letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168))}
+.io-head span:last-child{text-align:right}
+.io-row{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;align-items:stretch;margin-bottom:8px;min-width:0}
+.io-in,.io-out{min-width:0;padding:11px 12px;border-radius:8px;font-size:13.5px;line-height:1.4;color:var(--ink,var(--i,#14110f))}
+.io-in{background:#fff;border:1px solid var(--line,var(--l,#ddd4c8))}
+.io-out{background:var(--green-soft,var(--soft,#e7f3ec));border:1px solid #c9e2d4}
+.io-k{display:none;font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168));margin-bottom:6px}
+.io-arrow{display:flex;align-items:center;justify-content:center;color:var(--green,var(--accent,var(--a,#1f6b4a)));font:700 16px/1 sans-serif}
+.io-arrow::before{content:"→"}
+.type-board,.file-board,.form-board,.check-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.type-board{grid-template-columns:1fr 1fr}.file-board,.form-board,.check-board{grid-template-columns:1fr 1fr}.form-board.cols-3,.check-board.cols-3{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:700px){.type-board{grid-template-columns:1fr 1fr 1fr 1fr}}
+.form-card,.type-card,.file-card,.check-card,.mode-card{min-width:0;background:#fff;border:1px solid var(--line,var(--l,#ddd4c8));padding:13px 12px 12px;border-top:4px solid var(--green,var(--accent,var(--a,#1f6b4a)))}
+.form-card .mark,.type-card .mark,.file-card .mark,.check-card .mark,.mode-tag{font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--green,var(--accent,var(--a,#1f6b4a)));white-space:nowrap;margin-bottom:7px}
+.form-card h3,.type-card h3,.file-card h3,.check-card h3,.mode-card h3{margin:0 0 6px;font:650 16px/1.2 var(--serif,Georgia,serif);color:var(--ink,var(--i,#14110f))}
+.form-card p,.type-card p,.file-card p,.check-card p,.mode-card p{margin:0;font-size:13px;line-height:1.45;color:var(--ink2,var(--i,#3a342f))}
+.mode-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.mode-board{grid-template-columns:1fr 1fr}}
+.mode-card.is-pick{background:var(--green-soft,var(--accent-soft,var(--s,#eef5f7)))}
+.mode-foot{grid-column:1/-1;margin:0;padding:10px 12px;background:#f7f8f9;border:1px solid var(--line,var(--l,#ddd));font-size:13px;line-height:1.5;color:var(--ink2,var(--i,#3a342f))}
+@media(max-width:639px){.io-head{display:none}.io-row,.io-head{grid-template-columns:1fr}.io-arrow{height:18px}.io-arrow::before{content:"↓"}.io-k{display:block}}
+h1,h2,h3,p{overflow-wrap:break-word}
+@media(min-width:700px){.step h2,.head h2{white-space:nowrap}}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;border-left:0;border-right:0;background:transparent;padding:10px 0 2px}
+.meta span,.meta div{display:inline;padding:0;border:0;white-space:nowrap}
+
+
+
+
+.meta{display:flex!important;flex-wrap:wrap;align-items:baseline;gap:6px 18px;background:transparent}
+.meta span,.meta div{display:inline!important;border:0!important;background:transparent!important;padding:0!important;white-space:nowrap}
+
+
+
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fff;color:#202020;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}
+.finch-page{background-color:var(--bg);color:var(--ink)}
+</style></head>
+<body><div class="finch-page">
+<div class="finchip-page"><div class="wrap">
+<article class="sheet">
+<p class="kicker">OpenNIW Petition Suite · Information</p>
+<h1>Apply for U.S. status with AI · Full-flow Skill for NIW / EB‑1A / O‑1</h1>
+<p class="lede">OpenNIW Petition Suite is a document workflow for self-petitioners: gather your record, compare it with approved cases, draft NIW / EB‑1A / O‑1 materials, then fill forms in the browser and package them in official order. This is not legal advice and not a law-firm service.</p>
+<p class="save">Walk the full preparation path with the goal of cutting a large share of traditional law-firm drafting cost.</p>
+<p class="fine">For legal judgment, consult a licensed immigration attorney. You remain responsible for everything you sign and file.</p>
+<hr class="divider"/>
+<section class="block">
+<h2>What this Skill is for</h2>
+<p>Immigration filings are long, expensive, and opaque. This workflow takes over the repetitive work and some of the lawyer hours, so you can spend time on the parts that actually need you.</p>
+</section>
+<section class="block">
+<h2>Step 1: Collect your record and benchmark it (Stage I)</h2>
+<p>In a traditional process, a law firm spends a lot of staff time collecting your facts and reading your papers. DIY filers know that loop too. Give a Google Scholar link, a LinkedIn URL, and a few paper clues. The Agent does deep research online, pulls together your publications, field, collaborators, and institutions into a local profile, and downloads the papers it can find.</p>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Filled Intake collection page" height="1715" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/3ba700d4257512afc48ed2dba2e814aed544f775e01fa-3ba700d42575.jpg" width="1100"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Intake: collect links and basics first. Evaluation and drafting grow from this local file.</figcaption></figure>
+<div aria-label="Inputs become a local profile and drafting material" class="io-board" role="img">
+<div class="io-head"><span>You put in</span><span></span><span>It tries to return</span></div>
+<div class="io-row"><div class="io-in"><span class="io-k">In</span>Google Scholar / homepage / LinkedIn</div><div aria-hidden="true" class="io-arrow"></div><div class="io-out"><span class="io-k">Out</span>Paper list, field tags, public-page summaries</div></div>
+<div class="io-row"><div class="io-in"><span class="io-k">In</span>CV / resume PDF</div><div aria-hidden="true" class="io-arrow"></div><div class="io-out"><span class="io-k">Out</span>Education, title, work location, reusable fields</div></div>
+<div class="io-row"><div class="io-in"><span class="io-k">In</span>Facts and means you add</div><div aria-hidden="true" class="io-arrow"></div><div class="io-out"><span class="io-k">Out</span>Case profile, evidence gaps, drafting material</div></div>
+</div>
+<h3>See where you sit among approved cases</h3>
+<p>Against 7,724 public NIW, 2,679 EB‑1A, and 179 O‑1 approved cases, you can see roughly where your paper and citation counts sit among more than ten thousand people.</p>
+<p>This is a <strong>position inside an already-approved sample</strong>, not an approval probability. The page also labels it Approved cases only.</p>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Benchmark page compared with approved cases" height="3145" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/609292a43af0a706602cee26089e600ee9804dc005d1f-609292a43af0.jpg" width="1100"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Benchmark: enter category, field, citations, and paper count, then see your percentile in the public approved sample.</figcaption></figure>
+<div class="soft">Many DIY filers get stuck not knowing whether their record looks strong or weak. This step puts a reference frame on the table first.</div>
+</section>
+<section class="block">
+<h2>Step 2: Lock the core direction and collect evidence (Stage II)</h2>
+<p>The Agent drafts a Proposed Endeavor sentence, scores how executable it is, and you lock the one you choose. Later documents quote that sentence verbatim, so the story does not drift.</p>
+<p>After the direction is locked, the Agent lists missing exhibits, harvests citing papers, screens independent citations, and checks sources one by one so you are not padding the file with unrelated or duplicate cites.</p>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Confirmation after the endeavor is locked" height="933" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/44e4168f4596dcd02745d1649f6f67f2dc3d441270cad-44e4168f4596.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>After lock, the Agent confirms later documents will quote this endeavor sentence verbatim.</figcaption></figure>
+</section>
+<section class="block">
+<h2>Step 3: Draft the full document set to the official framework (Stage III)</h2>
+<p>This is not a block of text that merely sounds like a lawyer. It builds the case skeleton to the immigration framework: a Proposed Endeavor Statement (PES), support-letter / recommendation-letter drafts, and an index that maps each claim to an exhibit.</p>
+<p>The Skill writes those drafts by section. You check the facts and fill in the evidence.</p>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="PES draft preview" height="4277" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/9a4897071f11beaadf4546226c7ed5945ace567a2eb26-9a4897071f11.jpg" width="900"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>The PES draft in the local case folder looks like this — sections already split so you can edit directly.</figcaption></figure>
+</section>
+<section class="block">
+<h2>Step 4: Fill official forms in a browser wizard (Stage IV)</h2>
+<p>After the drafts settle, the Skill writes the fields it can determine into <code>answers.json</code>, then opens a browser wizard for you to confirm each item. Fields inferred by AI are flagged; editing them clears the flag. Once you confirm, a local script fills I‑140, ETA‑9089 Appendix A, and related official PDFs, so you do not recopy the fields that can be filled automatically.</p>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Forms wizard generating official PDFs and listing remaining required fields" height="828" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/ab9bec00dbea29a5420d66c93ac0e6d43970548886ca1-ab9bec00dbea.png" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Each button fills a real government PDF from your answers.json. Remaining required blanks are listed one by one, including items to hand-fill or leave for an attorney signature.</figcaption></figure>
+<div aria-label="How official forms are handled" class="form-board cols-3" role="img">
+<article class="form-card"><div class="mark">Auto-fill</div><h3>I‑140</h3><p>Local script fills it from answers.json.</p></article>
+<article class="form-card"><div class="mark">Same pass</div><h3>ETA‑9089 A</h3><p>Filled with I‑140; unmatched fields stay for you.</p></article>
+<article class="form-card"><div class="mark">No guessing</div><h3>Open fields</h3><p>Uncertain items are flagged for you to confirm.</p></article>
+</div>
+</section>
+<section class="block">
+<h2>Step 5: Package and mail in official order (Stage V)</h2>
+<p>Before the package is built, the Skill red-teams the file: claims with no source, key arguments without independent support, dead citations, and unfinished placeholders. It then walks twelve RFE-prevention rules. Every finding has to be fixed, or you accept it on the record. Nothing is waved through quietly.</p>
+<p>After that check, the materials are assembled in USCIS order into a print-sign-and-mail package, with the lockbox address matched to your state.</p>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Packaging page: one ZIP, fee list, and lockbox mailing address" height="787" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/b8e21c9303909633ae57a258d13b5ed3e11a27e730299-b8e21c930390.png" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Packaging page: filled forms, Word drafts, and assembly order in one ZIP. Fees and the lockbox address are listed together. Recheck the address on uscis.gov before you mail.</figcaption></figure>
+<div class="soft">This is a self-help draft and a gap check, not attorney review and not a final filing gate. Recheck the file yourself before you send it.</div>
+</section>
+<footer class="foot">
+<p>FinChip: <a href="https://finchip.ai/skills/openniw-petition-suite-finchip" rel="noopener" target="_blank">openniw-petition-suite-finchip</a> · Transplanted from open-source OpenNIW (MIT) · Local document-preparation tool, not attorney representation.</p>
+</footer>
+</article>
+</div></div>
+</div></body>
+</html>

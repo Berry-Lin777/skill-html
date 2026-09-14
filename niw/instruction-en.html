@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>OpenNIW Petition Suite — Full NIW / EB-1A / O-1 Walkthrough</title>
+<style>
+
+:root{
+  color-scheme:light;
+  --ink:#121820;
+  --ink2:#2a3340;
+  --muted:#66707c;
+  --desk:#e6e8eb;
+  --paper:#ffffff;
+  --line:#c8ced6;
+  --line2:#e4e8ed;
+  --accent:#1a4d5c;
+  --accent-soft:#eef5f7;
+  --warn:#6a4b1f;
+  --warn-bg:#f8f3ea;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Songti SC","Noto Serif SC",Georgia,serif;
+  --sans:"Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,.finch-page{
+  margin:0;min-width:0;
+  background:var(--desk);color:var(--ink);
+  font:15px/1.65 var(--sans);
+}
+.finchip-page{
+  width:100%;max-width:100%;min-width:0;
+  background-color:var(--desk);
+  background-image:linear-gradient(180deg,#dde1e6 0%,var(--desk) 22%,var(--desk) 100%);
+  color:var(--ink);
+}
+.wrap{width:100%;max-width:880px;margin:0 auto;padding:20px 12px 56px}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3,p{margin:0;overflow-wrap:break-word}
+a{color:var(--accent);text-underline-offset:2px}
+code{
+  font:12.5px/1.4 var(--mono);
+  background:var(--accent-soft);
+  border:1px solid #d5e3e7;
+  padding:.08em .32em;
+}
+
+/* One continuous formal sheet */
+.doc{
+  width:100%;max-width:100%;min-width:0;
+  background:var(--paper);
+  color:var(--ink);
+  border:1px solid var(--line);
+  box-shadow:0 1px 0 rgba(18,24,32,.03), 0 22px 48px rgba(18,24,32,.07);
+  padding:28px 22px 36px;
+  counter-reset:exhibit;
+}
+@media(min-width:700px){
+  .doc{padding:40px 48px 52px}
+}
+
+/* Letterhead */
+.mast{
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px 20px;
+  padding-bottom:14px;margin-bottom:22px;
+  border-bottom:2px solid var(--ink);
+}
+.mast-left{min-width:0}
+.mast .org{
+  font:700 11px/1.2 var(--sans);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+}
+.mast .docname{
+  margin-top:6px;font:500 12.5px/1.35 var(--serif);color:var(--ink2);
+}
+.mast-right{text-align:right;font:12px/1.45 var(--mono);color:var(--muted)}
+.mast-right strong{display:block;color:var(--ink);font-weight:700;letter-spacing:.04em}
+
+.hero{padding:0;border:0;background:transparent;min-width:0}
+.brand-row{display:none}
+h1{
+  font:650 clamp(26px,4.8vw,34px)/1.18 var(--serif);
+  letter-spacing:-.02em;color:var(--ink);
+  margin:0 0 12px;
+}
+.lede{
+  color:var(--ink2);font-size:15px;line-height:1.7;
+  padding-bottom:16px;border-bottom:1px solid var(--line2);
+}
+.meta{
+  display:grid;gap:0;margin:16px 0 0;
+  border:1px solid var(--line);background:#fbfcfd;
+}
+@media(min-width:640px){.meta{grid-template-columns:1fr 1fr}}
+.meta span{
+  display:block;padding:9px 12px;font-size:12.5px;color:var(--ink2);
+  border-top:1px solid var(--line2);margin:0;border-right:0;
+}
+@media(min-width:640px){
+  .meta span{border-top:1px solid var(--line2)}
+  .meta span:nth-child(1),.meta span:nth-child(2){border-top:0}
+  .meta span:nth-child(odd){border-right:1px solid var(--line2)}
+}
+.meta span:first-child{border-top:0}
+.note,.warn{
+  margin-top:12px;padding:11px 14px;font-size:13px;line-height:1.6;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  border-left:0;border-right:0;background:transparent;
+}
+.note{border-left:2px solid var(--accent);padding-left:12px;color:var(--ink2);background:var(--accent-soft)}
+.warn{border-left:2px solid var(--warn);padding-left:12px;color:var(--warn);background:var(--warn-bg)}
+.red-note{
+  margin-top:16px;padding:12px 14px;font-size:13px;line-height:1.65;font-weight:600;
+  border-left:3px solid #b3261e;background:#fff0ef;color:#b3261e;
+}
+
+/* Formal TOC with leaders */
+.toc{
+  margin:28px 0 8px;border:0;background:transparent;min-width:0;
+  padding-top:8px;border-top:1px solid var(--ink);
+}
+.toc-head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  padding:12px 0 10px;border-bottom:1px solid var(--line2);
+  background:transparent;
+  font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li{border-bottom:1px dotted #c5ccd4}
+.toc li:last-child{border-bottom:1px solid var(--line2)}
+.toc a{
+  display:grid;grid-template-columns:2.2em minmax(0,1fr) auto;
+  align-items:baseline;gap:8px 10px;
+  text-decoration:none;color:var(--ink);padding:10px 0;min-width:0;
+}
+.toc a:hover .t{color:var(--accent)}
+.toc .n{font:700 12px/1.2 var(--mono);color:var(--accent)}
+.toc .t{font:600 14px/1.35 var(--serif);color:var(--ink)}
+.toc .d{font:12px/1.35 var(--sans);color:var(--muted);text-align:right;max-width:12em}
+@media(max-width:520px){
+  .toc a{grid-template-columns:2em 1fr}
+  .toc .d{grid-column:2;text-align:left}
+}
+
+/* Continuous sections — no cards */
+.step{
+  margin-top:8px;padding:30px 0 10px;min-width:0;
+  background:transparent;border:0;border-top:1px solid var(--line2);
+}
+.step:first-of-type{border-top:1px solid var(--ink)}
+.step-head{
+  display:grid;grid-template-columns:3rem 1fr;gap:10px 16px;align-items:start;
+  padding-bottom:0;margin-bottom:14px;border:0;
+}
+.step .num{
+  font:650 28px/1 var(--serif);color:var(--accent);
+  letter-spacing:-.03em;padding-top:1px;
+}
+.step h2{
+  font:650 clamp(19px,3.2vw,24px)/1.28 var(--serif);
+  color:var(--ink);letter-spacing:-.015em;padding-top:4px;
+}
+.facts{
+  display:grid;gap:0;margin:0 0 16px;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:#fbfcfd;
+}
+@media(min-width:700px){.facts{grid-template-columns:1fr 1fr}}
+.facts > div{padding:14px 16px;min-width:0}
+.facts > div + div{border-top:1px solid var(--line2)}
+@media(min-width:700px){
+  .facts > div + div{border-top:0;border-left:1px solid var(--line2)}
+}
+.facts dt{
+  margin:0 0 6px;font:700 10px/1 var(--sans);
+  letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+}
+.facts dd{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.6}
+.facts ol{margin:4px 0 0;padding-left:1.15em;color:var(--ink2);font-size:13.5px}
+.facts li{margin:.35em 0}
+
+.prompt-wrap{margin:0 0 16px}
+.prompt-label{
+  font:700 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px;
+}
+.prompt{
+  margin:0;padding:14px 16px;
+  background:#f7f8f9;color:var(--ink);
+  border:1px solid var(--line);border-left:3px solid var(--ink);
+  font:13px/1.6 var(--mono);white-space:pre-wrap;overflow: visible;
+}
+
+.shot{
+  margin:14px 0 0;border:1px solid var(--line);background:#fff;overflow:hidden;
+  box-shadow:inset 0 0 0 1px #fff;
+}
+.shot:first-child{margin-top:0}
+.shot figcaption{
+  padding:9px 12px;font-size:11.5px;color:var(--muted);
+  background:#f7f8fa;border-top:1px solid var(--line2);
+  font-family:var(--mono);line-height:1.45;
+}
+.shot figcaption::before{
+  counter-increment:exhibit;
+  content:"Exhibit " counter(exhibit, decimal-leading-zero) " · ";
+  color:var(--accent);font-weight:700;letter-spacing:.02em;
+}
+html[lang="zh-CN"] .shot figcaption::before{
+  content:"附图 " counter(exhibit, decimal-leading-zero) " · ";
+}
+.stack{display:grid;gap:14px}
+@media(min-width:700px){.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}}
+.pair .shot{margin-top:0}
+
+.compare{
+  margin:0 0 16px;border:1px solid var(--line);background:#fbfcfd;min-width:0;
+}
+.compare-head,.compare .ch{
+  padding:10px 14px;border-bottom:1px solid var(--line);
+  background:transparent;
+  font:700 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
+}
+.compare table{width:100%;border-collapse:collapse;font-size:13px}
+.compare th,.compare td{
+  border-top:1px solid var(--line2);padding:12px 14px;
+  text-align:left;vertical-align:top;min-width:0;
+}
+.compare tr:first-child th,.compare tr:first-child td{border-top:0}
+.compare th{
+  width:30%;font:650 12.5px/1.4 var(--serif);color:var(--ink);
+  background:transparent;
+}
+.compare td{color:var(--ink2);line-height:1.55}
+
+.end{
+  margin-top:12px;padding:30px 0 8px;min-width:0;
+  background:transparent;border:0;border-top:2px solid var(--ink);
+}
+.end h2{
+  font:650 clamp(20px,3.4vw,26px)/1.25 var(--serif);
+  margin:0 0 10px;color:var(--ink);
+}
+.end .lead{color:var(--ink2);font-size:14.5px;margin:0 0 16px;line-height:1.65}
+.end h3{
+  font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin:18px 0 8px;
+  padding-top:12px;border-top:1px solid var(--line2);
+}
+.end ol,.end ul{margin:0;padding-left:1.2em;color:var(--ink2);font-size:13.5px}
+.end li{margin:.4em 0;line-height:1.55}
+.end .path{
+  font:12.5px/1.55 var(--mono);background:#f7f8f9;color:var(--ink);
+  border:1px solid var(--line);border-left:3px solid var(--ink);
+  padding:12px 14px;margin-top:10px;overflow: visible;white-space:pre-wrap;
+}
+
+.foot{
+  margin-top:28px;padding-top:14px;border-top:1px solid var(--line);
+  font:11.5px/1.55 var(--mono);color:var(--muted);
+}
+.foot code{font-size:11px;border:0;background:transparent;padding:0}
+
+
+.deliverable{
+  margin:8px 0 18px;padding:22px 20px 20px;
+  border:1px solid var(--ink);background:#fbfcfd;min-width:0;
+}
+.deliverable .eyebrow{
+  font:700 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:10px;
+}
+.deliverable .title{
+  font:650 clamp(26px,5vw,36px)/1.15 var(--serif);
+  letter-spacing:-.02em;color:var(--ink);margin:0 0 10px;
+}
+.deliverable .pathline{
+  font:650 15px/1.4 var(--mono);color:var(--accent);
+  margin:0 0 12px;word-break:break-all;
+}
+.deliverable .blurb{
+  margin:0;font-size:14.5px;line-height:1.65;color:var(--ink2);
+}
+.deliverable .follow{
+  margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line2);
+  font-size:13.5px;color:var(--ink2);line-height:1.55;
+}
+.deliverable .follow strong{color:var(--ink)}
+.end .deliverable{margin-top:0;margin-bottom:20px}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+/* approved monitor frame */
+.shot{width:74%;max-width:620px;margin:22px auto 0;border:0!important;background:transparent!important;overflow:visible!important;box-shadow:none!important;min-width:0}
+.grid .shot,.pair .shot{width:100%;max-width:none;margin-top:0}
+
+.bezel{background:#171d24;border:1px solid #0b0f14;border-radius:20px;padding:0 14px 16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 18px 36px rgba(18,24,32,.2)}
+.bezel-bar{display:flex;align-items:center;gap:7px;position:relative;height:40px;margin:0 -14px 12px;padding:0 14px;background:linear-gradient(180deg,#2d3640,#1e262e);border-bottom:1px solid #3d4854;border-radius:19px 19px 0 0}
+.bezel-bar::after{background:#10151a;border:1px solid #3a4450;color:#e4ebf0}
+.bezel-screen{padding:7px;background:linear-gradient(180deg,#f4f7f9,#e6ebf0);border-radius:10px;box-shadow:inset 0 0 0 1px rgba(18,24,32,.08)}
+.bezel-stand::before{background:linear-gradient(180deg,#b7c0c8,#7d8791)}
+.bezel-stand::after{background:linear-gradient(180deg,#eef2f5,#c5ced6);box-shadow:0 4px 10px rgba(18,24,32,.14)}
+
+.bezel-bar i{display:block;width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.bezel-bar i:nth-child(1){background:radial-gradient(circle at 32% 30%,#ff9d98,#ff5f57 68%)}
+.bezel-bar i:nth-child(2){background:radial-gradient(circle at 32% 30%,#ffe08a,#febc2e 68%)}
+.bezel-bar i:nth-child(3){background:radial-gradient(circle at 32% 30%,#7aed8a,#28c840 68%)}
+.bezel-bar::after{content:"openniw · walkthrough";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:46%;max-width:64%;padding:6px 14px;border-radius:999px;font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-align:center;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pair .bezel-bar::after,.grid .bezel-bar::after{content:"preview"}
+.bezel-screen img{width:100%;height:auto!important;display:block;border-radius:5px;object-fit:contain}
+.bezel-stand{height:30px;position:relative;margin-top:4px}
+.bezel-stand::before{content:"";position:absolute;left:50%;top:0;width:16px;height:15px;margin-left:-8px;border-radius:0 0 3px 3px;box-shadow:inset 1px 0 0 rgba(255,255,255,.2)}
+.bezel-stand::after{content:"";position:absolute;left:50%;bottom:0;width:46%;height:9px;margin-left:-23%;border-radius:3px 3px 11px 11px}
+.pair .bezel-stand,.grid .bezel-stand{display:none}
+.shot figcaption{margin-top:8px;padding:0 2px;border:0!important;background:transparent!important;text-align:center}
+.bezel-screen{position:relative}
+.bezel-screen .tag{z-index:2}
+.io-board,.type-board,.file-board,.form-board,.mode-board,.check-board{margin-top:16px;min-width:0}
+.io-board{padding:14px 12px 10px;background:linear-gradient(rgba(200,200,200,.28) 1px,transparent 1px) 0 0/100% 26px,#f6f4ef;border:1px solid var(--line,var(--l,#ddd4c8));border-radius:12px}
+.io-head{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;margin-bottom:10px;font:700 11px/1 var(--sans,sans-serif);letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168))}
+.io-head span:last-child{text-align:right}
+.io-row{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;align-items:stretch;margin-bottom:8px;min-width:0}
+.io-in,.io-out{min-width:0;padding:11px 12px;border-radius:8px;font-size:13.5px;line-height:1.4;color:var(--ink,var(--i,#14110f))}
+.io-in{background:#fff;border:1px solid var(--line,var(--l,#ddd4c8))}
+.io-out{background:var(--green-soft,var(--soft,#e7f3ec));border:1px solid #c9e2d4}
+.io-k{display:none;font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168));margin-bottom:6px}
+.io-arrow{display:flex;align-items:center;justify-content:center;color:var(--green,var(--accent,var(--a,#1f6b4a)));font:700 16px/1 sans-serif}
+.io-arrow::before{content:"→"}
+.type-board,.file-board,.form-board,.check-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.type-board{grid-template-columns:1fr 1fr}.file-board,.form-board,.check-board{grid-template-columns:1fr 1fr}.form-board.cols-3,.check-board.cols-3{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:700px){.type-board{grid-template-columns:1fr 1fr 1fr 1fr}}
+.form-card,.type-card,.file-card,.check-card,.mode-card{min-width:0;background:#fff;border:1px solid var(--line,var(--l,#ddd4c8));padding:13px 12px 12px;border-top:4px solid var(--green,var(--accent,var(--a,#1f6b4a)))}
+.form-card .mark,.type-card .mark,.file-card .mark,.check-card .mark,.mode-tag{font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--green,var(--accent,var(--a,#1f6b4a)));white-space:nowrap;margin-bottom:7px}
+.form-card h3,.type-card h3,.file-card h3,.check-card h3,.mode-card h3{margin:0 0 6px;font:650 16px/1.2 var(--serif,Georgia,serif);color:var(--ink,var(--i,#14110f))}
+.form-card p,.type-card p,.file-card p,.check-card p,.mode-card p{margin:0;font-size:13px;line-height:1.45;color:var(--ink2,var(--i,#3a342f))}
+.mode-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.mode-board{grid-template-columns:1fr 1fr}}
+.mode-card.is-pick{background:var(--green-soft,var(--accent-soft,var(--s,#eef5f7)))}
+.mode-foot{grid-column:1/-1;margin:0;padding:10px 12px;background:#f7f8f9;border:1px solid var(--line,var(--l,#ddd));font-size:13px;line-height:1.5;color:var(--ink2,var(--i,#3a342f))}
+@media(max-width:639px){.io-head{display:none}.io-row,.io-head{grid-template-columns:1fr}.io-arrow{height:18px}.io-arrow::before{content:"↓"}.io-k{display:block}}
+h1,h2,h3,p{overflow-wrap:break-word}
+@media(min-width:700px){.step h2,.head h2{white-space:nowrap}}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;border-left:0;border-right:0;background:transparent;padding:10px 0 2px}
+.meta span,.meta div{display:inline;padding:0;border:0;white-space:nowrap}
+
+
+
+
+.meta{display:flex!important;flex-wrap:wrap;align-items:baseline;gap:6px 18px;background:transparent}
+.meta span,.meta div{display:inline!important;border:0!important;background:transparent!important;padding:0!important;white-space:nowrap}
+
+
+.finch-inline-335{margin-top:12px}
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fff;color:#202020;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}
+.finch-page{background-color:var(--desk);color:var(--ink)}
+</style></head>
+<body><div class="finch-page">
+<div class="finchip-page"><div class="wrap">
+<div class="doc">
+<div class="mast">
+<div class="mast-left">
+<div class="org">OpenNIW Petition Suite</div>
+<div class="docname">NIW Operating Memorandum · Walkthrough</div>
+</div>
+<div class="mast-right">
+<strong>DOC · WALKTHROUGH</strong>
+    Claude Code · EN<br/>
+    Stage I–III · PES draft
+  </div>
+</div>
+<header class="hero">
+<h1>Full walkthrough: applying for NIW / EB‑1A / O‑1 U.S. status</h1>
+<p class="lede">This case is from <strong>Claude Code</strong>: Intake → Benchmark → evaluation → freeze the endeavor → fill evidence gaps → write <code>pes.md</code>. Follow along and you will have a first PES draft.</p>
+<div class="meta">
+<span>Agent: Claude Code</span>
+<span>Skill: openniw-petition-suite</span>
+<span>Demo persona: Alex Rivera (synthetic)</span>
+<span>Stops at Stage III · PES draft</span>
+</div>
+<div class="note">Buy and download the skill package on FinChip first: <a href="https://finchip.ai/skills/openniw-petition-suite-finchip" rel="noopener" target="_blank">openniw-petition-suite-finchip</a>, then open that folder in Claude Code. This tutorial is self-help drafting only — not legal advice, not an approval prediction.</div>
+<div class="warn">Screenshots are from a real English Claude Code demo. Numbers and links are demo data. Use your own materials for a real case.</div>
+</header>
+<nav aria-label="Contents" class="toc">
+<div class="toc-head"><span>Procedure index</span><span>7 steps + close</span></div>
+<ol>
+<li><a href="#s01"><span class="n">01</span><span class="t">Start NIW</span><span class="d">Activate NIW in Claude Code</span></a></li>
+<li><a href="#s02"><span class="n">02</span><span class="t">Here in chat or Desktop</span><span class="d">How to choose</span></a></li>
+<li><a href="#s03"><span class="n">03</span><span class="t">Paste intake facts</span><span class="d">Demo persona</span></a></li>
+<li><a href="#s04"><span class="n">04</span><span class="t">Pick endeavor framing</span><span class="d">Public-good modeling</span></a></li>
+<li><a href="#s05"><span class="n">05</span><span class="t">Freeze the endeavor</span><span class="d">Lock the sentence</span></a></li>
+<li><a href="#s06"><span class="n">06</span><span class="t">Collect evidence</span><span class="d">Fill paper and material gaps</span></a></li>
+<li><a href="#s07"><span class="n">07</span><span class="t">Deliver the first formal document</span><span class="d">Final deliverable</span></a></li>
+<li><a href="#end"><span class="n">—</span><span class="t">Final deliverable</span><span class="d">Edit around pes.md</span></a></li>
+</ol>
+</nav>
+<section class="step" id="s01">
+<div class="step-head"><div class="num">01</div><h2>Start NIW</h2></div>
+<dl class="facts">
+<div><dt>Why</dt><dd>Tell Claude Code you want NIW so it activates the NIW zone and prepares a case folder.</dd></div>
+<div><dt>You do</dt><dd><ol><li>Open the downloaded skill folder in Claude Code</li><li>Start a new chat and paste the prompt below</li></ol></dd></div>
+</dl>
+<div class="prompt-wrap"><div class="prompt-label">Send to Claude Code</div><div class="prompt">I already downloaded this immigration skill into the current folder. I want to prepare NIW (National Interest Waiver) materials — please start from this step and guide me.</div></div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Kickoff: Claude Code finds the NIW skill and asks how to proceed" height="889" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-en/59ee0205577289047e8868dbe5d2c03474b2c304de816-59ee02055772.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Kickoff: Claude Code finds the NIW skill and asks how to proceed</figcaption></figure>
+</section>
+<section class="step" id="s02">
+<div class="step-head"><div class="num">02</div><h2>How to choose Here in chat or Desktop</h2></div>
+<dl class="facts">
+<div><dt>Why</dt><dd>Claude Code asks which UI to use. Both write the same case files; the difference is window layout. For this tutorial, stay in chat.</dd></div>
+<div><dt>You do</dt><dd><ol><li>Read the comparison below</li><li>Select <strong>Here in chat</strong></li></ol></dd></div>
+</dl>
+<div aria-label="Here in chat versus Desktop" class="mode-board" role="img">
+<article class="mode-card is-pick"><div class="mode-tag">This tutorial</div><h3>Here in chat</h3><p>Stay in Claude Code. Paste intake facts in chat. No extra install. Same <code>niw-case/</code> outputs.</p></article>
+<article class="mode-card"><div class="mode-tag">Optional window</div><h3>Desktop</h3><p>OpenNIW’s Electron app (<code>optional/desktop/</code>), split screen. Layout only — not petition quality.</p></article>
+<p class="mode-foot">Both write the same materials into <code>niw-case/</code>. Chat mode is enough for this demo.</p>
+</div>
+<div class="prompt-wrap"><div class="prompt-label">Choose / reply</div><div class="prompt">Here in chat</div></div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Mode choice: select Here in chat" height="829" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-en/a68c3fd41a0b52952922229a28ffe0ef1b56bc0bc9e52-a68c3fd41a0b.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Mode choice: select Here in chat</figcaption></figure>
+</section>
+<section class="step" id="s03">
+<div class="step-head"><div class="num">03</div><h2>Paste intake facts in chat</h2></div>
+<dl class="facts">
+<div><dt>Why</dt><dd>Claude Code asks for Scholar / homepage / CV / basics in chat (chat path). This builds <code>profile.md</code> without retyping a paper list by hand later.</dd></div>
+<div><dt>You do</dt><dd><ol><li>Paste the demo persona below</li><li>Let it archive what it can (placeholder links may 404 — that is expected)</li><li>Continue when it asks the next decision</li></ol></dd></div>
+</dl>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Claude Code asks for links, CV, and basic facts in chat" height="849" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-en/c592aa29e9a41b0c2e870ef6881caaab8a3e65961b583-c592aa29e9a4.jpg" width="1024"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Claude Code asks for links, CV, and basic facts in chat</figcaption></figure>
+<div class="prompt-wrap"><div class="prompt-label">Send to Claude Code</div><div class="prompt">Demo persona (not a real person — placeholder links OK if fetch fails):
+
+Name: Alex Rivera
+Highest degree: PhD, Environmental Data Science, 2019
+Current position: Independent consultant (no U.S. employer sponsor)
+Field: climate risk / coastal flood modeling
+In the U.S.?: Yes
+
+Homepage: https://example.com/alex-rivera
+LinkedIn: https://www.linkedin.com/in/alex-rivera-demo
+Other: https://github.com/example/coastal-flood-demo
+Google Scholar: (none for this demo)
+
+Rough record: ~18 papers, ~210 citations
+Proposed direction: open calibrated coastal flood-risk screening models for U.S. counties; exploring county-level pilots (no LOI yet)
+
+No CV upload for this demo. Please continue with the next step.</div></div>
+</section>
+<section class="step" id="s04">
+<div class="step-head"><div class="num">04</div><h2>Pick the endeavor framing</h2></div>
+<dl class="facts">
+<div><dt>Why</dt><dd>After Stage I issue-spotting, Claude Code asks which framing the frozen endeavor sentence should build on.</dd></div>
+<div><dt>You do</dt><dd><ol><li>Select <strong>1 · Public-good open modeling</strong></li></ol></dd></div>
+</dl>
+<div class="prompt-wrap"><div class="prompt-label">Choose / reply</div><div class="prompt">1 · Public-good open modeling</div></div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Choose endeavor framing: Public-good open modeling" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-en/34cb3349ce05b407387689b91acddd9ea5380cb8e0ec4-34cb3349ce05.jpg" width="952"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Choose endeavor framing: Public-good open modeling</figcaption></figure>
+</section>
+<section class="step" id="s05">
+<div class="step-head"><div class="num">05</div><h2>Draft and freeze the Proposed Endeavor</h2></div>
+<dl class="facts">
+<div><dt>Why</dt><dd>Every later document quotes this sentence verbatim. Edit before freeze; after freeze, leave it alone if you can.</dd></div>
+<div><dt>You do</dt><dd><ol><li>Select <strong>B — Application-focused</strong></li><li>Confirm freeze when asked</li></ol></dd></div>
+</dl>
+<div class="note">Note: when the Skill says “freeze,” it means lock. Once this endeavor sentence is set, later documents quote it as written and do not rewrite it.</div>
+<div class="prompt-wrap"><div class="prompt-label">Choose / reply</div><div class="prompt">B — Application-focused</div></div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Freeze canonical endeavor: choose B — Application-focused" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-en/671fc41eab0b621967f21cf75adb5ae9f4b1bf9d11def-671fc41eab0b.jpg" width="981"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Freeze canonical endeavor: choose B — Application-focused</figcaption></figure>
+</section>
+<section class="step" id="s06">
+<div class="step-head"><div class="num">06</div><h2>Collect evidence and fill paper gaps</h2></div>
+<dl class="facts">
+<div><dt>Why</dt><dd>The evidence checklist lists proof this case still needs — recommendation letters, award records, press, and similar exhibits — so you know what to collect instead of searching blindly. Then paste a paper list and means notes. This tutorial stays in Stage II–III and does not jump to Forms.</dd></div>
+<div><dt>You do</dt><dd><ol><li>Refuse “skip to Forms” / “stop here”</li><li>Paste the publication list + means notes</li><li>Ask it to continue into Stage III drafting</li></ol></dd></div>
+</dl>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="After freeze: evidence branch — continue, do not skip to Forms" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-en/08b434bc51c0ded694abea6e1a5f49d5b8d43c6af8533-08b434bc51c0.jpg" width="737"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>After freeze: evidence branch — continue, do not skip to Forms</figcaption></figure>
+<div class="prompt-wrap"><div class="prompt-label">Send to Claude Code</div><div class="prompt">Do not skip to Stage IV Forms, and do not stop here.
+
+Continue Stage II·b with this demo publication list (titles only, no PDFs):
+
+1. County-scale coastal flood screening with open elevation and hazard layers
+2. Calibrating inundation models for U.S. coastal jurisdictions using public data
+3. Transparent flood-risk tools for local government planning decisions
+4. Comparing coastal flood percentiles across approved peer research profiles
+5. Open-source coastal risk models for hazard-mitigation workflows
+6. Uncertainty communication in county flood-risk dashboards
+7. Integrating climate scenarios into coastal screening pipelines
+8. Reproducible flood model releases for non-specialist agency users
+
+Then record means (demo, asserted): self-funded consultant time; local compute; open-source planned; county pilots discussed but no LOI yet.
+
+After that, enter Stage III drafting and write documents/pes.md.</div></div>
+</section>
+<section class="step" id="s07">
+<div class="step-head"><div class="num">07</div><h2>Deliver the first formal document</h2></div>
+<dl class="facts">
+<div><dt>Why</dt><dd>PES (Proposed Endeavor Statement) is the first formal document. It explains what you will do, why it has public value, and how you will carry it out. It is a draft of policy hooks + project plan + <code>[TODO]</code>s — not a full package, but it is already a reviewable deliverable.</dd></div>
+<div><dt>You do</dt><dd><ol><li>Let Claude Code write <code>niw-case/documents/pes.md</code></li><li>Open the file / preview the card</li><li>Stop after PES for this demo</li></ol></dd></div>
+</dl>
+<div class="deliverable">
+<div class="eyebrow">Final deliverable · this tutorial</div>
+<div class="title">Deliver the first formal document</div>
+<div class="pathline">niw-case/documents/pes.md</div>
+<p class="blurb">PES is the first formal document in the filing set. It writes down your Proposed Endeavor, project plan, policy basis, and how you will execute it. The chat result and preview below are that file. Later fact fixes and paragraph edits all go into this <code>pes.md</code> — do not start a new file.</p>
+<p class="follow"><strong>Note:</strong> Self-help draft with <code>[TODO]</code>s — not a full filing package and not ready to mail to USCIS. Support letters and the Petition Letter come next if you continue.</p>
+</div>
+<div class="prompt-wrap"><div class="prompt-label">Send to Claude Code (closing)</div><div class="prompt">§1–2 OK for this demo. Stop here after the PES — do not draft the Petition Letter or support letters yet.</div></div>
+<div class="stack">
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Stage III complete: pes.md written and offered as a document card" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-en/c43cb6a2293176f93d2a9add79afbadaf80688d65c9b3-c43cb6a22931.jpg" width="905"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Stage III complete: pes.md written and offered as a document card</figcaption></figure>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Final deliverable preview: niw-case/documents/pes.md" height="5205" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/instruction-en/bff73a7bbbe3510cd0c7290bb1de915554304c6fd888b-bff73a7bbbe3.jpg" width="900"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Final deliverable preview: niw-case/documents/pes.md</figcaption></figure>
+</div>
+</section>
+<section class="end" id="end">
+<div class="deliverable">
+<div class="eyebrow">Result · End of this walkthrough</div>
+<div class="title">Deliver the first formal document</div>
+<div class="pathline">niw-case/documents/pes.md</div>
+<p class="blurb">Intake, evaluation, the frozen endeavor, evidence, and means all exist to produce this PES. The PES states what you will do, why it is in the national interest, and how you will execute it. You or a lawyer can use it as the core for later documents.</p>
+<p class="follow"><strong>How to edit next:</strong> Keep <code>pes.md</code> at the center — revise policy hooks, projects, means, and <code>[TODO]</code>s. If the endeavor sentence changes, re-freeze it first, then ask Claude Code to sync the PES. Other case files support the draft; they do not replace it.</p>
+</div>
+<h3>Edit around pes.md</h3>
+<ol>
+<li>Open <code>niw-case/documents/pes.md</code> in Claude Code and edit directly, or say: “Rewrite PES §2…” / “Change project 3 in §3…”</li>
+<li>If the endeavor sentence changes: freeze the new sentence, then ask to “rewrite PES from the new endeavor”</li>
+<li>If paper counts / means change: update the case first, then refresh the related PES paragraphs</li>
+</ol>
+<h3>How to re-run</h3>
+<ol>
+<li><strong>Rewrite the deliverable only:</strong> stay in <code>niw-case/</code> and say “Rewrite pes.md from Stage III”</li>
+<li><strong>Full restart:</strong> backup/rename the old <code>niw-case/</code>, start a new Claude Code chat from Step 01</li>
+<li><strong>Real case:</strong> use your own facts; replace every <code>[TODO]</code> before later stages</li>
+</ol>
+<div class="path">Backup example: mv niw-case niw-case-demo-2026-08-11
+Then open a new Claude Code chat and say: I want to prepare NIW materials — please start from this step and guide me.</div>
+<div class="note finch-inline-335">Reminder: OpenNIW / this skill is local self-help drafting — not legal advice and not an approval prediction. Review carefully or consult a licensed immigration attorney before filing.</div>
+<div class="red-note">The walkthrough above is the detailed PES drafting tutorial. If you want the full document set — Petition Letter, recommendation letters, organized in the structure of real approved filings — say that at the start of your prompt.</div>
+</section>
+<footer class="foot">
+<p>Demo runtime: Claude Code · Here in chat. Local screenshot backup: <code>output/skill-smoke-tests/openniw-petition-suite/tutorial-niw-en/screenshots/</code></p>
+</footer>
+</div>
+</div></div>
+</div></body>
+</html>

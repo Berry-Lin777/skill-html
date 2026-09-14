@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>用 AI 申请美国身份 · NIW / EB-1A / O-1 全流程 Skill</title>
+<style>
+:root{
+  color-scheme:light;
+  --ink:#14110f;
+  --ink2:#3a342f;
+  --muted:#7a7168;
+  --bg:#f3efe8;
+  --paper:#fffcf7;
+  --line:#ddd4c8;
+  --line2:#ebe4da;
+  --green:#1f6b4a;
+  --green-soft:#e7f3ec;
+  --amber:#8a5a12;
+  --amber-soft:#f7efe2;
+  --bezel:#2b2622;
+  --bezel-2:#1a1714;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Songti SC","Noto Serif SC",Georgia,serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Helvetica Neue",Helvetica,Arial,"Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,.finch-page{
+  margin:0;min-width:0;
+  background:var(--bg);color:var(--ink);
+  font:15.5px/1.7 var(--sans);
+}
+.finchip-page{
+  width:100%;max-width:100%;min-width:0;
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(circle at 88% 0%,rgba(31,107,74,.08),transparent 38%),
+    linear-gradient(180deg,#e8e2d8 0%,var(--bg) 26%,var(--bg) 100%);
+  color:var(--ink);
+}
+.wrap{width:100%;max-width:860px;margin:0 auto;padding:18px 12px 48px}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3,p{margin:0;overflow-wrap:break-word}
+a{color:var(--green);text-underline-offset:2px}
+code{
+  font:12.5px/1.4 var(--mono);
+  background:var(--green-soft);
+  border:1px solid #c9e2d4;
+  padding:.08em .32em;
+}
+
+.sheet{
+  width:100%;max-width:100%;min-width:0;
+  background:var(--paper);
+  border:1px solid var(--line);
+  box-shadow:0 18px 42px rgba(20,17,15,.07);
+  padding:26px 18px 36px;
+}
+@media(min-width:700px){.sheet{padding:36px 42px 48px}}
+
+.kicker{
+  font:700 11px/1.2 var(--sans);
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--green);
+}
+@media(min-width:500px){.kicker{white-space:nowrap}}
+h1{
+  margin-top:10px;
+  font:650 clamp(22px,3.5vw,28px)/1.25 var(--serif);
+  letter-spacing:-.02em;
+}
+.lede{
+  margin-top:14px;
+  font-size:16.5px;line-height:1.75;
+  color:var(--ink2);max-width:42em;
+}
+.save{
+  margin-top:18px;
+  display:block;width:fit-content;max-width:100%;
+  padding:10px 14px;
+  background:var(--ink);color:#fff;
+  font:650 14px/1.35 var(--sans);
+}
+@media(min-width:560px){.save{white-space:nowrap}}
+.fine{
+  margin-top:12px;
+  font-size:12.5px;line-height:1.55;color:var(--muted);max-width:42em;
+}
+
+.divider{
+  margin:28px 0 0;
+  border:0;border-top:1px solid var(--line);
+}
+
+.block{margin-top:28px;min-width:0}
+.block h2{
+  font:650 clamp(20px,3.2vw,26px)/1.25 var(--serif);
+  margin-bottom:10px;
+}
+.block h3{
+  font:650 16.5px/1.35 var(--sans);
+  color:var(--ink);
+  margin-top:22px;margin-bottom:8px;
+}
+.block p{color:var(--ink2);max-width:44em}
+.block p + p{margin-top:10px}
+
+/* Computer / TV frame: wraps each screenshot and follows its aspect ratio */
+.shot{
+  width:74%;
+  max-width:620px;
+  margin:22px auto 0;
+  border:0;
+  background:transparent;
+  overflow:visible;
+  min-width:0;
+}
+.bezel{
+  background:#1b1a18;
+  border:1px solid #0c0b0a;
+  border-radius:20px;
+  padding:0 14px 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.1),
+    0 18px 36px rgba(20,17,15,.2);
+}
+.bezel-bar{
+  display:flex;align-items:center;gap:7px;
+  position:relative;
+  height:40px;
+  margin:0 -14px 12px;
+  padding:0 14px;
+  background:linear-gradient(180deg,#2f2c28,#221f1c);
+  border-bottom:1px solid #3f3b36;
+  border-radius:19px 19px 0 0;
+}
+.bezel-bar i{
+  display:block;width:12px;height:12px;border-radius:50%;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.25);
+}
+.bezel-bar i:nth-child(1){background:radial-gradient(circle at 32% 30%,#ff9d98,#ff5f57 68%)}
+.bezel-bar i:nth-child(2){background:radial-gradient(circle at 32% 30%,#ffe08a,#febc2e 68%)}
+.bezel-bar i:nth-child(3){background:radial-gradient(circle at 32% 30%,#7aed8a,#28c840 68%)}
+.bezel-bar::after{
+  content:"openniw · preview";
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  min-width:46%;max-width:64%;
+  padding:6px 14px;
+  background:#12110f;
+  border:1px solid #3a3631;
+  border-radius:999px;
+  font:600 10px/1.2 var(--mono);
+  color:#e4dccf;
+  text-align:center;
+  letter-spacing:.03em;
+  white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.bezel-screen{
+  padding:7px;
+  background:linear-gradient(180deg,#f8f3ea,#efe6d8);
+  border-radius:10px;
+  box-shadow:inset 0 0 0 1px rgba(20,17,15,.08);
+}
+.bezel-screen img{
+  width:100%;height:auto;display:block;
+  border-radius:5px;
+}
+.bezel-stand{
+  height:30px;
+  position:relative;
+  margin-top:4px;
+}
+.bezel-stand::before{
+  content:"";
+  position:absolute;left:50%;top:0;
+  width:16px;height:15px;margin-left:-8px;
+  background:linear-gradient(180deg,#b7b09f,#7d776c);
+  border-radius:0 0 3px 3px;
+  box-shadow:inset 1px 0 0 rgba(255,255,255,.2);
+}
+.bezel-stand::after{
+  content:"";
+  position:absolute;left:50%;bottom:0;
+  width:46%;height:9px;margin-left:-23%;
+  background:linear-gradient(180deg,#f3ece1,#cfc6b6);
+  border-radius:3px 3px 11px 11px;
+  box-shadow:0 4px 10px rgba(20,17,15,.14);
+}
+.pair .bezel-stand{display:none}
+.pair .bezel-bar::after{content:"preview"}
+.shot figcaption{
+  margin-top:8px;
+  padding:0 2px;
+  font-size:12.5px;color:var(--muted);line-height:1.5;
+  text-align:center;
+  border:0;background:transparent;
+}
+
+/* Intake → output canvas */
+.io-board{
+  margin-top:16px;
+  padding:14px 12px 10px;
+  background:
+    linear-gradient(rgba(221,212,200,.45) 1px,transparent 1px) 0 0 / 100% 26px,
+    #f6f1e8;
+  border:1px solid var(--line);
+  border-radius:12px;
+  min-width:0;
+}
+.io-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);
+  gap:8px;
+  margin-bottom:10px;
+  font:700 11px/1 var(--sans);
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);
+}
+.io-head span:last-child{text-align:right}
+.io-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);
+  gap:8px;
+  align-items:stretch;
+  margin-bottom:8px;
+  min-width:0;
+}
+.io-in,.io-out{
+  min-width:0;
+  padding:11px 12px;
+  border-radius:8px;
+  font-size:13.5px;line-height:1.4;
+  color:var(--ink);
+}
+.io-in{
+  background:#fff;
+  border:1px solid var(--line);
+}
+.io-out{
+  background:var(--green-soft);
+  border:1px solid #c9e2d4;
+}
+.io-k{
+  display:none;
+  font:700 10px/1 var(--sans);
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.io-arrow{
+  display:flex;align-items:center;justify-content:center;
+  color:var(--green);
+  font:700 16px/1 var(--sans);
+}
+.io-arrow::before{content:"→"}
+@media(max-width:639px){
+  .io-head{display:none}
+  .io-row,.io-head{grid-template-columns:1fr}
+  .io-arrow{height:18px}
+  .io-arrow::before{content:"↓"}
+  .io-k{display:block}
+}
+
+/* Official-form canvas */
+.form-board{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  min-width:0;
+}
+@media(min-width:640px){
+  .form-board{grid-template-columns:1fr 1fr 1fr}
+}
+.form-card{
+  min-width:0;
+  background:#fff;
+  border:1px solid var(--line);
+  border-top:4px solid var(--green);
+  padding:14px 12px 13px;
+  box-shadow:0 1px 0 rgba(20,17,15,.03);
+}
+.form-card .mark{
+  font:700 10px/1 var(--sans);
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--green);
+  white-space:nowrap;
+}
+.form-card h3{
+  margin:8px 0 6px;
+  font:650 17px/1.2 var(--serif);
+  white-space:nowrap;
+}
+.form-card p{
+  margin:0;
+  font-size:13px;line-height:1.45;
+  color:var(--ink2);
+}
+
+.callout{
+  margin-top:14px;
+  padding:12px 14px;
+  background:var(--amber-soft);
+  border-left:3px solid var(--amber);
+  color:var(--amber);
+  font-size:13.5px;line-height:1.6;
+}
+.soft{
+  margin-top:14px;
+  padding:12px 14px;
+  background:var(--green-soft);
+  border-left:3px solid var(--green);
+  color:var(--ink2);
+  font-size:13.5px;line-height:1.6;
+}
+
+.foot{
+  margin-top:24px;
+  font-size:12px;color:var(--muted);line-height:1.55;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+}
+
+
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fff;color:#202020;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}
+.finch-page{background-color:var(--bg);color:var(--ink)}
+</style></head>
+<body><div class="finch-page">
+<div class="finchip-page"><div class="wrap">
+<article class="sheet">
+<p class="kicker">OpenNIW Petition Suite · Information</p>
+<h1>用 AI 申请美国身份 · NIW / EB‑1A / O‑1 全流程 Skill</h1>
+<p class="lede">OpenNIW Petition Suite 是一套面向自申请人的美国就业类移民材料工作流：整理个人材料、对照获批案例、起草 NIW / EB‑1A / O‑1 文书，并在浏览器里辅助填表、按官方顺序打包。这不是法律建议，也不是律所服务。</p>
+<p class="save">完整走完材料准备流程，目标是帮你显著降低传统律所文书起草成本。</p>
+<p class="fine">涉及法律判断请咨询持牌移民律师；你对自己签字、递交的材料负全部责任。</p>
+<hr class="divider"/>
+<section class="block">
+<h2>Skill 解决的痛点</h2>
+<p>移民申请的痛点很直接：流程长、成本贵、信息不透明，中间要耗掉大量律师费和时间。这套流程帮你省掉重复劳动和一部分律师费，把时间留给真正该做的事。</p>
+</section>
+<section class="block">
+<h2>步骤一：收集资料，统计评估申请水平（Stage I）</h2>
+<p>传统流程里，律所要花大量人工时间搜集你的信息、翻你的论文；自己动手办的人对这种反复折腾也不陌生。你只要给一份谷歌学术、领英链接和论文线索，Agent 会尽量在网上做 deep research，把你发表过的论文、所在领域、合作者和机构都整理出来，写成一份档案，并自动下载你的论文原文。</p>
+<figure class="shot">
+<div class="bezel">
+<div class="bezel-bar"><i></i><i></i><i></i></div>
+<div class="bezel-screen">
+<img alt="Intake 收集页已填示例" height="1715" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/3ba700d4257512afc48ed2dba2e814aed544f775e01fa-3ba700d42575.jpg" width="1100"/>
+</div>
+<div aria-hidden="true" class="bezel-stand"></div>
+</div>
+<figcaption>Intake：链接和基本情况先收齐；后面的评估、起草都从这份本地档案长出来。</figcaption>
+</figure>
+<div aria-label="投入与产出：链接和简历变成档案与起草素材" class="io-board" role="img">
+<div class="io-head"><span>你丢进去的</span><span></span><span>它尽量吐出来的</span></div>
+<div class="io-row">
+<div class="io-in"><span class="io-k">投入</span>Google Scholar / 主页 / LinkedIn</div>
+<div aria-hidden="true" class="io-arrow"></div>
+<div class="io-out"><span class="io-k">产出</span>论文列表、领域标签、公开主页摘要</div>
+</div>
+<div class="io-row">
+<div class="io-in"><span class="io-k">投入</span>CV / 简历 PDF</div>
+<div aria-hidden="true" class="io-arrow"></div>
+<div class="io-out"><span class="io-k">产出</span>学历、职位、工作地等可复用字段</div>
+</div>
+<div class="io-row">
+<div class="io-in"><span class="io-k">投入</span>你补的事实与 means</div>
+<div aria-hidden="true" class="io-arrow"></div>
+<div class="io-out"><span class="io-k">产出</span>案卷档案、证据缺口、后续起草素材</div>
+</div>
+</div>
+<h3>统计评估你的申请水平</h3>
+<p>基于全网公开的 7,724 个 NIW、2,679 个 EB‑1A、179 个 O‑1 获批案例，看看你在这一万多人里大概是什么水平——论文数、引用大概落在哪个位置。</p>
+<p>这只是<strong>已获批样本里的位置</strong>，不是获批概率——页面上也会标清楚 Approved cases only。</p>
+<figure class="shot">
+<div class="bezel">
+<div class="bezel-bar"><i></i><i></i><i></i></div>
+<div class="bezel-screen">
+<img alt="与已获批案例对照的 Benchmark 页" height="3145" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/609292a43af0a706602cee26089e600ee9804dc005d1f-609292a43af0.jpg" width="1100"/>
+</div>
+<div aria-hidden="true" class="bezel-stand"></div>
+</div>
+<figcaption>Benchmark：类别、领域、引用、论文数一填，马上看到你在公开获批样本里的百分位。</figcaption>
+</figure>
+<div class="soft">很多人自己办的时候，卡在不知道自己算强还是弱。这一步先把参照系摆出来。</div>
+</section>
+<section class="block">
+<h2>步骤二：锁定核心方向，收集证据（Stage II）</h2>
+<p>Agent 会先给出一句 Proposed Endeavor 的草案，评分它的可执行性，你选定后锁定这句话——之后所有文书都原句引用它，不会中途改口。</p>
+<p>方向锁定后，Agent 把还缺的展品列成证据清单，并自动抓取你论文的引用文章，筛出独立引用、逐篇核实来源，避免用无关或重复引用凑数。</p>
+<figure class="shot">
+<div class="bezel">
+<div class="bezel-bar"><i></i><i></i><i></i></div>
+<div class="bezel-screen">
+<img alt="Endeavor 锁定后的确认页面" height="933" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/44e4168f4596dcd02745d1649f6f67f2dc3d441270cad-44e4168f4596.jpg" width="1024"/>
+</div>
+<div aria-hidden="true" class="bezel-stand"></div>
+</div>
+<figcaption>方向锁定后，Agent 确认后续文书将原句引用这句 endeavor。</figcaption>
+</figure>
+</section>
+<section class="block">
+<h2>步骤三：按官方框架起草整套文书（Stage III）</h2>
+<p>不是给你一段「看起来像律师写的」空话，而是照移民局的法律框架把案件骨架搭出来：申请陈述（PES）、支持信 / 推荐信初稿，还有一份 index，标清每句主张对应哪份证据。</p>
+<p>Skill 先把这些草稿按章节写好，你负责核实事实、把证据补上。</p>
+<figure class="shot">
+<div class="bezel">
+<div class="bezel-bar"><i></i><i></i><i></i></div>
+<div class="bezel-screen">
+<img alt="PES 文书草稿预览" height="4277" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/9a4897071f11beaadf4546226c7ed5945ace567a2eb26-9a4897071f11.jpg" width="900"/>
+</div>
+<div aria-hidden="true" class="bezel-stand"></div>
+</div>
+<figcaption>本地案卷里的 PES 草稿长这样——段落已经分开，方便你直接改。</figcaption>
+</figure>
+</section>
+<section class="block">
+<h2>步骤四：浏览器向导填官方表格（Stage IV）</h2>
+<p>文书定稿之后，Skill 会先把能确定的字段自动写进 <code>answers.json</code>，再打开浏览器向导让你逐项确认；AI 推断出来的字段会特别标出来，你改一下就清除标记。确认完，本地脚本把 I‑140、ETA‑9089 Appendix A 等官方 PDF 直接填好，能自动填的不用你再抄一遍。</p>
+<figure class="shot">
+<div class="bezel">
+<div class="bezel-bar"><i></i><i></i><i></i></div>
+<div class="bezel-screen">
+<img alt="表单向导：生成官方 PDF，标出还需要手填的必填项" height="828" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/ab9bec00dbea29a5420d66c93ac0e6d43970548886ca1-ab9bec00dbea.png" width="1024"/>
+</div>
+<div aria-hidden="true" class="bezel-stand"></div>
+</div>
+<figcaption>每个按钮对应一份真实的政府 PDF，用你的 answers.json 直接填好；还留白的必填项会逐条列出来，提示你哪几项要手填或者需要律师签字。</figcaption>
+</figure>
+<div aria-label="三份官方表格的处理方式" class="form-board" role="img">
+<article class="form-card">
+<div class="mark">自动填写</div>
+<h3>I‑140</h3>
+<p>本地脚本按 answers.json 直接填写。</p>
+</article>
+<article class="form-card">
+<div class="mark">同批填写</div>
+<h3>ETA‑9089 A</h3>
+<p>与 I‑140 一起填；未匹配字段留给你手填。</p>
+</article>
+<article class="form-card">
+<div class="mark">不猜测</div>
+<h3>未定字段</h3>
+<p>不确定的项会标出来，让你逐一确认。</p>
+</article>
+</div>
+</section>
+<section class="block">
+<h2>步骤五：打包，按官方顺序邮寄（Stage V）</h2>
+<p>正式打包前，Skill 会先给案卷做一次红队检查：挑出没写来源的说法、缺独立证据支撑的关键论点、失效的引用、还没填完的占位符，再逐条对照十二条 RFE 预防规则；查出来的问题都要处理掉，或者你自己确认接受，不会悄悄放过。</p>
+<p>检查通过后，材料按 USCIS 要求的顺序整理成一份可以直接打印、签字、邮寄的文件包，并按你所在的州自动匹配对应的 lockbox 邮寄地址。</p>
+<figure class="shot">
+<div class="bezel">
+<div class="bezel-bar"><i></i><i></i><i></i></div>
+<div class="bezel-screen">
+<img alt="打包页面：一份 ZIP 文件包 + 费用清单 + lockbox 邮寄地址" height="787" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/niw/information-en/b8e21c9303909633ae57a258d13b5ed3e11a27e730299-b8e21c930390.png" width="1024"/>
+</div>
+<div aria-hidden="true" class="bezel-stand"></div>
+</div>
+<figcaption>打包页面：填好的表格、Word 版文书和装订顺序打成一个 ZIP；费用和 lockbox 地址一并列出，邮寄前建议在 uscis.gov 上再核对一次地址。</figcaption>
+</figure>
+<div class="soft">这是自助工具生成的文书和查漏检查，不是律师审阅，也不是递交前的最终把关；正式递交前建议自己再核对一遍。</div>
+</section>
+<footer class="foot">
+<p>FinChip：<a href="https://finchip.ai/skills/openniw-petition-suite-finchip" rel="noopener" target="_blank">openniw-petition-suite-finchip</a> · 基于开源 OpenNIW（MIT）移植封装 · 本地文书准备工具，不是律师代理。</p>
+</footer>
+</article>
+</div></div>
+</div></body>
+</html>
