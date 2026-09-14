@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<!-- Standalone single-file version: styles, scripts and images are fully inlined. -->
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="One Character Studio: start from a single character reference image to generate and validate turnaround sheets, expression sheets, pose sheets, and hero portraits — and build a reusable character asset pack." name="description"/>
+<title>One Character Studio | Turn One Character Image into a Reusable Asset Library</title>
+<style>
+:root {
+  --ink: #0b0d12;
+  --ink-2: #121620;
+  --paper: #f4ead7;
+  --paper-2: #dfcfb4;
+  --cream: #fff7e8;
+  --muted: #aca69b;
+  --line: rgba(255, 247, 232, 0.14);
+  --orange: #f16028;
+  --gold: #f4b942;
+  --teal: #0d7280;
+  --violet: #9270ff;
+  --green: #71b98b;
+  --red: #b93037;
+  --shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+  --radius: 28px;
+  --max: 1180px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+.finch-page {
+  margin: 0;
+  color: var(--cream);
+  background:
+    radial-gradient(circle at 8% 2%, rgba(241, 96, 40, .16), transparent 27rem),
+    radial-gradient(circle at 91% 12%, rgba(13, 114, 128, .16), transparent 32rem),
+    var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+.finch-page::before {
+  content: "";
+  position: relative;
+  inset: 0;
+  pointer-events: none;
+  opacity: .17;
+  background-image: radial-gradient(rgba(255,255,255,.5) .55px, transparent .55px);
+  background-size: 6px 6px;
+  mix-blend-mode: soft-light;
+  z-index: 20;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+.skip-link { position: relative; left: 18px; top: -100px; z-index: 100; background: var(--paper); color: var(--ink); padding: 10px 16px; border-radius: 99px; }
+.skip-link:focus { top: 18px; }
+
+.site-nav {
+  position: relative;
+  top: 0;
+  z-index: 15;
+  backdrop-filter: blur(20px);
+  background: rgba(11, 13, 18, .76);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  width: min(calc(100% - 40px), var(--max));
+  height: 72px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 800; letter-spacing: -.02em; }
+.brand-mark {
+  width: 34px; height: 34px; border-radius: 11px;
+  display: grid; place-items: center;
+  background: conic-gradient(from 210deg, var(--orange), var(--gold), var(--teal), var(--orange));
+  color: var(--ink); font-size: 18px; box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+}
+.nav-links { margin-left: auto; display: flex; gap: 22px; align-items: center; font-size: 14px; color: #d7d1c7; }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: #fff; }
+.nav-cta { border: 1px solid rgba(255,255,255,.25); padding: 8px 14px; border-radius: 99px; }
+
+.container { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+.section { padding: 112px 0; position: relative; }
+.section.compact { padding: 70px 0; }
+.section.paper {
+  color: #201c18;
+  background:
+    linear-gradient(90deg, transparent 49.7%, rgba(50,35,20,.035) 50%, transparent 50.3%),
+    radial-gradient(rgba(53,35,19,.14) .55px, transparent .55px),
+    var(--paper);
+  background-size: auto, 7px 7px, auto;
+}
+.section.paper::before, .section.paper::after { content: ""; position: absolute; left: 0; right: 0; height: 18px; background: linear-gradient(135deg, transparent 7px, var(--paper) 0) 0 0/14px 14px repeat-x; }
+.section.paper::before { top: -14px; }
+.section.paper::after { bottom: -14px; transform: rotate(180deg); }
+
+.eyebrow { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 18px; color: var(--gold); font-weight: 800; letter-spacing: .16em; text-transform: uppercase; font-size: 12px; }
+.eyebrow::before { content: ""; width: 28px; height: 2px; background: currentColor; }
+.paper .eyebrow { color: #9c3e22; }
+.section-head { display: grid; grid-template-columns: 1fr .72fr; gap: 40px; align-items: end; margin-bottom: 46px; }
+.section-head h2, .hero h1, .guide-hero h1 { margin: 0; letter-spacing: -.055em; line-height: 1.05; }
+.section-head h2 { font-size: clamp(38px, 5vw, 66px); max-width: 850px; }
+.section-head p { margin: 0; color: #bcb5aa; font-size: 17px; }
+.paper .section-head p { color: #62594e; }
+.lead { font-size: clamp(18px, 2vw, 23px); color: #c7c1b7; max-width: 740px; }
+.hero-copy, .guide-hero-grid > div, .section-head > * { min-width: 0; }
+.hero h1, .guide-hero h1, p { overflow-wrap: anywhere; }
+.mobile-break { display: none; }
+
+.hero { min-height: auto; display: grid; align-items: center; padding: 72px 0 88px; position: relative; }
+.hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; gap: 60px; }
+.hero h1 { font-size: clamp(54px, 6.7vw, 96px); max-width: 780px; }
+.hero h1 em { font-style: normal; color: var(--gold); text-shadow: 5px 5px 0 rgba(241,96,40,.55); }
+.hero-copy .lead { margin: 28px 0 34px; }
+.hero-kicker { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 22px; }
+.tag { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; color: #d8d1c4; font-size: 13px; background: rgba(255,255,255,.035); }
+.tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(244,185,66,.12); }
+.button-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border-radius: 14px; text-decoration: none; font-weight: 800; border: 1px solid rgba(255,255,255,.2); transition: transform .2s ease, background .2s ease; }
+.button:hover { transform: translateY(-2px); }
+.button.primary { background: var(--orange); color: #fff; border-color: var(--orange); box-shadow: 0 12px 40px rgba(241,96,40,.24); }
+.button.secondary { background: rgba(255,255,255,.05); }
+.paper .button.secondary { color: #201c18; border-color: rgba(32,28,24,.2); background: rgba(255,255,255,.4); }
+
+.hero-art { position: relative; min-height: 640px; }
+.hero-frame { position: absolute; inset: 0; overflow: hidden; border-radius: 48% 48% 24px 24px; border: 1px solid rgba(255,255,255,.18); box-shadow: var(--shadow); background: var(--teal); transform: rotate(2deg); }
+.hero-frame img { width: 100%; height: 100%; object-fit: cover; }
+.hero-stamp { position: absolute; z-index: 2; width: 132px; aspect-ratio: 1; border-radius: 50%; background: var(--paper); color: #241c13; display: grid; place-items: center; text-align: center; font-weight: 900; line-height: 1.1; right: -30px; top: 56px; transform: rotate(9deg); box-shadow: 0 12px 35px rgba(0,0,0,.25); border: 8px double #241c13; }
+.hero-proof { position: absolute; z-index: 2; bottom: 22px; left: -35px; right: 24px; display: grid; grid-template-columns: repeat(3, 1fr); background: rgba(10,12,17,.88); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 18px; transform: rotate(-1deg); }
+.hero-proof div { padding: 0 14px; border-right: 1px solid var(--line); }
+.hero-proof div:last-child { border: 0; }
+.hero-proof strong { display: block; font-size: 22px; color: var(--gold); }
+.hero-proof span { font-size: 12px; color: #bdb6aa; }
+
+.ticker { overflow: hidden; border-block: 1px solid var(--line); background: #0f131b; }
+.ticker-track { display: flex; width: max-content; gap: 42px; padding: 15px 0; animation: ticker 24s linear infinite; color: #d8d0c4; text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 800; }
+.ticker-track span::after { content: "✦"; color: var(--orange); margin-left: 42px; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; }
+.card { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.038); padding: 28px; position: relative; overflow: hidden; }
+.card h3 { font-size: 22px; margin: 0 0 10px; letter-spacing: -.03em; }
+.card p { color: #bdb5aa; margin: 0; }
+.paper .card { background: rgba(255,255,255,.42); border-color: rgba(37,29,20,.14); }
+.paper .card p { color: #62594e; }
+.card-number { font-family: Georgia, serif; font-style: italic; color: var(--orange); font-size: 38px; line-height: 1; margin-bottom: 22px; }
+.compare-card { min-height: 280px; display: flex; flex-direction: column; }
+.compare-card.after { background: linear-gradient(145deg, rgba(13,114,128,.22), rgba(255,255,255,.03)); }
+.compare-label { display: inline-flex; align-self: flex-start; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.08); font-size: 12px; text-transform: uppercase; letter-spacing: .14em; margin-bottom: 40px; }
+.compare-card.after .compare-label { background: var(--teal); }
+.compare-card ul { margin: auto 0 0; padding: 0; list-style: none; display: grid; gap: 12px; color: #c8c1b6; }
+.compare-card li { display: flex; gap: 10px; }
+.compare-card li::before { content: "×"; color: #ef7a7a; font-weight: 900; }
+.compare-card.after li::before { content: "✓"; color: #70d49b; }
+
+.stat-band { display: grid; grid-template-columns: 1.2fr repeat(3, .6fr); gap: 1px; background: rgba(255,255,255,.14); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.stat { background: var(--ink-2); padding: 30px; }
+.stat:first-child { background: var(--orange); }
+.stat strong { display: block; font-size: clamp(28px, 4vw, 54px); line-height: 1; letter-spacing: -.04em; }
+.stat span { display: block; color: #bab3a8; margin-top: 10px; font-size: 13px; }
+.stat:first-child span { color: rgba(255,255,255,.76); }
+
+.process { display: grid; gap: 0; counter-reset: flow; }
+.process-step { display: grid; grid-template-columns: 94px .75fr 1.25fr; gap: 28px; align-items: start; padding: 35px 0; border-top: 1px solid var(--line); }
+.process-step::before { counter-increment: flow; content: "0" counter(flow); font-family: Georgia, serif; font-style: italic; font-size: 44px; color: var(--orange); line-height: 1; }
+.process-step h3 { margin: 0; font-size: 24px; }
+.process-step p { margin: 0; color: #bdb5aa; }
+
+.master-summary {
+  margin: 28px 0 34px;
+  padding: 32px;
+  border-radius: 24px;
+  border: 1px solid rgba(244,185,66,.28);
+  background: linear-gradient(135deg, rgba(241,96,40,.14), rgba(13,114,128,.13));
+  font-size: clamp(20px, 2.4vw, 29px);
+  line-height: 1.55;
+  letter-spacing: -.02em;
+  color: #f4ede2;
+}
+.master-summary strong { color: var(--gold); }
+.workflow-map { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 12px; margin: 30px 0; counter-reset: overview; }
+.workflow-node { position: relative; min-height: 205px; padding: 22px 18px; border-radius: 20px; border: 1px solid var(--line); background: rgba(255,255,255,.035); }
+.workflow-node::before { counter-increment: overview; content: "0" counter(overview); display: block; margin-bottom: 32px; color: var(--orange); font: italic 30px/1 Georgia, serif; }
+.workflow-node h3 { margin: 0 0 8px; font-size: 18px; }
+.workflow-node p { margin: 0; color: #aaa399; font-size: 13px; }
+.workflow-node:not(:last-child)::after { content: "→"; position: absolute; z-index: 2; right: -18px; top: 48%; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); background: var(--gold); font-weight: 900; }
+.positioning-note { display: grid; grid-template-columns: 140px 1fr; gap: 20px; align-items: start; padding: 22px 0; border-top: 1px solid var(--line); }
+.positioning-note strong { color: var(--gold); }
+.positioning-note p { margin: 0; color: #bdb5aa; }
+
+.package-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; }
+.package-card { min-width: 0; margin: 0; overflow: hidden; border: 1px solid rgba(37,29,20,.14); border-radius: 24px; background: #eadbc2; cursor: zoom-in; }
+.package-card img { width: 100%; aspect-ratio: 1; object-fit: contain; display: block; }
+.package-card figcaption { display: grid; gap: 4px; padding: 18px; color: #2d261f; background: rgba(255,255,255,.62); }
+.package-card figcaption strong { font-size: 16px; }
+.package-card figcaption span { color: #6a5e51; font-size: 12px; }
+.package-records { margin-top: 18px; }
+.package-records .card { min-height: 245px; }
+.reference-panel { margin-top: 48px; padding: 34px; border-radius: 28px; border: 1px solid rgba(37,29,20,.14); background: rgba(255,255,255,.5); }
+.reference-copy { display: grid; grid-template-columns: .8fr 1.2fr; gap: 30px; align-items: end; margin-bottom: 24px; }
+.reference-copy .eyebrow { grid-column: 1 / -1; margin: 0 0 -10px; }
+.reference-copy h3 { margin: 0; color: #2a221b; font-size: clamp(26px, 3.5vw, 44px); line-height: 1.05; letter-spacing: -.04em; }
+.reference-copy p { margin: 0; color: #655a4e; }
+.reference-gallery { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+.reference-gallery figure { margin: 0; overflow: hidden; border-radius: 18px; border: 1px solid rgba(37,29,20,.14); background: #f4eee4; }
+.reference-gallery img { width: 100%; height: 230px; object-fit: cover; display: block; }
+.reference-gallery figure:first-child img { object-position: center 35%; }
+.reference-gallery figure:nth-child(2) img { object-position: center 28%; }
+.reference-gallery figcaption { padding: 12px 14px; color: #51473c; font-size: 12px; font-weight: 800; }
+.reference-disclaimer { margin: 14px 0 0; color: #766b5f; font-size: 12px; }
+.guide-content .reference-panel { background: rgba(255,255,255,.045); border-color: var(--line); }
+.guide-content .reference-copy h3 { color: #f1eadf; }
+.guide-content .reference-copy p, .guide-content .reference-disclaimer { color: #9f988e; }
+.guide-content .reference-gallery figure { border-color: var(--line); background: #1b1c20; }
+.guide-content .reference-gallery figcaption { color: #c8c0b4; }
+
+.asset-strip { display: grid; grid-template-columns: 1.35fr .85fr .85fr; grid-template-rows: repeat(2, 255px); gap: 14px; }
+.asset-tile { position: relative; overflow: hidden; border-radius: 24px; background: #1a1b20; border: 1px solid var(--line); cursor: zoom-in; }
+.asset-tile.large { grid-row: span 2; }
+.asset-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.asset-tile:hover img { transform: scale(1.025); }
+.asset-tile.sheet img { object-fit: contain; background: #eadbc2; }
+.asset-tile figcaption { position: absolute; left: 14px; bottom: 14px; padding: 7px 10px; border-radius: 9px; background: rgba(11,13,18,.84); backdrop-filter: blur(8px); font-size: 12px; font-weight: 800; }
+
+.tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+.tab-button { border: 1px solid var(--line); background: rgba(255,255,255,.04); color: #d5cec2; border-radius: 999px; padding: 10px 16px; font: inherit; font-weight: 750; cursor: pointer; }
+.tab-button[aria-selected="true"] { color: #131317; background: var(--gold); border-color: var(--gold); }
+.tab-panel[hidden] { display: none; }
+.case-head { display: grid; grid-template-columns: .72fr 1.28fr; gap: 42px; align-items: center; margin-bottom: 28px; }
+.case-head h3 { font-size: clamp(32px, 4.5vw, 58px); line-height: 1.04; margin: 0 0 18px; }
+.case-head p { color: #bdb5aa; }
+.case-chip { display: inline-flex; padding: 7px 11px; border: 1px solid var(--line); border-radius: 99px; font-size: 12px; margin-right: 7px; margin-top: 8px; }
+.case-portrait { aspect-ratio: 1; overflow: hidden; border-radius: 50% 50% 24px 24px; border: 1px solid var(--line); background: #262026; }
+.case-portrait img { width: 100%; height: 100%; object-fit: cover; }
+
+.benefit { min-height: 270px; }
+.benefit .icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 15px; background: rgba(241,96,40,.14); color: var(--orange); font-size: 24px; margin-bottom: 48px; }
+.benefit:nth-child(2) .icon { color: var(--gold); background: rgba(244,185,66,.13); }
+.benefit:nth-child(3) .icon { color: #69c4d1; background: rgba(13,114,128,.2); }
+
+.quote { font-family: Georgia, "Songti SC", serif; font-size: clamp(32px, 5vw, 66px); line-height: 1.25; letter-spacing: -.035em; max-width: 1000px; margin: 0; }
+.quote em { font-style: italic; color: var(--orange); }
+.note { font-size: 13px; color: #9d968b; }
+.run-card { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; }
+
+.cta-panel { position: relative; overflow: hidden; background: var(--orange); color: white; border-radius: 36px; padding: 58px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 36px; align-items: center; box-shadow: 0 34px 90px rgba(241,96,40,.22); }
+.cta-panel::after { content: "✦"; position: absolute; right: -20px; bottom: -145px; font-size: 330px; opacity: .12; line-height: 1; }
+.cta-panel h2 { font-size: clamp(42px, 6vw, 76px); letter-spacing: -.055em; line-height: 1; margin: 0 0 22px; }
+.cta-panel p { max-width: 650px; margin: 0; color: rgba(255,255,255,.78); }
+.cta-panel .button { background: #fff; color: #1c1612; border-color: #fff; justify-self: end; min-width: 210px; position: relative; z-index: 2; }
+
+.site-footer { padding: 38px 0 48px; border-top: 1px solid var(--line); color: #8f897f; font-size: 13px; }
+.footer-inner { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+/* Guide */
+.guide-hero { padding: 92px 0 72px; border-bottom: 1px solid var(--line); }
+.guide-hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 60px; align-items: center; }
+.guide-hero h1 { font-size: clamp(50px, 7vw, 94px); }
+.guide-hero h1 span { color: var(--gold); }
+.guide-cover { min-height: 560px; position: relative; }
+.guide-cover .cover-main { position: absolute; inset: 30px 70px 0 0; border-radius: 28px; overflow: hidden; transform: rotate(-3deg); border: 1px solid var(--line); box-shadow: var(--shadow); background: #e9d9bd; }
+.guide-cover .cover-main img { width: 100%; height: 100%; object-fit: contain; }
+.guide-cover .cover-small { position: absolute; width: 210px; aspect-ratio: 1; right: 0; bottom: 18px; border-radius: 24px; overflow: hidden; border: 8px solid var(--ink); transform: rotate(5deg); }
+.guide-cover .cover-small img { width: 100%; height: 100%; object-fit: cover; }
+
+.toc { position: relative; top: 92px; align-self: start; border: 1px solid var(--line); border-radius: 22px; padding: 20px; background: rgba(255,255,255,.03); }
+.toc strong { display: block; margin: 0 0 12px; font-size: 13px; color: var(--gold); letter-spacing: .1em; }
+.toc a { display: block; padding: 8px 9px; color: #aaa399; text-decoration: none; border-radius: 9px; font-size: 14px; }
+.toc a:hover, .toc a.active { color: #fff; background: rgba(255,255,255,.06); }
+.guide-layout { display: grid; grid-template-columns: 250px minmax(0,1fr); gap: 70px; }
+.guide-content { min-width: 0; }
+.guide-section { padding: 48px 0 72px; border-bottom: 1px solid var(--line); scroll-margin-top: 95px; }
+.guide-section:last-child { border-bottom: 0; }
+.step-meta { display: flex; align-items: center; gap: 14px; color: var(--orange); font-size: 12px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+.step-meta::after { content: ""; height: 1px; width: 70px; background: currentColor; }
+.guide-section h2 { font-size: clamp(34px, 5vw, 58px); letter-spacing: -.045em; line-height: 1.08; margin: 14px 0 20px; }
+.guide-section h3 { margin-top: 34px; font-size: 23px; }
+.guide-section > p { color: #bdb5aa; font-size: 17px; }
+.check-list { list-style: none; padding: 0; margin: 28px 0; display: grid; gap: 12px; }
+.check-list li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; color: #d3ccc0; }
+.check-list li::before { content: "✓"; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); background: var(--gold); font-size: 13px; font-weight: 900; margin-top: 2px; }
+.callout { border-left: 4px solid var(--orange); background: rgba(241,96,40,.08); padding: 20px 22px; border-radius: 0 16px 16px 0; margin: 28px 0; color: #d7d0c5; }
+.callout strong { color: #fff; }
+.callout.warning { border-color: var(--gold); background: rgba(244,185,66,.08); }
+
+.prompt-box { position: relative; margin: 24px 0; border: 1px solid rgba(255,255,255,.16); background: #07090d; border-radius: 20px; overflow: hidden; }
+.prompt-head { padding: 12px 16px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; color: #9f988e; font-size: 12px; }
+.copy-button { border: 1px solid var(--line); color: #d8d1c5; background: rgba(255,255,255,.05); padding: 6px 10px; border-radius: 8px; cursor: pointer; }
+.prompt-box pre { margin: 0; padding: 20px; white-space: pre-wrap; word-break: break-word; color: #e9e2d6; font: 14px/1.75 ui-monospace, SFMono-Regular, Consolas, monospace; }
+
+.file-tree { border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.03); padding: 22px; font: 14px/1.75 ui-monospace, SFMono-Regular, Consolas, monospace; color: #cdc6bb; overflow: visible; white-space: pre; }
+.rubric { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 24px 0; }
+.rubric div { border: 1px solid var(--line); border-radius: 16px; padding: 18px; background: rgba(255,255,255,.03); }
+.rubric strong { display: block; color: var(--gold); font-size: 25px; }
+.rubric span { color: #aaa399; font-size: 13px; }
+.screenshot { margin: 28px 0; border-radius: 24px; overflow: hidden; border: 1px solid var(--line); background: #111; }
+.screenshot img { width: 100%; height: auto; }
+.screenshot figcaption { padding: 13px 16px; color: #9f988e; font-size: 12px; border-top: 1px solid var(--line); }
+.shot-crop { width: 100%; overflow: hidden; background: #111; }
+.shot-crop img { width: 100%; max-width: none; }
+.shot-crop.elf-crop { aspect-ratio: 1342 / 1348; }
+.shot-crop.elf-crop img { transform: translateY(-16.7%); }
+.shot-crop.fox-run-crop { aspect-ratio: 1318 / 1075; }
+.shot-crop.fox-run-crop img { transform: translateY(-7.3%); }
+.shot-crop.fox-confirm-crop { aspect-ratio: 1306 / 1405; }
+.mini-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin: 28px 0; }
+.mini-gallery figure { margin: 0; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; background: #e9dbc3; cursor: zoom-in; }
+.mini-gallery img { width: 100%; aspect-ratio: 4/3; object-fit: contain; }
+.mini-gallery figcaption { padding: 11px 14px; color: #aaa399; font-size: 12px; background: var(--ink-2); }
+.table-wrap { overflow: visible; margin: 26px 0; }
+table { width: 100%; border-collapse: collapse; min-width: 650px; }
+th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--gold); font-size: 13px; }
+td { color: #c7c0b4; }
+
+.lightbox { position: relative; inset: 0; z-index: 100; display: none; place-items: center; padding: 28px; background: rgba(4,5,8,.92); backdrop-filter: blur(10px); }
+.lightbox.open { display: grid; }
+.lightbox img { max-width: min(1400px,95vw); max-height: auto; border-radius: 18px; box-shadow: var(--shadow); }
+.lightbox button { position: relative; right: 24px; top: 20px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.09); color: #fff; font-size: 24px; cursor: pointer; }
+
+@media (max-width: 900px) {
+  .hero-grid, .guide-hero-grid, .cta-panel, .section-head, .case-head { grid-template-columns: 1fr; }
+  .hero { min-height: auto; }
+  .hero-art { min-height: 580px; margin-top: 10px; }
+  .hero-stamp { right: 0; }
+  .hero-proof { left: 8px; }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+  .stat-band { grid-template-columns: 1fr 1fr; }
+  .process-step { grid-template-columns: 70px 1fr; }
+  .process-step p { grid-column: 2; }
+  .workflow-map { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .workflow-node:not(:last-child)::after { display: none; }
+  .package-grid { grid-template-columns: 1fr 1fr; }
+  .reference-copy { grid-template-columns: 1fr; gap: 12px; }
+  .asset-strip { grid-template-columns: 1fr 1fr; grid-template-rows: 380px 240px 240px; }
+  .asset-tile.large { grid-row: auto; grid-column: 1 / -1; }
+  .cta-panel .button { justify-self: start; }
+  .guide-layout { grid-template-columns: 1fr; }
+  .toc { position: static; display: grid; grid-template-columns: repeat(3,1fr); }
+  .toc strong { grid-column: 1/-1; }
+}
+
+@media (max-width: 640px) {
+  .container, .nav-inner { width: min(calc(100% - 24px), var(--max)); }
+  .nav-inner { gap: 8px; }
+  .brand { gap: 8px; font-size: 13px; white-space: nowrap; }
+  .brand-mark { width: 30px; height: 30px; font-size: 15px; }
+  .nav-links { gap: 6px; }
+  .nav-cta { padding: 7px 9px; font-size: 12px; white-space: nowrap; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .section { padding: 78px 0; }
+  .hero { padding-top: 48px; }
+  .hero h1, .guide-hero h1 { font-size: 42px; letter-spacing: -.07em; word-break: break-all; }
+  .mobile-break { display: block; }
+  .hero-art { min-height: 500px; }
+  .hero-frame { border-radius: 42% 42% 20px 20px; }
+  .hero-stamp { width: 98px; font-size: 13px; top: 25px; }
+  .hero-proof { grid-template-columns: 1fr; right: 8px; }
+  .hero-proof div { border-right: 0; border-bottom: 1px solid var(--line); padding: 7px 4px; }
+  .hero-proof div:last-child { border-bottom: 0; }
+  .hero-proof strong { font-size: 18px; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .stat-band { grid-template-columns: 1fr; }
+  .process-step { grid-template-columns: 54px 1fr; gap: 14px; }
+  .process-step::before { font-size: 32px; }
+  .asset-strip { display: grid; grid-template-columns: 1fr; grid-template-rows: repeat(3,300px); }
+  .asset-tile.large { grid-column: auto; }
+  .cta-panel { padding: 36px 24px; }
+  .guide-cover { min-height: 440px; }
+  .guide-cover .cover-main { inset: 20px 25px 0 0; }
+  .guide-cover .cover-small { width: 145px; }
+  .toc { grid-template-columns: 1fr 1fr; }
+  .rubric { grid-template-columns: 1fr 1fr; }
+  .mini-gallery { grid-template-columns: 1fr; }
+  .run-card { grid-template-columns: 1fr; }
+  .workflow-map { grid-template-columns: 1fr; }
+  .workflow-node { min-height: auto; }
+  .workflow-node::before { margin-bottom: 18px; }
+  .positioning-note { grid-template-columns: 1fr; gap: 7px; }
+  .package-grid, .reference-gallery { grid-template-columns: 1fr; }
+  .reference-panel { padding: 22px 16px; }
+  .reference-gallery img { height: 260px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+  
+
+/* Targeted revision: give each core character asset a primary, readable presentation. */
+.package-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.package-card img { aspect-ratio: 4 / 3; }
+.asset-strip {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: none;
+  gap: 22px;
+}
+.asset-tile,
+.asset-tile.large {
+  grid-row: auto;
+  grid-column: auto;
+  aspect-ratio: 4 / 3;
+  min-height: 0;
+}
+.asset-tile.large img {
+  object-fit: contain;
+  background: #eadbc2;
+}
+.asset-strip .asset-tile:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 9;
+}
+@media (min-width: 901px) {
+  .case-head { grid-template-columns: 1fr 1fr; }
+  .case-portrait {
+    aspect-ratio: 4 / 5;
+    min-height: 460px;
+  }
+}
+@media (max-width: 640px) {
+  .package-grid,
+  .asset-strip { grid-template-columns: 1fr; }
+  .package-card img,
+  .asset-tile,
+  .asset-tile.large,
+  .asset-strip .asset-tile:last-child:nth-child(odd) {
+    grid-column: auto;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* Information only: enlarge the character-led product visual. */
+@media (min-width: 901px) {
+  .hero-art { min-height: 700px; }
+}
+@media (max-width: 640px) {
+  .hero-art { min-height: 560px; }
+}
+
+
+/* Group-sheet revision: full overview plus enlarged, scrollable details. */
+.sheet-carousel {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: #eadbc2;
+}
+.sheet-track {
+  display: flex;
+  width: 100%;
+  overflow: visible;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overscroll-behavior-inline: contain;
+}
+.sheet-track::-webkit-scrollbar { display: none; }
+.sheet-slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background: #eadbc2;
+}
+.sheet-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: #eadbc2;
+  cursor: zoom-in;
+}
+.sheet-slide.is-detail img {
+  transform: scale(var(--sheet-zoom, 2));
+  transform-origin: var(--sheet-x, 50%) var(--sheet-y, 50%);
+}
+.sheet-badge {
+  position: absolute;
+  z-index: 3;
+  left: 12px;
+  top: 12px;
+  max-width: calc(100% - 150px);
+  padding: 7px 10px;
+  border-radius: 9px;
+  color: #fff;
+  background: rgba(11, 13, 18, .84);
+  backdrop-filter: blur(8px);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.sheet-controls {
+  position: absolute;
+  z-index: 4;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(11, 13, 18, .86);
+  backdrop-filter: blur(9px);
+}
+.sheet-controls button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, .09);
+  font: 700 18px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+.sheet-controls button:hover { background: rgba(255, 255, 255, .2); }
+.sheet-status {
+  min-width: 38px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+}
+.package-card.has-carousel > img,
+.asset-tile.has-carousel > img,
+.reference-gallery figure.has-carousel > img { display: none; }
+.asset-tile.has-carousel {
+  min-height: 0;
+  aspect-ratio: auto !important;
+}
+.asset-tile.has-carousel .sheet-carousel { border-radius: inherit; }
+.asset-tile.has-carousel .sheet-slide { aspect-ratio: 4 / 3; }
+.reference-gallery {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.reference-gallery figure.has-carousel { min-width: 0; }
+.reference-gallery .sheet-slide { aspect-ratio: 16 / 10; }
+.reference-gallery .sheet-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.hero-frame img,
+.guide-cover .cover-main img,
+.guide-cover .cover-small img,
+.case-portrait img,
+.asset-tile:not(.has-carousel) > img {
+  object-fit: contain !important;
+  background: #eadbc2;
+}
+.asset-strip .asset-tile:last-child:nth-child(odd) > img {
+  object-fit: contain !important;
+}
+@media (max-width: 640px) {
+  .reference-gallery { grid-template-columns: 1fr; }
+  .sheet-slide,
+  .asset-tile.has-carousel .sheet-slide { aspect-ratio: 1 / 1; }
+  .reference-gallery .sheet-slide { aspect-ratio: 4 / 3; }
+  .sheet-badge { max-width: calc(100% - 128px); }
+}
+
+/* FINAL DETAIL SYSTEM START
+   Full overview is always uncropped. Group sheets are only split when a complete,
+   independently readable subject exists. Reference sheets use semantic detail windows. */
+.final-carousel { position: relative; overflow: hidden; }
+.final-carousel .sheet-track { display: grid !important; overflow: hidden !important; scroll-snap-type: none !important; }
+.final-carousel .sheet-slide {
+  grid-area: 1 / 1; display: none !important; width: 100% !important; min-width: 0 !important;
+  aspect-ratio: 16 / 10; position: relative; overflow: hidden; background: var(--paper, #f5efe4);
+  opacity: 0; transform: none !important;
+}
+.final-carousel .sheet-slide.is-active { display: block !important; opacity: 1; animation: finalSlideIn .32s ease both; }
+.final-carousel .sheet-slide img {
+  display: block; width: 100%; height: 100%; object-fit: contain !important; object-position: center;
+  transform: none !important; transform-origin: center; padding: 0;
+}
+.final-carousel .sheet-slide.is-overview img { object-fit: contain !important; }
+.final-carousel .sheet-slide.is-expression-detail img { object-fit: contain !important; padding: clamp(8px, 1.2vw, 18px); }
+.final-carousel .sheet-slide.is-reference-detail img {
+  object-fit: contain !important; transform: scale(var(--sheet-zoom)) !important;
+  transform-origin: var(--sheet-x) var(--sheet-y) !important;
+}
+.final-carousel .sheet-badge { z-index: 3; max-width: calc(100% - 32px); white-space: normal; line-height: 1.25; }
+.final-carousel .sheet-controls { z-index: 5; }
+.static-overview .sheet-controls { display: none !important; }
+.reference-grid .final-carousel .sheet-slide { aspect-ratio: 16 / 9; }
+.asset-tile .final-carousel .sheet-slide, .package-card .final-carousel .sheet-slide { min-height: clamp(300px, 34vw, 560px); }
+.reference-grid .final-carousel .sheet-slide { min-height: clamp(260px, 28vw, 470px); }
+@keyframes finalSlideIn { from { opacity: .25; } to { opacity: 1; } }
+@media (max-width: 720px) {
+  .asset-tile .final-carousel .sheet-slide, .package-card .final-carousel .sheet-slide,
+  .reference-grid .final-carousel .sheet-slide { min-height: 280px; aspect-ratio: 4 / 3; }
+  .final-carousel .sheet-slide.is-expression-detail img { padding: 8px; }
+}
+/* FINAL DETAIL SYSTEM END */
+
+/* HERO CASE SHOWCASE START */
+.hero-case-showcase { padding-top: clamp(26px, 3vw, 52px); padding-bottom: clamp(22px, 3vw, 44px); }
+.hero-case-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 18px; }
+.hero-case-heading span { font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--accent, #b54d32); }
+.hero-case-heading strong { max-width: 620px; font-family: var(--display, inherit); font-size: clamp(20px, 2vw, 30px); line-height: 1.16; text-align: right; }
+.hero-case-grid { display: grid; grid-template-columns: 1.16fr 1fr 1fr; gap: clamp(12px, 1.4vw, 22px); }
+.hero-case-card { position: relative; min-width: 0; min-height: clamp(330px, 34vw, 520px); overflow: hidden; border: 1px solid rgba(128, 101, 72, .28); border-radius: 26px; background: linear-gradient(145deg, rgba(255,255,255,.82), rgba(238,224,201,.72)); box-shadow: 0 22px 50px rgba(28, 22, 16, .12); }
+.hero-case-card::before { content: ''; position: absolute; inset: 12px; border: 1px solid rgba(128, 101, 72, .16); border-radius: 18px; pointer-events: none; z-index: 2; }
+.hero-case-card img { display: block; width: 100%; height: 100%; object-fit: contain !important; object-position: center; padding: 18px 18px 58px; transform: none !important; }
+.hero-case-card figcaption { position: absolute; left: 18px; right: 18px; bottom: 16px; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 13px; border: 1px solid rgba(255,255,255,.24); border-radius: 12px; color: #fff; background: rgba(20,18,16,.84); backdrop-filter: blur(10px); }
+.hero-case-card figcaption strong { font-size: 14px; }
+.hero-case-card figcaption span { font-size: 11px; opacity: .72; letter-spacing: .06em; text-transform: uppercase; }
+.hero-case-card:nth-child(1) { background: radial-gradient(circle at 50% 28%, rgba(83,101,77,.18), transparent 45%), #ded5c2; }
+.hero-case-card:nth-child(2) { background: radial-gradient(circle at 50% 26%, rgba(184,66,37,.18), transparent 46%), #eadfcb; }
+.hero-case-card:nth-child(3) { background: radial-gradient(circle at 50% 26%, rgba(12,95,96,.16), transparent 46%), #eee2c9; }
+@media (max-width: 920px) {
+  .hero-case-grid { grid-template-columns: 1fr 1fr; }
+  .hero-case-card:first-child { grid-column: 1 / -1; }
+  .hero-case-heading { align-items: start; flex-direction: column; }
+  .hero-case-heading strong { text-align: left; }
+}
+@media (max-width: 620px) {
+  .hero-case-grid { grid-template-columns: 1fr; }
+  .hero-case-card:first-child { grid-column: auto; }
+  .hero-case-card { min-height: 400px; }
+}
+/* HERO CASE SHOWCASE END */
+
+.finch-inline-162{margin-top:16px}
+.finch-inline-262{--sheet-zoom:1.78;--sheet-x:88%;--sheet-y:54%}
+.finch-inline-265{--sheet-zoom:1.34;--sheet-x:42%;--sheet-y:43%}
+.finch-inline-268{--sheet-zoom:2.05;--sheet-x:37%;--sheet-y:88%}
+.finch-inline-278{--sheet-zoom:2.08;--sheet-x:82%;--sheet-y:84%}
+.finch-inline-281{--sheet-zoom:1.64;--sheet-x:50%;--sheet-y:24%}
+.finch-inline-284{--sheet-zoom:1.80;--sheet-x:47%;--sheet-y:73%}
+.finch-inline-294{--sheet-zoom:1.86;--sheet-x:89%;--sheet-y:58%}
+.finch-inline-297{--sheet-zoom:1.50;--sheet-x:24%;--sheet-y:50%}
+.finch-inline-300{--sheet-zoom:2.45;--sheet-x:60%;--sheet-y:39%}
+.finch-inline-533{color:white}
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#0b0d12;color:#fff7e8;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}
+.final-carousel .sheet-slide,.sheet-slide{grid-area:auto!important}.final-carousel .sheet-track{overflow:visible!important}
+</style></head>
+<body><div class="finch-page">
+<nav aria-label="Primary navigation" class="site-nav">
+<div class="nav-inner">
+<a class="brand" href="#top"><span class="brand-mark">狐</span><span>One Character Studio</span></a>
+<div class="nav-links">
+<a href="#overview">One-Minute Overview</a>
+<a href="#package">What You Get</a>
+<a href="#cases">Real Cases</a>
+<a class="nav-cta" href="instruction-en.html">View the User Guide</a>
+</div>
+</div>
+</nav>
+<main id="main">
+<!-- 01 Hero -->
+<header class="hero" id="top">
+<div class="container hero-grid">
+<div class="hero-copy">
+<div class="hero-kicker">
+<span class="tag"><i></i>Character Consistency Workflow</span>
+<span class="tag"><i></i>Built-in Image Generation</span>
+<span class="tag"><i></i>Structured Delivery</span>
+</div>
+<p class="eyebrow">One Character Studio</p>
+<h1>One Character Image,<br/>Your <em>Long-Running Lead</em></h1>
+<p class="lead">One Character Studio turns a single reference image into a character system that keeps producing: lock the identity first, then extend into turnarounds, expressions, poses, and a hero portrait — delivered together with prompts, review records, and character rules.</p>
+<div class="button-row">
+<a class="button primary" href="https://github.com/FinchipAIOrg/one-character-studio" rel="noopener" target="_blank">Get the Skill ↗</a>
+<a class="button secondary" href="#cases">See Real Outputs First</a>
+</div>
+</div>
+<div aria-label="Hero visual from a real generated case" class="hero-art">
+<div class="hero-frame"><img alt="Hero portrait of the blonde fox character in a red-and-gold robe" class="finch-media-ratio" fetchpriority="high" height="1536" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/4d69d6a564e479e66c77653d26555f66c1104cc7b2104-4d69d6a564e4.png" width="1024"/></div>
+<div class="hero-stamp">ONE<br/>CHARACTER<br/>STUDIO</div>
+<div class="hero-proof">
+<div><strong>1 image</strong><span>A clear character reference</span></div>
+<div><strong>4 types</strong><span>Core visual assets</span></div>
+<div><strong>1 pack</strong><span>Reusable character documentation</span></div>
+</div>
+</div>
+</div>
+<div aria-label="Generated case studies below the hero title" class="container hero-case-showcase">
+<div class="hero-case-heading"><span>Generated with the Skill</span><strong>One workflow, built for different scales, genres, and visual languages</strong></div>
+<div class="hero-case-grid">
+<figure class="hero-case-card"><img alt="Complete hero visual of a green-haired elven knight riding a white unicorn" class="finch-media-ratio" height="1536" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/40ce3f92cb97cbe6ac8b9733780b2f52e34b3b58fe75c-40ce3f92cb97.png" width="1024"/><figcaption><strong>Knight &amp; Mount</strong><span>Complex dual subject</span></figcaption></figure>
+<figure class="hero-case-card"><img alt="Complete full-body artwork of a blonde fox woman in a red-and-gold gown" class="finch-media-ratio" height="1536" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/4d69d6a564e479e66c77653d26555f66c1104cc7b2104-4d69d6a564e4.png" width="1024"/><figcaption><strong>Eastern Fantasy Heroine</strong><span>Full-body character art</span></figcaption></figure>
+<figure class="hero-case-card"><img alt="Complete hero portrait of Milo the raincoat fox" class="finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/45dd3a4f12bb349c7e34591087cda21f65794617d2d7e-45dd3a4f12bb.png" width="1254"/><figcaption><strong>Milo the Raincoat Fox</strong><span>Brand character hero</span></figcaption></figure>
+</div>
+</div>
+</header>
+<div aria-hidden="true" class="ticker">
+<div class="ticker-track">
+<span>Turnaround Sheets</span><span>Expression Sheets</span><span>Pose Sheets</span><span>Hero Portraits</span><span>Character Lock</span><span>Consistency Review</span>
+<span>Turnaround Sheets</span><span>Expression Sheets</span><span>Pose Sheets</span><span>Hero Portraits</span><span>Character Lock</span><span>Consistency Review</span>
+</div>
+</div>
+<!-- 02 Overview -->
+<section class="section" id="overview">
+<div class="container">
+<div class="section-head">
+<div><p class="eyebrow">01 / One-minute overview</p><h2>The Entire Skill Makes One Key Transformation</h2></div>
+<p>It turns “one nice but isolated character image” into character assets that keep working across angles, expressions, and poses — assets that can be reviewed, archived, and handed off.</p>
+</div>
+<div class="master-summary"><strong>The full motion:</strong> read the reference image → extract the character identity → build the character lock → generate visual assets one by one → inspect and repair drift → package everything into production-ready character documentation.</div>
+<div aria-label="The complete One Character Studio workflow" class="workflow-map">
+<article class="workflow-node"><h3>Read the character</h3><p>Identify silhouette, facial features, proportions, costume, palette, props, and art style.</p></article>
+<article class="workflow-node"><h3>Lock the identity</h3><p>Separate what must stay fixed, what may vary, what can be reasonably inferred, and what must never drift.</p></article>
+<article class="workflow-node"><h3>Extend the assets</h3><p>Generate turnaround, expressions, poses, and hero portrait in sequence — never mixing objectives.</p></article>
+<article class="workflow-node"><h3>Review &amp; repair</h3><p>When face swaps, costume changes, or left-right flips appear, repair only the failed item.</p></article>
+<article class="workflow-node"><h3>Package &amp; deliver</h3><p>Ship images, prompts, the character lock, and quality records in one pack.</p></article>
+</div>
+<div class="positioning-note"><strong>What it is</strong><p>Not chasing one lucky stunning image, but building a lightweight, reusable, transferable production standard for creators who need the same character to appear again and again.</p></div>
+<div class="positioning-note"><strong>What it is not</strong><p>It does not replace 3D modeling, animation rigging, or legal clearance. It delivers extensible 2D character reference assets plus production records.</p></div>
+</div>
+</section>
+<!-- 03 Before / After -->
+<section class="section" id="before-after">
+<div class="container">
+<div class="section-head">
+<div><p class="eyebrow">02 / Before &amp; After</p><h2>In Character Work, the Real Effort Starts from the Second Image</h2></div>
+<p>What really slows a project down is not whether images can be generated — it is the character changing faces with every angle, losing details with every pose, and every hard-won lesson staying buried in chat history, so the next attempt starts from zero again.</p>
+</div>
+<div class="grid-2">
+<article class="card compare-card">
+<span class="compare-label">Typical Generation</span>
+<h3>Every image starts from scratch</h3>
+<ul>
+<li>Key traits are scattered across chats and easily missed</li>
+<li>Change the angle and the face shape, perceived age, and proportions drift</li>
+<li>Scars, straps, hair accessories, and props swap sides or vanish</li>
+<li>Winning prompts never accumulate, and teammates cannot take over</li>
+</ul>
+</article>
+<article class="card compare-card after">
+<span class="compare-label">One Character Studio</span>
+<h3>Lock first, then extend, then validate</h3>
+<ul>
+<li>Write silhouette, features, proportions, costume, palette, and style into a character lock</li>
+<li>Carry the same reference image every time and generate asset by asset</li>
+<li>Locate drift against a single standard and repair only the failed item</li>
+<li>Package images, prompts, character rules, and quality records together</li>
+</ul>
+</article>
+</div>
+</div>
+</section>
+<!-- 04 Evidence -->
+<section class="section paper">
+<div class="container">
+<div class="section-head">
+<div><p class="eyebrow">03 / What changes</p><h2>Turn “Does It Look Right” from a Feeling into a Checkable Standard</h2></div>
+<p>Every asset is reviewed on four dimensions: silhouette, facial features, costume, and style &amp; palette. An asset only enters the final folder at 7/8 or above with no hard failures.</p>
+</div>
+<div class="stat-band">
+<div class="stat"><strong>1 → 4</strong><span>From one reference image to four core asset types</span></div>
+<div class="stat"><strong>Character lock</strong><span>Immutable identity anchors, reused every run</span></div>
+<div class="stat"><strong>≥ 7/8</strong><span>Acceptance threshold per asset</span></div>
+<div class="stat"><strong>Traceable</strong><span>Prompts and review records ship with the pack</span></div>
+</div>
+<p class="note finch-inline-162">Note: 8/8 is the score recorded by the Skill’s built-in consistency rubric, not a third-party quality certification.</p>
+</div>
+</section>
+<!-- 05 Transition -->
+<section class="section compact">
+<div class="container">
+<p class="quote">It is not about making AI <em>draw a few more</em> — it is about building production rules that let the same character keep growing.</p>
+</div>
+</section>
+<!-- 06 Solution -->
+<section class="section" id="solution">
+<div class="container">
+<div class="section-head">
+<div><p class="eyebrow">04 / Why it works</p><h2>Stability Does Not Come from Writing Longer Prompts</h2></div>
+<p>One Character Studio fills in “character standardization” — the piece most often missing in front of general image generation — then cuts wasteful re-rolls with asset-by-asset generation and targeted repair.</p>
+</div>
+<div class="process">
+<article class="process-step"><h3>Identity before imagery</h3><p>Write down face shape, silhouette, proportions, costume structure, palette, and signature props first — then decide what the character does.</p></article>
+<article class="process-step"><h3>The reference stays in the room</h3><p>Every run keeps using the canonical reference image and the same character lock, so later images never drift from the original identity basis.</p></article>
+<article class="process-step"><h3>One asset at a time</h3><p>Turnarounds, expressions, poses, and hero portraits are handled separately, so when a problem appears you know exactly which asset drifted.</p></article>
+<article class="process-step"><h3>Only passes enter the pack</h3><p>Reviewed on silhouette, features, costume, and style &amp; palette; on hard drift, passed assets are kept and only the failed item is repaired.</p></article>
+</div>
+</div>
+</section>
+<!-- 07 Package -->
+<section class="section paper" id="package">
+<div class="container">
+<div class="section-head">
+<div><p class="eyebrow">05 / What you get</p><h2>What You Receive Is a Character Library That Keeps Working</h2></div>
+<p>The default Starter pack contains both ready-to-view visual results and the identity rules, prompts, and review evidence needed for the next round of generation.</p>
+</div>
+<div class="package-grid">
+<figure class="package-card has-carousel"><div class="sheet-carousel final-carousel static-overview" data-sheet-static=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full overview</span><img alt="Turnaround sheet of Milo the raincoat fox — Full overview" class="sheet-source finch-media-ratio" height="941" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/7b092c43e881045a9e6a9e2f310ddb282b2a4ed39da19-7b092c43e881.png" width="1672"/></div></div></div><figcaption><strong>Turnaround</strong><span>Front, 3/4, side, and back views</span></figcaption></figure>
+<figure class="package-card has-carousel"><div class="sheet-carousel final-carousel expression-carousel" data-sheet-carousel=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full expression overview</span><img alt="Expression sheet of Milo the raincoat fox, full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/c64fa4151a4fd122232a6f58fdd963db191cdedbcc2c5-c64fa4151a4f.png" width="1536"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Smile</span><img alt="Complete portrait · Smile" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/226420b586ac303d81e3b326d5d1059ed8e74904940d3-226420b586ac.png" width="1254"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Surprise</span><img alt="Complete portrait · Surprise" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/773a81b07b204fcf71c9ca214bf6a5d362d75e4a68d23-773a81b07b20.png" width="1254"/></div></div></div><figcaption><strong>Expressions</strong><span>Six facial expressions</span></figcaption></figure>
+<figure class="package-card has-carousel"><div class="sheet-carousel final-carousel static-overview" data-sheet-static=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full overview</span><img alt="Pose sheet of Milo the raincoat fox — Full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/9876615340b0f04c407af2630550f7786838d96833154-9876615340b0.png" width="1536"/></div></div></div><figcaption><strong>Poses</strong><span>Four full-body poses</span></figcaption></figure>
+<figure class="package-card"><img alt="Hero portrait of Milo the raincoat fox" class="finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/45dd3a4f12bb349c7e34591087cda21f65794617d2d7e-45dd3a4f12bb.png" width="1254"/><figcaption><strong>Hero Portrait</strong><span>Cover-grade character hero visual</span></figcaption></figure>
+</div>
+<div class="grid-4 package-records">
+<article class="card"><div class="card-number">A</div><h3>Character Lock</h3><p>Stores the immutable identity, allowed variations, reasonable inferences, and forbidden drift.</p></article>
+<article class="card"><div class="card-number">B</div><h3>Per-Asset Prompts</h3><p>Records the exact generation brief behind each final asset for easy reuse.</p></article>
+<article class="card"><div class="card-number">C</div><h3>Review Evidence</h3><p>Documents the inspection results for silhouette, features, costume, and style &amp; palette.</p></article>
+<article class="card"><div class="card-number">D</div><h3>Overview &amp; Manifest</h3><p>Consolidates final images, file paths, and structure validation results.</p></article>
+</div>
+<div class="reference-panel">
+<div class="reference-copy"><p class="eyebrow">Visual references</p><h3>Once a character enters a real project, one front view is never enough</h3><p>Multiple views, expressions, costume structure, props, and material details become the shared basis for storyboards, posters, game concepts, and brand content.</p></div>
+<div class="reference-gallery">
+<figure class="has-carousel"><div class="sheet-carousel final-carousel reference-carousel" data-sheet-carousel=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full overview</span><img alt="Visual reference of a sci-fi character with multiple views and detail callouts — Full overview" class="sheet-source finch-media-ratio" height="718" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/a8d3fcee9b104c42a9e56ba37440797eb82cf030c29e5-a8d3fcee9b10.jpg" width="1179"/></div><div class="sheet-slide is-reference-detail finch-inline-262"><span class="sheet-badge">Accessories · Gloves &amp; weapons</span><img alt="Visual reference of a sci-fi character with multiple views and detail callouts — Accessories · Gloves &amp; weapons" class="sheet-source finch-media-ratio" height="718" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/a8d3fcee9b104c42a9e56ba37440797eb82cf030c29e5-a8d3fcee9b10.jpg" width="1179"/></div><div class="sheet-slide is-reference-detail finch-inline-265"><span class="sheet-badge">Garment construction · Front, side &amp; back</span><img alt="Visual reference of a sci-fi character with multiple views and detail callouts — Garment construction · Front, side &amp; back" class="sheet-source finch-media-ratio" height="718" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/a8d3fcee9b104c42a9e56ba37440797eb82cf030c29e5-a8d3fcee9b10.jpg" width="1179"/></div><div class="sheet-slide is-reference-detail finch-inline-268"><span class="sheet-badge">Facial detail · Expressions &amp; hair</span><img alt="Visual reference of a sci-fi character with multiple views and detail callouts — Facial detail · Expressions &amp; hair" class="sheet-source finch-media-ratio" height="718" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/a8d3fcee9b104c42a9e56ba37440797eb82cf030c29e5-a8d3fcee9b10.jpg" width="1179"/></div></div></div><figcaption>Multi-view and component breakdown</figcaption></figure>
+<figure class="has-carousel"><div class="sheet-carousel final-carousel reference-carousel" data-sheet-carousel=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full overview</span><img alt="Visual reference of a fantasy female character with multiple views and expression studies — Full overview" class="sheet-source finch-media-ratio" height="1124" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/9e77c989b51b4a389521aaf23023e335f37392edcce7c-9e77c989b51b.jpg" width="1179"/></div><div class="sheet-slide is-reference-detail finch-inline-278"><span class="sheet-badge">Accessories · Eye, lip &amp; fox-mask design</span><img alt="Visual reference of a fantasy female character with multiple views and expression studies — Accessories · Eye, lip &amp; fox-mask design" class="sheet-source finch-media-ratio" height="1124" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/9e77c989b51b4a389521aaf23023e335f37392edcce7c-9e77c989b51b.jpg" width="1179"/></div><div class="sheet-slide is-reference-detail finch-inline-281"><span class="sheet-badge">Garment construction · Front, side, back &amp; special look</span><img alt="Visual reference of a fantasy female character with multiple views and expression studies — Garment construction · Front, side, back &amp; special look" class="sheet-source finch-media-ratio" height="1124" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/9e77c989b51b4a389521aaf23023e335f37392edcce7c-9e77c989b51b.jpg" width="1179"/></div><div class="sheet-slide is-reference-detail finch-inline-284"><span class="sheet-badge">Facial detail · Expressions &amp; three angles</span><img alt="Visual reference of a fantasy female character with multiple views and expression studies — Facial detail · Expressions &amp; three angles" class="sheet-source finch-media-ratio" height="1124" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/9e77c989b51b4a389521aaf23023e335f37392edcce7c-9e77c989b51b.jpg" width="1179"/></div></div></div><figcaption>Expressions and facial details</figcaption></figure>
+<figure class="has-carousel"><div class="sheet-carousel final-carousel reference-carousel" data-sheet-carousel=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full overview</span><img alt="Visual reference of a heavily armored character’s poses and equipment — Full overview" class="sheet-source finch-media-ratio" height="646" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/976d4be2824f0dbce2c12296275c5be6cff1a07ab2842-976d4be2824f.jpg" width="1179"/></div><div class="sheet-slide is-reference-detail finch-inline-294"><span class="sheet-badge">Accessories · Greatsword, shield &amp; crest</span><img alt="Visual reference of a heavily armored character’s poses and equipment — Accessories · Greatsword, shield &amp; crest" class="sheet-source finch-media-ratio" height="646" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/976d4be2824f0dbce2c12296275c5be6cff1a07ab2842-976d4be2824f.jpg" width="1179"/></div><div class="sheet-slide is-reference-detail finch-inline-297"><span class="sheet-badge">Garment construction · Heavy armor, cape &amp; turnaround</span><img alt="Visual reference of a heavily armored character’s poses and equipment — Garment construction · Heavy armor, cape &amp; turnaround" class="sheet-source finch-media-ratio" height="646" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/976d4be2824f0dbce2c12296275c5be6cff1a07ab2842-976d4be2824f.jpg" width="1179"/></div><div class="sheet-slide is-reference-detail finch-inline-300"><span class="sheet-badge">Facial detail · Multi-angle expressions</span><img alt="Visual reference of a heavily armored character’s poses and equipment — Facial detail · Multi-angle expressions" class="sheet-source finch-media-ratio" height="646" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/976d4be2824f0dbce2c12296275c5be6cff1a07ab2842-976d4be2824f.jpg" width="1179"/></div></div></div><figcaption>Poses, gear, and material specs</figcaption></figure>
+</div>
+<p class="reference-disclaimer">The three images above are external visual references provided by the user, illustrating common forms of character documentation — they are not outputs generated by One Character Studio.</p>
+</div>
+</div>
+</section>
+<!-- 08 Cases -->
+<section class="section" id="cases">
+<div class="container">
+<div class="section-head">
+<div><p class="eyebrow">06 / Real outputs</p><h2>Three Art Styles, One Reusable Logic</h2></div>
+<p>All of the following are complete character assets driven by real reference images. The first two come from actual user runs; Milo the raincoat fox is a new case produced for this updated page.</p>
+</div>
+<div class="case-tabs">
+<div aria-label="Select a character case" class="tabs">
+</div>
+<article class="tab-panel" id="case-fox"><h3>Golden-Crimson Fox</h3>
+<div class="case-head">
+<div class="case-portrait"><img alt="Hero portrait of the golden-crimson fox character" class="finch-media-ratio" height="1536" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/4d69d6a564e479e66c77653d26555f66c1104cc7b2104-4d69d6a564e4.png" width="1024"/></div>
+<div>
+<p class="eyebrow">Case 01</p>
+<h3>Ornate costume details, preserved across every view</h3>
+<p>Locked: fox ears, a single fluffy tail, blonde hair, blue eyes, a forehead ornament, and a red-and-gold embroidered robe. All four delivered assets were recorded as 8/8 on the built-in rubric, with structure validation returning no errors or warnings.</p>
+<span class="case-chip">Long hair &amp; fox ears</span><span class="case-chip">Red-gold embroidery</span><span class="case-chip">Single-tail constraint</span><span class="case-chip">8/8 × 4</span>
+</div>
+</div>
+<div class="asset-strip">
+<figure class="asset-tile large has-carousel"><div class="sheet-carousel final-carousel static-overview" data-sheet-static=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full overview</span><img alt="Four-view turnaround of the golden-crimson fox — Full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/a1f75b47d6122f54b73f4794ada64108fd13367c54035-a1f75b47d612.png" width="1536"/></div></div></div><figcaption>Four-view turnaround</figcaption></figure>
+<figure class="asset-tile sheet has-carousel"><div class="sheet-carousel final-carousel expression-carousel" data-sheet-carousel=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full expression overview</span><img alt="Six facial expressions of the golden-crimson fox, full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/2e29328c6d469741312d7b9467958e6b1d76195e3dead-2e29328c6d46.png" width="1536"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Smile</span><img alt="Complete portrait · Smile" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/82dd9a2778047b0e133bab6072335d5970b89a9f9ffd5-82dd9a277804.png" width="1254"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Focused</span><img alt="Complete portrait · Focused" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/06afeec0b1e739e46f842ff0e51bfc446e53656d8dc3b-06afeec0b1e7.png" width="1254"/></div></div></div><figcaption>Six expressions</figcaption></figure>
+<figure class="asset-tile sheet has-carousel"><div class="sheet-carousel final-carousel static-overview" data-sheet-static=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full overview</span><img alt="Four poses of the golden-crimson fox — Full overview" class="sheet-source finch-media-ratio" height="941" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/2a746399e29bc5061530e402264f8f710aead366876c5-2a746399e29b.png" width="1672"/></div></div></div><figcaption>Four poses</figcaption></figure>
+<figure class="asset-tile"><img alt="Hero portrait of the golden-crimson fox" class="finch-media-ratio" height="1536" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/4d69d6a564e479e66c77653d26555f66c1104cc7b2104-4d69d6a564e4.png" width="1024"/><figcaption>Hero portrait</figcaption></figure>
+<figure class="asset-tile has-carousel"><div class="sheet-carousel final-carousel expression-carousel" data-sheet-carousel=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full expression overview</span><img alt="Expression details of the golden-crimson fox, full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/2e29328c6d469741312d7b9467958e6b1d76195e3dead-2e29328c6d46.png" width="1536"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Smile</span><img alt="Complete portrait · Smile" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/82dd9a2778047b0e133bab6072335d5970b89a9f9ffd5-82dd9a277804.png" width="1254"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Focused</span><img alt="Complete portrait · Focused" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/06afeec0b1e739e46f842ff0e51bfc446e53656d8dc3b-06afeec0b1e7.png" width="1254"/></div></div></div><figcaption>Identity anchor recheck</figcaption></figure>
+</div>
+</article>
+<article class="tab-panel" id="case-elf"><h3>Green-Haired Elf</h3>
+<div class="case-head">
+<div class="case-portrait"><img alt="Hero portrait of the green-haired elf and unicorn" class="finch-media-ratio" height="1536" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/40ce3f92cb97cbe6ac8b9733780b2f52e34b3b58fe75c-40ce3f92cb97.png" width="1024"/></div>
+<div>
+<p class="eyebrow">Case 02</p>
+<h3>Rider and mount, locked as one combined identity</h3>
+<p>The elf’s green hair, purple eyes, glasses, bronze armor, and amethyst staff stay fixed; the ivory-white unicorn is locked as a single-horned mount. All four assets were recorded as 8/8, with structure validation returning no errors or warnings.</p>
+<span class="case-chip">Dual subjects</span><span class="case-chip">Fixed staff</span><span class="case-chip">Single-horned mount</span><span class="case-chip">8/8 × 4</span>
+</div>
+</div>
+<div class="asset-strip">
+<figure class="asset-tile large has-carousel"><div class="sheet-carousel final-carousel static-overview" data-sheet-static=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full overview</span><img alt="Four views of the green-haired elf and unicorn — Full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/e3833a8554b15ca72ed6541cd5e0d1943bdea0eac92e7-e3833a8554b1.png" width="1536"/></div></div></div><figcaption>Four-view turnaround</figcaption></figure>
+<figure class="asset-tile sheet has-carousel"><div class="sheet-carousel final-carousel expression-carousel" data-sheet-carousel=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full expression overview</span><img alt="Six expressions of the green-haired elf, full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/a68fd88c3c1fae401a393559f246d26f6834109bf538c-a68fd88c3c1f.png" width="1536"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Smile</span><img alt="Complete portrait · Smile" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/fc391514230edabae16ce21d69973bdead6c642ccca0f-fc391514230e.png" width="1254"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Surprise</span><img alt="Complete portrait · Surprise" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/1838ed63c0528d687553d4fcab249069688addfb0d389-1838ed63c052.png" width="1254"/></div></div></div><figcaption>Six expressions</figcaption></figure>
+<figure class="asset-tile sheet has-carousel"><div class="sheet-carousel final-carousel static-overview" data-sheet-static=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full overview</span><img alt="Riding poses of the green-haired elf — Full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/286a05b3f0f2449105fa09323fb4a2e6d8de0b73883ee-286a05b3f0f2.png" width="1536"/></div></div></div><figcaption>Four poses</figcaption></figure>
+<figure class="asset-tile"><img alt="Hero portrait of the green-haired elf and unicorn" class="finch-media-ratio" height="1536" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/40ce3f92cb97cbe6ac8b9733780b2f52e34b3b58fe75c-40ce3f92cb97.png" width="1024"/><figcaption>Mounted hero portrait</figcaption></figure>
+<figure class="asset-tile has-carousel"><div class="sheet-carousel final-carousel expression-carousel" data-sheet-carousel=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full expression overview</span><img alt="Expression details of the green-haired elf, full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/a68fd88c3c1fae401a393559f246d26f6834109bf538c-a68fd88c3c1f.png" width="1536"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Smile</span><img alt="Complete portrait · Smile" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/fc391514230edabae16ce21d69973bdead6c642ccca0f-fc391514230e.png" width="1254"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Surprise</span><img alt="Complete portrait · Surprise" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/1838ed63c0528d687553d4fcab249069688addfb0d389-1838ed63c052.png" width="1254"/></div></div></div><figcaption>Facial consistency</figcaption></figure>
+</div>
+</article>
+<article class="tab-panel" id="case-milo"><h3>Milo the Raincoat Fox</h3>
+<div class="case-head">
+<div class="case-portrait"><img alt="Comic-style hero portrait of Milo the raincoat fox" class="finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/45dd3a4f12bb349c7e34591087cda21f65794617d2d7e-45dd3a4f12bb.png" width="1254"/></div>
+<div>
+<p class="eyebrow">Case 03 · Newly generated</p>
+<h3>From a single promo image to a full production kit</h3>
+<p>This re-run locked two pointed ears, a single large tail with a cream tip, a mustard-yellow two-toggle coat, a teal crossbody bag, and a vintage halftone texture. All four assets passed the 8/8 review, with validation returning pass.</p>
+<span class="case-chip">Vintage comic</span><span class="case-chip">Halftone texture</span><span class="case-chip">Two toggles</span><span class="case-chip">8/8 × 4</span>
+</div>
+</div>
+<div class="asset-strip">
+<figure class="asset-tile large sheet has-carousel"><div class="sheet-carousel final-carousel static-overview" data-sheet-static=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full overview</span><img alt="Four views of Milo the raincoat fox — Full overview" class="sheet-source finch-media-ratio" height="941" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/7b092c43e881045a9e6a9e2f310ddb282b2a4ed39da19-7b092c43e881.png" width="1672"/></div></div></div><figcaption>Four-view turnaround</figcaption></figure>
+<figure class="asset-tile sheet has-carousel"><div class="sheet-carousel final-carousel expression-carousel" data-sheet-carousel=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full expression overview</span><img alt="Six expressions of Milo the raincoat fox, full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/c64fa4151a4fd122232a6f58fdd963db191cdedbcc2c5-c64fa4151a4f.png" width="1536"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Smile</span><img alt="Complete portrait · Smile" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/226420b586ac303d81e3b326d5d1059ed8e74904940d3-226420b586ac.png" width="1254"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Surprise</span><img alt="Complete portrait · Surprise" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/773a81b07b204fcf71c9ca214bf6a5d362d75e4a68d23-773a81b07b20.png" width="1254"/></div></div></div><figcaption>Six expressions</figcaption></figure>
+<figure class="asset-tile sheet has-carousel"><div class="sheet-carousel final-carousel static-overview" data-sheet-static=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full overview</span><img alt="Four poses of Milo the raincoat fox — Full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/9876615340b0f04c407af2630550f7786838d96833154-9876615340b0.png" width="1536"/></div></div></div><figcaption>Four poses</figcaption></figure>
+<figure class="asset-tile"><img alt="Hero portrait of Milo the raincoat fox" class="finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/45dd3a4f12bb349c7e34591087cda21f65794617d2d7e-45dd3a4f12bb.png" width="1254"/><figcaption>Hero portrait</figcaption></figure>
+<figure class="asset-tile sheet has-carousel"><div class="sheet-carousel final-carousel expression-carousel" data-sheet-carousel=""><div class="sheet-track"><div class="sheet-slide is-active is-overview"><span class="sheet-badge">Full expression overview</span><img alt="Expression details of Milo the raincoat fox, full overview" class="sheet-source finch-media-ratio" height="1024" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/c64fa4151a4fd122232a6f58fdd963db191cdedbcc2c5-c64fa4151a4f.png" width="1536"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Smile</span><img alt="Complete portrait · Smile" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/226420b586ac303d81e3b326d5d1059ed8e74904940d3-226420b586ac.png" width="1254"/></div><div class="sheet-slide is-expression-detail"><span class="sheet-badge">Complete portrait · Surprise</span><img alt="Complete portrait · Surprise" class="sheet-source finch-media-ratio" height="1254" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/one-character-studio/information-en/773a81b07b204fcf71c9ca214bf6a5d362d75e4a68d23-773a81b07b20.png" width="1254"/></div></div></div><figcaption>Expression extension</figcaption></figure>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- 09 Advantages -->
+<section class="section paper" id="value">
+<div class="container">
+<div class="section-head">
+<div><p class="eyebrow">07 / Why it matters</p><h2>Turn Creativity into Character Assets You Can Keep Operating</h2></div>
+<p>Built for creators and teams who need high-frequency content, multi-person collaboration, or long-term IP operations — and for anyone who needs a discussable visual baseline before formal production.</p>
+</div>
+<div class="grid-3">
+<article class="card benefit"><div class="icon">◎</div><h3>Fewer blind re-rolls</h3><p>Fix the identity first, then locate the problem; when one asset drifts, you don’t have to scrap the whole set that already passed.</p></article>
+<article class="card benefit"><div class="icon">↗</div><h3>One shared standard</h3><p>Images, prompts, the character lock, and review records ship together — creators, operators, and partners all see the same character rules.</p></article>
+<article class="card benefit"><div class="icon">✦</div><h3>A longer character life</h3><p>One base asset set keeps extending into avatars, stickers, social content, promo art, storyboards, and game concepts.</p></article>
+</div>
+</div>
+</section>
+<!-- 10 Audience -->
+<section class="section">
+<div class="container">
+<div class="section-head">
+<div><p class="eyebrow">08 / Built for</p><h2>Who It’s For</h2></div>
+<p>No advanced prompt-writing skills required — but you do need a reference image you have the rights to use, with a clear subject and legible details.</p>
+</div>
+<div class="grid-4">
+<article class="card"><div class="card-number">A</div><h3>Independent Creators</h3><p>Quickly build a base character library for comics, novels, VTubers, or personal IPs.</p></article>
+<article class="card"><div class="card-number">B</div><h3>Brands &amp; E-commerce</h3><p>Continuously produce posters, product detail pages, and social content around mascots and virtual ambassadors.</p></article>
+<article class="card"><div class="card-number">C</div><h3>Game &amp; Animation Teams</h3><p>Align on a character baseline before kickoff and outsourcing, cutting the errors caused by verbal descriptions.</p></article>
+<article class="card"><div class="card-number">D</div><h3>Education &amp; Communities</h3><p>Extend course characters, community avatars, and event mascots into visual identities that keep updating.</p></article>
+</div>
+</div>
+</section>
+<!-- 11 CTA -->
+<section class="section compact">
+<div class="container">
+<div class="cta-panel">
+<div>
+<p class="eyebrow finch-inline-533">09 / Start here</p>
+<h2>Don’t let your character stop at the first image.</h2>
+<p>Prepare one clear reference image and state the purpose and asset scope you want. Leave the rest — character lock, asset-by-asset generation, consistency review, and structured packaging — to One Character Studio.</p>
+</div>
+<a class="button" href="instruction-en.html">Open the English User Guide →</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner"><span>One Character Studio · English Product Page</span><span>Use only reference material you have the legal rights to, and review platform rules and intended use before commercial release.</span></div>
+</footer>
+</div></body>
+</html>

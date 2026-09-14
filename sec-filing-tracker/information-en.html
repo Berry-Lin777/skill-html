@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Search the full text of U.S. SEC EDGAR filings by keyword and get back a clean list where every row opens the original on sec.gov. No API key. Nothing invented." name="description"/>
+<title>SEC Filing Tracker · Search every SEC EDGAR filing by keyword, and open the source</title>
+<style>
+:root{
+  --navy:#16213C; --navy2:#2C4470; --navy3:#33548C; --navy4:#4668A0;
+  --gold:#C9A24B; --gold-d:#96681F; --gold-l:#E7CF9A;
+  --ink:#233047; --slate:#5A6A82; --mist:#EDF1F7; --mist2:#E3EAF2;
+  --paper:#FBF9F4; --card:#FFFFFF; --coral:#B2453D; --teal:#2E6B4F;
+  --line:#E4E0D4;
+  --radius:18px; --shadow:0 10px 30px rgba(27,42,74,.08);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+.finch-page{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  color:var(--ink); line-height:1.75; background:
+    radial-gradient(1200px 500px at 85% -10%, rgba(201,162,75,.10), transparent 60%),
+    radial-gradient(900px 420px at -10% 8%, rgba(70,104,160,.10), transparent 55%),
+    var(--paper);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--navy3); text-decoration:none;}
+a:hover{text-decoration:underline;}
+img{max-width:100%;}
+.container{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+/* top bar */
+.topbar{position: relative; top:0; z-index:50; background:rgba(22,33,60,.9); backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(201,162,75,.35);}
+.topbar .container{display:flex; align-items:center; justify-content:space-between; height:58px;}
+.brand{color:#fff; font-weight:800; letter-spacing:.5px; font-size:15.5px; display:flex; align-items:center; gap:10px;}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold); box-shadow:0 0 10px var(--gold);}
+.langswitch{display:flex; gap:6px;}
+.langswitch a{color:#c7d2e4; font-size:12px; padding:4px 11px; border-radius:20px; border:1px solid rgba(255,255,255,.25);}
+.langswitch a.active{background:var(--gold); color:#1a2540; border-color:var(--gold); font-weight:700;}
+
+/* hero */
+.hero{position:relative; overflow:hidden; padding:104px 0 108px; background-position:center; background-size:cover;}
+.hero::before{content:""; position:absolute; inset:0; background:radial-gradient(820px 460px at 50% -12%, rgba(201,162,75,.16), transparent 62%);}
+.hero::after{content:""; position:absolute; inset:auto 0 0 0; height:150px; background:linear-gradient(180deg, transparent, rgba(251,249,244,.97));}
+.hero-inner{position:relative; z-index:2; text-align:center; max-width:1000px; margin:0 auto;}
+.hero-kicker{color:var(--gold-l); letter-spacing:3px; font-size:13.5px; font-weight:700; margin-bottom:20px; text-transform:uppercase;
+  text-shadow:0 2px 10px rgba(0,0,0,.5);}
+.hero-title{color:#fff; font-size:70px; font-weight:900; letter-spacing:.5px; line-height:1.02;
+  text-shadow:0 4px 30px rgba(0,0,0,.5);}
+.hero-sub{color:#eaf0fa; font-size:22px; max-width:880px; margin:26px auto 0; line-height:1.6; font-weight:500;
+  text-shadow:0 2px 14px rgba(0,0,0,.45);}
+@media (max-width: 700px){
+  .hero{padding:66px 0 60px;}
+  .hero-title{font-size:40px;}
+  .hero-sub{font-size:17px;}
+  .hero-kicker{letter-spacing:1.5px; font-size:11.5px;}
+}
+
+/* sections */
+section.sec{margin:0 0 8px; padding-top:70px; scroll-margin-top:80px;}
+h2.sell{font-size:34px; font-weight:800; line-height:1.25; color:var(--navy); letter-spacing:.2px; max-width:840px;}
+p.lead{font-size:16px; color:var(--slate); margin-top:12px; max-width:800px;}
+.rule{height:2px; margin:22px 0 26px; background:linear-gradient(90deg,var(--gold) 0%, var(--gold-l) 30%, transparent 70%); border-radius:2px;}
+p.text{font-size:15.5px; color:#3a4458; margin-bottom:14px; text-align:justify; max-width:860px;}
+p.text b{color:var(--navy2);}
+p.text + p.text{margin-top:-6px;}
+h3.sub{font-size:19px; color:var(--navy2); margin:34px 0 12px; display:flex; align-items:center; gap:10px; font-weight:800;}
+h3.sub::before{content:""; width:7px; height:19px; border-radius:3px; background:var(--gold);}
+
+/* stat strip */
+.stats{display:flex; flex-wrap:wrap; gap:14px; margin-top:34px; justify-content:center;}
+.stat{background:rgba(255,255,255,.06); border:1px solid rgba(231,207,154,.5); border-radius:14px;
+  padding:10px 18px; color:var(--gold-l); font-size:14px; backdrop-filter:blur(4px);}
+.stat b{color:#fff; font-weight:800;}
+
+/* tables */
+.table-wrap{overflow: visible; margin:16px 0 18px; border-radius:14px; box-shadow:var(--shadow);}
+table.tbl{width:100%; border-collapse:separate; border-spacing:0; background:#fff;
+  border:1px solid var(--line); border-radius:14px; overflow:hidden;}
+.tbl th{background:linear-gradient(135deg,var(--navy),var(--navy3)); color:#fff; text-align:left;
+  padding:12px 15px; font-size:14px; letter-spacing:.3px;}
+.tbl td{padding:12px 15px; font-size:14px; vertical-align:top; border-top:1px solid var(--line); color:#3a4458;}
+.tbl tr td:first-child{background:#f2f5f9; font-weight:700; color:var(--navy3); white-space:nowrap;}
+.tbl tr:nth-child(even) td{background:#fdfcfa;}
+.tbl tr:nth-child(even) td:first-child{background:#eef2f7;}
+.tbl td b{color:var(--navy2);}
+
+/* figure */
+figure{margin:24px 0; text-align:center;}
+figure img{border-radius:14px; border:1px solid var(--line); box-shadow:var(--shadow);
+  width:min(92%,860px); height:auto;}
+figure.wide img{width:100%;}
+figcaption{font-size:13px; color:var(--slate); margin-top:10px; max-width:760px; margin-left:auto; margin-right:auto;}
+
+/* screenshot gallery */
+.shot-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin:18px 0 6px;}
+.shot-grid figure{margin:0;}
+.shot-grid figure.full{grid-column:1/-1;}
+.shot-grid img.shot{display:block; width:100%; height:auto; border:1px solid var(--line);
+  border-radius:12px; box-shadow:var(--shadow); background:#fff;}
+.shot-grid figcaption{font-size:12.5px; color:var(--slate); margin-top:7px;}
+@media (max-width: 720px){ .shot-grid{grid-template-columns:1fr;} }
+
+/* callout */
+.callout{display:flex; gap:14px; align-items:flex-start; background:var(--mist);
+  border-left:5px solid var(--navy3); border-radius:0 14px 14px 0; padding:16px 20px; margin:22px 0; max-width:860px;}
+.callout.gold{background:#f7f0e0; border-left-color:var(--gold-d);}
+.callout.coral{background:#f9ecea; border-left-color:var(--coral);}
+.callout .ico{font-size:20px; line-height:1.4;}
+.callout .ct{font-weight:800; color:var(--navy2); margin-bottom:2px;}
+.callout p{font-size:14px; color:#3a4458;}
+.callout p+p{margin-top:6px;}
+
+/* advantage list */
+.adv{margin:14px 0; padding:18px 22px 18px 26px; background:#fff; border:1px solid var(--line);
+  border-left:5px solid var(--navy4); border-radius:0 14px 14px 0; max-width:860px;}
+.adv h4{color:var(--navy2); font-size:16.5px; margin-bottom:4px;}
+.adv p{font-size:14.5px; color:#3a4458;}
+
+/* pills */
+ul.pills{list-style:none; margin:14px 0 6px; max-width:860px;}
+ul.pills li{position:relative; padding:9px 0 9px 32px; font-size:15px; color:#3a4458;
+  border-bottom:1px dashed var(--line);}
+ul.pills li:last-child{border-bottom:0;}
+ul.pills li::before{content:""; position:absolute; left:6px; top:16px; width:12px; height:12px;
+  background:var(--gold); transform:rotate(45deg); border-radius:2px;}
+
+/* cta */
+.cta-box{margin:70px 0 10px; text-align:center; background:
+  linear-gradient(135deg,#fff 0%, #f7f4ec 100%); border:1px solid var(--line);
+  border-radius:22px; padding:56px 32px; box-shadow:var(--shadow);}
+.cta-box h2{font-size:32px; font-weight:900; color:var(--navy); line-height:1.25;}
+.cta-box .txt{font-size:16px; color:#3a4458; max-width:760px; margin:16px auto 0;}
+.btn{display:inline-block; margin-top:28px; padding:15px 38px; border-radius:40px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-d)); color:#fff; font-weight:800;
+  letter-spacing:.4px; font-size:16.5px; box-shadow:0 14px 30px rgba(201,162,75,.38);}
+.btn:hover{text-decoration:none; filter:brightness(1.05);}
+.cta-note{font-size:13px; color:var(--slate); margin-top:18px;}
+
+/* footer */
+footer{margin-top:60px; background:linear-gradient(135deg,#101a31,#24375c);
+  color:#9fb0cc; padding:38px 0; text-align:center; font-size:13px;}
+footer .brand2{color:#fff; font-weight:800; font-size:15px; letter-spacing:.5px;}
+footer .gold{color:var(--gold-l); font-weight:700;}
+footer .small{font-size:12px; color:#6f83a6; margin-top:8px;}
+
+.finch-inline-15{background-image:linear-gradient(180deg, rgba(8,14,28,.84) 0%, rgba(16,27,52,.66) 60%, rgba(20,32,58,.5) 100%), url("https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/69d592e4c470f637185253855b97ac2ff6fc178cdf78e-69d592e4c470.png")}
+.finch-inline-193{margin-top:8px;}
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fbfaf7;color:#24324a;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}</style></head>
+<body><div class="finch-page">
+<header class="topbar"><div class="container"><div class="brand"><span class="dot"></span>SEC Filing Tracker</div><div class="langswitch"><a class="" href="information-zh.html">Chinese</a><a class="active" href="information-en.html">English</a></div></div></header>
+<!-- Hero -->
+<section class="hero finch-inline-15">
+<div class="hero-inner">
+<div class="hero-kicker">A FinChip Studio Skill  ·  Keyword tracking across SEC EDGAR filings</div>
+<h1 class="hero-title">SEC Filing Tracker</h1>
+<p class="hero-sub">One keyword search across the full text of U.S. SEC filings — returned as a clean list where every row opens the original, right on sec.gov.</p>
+<div class="stats">
+<span class="stat">Full text <b>2001 – present</b></span>
+<span class="stat"><b>No API key</b> · no registration</span>
+<span class="stat">Official links, <b>verified to open</b></span>
+<span class="stat"><b>Nothing invented</b> — no fabricated rows</span>
+</div>
+</div>
+</section>
+<main class="container">
+<!-- 1 problem -->
+<section class="sec" id="problem">
+<h2 class="sell">Research that should take minutes is burning hours.</h2>
+<p class="lead">Writing research notes, running diligence, tracking competitors or following which companies mention an executive, a product or a phrase — it almost always comes back to SEC EDGAR.</p>
+<div class="rule"></div>
+<p class="text">EDGAR’s own full-text results are rough: rows come back without usable links, and company, form and date information is scattered across pages. So most people end up doing one of two things — opening a paid terminal, or copying a search result into Excel by hand, then adding links and company details back in, row by row.</p>
+<p class="text">General-purpose AI tools can generate a table in seconds — but they routinely invent company names, CIKs and form types that look completely real, and the links <b>404 the moment you click them</b>.</p>
+<p class="text">The problem was never a lack of tools. It’s not being able to trust which links will actually open.</p>
+</section>
+<!-- 2 before / after -->
+<section class="sec" id="changes">
+<h2 class="sell">The same question, two very different workflows.</h2>
+<p class="lead">Three shifts you can verify yourself — in search, in link reliability, in statistics.</p>
+<div class="rule"></div>
+<div class="table-wrap">
+<table class="tbl">
+<thead><tr><th>Scenario</th><th>Before</th><th>After</th></tr></thead>
+<tbody>
+<tr><td>Full-text search</td><td>Keywords in EDGAR’s old interface return fragments, not companies; different forms live in different places and get reassembled by hand every time.</td><td>Enter a keyword and a range; get one filing per row — company, CIK, form, date, accession number and a verified official link.</td></tr>
+<tr><td>Link reliability</td><td>Links from search engines or aggregators routinely break or land on the wrong page, so you reconstruct URLs yourself.</td><td>Every link is built by EDGAR’s official rules and re-verified; if a CIK or accession number is incomplete it falls back to the company’s filings browse page and flags url_kind.</td></tr>
+<tr><td>Cross-form statistics</td><td>To see which forms mention a phrase you search several times, then stitch the results into a sheet by hand.</td><td>One response returns a by-form histogram and a total — e.g. 8-K ×16, 497K ×8, 10-Q ×1.</td></tr>
+</tbody>
+</table>
+</div>
+<figure>
+<img alt="One filing row returned by a real run — query “artificial intelligence”, July 2026 (real data)" class="finch-media-ratio" height="656" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-en/752c47bb2c6fbeb085af04be73a9749e44169e105f986-752c47bb2c6f.png" width="1567"/>
+<figcaption>One filing row returned by a real run — query “artificial intelligence”, July 2026 (real data).</figcaption>
+</figure>
+</section>
+<!-- 3 how it works -->
+<section class="sec" id="how">
+<h2 class="sell">One request in. A verified, openable list out.</h2>
+<p class="lead">Give it the phrase you care about — quote it for an exact match — and optionally narrow by form type and date range.</p>
+<div class="rule"></div>
+<p class="text">SEC Filing Tracker calls SEC’s official EDGAR full-text search endpoint with a single, identified HTTP request and returns up to 100 hits. Documents inside the same filing collapse into one row, deduped by accession number, and EDGAR’s own relevance order is preserved end to end.</p>
+<figure class="wide">
+<img alt="The four inputs and their defaults" class="finch-media-ratio" height="606" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-en/f8dd60503141913145fd176992ca86a2a49a4150ff5e5-f8dd60503141.png" width="1567"/>
+<figcaption>The four inputs and their defaults.</figcaption>
+</figure>
+<p class="text">What comes back is row after row of real filing records: <b>company, tickers, CIK, form type, filing date, accession number</b> — plus a by-form distribution and the total match count. No guesswork, no fabricated fields.</p>
+<figure class="wide">
+<img alt="How one request flows: input → official EDGAR API → a list you can use" class="finch-media-ratio" height="756" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-en/d90d02e5efd0328cbe431659c5fe43f0e5525adc1ff5b-d90d02e5efd0.png" width="1567"/>
+<figcaption>How one request flows: your input → the official EDGAR API → a list you can use.</figcaption>
+</figure>
+<p class="text">The Skill does the tedious look-up, dedupe and link construction first, and hands every source and piece of evidence back to you. <b>Your judgment stays yours</b> — it simply makes the finding correct and the links real.</p>
+</section>
+<!-- 4 real cases -->
+<section class="sec" id="reallife">
+<h2 class="sell">See it run — three real cases, straight from the session.</h2>
+<p class="lead">Every case below is a real input and output from running the Skill. Nothing is fabricated, simulated or embellished.</p>
+<div class="rule"></div>
+<h3 class="sub">Case 01 · Track an exact phrase — one month, every form</h3>
+<p class="text">Input: “artificial intelligence”, 1–31 July 2026, up to 30 results. Output: <b>30 filings across 8 real form types</b> — 8-K ×16, 497K ×8, 10-Q ×1, 424B3 ×1, FWP ×1, N-CSR ×1, N-CSR/A ×1, N-CSRS ×1 — with 3,890 total matches (EDGAR flag: eq) and 4 duplicates removed automatically. Companies include Artificial Intelligence Technology Solutions Inc. (AITX), Krane Shares Trust and more.</p>
+<figure>
+<img alt="By-form distribution returned by Case 01 (real run data)" class="finch-media-ratio" height="639" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-en/1654552714a9f38aa3c3163633168f14f0b1272825196-1654552714a9.png" width="1567"/>
+<figcaption>By-form distribution returned by Case 01 (real run data).</figcaption>
+</figure>
+<h3 class="sub">Case 02 · One form type, live against SEC — real companies</h3>
+<p class="text">Input: “material weakness”, 10-K only, 1 January – 31 August 2026, up to 5 results. The live call to the SEC EDGAR API returned: ANAVEX LIFE SCIENCES CORP. (10-K/A), Where Food Comes From, Inc. (10-K/A), UNIVERSAL LOGISTICS HOLDINGS, INC. (10-K), SYNLOGIC, INC. (10-K) and Forian Inc. (10-K/A). Every row links to the official sec.gov filing page.</p>
+<h3 class="sub">Case 03 · A source outage never becomes a crash</h3>
+<p class="text">With the source marked unavailable, the run still succeeds (ok: true, exit code 0) and returns an empty list, while the status report shows available: false with the reason. A network hiccup is handled cleanly, not thrown as an error.</p>
+<div class="callout gold"><div class="ico">★</div><div><div class="ct">Why you can trust this page</div>
+<p>Cases 01 and 03 run the repository’s own offline examples and are byte-for-byte deterministic; Case 02 is a live call to the SEC’s official API made in this session. No input, output, company or number here was invented.</p></div></div>
+<h3 class="sub">The same session on screen — eight real steps</h3>
+<p class="text">From installation to results: the screenshots below come from real sessions and corroborate the cases above.</p>
+<div class="shot-grid">
+<figure class="figure full"><img alt="Installation check: the Skill is recognized; offline 30 filings / 8 form types / 3890 matches and a live “material weakness” run both pass" class="shot finch-media-ratio" height="453" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/67b1706dbab9c33815b8dcf5a16be23a492059204c99e-67b1706dbab9.png" width="1600"/><figcaption>Installation check: the Skill is recognized; offline 30 filings / 8 form types / 3890 matches and a live “material weakness” run both pass.</figcaption></figure>
+<figure class="figure full"><img alt="Loading the Skill and running a full-text search (OpenAI example)" class="shot finch-media-ratio" height="328" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/b13ad5691f9fabccccb9df68bd84e61a56f9010b8badc-b13ad5691f9f.png" width="1600"/><figcaption>Loading the Skill and running a full-text search (OpenAI example).</figcaption></figure>
+<figure class="figure"><img alt="Top 20 filings: company / form / date, ranked by EDGAR relevance" class="shot finch-media-ratio" height="1698" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/d700de8e2651af549bbecc7db72629d569b10c7f54d97-d700de8e2651.png" width="1582"/><figcaption>Top 20 filings: company / form / date, ranked by EDGAR relevance.</figcaption></figure>
+<figure class="figure"><img alt="Exact phrase + form filter: 10-K / 10-K/A mentioning “material weakness” in 2025" class="shot finch-media-ratio" height="961" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/c14a1fbd348542d9df7075fe72e559f6f181b9483a238-c14a1fbd3485.png" width="1600"/><figcaption>Exact phrase + form filter: 10-K / 10-K/A mentioning “material weakness” in 2025.</figcaption></figure>
+<figure class="figure"><img alt="8-K event tracking: top 15 8-Ks mentioning the phrase" class="shot finch-media-ratio" height="834" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/94f13fe7532456f5004b8c8f01f1299678dbb18d4ee35-94f13fe75324.png" width="1600"/><figcaption>8-K event tracking: top 15 8-Ks mentioning the phrase.</figcaption></figure>
+<figure class="figure"><img alt="By-form statistics: “artificial intelligence” across 10-K / 10-Q" class="shot finch-media-ratio" height="917" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/a3ac73042dd92009d57a043814a6eb6c9cd97df05d408-a3ac73042dd9.png" width="1600"/><figcaption>By-form statistics: “artificial intelligence” across 10-K / 10-Q.</figcaption></figure>
+<figure class="figure"><img alt="Cross-company tracking: every filing mentioning “Sam Altman”" class="shot finch-media-ratio" height="962" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/90f4bf0afe2f27f26bf180906c3d7506eb93adb68e596-90f4bf0afe2f.png" width="1600"/><figcaption>Cross-company tracking: every filing mentioning “Sam Altman”.</figcaption></figure>
+<figure class="figure"><img alt="Zero matches reported honestly: total_matches 0 — nothing invented" class="shot finch-media-ratio" height="907" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/293771db57554a96117eac42981cc119d6346cd7f81ad-293771db5755.png" width="1600"/><figcaption>Zero matches reported honestly: total_matches 0 — nothing invented.</figcaption></figure>
+</div>
+</section>
+<!-- 5 what you get -->
+<section class="sec" id="whatyouget">
+<h2 class="sell">Everything you get — and the line it will never cross.</h2>
+<p class="lead">Each run is built so the only thing you still need to do is read the filing itself.</p>
+<div class="rule"></div>
+<div class="adv"><h4>Every field comes from EDGAR’s official JSON</h4><p>Company, tickers, CIK, form, date and accession number are copied or mechanically derived from EDGAR’s response — never inferred, never invented. Every value you receive can be checked verbatim on sec.gov.</p></div>
+<div class="adv"><h4>Links are verified — and never guessed</h4><p>A filing-index deep link is built only when a real CIK and a well-formed accession number are both present, and each one is re-verified as an HTTP 200 response; otherwise it falls back to the company’s filings browse page and flags url_kind. Links do not 404.</p></div>
+<div class="adv"><h4>No API key of any kind</h4><p>EDGAR’s full-text endpoint is anonymous, free and registration-free. The Skill sends only an identifying User-Agent and never reads, requires or accepts credentials.</p></div>
+<div class="adv"><h4>One request per run — fair-access compliant by construction</h4><p>Exactly one HTTP request per run, with results capped at 100 (EDGAR’s per-response ceiling), so the SEC’s 10 requests/second limit is satisfied by construction. No rate limits, no paging.</p></div>
+<div class="adv"><h4>Deterministic offline runs</h4><p>Offline mode runs the full pipeline — normalize, dedupe, cap, histogram — on fixture data; identical input yields byte-for-byte identical output. Ideal for CI and regression testing.</p></div>
+<figure class="wide">
+<img alt="The Skill’s ground rules — what it will never do" class="finch-media-ratio" height="689" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-en/6309bff634565256aeae3cb67f09657958e798e81a5ed-6309bff63456.png" width="1567"/>
+<figcaption>Its ground rules: what it will never do.</figcaption>
+</figure>
+</section>
+<!-- 6 who it's for -->
+<section class="sec" id="audience">
+<h2 class="sell">Built for people whose job is reading primary sources.</h2>
+<p class="lead">The point was never “it can search SEC too”. It turns a research hypothesis inside SEC’s primary disclosures into a set of audit-ready, machine-readable evidence candidates — fast, and far lighter than a research terminal.</p>
+<div class="rule"></div>
+<p class="text">It removes the recurring rhythm of research — search, copy, re-check the link, stitch a sheet by hand. The first search feeds the next step: widen or narrow from the by-form distribution, open the original from the accession number, keep tracking a phrase over time.</p>
+<div class="table-wrap">
+<table class="tbl">
+<thead><tr><th>Who it is for</th><th>Typical tasks</th><th>Why they reach for it</th></tr></thead>
+<tbody>
+<tr><td>Investment research · event-driven analysts</td><td>“Which 8-Ks this quarter mention material weakness, an acquisition or a cybersecurity incident?”</td><td>Turns a disclosure sweep across many filers into a reviewable candidate set — less time opening files one by one.</td></tr>
+<tr><td>IB, consulting, corporate strategy &amp; diligence</td><td>Tracking whether a target, client or competitor surfaces a product name, customer name, executive or counterparty.</td><td>Going straight to primary regulatory disclosure builds a fact-verification chain instead of relying on second-hand news.</td></tr>
+<tr><td>Compliance, legal &amp; commercial intelligence</td><td>Periodic sweeps over risk words, contract terms, policy language or competitive signals.</td><td>Form and date filters compress noise; structured JSON plugs into existing agents, sheets or internal monitoring.</td></tr>
+</tbody>
+</table>
+</div>
+<ul class="pills">
+<li><b>Individuals &amp; small teams</b> — free, zero-setup, cross-company disclosure scans.</li>
+<li><b>Research teams</b> — let analysts move from finding files to reading and judging them.</li>
+<li><b>Agent workflows</b> — a strict, predictable, citable structured entry point, ready to feed summarization, classification, monitoring and report generation.</li>
+</ul>
+<div class="callout"><div class="ico">i</div><div><div class="ct">A straight answer about scope</div>
+<p>Its primary value is research support, not a trading signal. If you only want standard financials or already run a mature research terminal, this is not a replacement for that.</p></div></div>
+</section>
+<!-- 7 cta -->
+<section class="cta-box" id="get">
+<h2>Put it to work on your next research question.</h2>
+<p class="txt">Tell it the phrase, the form types and the date range you care about. It returns each real filing’s company, CIK, form, date and accession number — plus an official link, verified and openable on sec.gov.</p>
+<div><a class="btn" href="#reallife">Watch it run in real cases ↓</a></div>
+<p class="cta-note">Available as a Claude Code Skill from FinChip Studio. No API key. No installation beyond the Skill itself.</p>
+</section>
+</main>
+<footer>
+<div class="brand2">SEC Filing Tracker</div>
+<div class="finch-inline-193">Search the full text of SEC EDGAR filings — and open every source.</div>
+<div class="small">For information and research purposes only. Not investment advice, and not a recommendation to buy, sell or hold any security. A hit is a full-text match, not a judgment about the company — open the linked filing and read the original before any decision.</div>
+<div class="small">A FinChip Studio Skill · sec-filing-tracker v0.1.0</div>
+</footer>
+</div></body>
+</html>

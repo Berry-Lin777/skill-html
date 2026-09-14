@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Interview Simulator — Twitter Banner</title>
+<style>
+    :root {
+      --ink: #102640;
+      --blue: #5e8fd8;
+      --blue-soft: #83ace5;
+      --yellow: #f7c832;
+      --coral: #ef765f;
+      --paper: #fff8db;
+      --line: #e8dfb8;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    .finch-page {
+      min-height: 100%;
+      margin: 0;
+    }
+
+    .finch-page {
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      background: #e9e6da;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main { width: min(1500px, 100%); }
+
+    .banner {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 1;
+      overflow: hidden;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image:
+        linear-gradient(90deg, transparent 99.1%, rgb(214 203 158 / 40%) 99.1%),
+        linear-gradient(0deg, transparent 99.1%, rgb(214 203 158 / 32%) 99.1%);
+      background-size: 94px 94px;
+      box-shadow: 0 20px 55px rgb(16 38 64 / 22%);
+      isolation: isolate;
+    }
+
+    .banner::after {
+      content: "";
+      position: absolute;
+      inset: 15px;
+      border: 1px solid rgb(206 177 81 / 45%);
+      pointer-events: none;
+    }
+
+    .copy {
+      position: absolute;
+      z-index: 4;
+      left: 6.3%;
+      top: 50%;
+      width: 52%;
+      transform: translateY(-50%);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 20px;
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 3px;
+      background: var(--blue);
+    }
+
+    h1 {
+      max-width: 790px;
+      margin: 0;
+      font-size: clamp(58px, 6.1vw, 94px);
+      font-weight: 850;
+      line-height: .92;
+      letter-spacing: -.055em;
+    }
+
+    .subline {
+      max-width: 620px;
+      margin: 22px 0 0;
+      color: rgb(16 38 64 / 78%);
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .pill {
+      padding: 9px 15px;
+      border: 1px solid #dfcd8e;
+      border-radius: 999px;
+      background: rgb(255 255 255 / 58%);
+      font-size: 13px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .visual {
+      position: absolute;
+      z-index: 2;
+      top: 38px;
+      right: 3.5%;
+      width: 40.5%;
+      height: 424px;
+      overflow: hidden;
+      border: 4px solid var(--ink);
+      border-radius: 22px;
+      background:
+        repeating-linear-gradient(-12deg,
+          var(--yellow) 0 42px,
+          #ffdb5a 42px 80px,
+          var(--blue) 80px 122px,
+          var(--blue-soft) 122px 160px);
+      box-shadow: 13px 14px 0 var(--ink), 0 22px 42px rgb(16 38 64 / 24%);
+    }
+
+    .visual__crop {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .visual__crop img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      filter: saturate(.96) contrast(1.03);
+    }
+
+    .visual__crop::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgb(16 38 64 / 13%), transparent 30%),
+        linear-gradient(90deg, rgb(16 38 64 / 10%), transparent 30%);
+      pointer-events: none;
+    }
+
+    .sticker {
+      position: absolute;
+      z-index: 5;
+      top: 24px;
+      right: 7.2%;
+      padding: 12px 19px;
+      transform: rotate(-4deg);
+      border: 3px solid var(--ink);
+      border-radius: 11px;
+      color: #fffdf5;
+      background: var(--coral);
+      box-shadow: 8px 8px 0 var(--ink);
+      font-size: 14px;
+      font-weight: 850;
+      letter-spacing: .035em;
+      text-transform: uppercase;
+    }
+
+    .dot {
+      position: absolute;
+      z-index: 5;
+      right: 2.3%;
+      bottom: 24px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow: 19px 0 0 var(--yellow), 38px 0 0 var(--blue);
+    }
+
+    .note {
+      margin: 13px 0 0;
+      color: #59626e;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 760px) {
+      .finch-page { padding: 12px; }
+      .copy { left: 5%; width: 55%; }
+      .eyebrow { margin-bottom: 9px; font-size: 8px; }
+      .eyebrow::before { width: 20px; height: 2px; }
+      .subline, .pills { display: none; }
+      .visual { top: 7.5%; height: 85%; }
+      .sticker { padding: 5px 8px; font-size: 7px; }
+    }
+  
+
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#edf0ff;color:#18224a;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}</style></head>
+<body><div class="finch-page">
+<main>
+<section aria-label="Interview Simulator Twitter banner" class="banner">
+<div class="copy">
+<div class="eyebrow">Interview practice skill</div>
+<h1>Interview<br/>Simulator</h1>
+<p class="subline">Resume-grounded questions and realistic follow-ups for focused practice.</p>
+<div aria-label="Key features" class="pills">
+<span class="pill">Resume-grounded</span>
+<span class="pill">Layered follow-ups</span>
+<span class="pill">Private practice</span>
+</div>
+</div>
+<div aria-hidden="true" class="visual">
+<div class="visual__crop">
+<img alt="" class="finch-media-ratio" height="820" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/interview-simulator/banners/1ce3066b2b5e9921d6a29f740b1535ec22e44b584824f-1ce3066b2b5e.png" width="1134"/>
+</div>
+</div>
+<div aria-hidden="true" class="dot"></div>
+</section>
+<p class="note">Source image supplied by the user. The banner uses proportional cropping without stretching.</p>
+</main>
+</div></body>
+</html>

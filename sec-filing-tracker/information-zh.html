@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="在 SEC EDGAR 申报全文里按关键词搜索，返回一份干净清单——每一行都附能直接在 sec.gov 上打开的官方链接。无需 API Key，全程不编造。" name="description"/>
+<title>SEC Filing Tracker · 按关键词搜遍 SEC EDGAR 申报文件，打开的永远是原件</title>
+<style>
+:root{
+  --navy:#16213C; --navy2:#2C4470; --navy3:#33548C; --navy4:#4668A0;
+  --gold:#C9A24B; --gold-d:#96681F; --gold-l:#E7CF9A;
+  --ink:#233047; --slate:#5A6A82; --mist:#EDF1F7; --mist2:#E3EAF2;
+  --paper:#FBF9F4; --card:#FFFFFF; --coral:#B2453D; --teal:#2E6B4F;
+  --line:#E4E0D4;
+  --radius:18px; --shadow:0 10px 30px rgba(27,42,74,.08);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+.finch-page{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  color:var(--ink); line-height:1.85; background:
+    radial-gradient(1200px 500px at 85% -10%, rgba(201,162,75,.10), transparent 60%),
+    radial-gradient(900px 420px at -10% 8%, rgba(70,104,160,.10), transparent 55%),
+    var(--paper);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--navy3); text-decoration:none;}
+a:hover{text-decoration:underline;}
+img{max-width:100%;}
+.container{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+/* top bar */
+.topbar{position: relative; top:0; z-index:50; background:rgba(22,33,60,.9); backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(201,162,75,.35);}
+.topbar .container{display:flex; align-items:center; justify-content:space-between; height:58px;}
+.brand{color:#fff; font-weight:800; letter-spacing:.5px; font-size:15.5px; display:flex; align-items:center; gap:10px;}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold); box-shadow:0 0 10px var(--gold);}
+.langswitch{display:flex; gap:6px;}
+.langswitch a{color:#c7d2e4; font-size:12px; padding:4px 11px; border-radius:20px; border:1px solid rgba(255,255,255,.25);}
+.langswitch a.active{background:var(--gold); color:#1a2540; border-color:var(--gold); font-weight:700;}
+
+/* hero */
+.hero{position:relative; overflow:hidden; padding:104px 0 108px; background-position:center; background-size:cover;}
+.hero::before{content:""; position:absolute; inset:0; background:radial-gradient(820px 460px at 50% -12%, rgba(201,162,75,.16), transparent 62%);}
+.hero::after{content:""; position:absolute; inset:auto 0 0 0; height:150px; background:linear-gradient(180deg, transparent, rgba(251,249,244,.97));}
+.hero-inner{position:relative; z-index:2; text-align:center; max-width:1000px; margin:0 auto;}
+.hero-kicker{color:var(--gold-l); letter-spacing:2px; font-size:13.5px; font-weight:700; margin-bottom:20px;
+  text-shadow:0 2px 10px rgba(0,0,0,.5);}
+.hero-title{color:#fff; font-size:64px; font-weight:900; letter-spacing:.5px; line-height:1.08;
+  text-shadow:0 4px 30px rgba(0,0,0,.5);}
+.hero-sub{color:#eaf0fa; font-size:21px; max-width:880px; margin:26px auto 0; line-height:1.7; font-weight:500;
+  text-shadow:0 2px 14px rgba(0,0,0,.45);}
+@media (max-width: 700px){
+  .hero{padding:66px 0 60px;}
+  .hero-title{font-size:38px;}
+  .hero-sub{font-size:16px;}
+  .hero-kicker{letter-spacing:1px; font-size:11.5px;}
+}
+
+/* sections */
+section.sec{margin:0 0 8px; padding-top:70px; scroll-margin-top:80px;}
+h2.sell{font-size:33px; font-weight:900; line-height:1.35; color:var(--navy); letter-spacing:.2px; max-width:840px;}
+p.lead{font-size:16px; color:var(--slate); margin-top:12px; max-width:800px;}
+.rule{height:2px; margin:22px 0 26px; background:linear-gradient(90deg,var(--gold) 0%, var(--gold-l) 30%, transparent 70%); border-radius:2px;}
+p.text{font-size:15.5px; color:#3a4458; margin-bottom:14px; text-align:justify; max-width:860px;}
+p.text b{color:var(--navy2);}
+p.text + p.text{margin-top:-6px;}
+h3.sub{font-size:19px; color:var(--navy2); margin:34px 0 12px; display:flex; align-items:center; gap:10px; font-weight:800;}
+h3.sub::before{content:""; width:7px; height:19px; border-radius:3px; background:var(--gold);}
+
+/* stat strip */
+.stats{display:flex; flex-wrap:wrap; gap:14px; margin-top:34px; justify-content:center;}
+.stat{background:rgba(255,255,255,.06); border:1px solid rgba(231,207,154,.5); border-radius:14px;
+  padding:10px 18px; color:var(--gold-l); font-size:14px; backdrop-filter:blur(4px);}
+.stat b{color:#fff; font-weight:800;}
+
+/* tables */
+.table-wrap{overflow: visible; margin:16px 0 18px; border-radius:14px; box-shadow:var(--shadow);}
+table.tbl{width:100%; border-collapse:separate; border-spacing:0; background:#fff;
+  border:1px solid var(--line); border-radius:14px; overflow:hidden;}
+.tbl th{background:linear-gradient(135deg,var(--navy),var(--navy3)); color:#fff; text-align:left;
+  padding:12px 15px; font-size:14px; letter-spacing:.3px;}
+.tbl td{padding:12px 15px; font-size:14px; vertical-align:top; border-top:1px solid var(--line); color:#3a4458;}
+.tbl tr td:first-child{background:#f2f5f9; font-weight:700; color:var(--navy3); white-space:nowrap;}
+.tbl tr:nth-child(even) td{background:#fdfcfa;}
+.tbl tr:nth-child(even) td:first-child{background:#eef2f7;}
+.tbl td b{color:var(--navy2);}
+
+/* figure */
+figure{margin:24px 0; text-align:center;}
+figure img{border-radius:14px; border:1px solid var(--line); box-shadow:var(--shadow);
+  width:min(92%,860px); height:auto;}
+figure.wide img{width:100%;}
+figcaption{font-size:13px; color:var(--slate); margin-top:10px; max-width:760px; margin-left:auto; margin-right:auto;}
+
+/* screenshot gallery */
+.shot-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin:18px 0 6px;}
+.shot-grid figure{margin:0;}
+.shot-grid figure.full{grid-column:1/-1;}
+.shot-grid img.shot{display:block; width:100%; height:auto; border:1px solid var(--line);
+  border-radius:12px; box-shadow:var(--shadow); background:#fff;}
+.shot-grid figcaption{font-size:12.5px; color:var(--slate); margin-top:7px;}
+@media (max-width: 720px){ .shot-grid{grid-template-columns:1fr;} }
+
+/* callout */
+.callout{display:flex; gap:14px; align-items:flex-start; background:var(--mist);
+  border-left:5px solid var(--navy3); border-radius:0 14px 14px 0; padding:16px 20px; margin:22px 0; max-width:860px;}
+.callout.gold{background:#f7f0e0; border-left-color:var(--gold-d);}
+.callout.coral{background:#f9ecea; border-left-color:var(--coral);}
+.callout .ico{font-size:20px; line-height:1.4;}
+.callout .ct{font-weight:800; color:var(--navy2); margin-bottom:2px;}
+.callout p{font-size:14px; color:#3a4458;}
+.callout p+p{margin-top:6px;}
+
+/* advantage list */
+.adv{margin:14px 0; padding:18px 22px 18px 26px; background:#fff; border:1px solid var(--line);
+  border-left:5px solid var(--navy4); border-radius:0 14px 14px 0; max-width:860px;}
+.adv h4{color:var(--navy2); font-size:16.5px; margin-bottom:4px;}
+.adv p{font-size:14.5px; color:#3a4458;}
+
+/* pills */
+ul.pills{list-style:none; margin:14px 0 6px; max-width:860px;}
+ul.pills li{position:relative; padding:9px 0 9px 32px; font-size:15px; color:#3a4458;
+  border-bottom:1px dashed var(--line);}
+ul.pills li:last-child{border-bottom:0;}
+ul.pills li::before{content:""; position:absolute; left:6px; top:17px; width:12px; height:12px;
+  background:var(--gold); transform:rotate(45deg); border-radius:2px;}
+
+/* cta */
+.cta-box{margin:70px 0 10px; text-align:center; background:
+  linear-gradient(135deg,#fff 0%, #f7f4ec 100%); border:1px solid var(--line);
+  border-radius:22px; padding:56px 32px; box-shadow:var(--shadow);}
+.cta-box h2{font-size:32px; font-weight:900; color:var(--navy); line-height:1.4;}
+.cta-box .txt{font-size:16px; color:#3a4458; max-width:780px; margin:18px auto 0;}
+.btn{display:inline-block; margin-top:28px; padding:15px 38px; border-radius:40px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-d)); color:#fff; font-weight:800;
+  letter-spacing:.5px; font-size:16px; box-shadow:0 14px 30px rgba(201,162,75,.38);}
+.btn:hover{text-decoration:none; filter:brightness(1.05);}
+.cta-note{font-size:13px; color:var(--slate); margin-top:18px;}
+
+/* footer */
+footer{margin-top:60px; background:linear-gradient(135deg,#101a31,#24375c);
+  color:#9fb0cc; padding:38px 0; text-align:center; font-size:13px;}
+footer .brand2{color:#fff; font-weight:800; font-size:15px; letter-spacing:.5px;}
+footer .gold{color:var(--gold-l); font-weight:700;}
+footer .small{font-size:12px; color:#6f83a6; margin-top:8px;}
+
+.finch-inline-15{background-image:linear-gradient(180deg, rgba(8,14,28,.84) 0%, rgba(16,27,52,.66) 60%, rgba(20,32,58,.5) 100%), url("https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/69d592e4c470f637185253855b97ac2ff6fc178cdf78e-69d592e4c470.png")}
+.finch-inline-194{margin-top:8px;}
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fbfaf7;color:#24324a;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}</style></head>
+<body><div class="finch-page">
+<header class="topbar"><div class="container"><div class="brand"><span class="dot"></span>SEC Filing Tracker</div><div class="langswitch"><a class="active" href="information-zh.html">中文</a><a class="" href="information-en.html">English</a></div></div></header>
+<!-- Hero -->
+<section class="hero finch-inline-15">
+<div class="hero-inner">
+<div class="hero-kicker">FinChip Studio 出品的 Skill · 按关键词追踪 SEC EDGAR 申报</div>
+<h1 class="hero-title">SEC Filing Tracker</h1>
+<p class="hero-sub">在 SEC EDGAR 申报全文里按关键词搜一遍，返回一份干净清单——每一行都能直接打开 sec.gov 上的原件。</p>
+<div class="stats">
+<span class="stat">全文检索 <b>2001 年至今</b></span>
+<span class="stat"><b>无需任何 API Key</b></span>
+<span class="stat">官方链接<b>逐条验证可打开</b></span>
+<span class="stat"><b>全程不编造</b>，没有虚构行</span>
+</div>
+</div>
+</section>
+<main class="container">
+<section class="sec" id="problem">
+<h2 class="sell">本该几分钟搞定的研究，正在耗掉你一整天。</h2>
+<p class="lead">写研报、做尽调、盯竞对、追某位高管或某个产品被哪些公司提及——几乎都要回到 SEC EDGAR。</p>
+<div class="rule"></div>
+<p class="text">原站的全文检索结果很粗糙：条目不带可用的链接，公司、表单、日期信息散落在不同页面。于是多数人的选择只剩两个——打开付费终端，或者把一次搜索结果手工复制进 Excel，再逐条补链接和公司信息。</p>
+<p class="text">通用 AI 工具能在几秒内生成一张表，却常常把公司名、CIK、表单类型编得跟真的一样——<b>点开链接，404 就在那里等你</b>。</p>
+<p class="text">缺的从来不是又一个工具，而是那一份确定：<b>知道哪个链接真的能打开</b>。</p>
+</section>
+<section class="sec" id="changes">
+<h2 class="sell">同一个问题，两种完全不同的工作流。</h2>
+<p class="lead">三处你可以自己验证的变化——检索、链接、统计。</p>
+<div class="rule"></div>
+<div class="table-wrap">
+<table class="tbl">
+<thead><tr><th>场景</th><th>之前</th><th>之后</th></tr></thead>
+<tbody>
+<tr><td>全文检索</td><td>在 EDGAR 老界面试关键词，只返回片段，看不到公司是谁；不同表单散落各处，每次都要重新整理。</td><td>输入关键词和范围，返回一行行申报记录——公司、CIK、表单、日期、备案号，外加验证过的官方链接。</td></tr>
+<tr><td>链接可靠性</td><td>搜索引擎或聚合站给的链接常常失效或指向错误页，只能自己再造 URL，心里没底。</td><td>每个链接按 EDGAR 官方规则构造并复验；缺少 CIK 或备案号不完整时，回退到公司申报浏览页并标明 url_kind。</td></tr>
+<tr><td>跨表单统计</td><td>想知道一个短语出现在哪些表单里，要分多次搜，再把结果手工拼成一张表。</td><td>一次返回按表单类型的分布和总命中数——例如 8-K 16 份、497K 8 份、10-Q 1 份。</td></tr>
+</tbody>
+</table>
+</div>
+<figure>
+<img alt="实测返回的一行申报记录（查询「artificial intelligence」· 2026-07 · 真实数据）" class="finch-media-ratio" height="656" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/6e84d9181a5acb852f9f1f4c10c2f83237a3868d338a5-6e84d9181a5a.png" width="1567"/>
+<figcaption>实测返回的一行申报记录——查询「artificial intelligence」· 2026 年 7 月 · 真实数据。</figcaption>
+</figure>
+</section>
+<!-- 3 怎么用 -->
+<section class="sec" id="how">
+<h2 class="sell">一次请求进去，一份可打开、可核对的清单出来。</h2>
+<p class="lead">输入你想盯的短语（加引号即精确匹配），可按表单类型与日期范围进一步收窄。</p>
+<div class="rule"></div>
+<p class="text">SEC Filing Tracker 调用 SEC 官方 EDGAR 全文检索接口，一次带标识的 HTTP 请求，最多返回 100 条。同一申报里的多份文档自动折叠为一行，按备案号去重，并保留 EDGAR 自身的相关度顺序。</p>
+<figure class="wide">
+<img alt="四个输入参数与默认值" class="finch-media-ratio" height="606" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/b4c2b4b924edeb158936b9e828b851c90b066b24bc4d1-b4c2b4b924ed.png" width="1567"/>
+<figcaption>四个输入参数与默认值。</figcaption>
+</figure>
+<p class="text">返回的是一行行真实申报记录：<b>公司、股票代码、CIK、表单类型、申报日期、备案号</b>——外加按表单类型的分布和总命中数。没有猜测，也没有编造的字段。</p>
+<figure class="wide">
+<img alt="一次请求的数据流：输入 → 官方接口 → 可直接使用的清单" class="finch-media-ratio" height="756" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/bb9723ea8e2032f9959e871a344cc4504846b7ee664da-bb9723ea8e20.png" width="1567"/>
+<figcaption>一次请求的数据流：你的输入 → 官方 EDGAR 接口 → 可直接使用的清单。</figcaption>
+</figure>
+<p class="text">Skill 先把最耗时的查找、去重和链接构造做完，再把每一行的来源与证据交还给你。<b>判断始终留给你</b>——它只负责把查找做对、把链接做真。</p>
+</section>
+<!-- 4 真实案例 -->
+<section class="sec" id="reallife">
+<h2 class="sell">直接看运行——三个真实案例，逐字取自本次实测。</h2>
+<p class="lead">下面每个案例都是运行 Skill 的真实输入与输出。不编造、不美化、不虚构。</p>
+<div class="rule"></div>
+<h3 class="sub">案例 01 · 追踪一个精确短语——整月、全表单</h3>
+<p class="text">输入「artificial intelligence」、2026 年 7 月 1 日至 31 日、最多 30 条。返回 <b>30 条申报，横跨 8 种真实表单类型</b>：8-K 16 份、497K 8 份、10-Q 1 份、424B3 1 份、FWP 1 份、N-CSR 1 份、N-CSR/A 1 份、N-CSRS 1 份；总命中 3890（EDGAR 标注 eq），自动去重 4 条。可见公司包括 Artificial Intelligence Technology Solutions Inc.（AITX）、Krane Shares Trust 等。</p>
+<figure>
+<img alt="案例 01 返回的按表单分布（实测数据）" class="finch-media-ratio" height="639" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/a5198f328c431ad1592c641c93d12abbb2ba3c5c4d761-a5198f328c43.png" width="1567"/>
+<figcaption>案例 01 返回的按表单类型分布——全部来自实测数据。</figcaption>
+</figure>
+<h3 class="sub">案例 02 · 只查一种表单、实时连 SEC——真实公司</h3>
+<p class="text">输入「material weakness」、仅 10-K、2026 年 1 月 1 日至 8 月 31 日、最多 5 条。实时调用 EDGAR 官方接口返回：ANAVEX LIFE SCIENCES CORP.（10-K/A）、Where Food Comes From, Inc.（10-K/A）、UNIVERSAL LOGISTICS HOLDINGS, INC.（10-K）、SYNLOGIC, INC.（10-K）、Forian Inc.（10-K/A）。每一行的链接都指向 sec.gov 官方备案页。</p>
+<h3 class="sub">案例 03 · 数据源不可用，也绝不变成一次崩溃</h3>
+<p class="text">把数据源标记为不可用时，运行仍然成功（ok: true、退出码 0），返回空清单，并在状态报告中标明 available: false 与原因。网络抖动被干净地处理，而不是抛成一个错误。</p>
+<div class="callout gold"><div class="ico">★</div><div><div class="ct">为什么这页可以放心相信</div>
+<p>案例 01 与案例 03 运行仓库自带的离线示例，逐字节确定；案例 02 是本次会话对 SEC 官方接口的实时调用。这里的任何输入、输出、公司或数字，都不是编的。</p></div></div>
+<h3 class="sub">同一次会话的屏幕实录——八个真实步骤</h3>
+<p class="text">从安装到结果：下面的截图来自真实会话，与上面的案例互相印证。</p>
+<div class="shot-grid">
+<figure class="figure full"><img alt="安装验证：Skill 被系统识别；离线 30 条 / 8 种表单 / 3890 匹配、联网 5 条 material weakness，两项测试全过" class="shot finch-media-ratio" height="453" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/67b1706dbab9c33815b8dcf5a16be23a492059204c99e-67b1706dbab9.png" width="1600"/><figcaption>安装验证：Skill 被系统识别；离线 30 条 / 8 种表单 / 3890 匹配、联网 5 条 material weakness，两项测试全过。</figcaption></figure>
+<figure class="figure full"><img alt="加载 Skill 并发起全文搜索（以 OpenAI 为例）" class="shot finch-media-ratio" height="328" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/b13ad5691f9fabccccb9df68bd84e61a56f9010b8badc-b13ad5691f9f.png" width="1600"/><figcaption>加载 Skill 并发起全文搜索（以 OpenAI 为例）。</figcaption></figure>
+<figure class="figure"><img alt="Top 20 备案结果：公司 / 表单 / 日期，按 EDGAR 相关性排序" class="shot finch-media-ratio" height="1698" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/d700de8e2651af549bbecc7db72629d569b10c7f54d97-d700de8e2651.png" width="1582"/><figcaption>Top 20 备案结果：公司 / 表单 / 日期，按 EDGAR 相关性排序。</figcaption></figure>
+<figure class="figure"><img alt="精确短语 + 表单限定：2025 年提到 material weakness 的 10-K / 10-K/A" class="shot finch-media-ratio" height="961" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/c14a1fbd348542d9df7075fe72e559f6f181b9483a238-c14a1fbd3485.png" width="1600"/><figcaption>精确短语 + 表单限定：2025 年提到 material weakness 的 10-K / 10-K/A。</figcaption></figure>
+<figure class="figure"><img alt="8-K 事件追踪：Top 15 份提及目标短语的 8-K" class="shot finch-media-ratio" height="834" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/94f13fe7532456f5004b8c8f01f1299678dbb18d4ee35-94f13fe75324.png" width="1600"/><figcaption>8-K 事件追踪：Top 15 份提及目标短语的 8-K。</figcaption></figure>
+<figure class="figure"><img alt="按表单类型统计：artificial intelligence 在 10-K / 10-Q 中的分布" class="shot finch-media-ratio" height="917" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/a3ac73042dd92009d57a043814a6eb6c9cd97df05d408-a3ac73042dd9.png" width="1600"/><figcaption>按表单类型统计：artificial intelligence 在 10-K / 10-Q 中的分布。</figcaption></figure>
+<figure class="figure"><img alt="跨公司追踪：全部提到 Sam Altman 的备案及涉及公司" class="shot finch-media-ratio" height="962" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/90f4bf0afe2f27f26bf180906c3d7506eb93adb68e596-90f4bf0afe2f.png" width="1600"/><figcaption>跨公司追踪：全部提到 Sam Altman 的备案及涉及公司。</figcaption></figure>
+<figure class="figure"><img alt="零命中如实返回：total_matches 0，不编造结果" class="shot finch-media-ratio" height="907" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/293771db57554a96117eac42981cc119d6346cd7f81ad-293771db5755.png" width="1600"/><figcaption>零命中如实返回：total_matches 0——不编造结果。</figcaption></figure>
+</div>
+</section>
+<!-- 5 你能得到什么 -->
+<section class="sec" id="whatyouget">
+<h2 class="sell">你拿到的每一样东西，以及它永不越过的线。</h2>
+<p class="lead">每一次运行都构建成这样：剩下的唯一一件事，就是你去读那份申报本身。</p>
+<div class="rule"></div>
+<div class="adv"><h4>每个字段都来自 EDGAR 官方 JSON</h4><p>公司、股票代码、CIK、表单、日期、备案号，逐项从 EDGAR 的响应复制或机械派生——不推断、不编造。你拿到的每个值，都能在 sec.gov 上原样核对。</p></div>
+<div class="adv"><h4>链接经过验证，且从不瞎猜</h4><p>备案页深链只在「真实 CIK + 合法备案号」都齐备时才构造，并逐条复验 HTTP 200；否则回退到公司申报浏览页并标明 url_kind。链接不会 404。</p></div>
+<div class="adv"><h4>无需任何 API Key</h4><p>EDGAR 全文检索接口匿名、免费、无需注册。Skill 只带一个说明身份的 User-Agent，不读取、不要求、不接受任何密钥。</p></div>
+<div class="adv"><h4>一次请求，天然满足 SEC 公平访问</h4><p>每次运行恰好一次 HTTP 请求，结果上限 100 条（EDGAR 单页命中上限），10 次/秒限制天然满足。不会被限流，也不需要翻页。</p></div>
+<div class="adv"><h4>断网也能确定性运行</h4><p>离线模式用固定数据跑完整流水线——规范化、去重、截断、直方图——输入相同则输出逐字节一致，适合 CI 与回归测试。</p></div>
+<figure class="wide">
+<img alt="这个 Skill 的底线规则——它永远不会做的事" class="finch-media-ratio" height="689" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/sec-filing-tracker/information-zh/80a73e2b8056a9946da093d38c3463813dcd95807c3f2-80a73e2b8056.png" width="1567"/>
+<figcaption>它的底线规则：永远不会做的事。</figcaption>
+</figure>
+</section>
+<!-- 6 为谁而做 -->
+<section class="sec" id="audience">
+<h2 class="sell">为那些以「一手信源」为职业的人而做。</h2>
+<p class="lead">卖点从来不是「我们也能搜 SEC」。而是把 SEC 原始披露里的一个研究假设，快速变成一组可审计、可被机器继续处理的证据候选——很快，而且比投研终端轻得多。</p>
+<div class="rule"></div>
+<p class="text">它去掉的，是研究里反复出现的那个节奏——查一下、复制、去核对链接、手工拼表。第一次搜索的结果可以直接进入下一步：按表单分布决定要不要扩大范围，拿到备案号直接打开原件，把同一个短语按时间持续追下去。</p>
+<div class="table-wrap">
+<table class="tbl">
+<thead><tr><th>为谁而做</th><th>典型任务</th><th>为什么需要它</th></tr></thead>
+<tbody>
+<tr><td>投研／事件驱动分析师</td><td>「本季度哪些 8-K 提到 material weakness、收购或网络安全事件？」</td><td>把横跨多个发行人的披露扫描变成可复核的候选集，减少逐份打开文件的时间。</td></tr>
+<tr><td>投行、咨询与企业战略／尽调人员</td><td>追踪标的、客户或竞对是否出现某个产品名、客户名、管理层或交易对手。</td><td>直接回到一手监管披露，形成事实核验链，而不是依赖二手新闻。</td></tr>
+<tr><td>合规、法务与商业情报团队</td><td>围绕风险词、合同条款、政策表述或竞争信号做周期性检索。</td><td>表单与日期筛选压缩噪声；结构化 JSON 可直接进入现有 Agent、表格或内部监控工作流。</td></tr>
+</tbody>
+</table>
+</div>
+<ul class="pills">
+<li><b>个人与小团队</b>——免费、零配置的跨公司披露扫描。</li>
+<li><b>研究团队</b>——让分析师从「找文件」转向「读文件、判断文件」。</li>
+<li><b>Agent 工作流</b>——一个严格、可预测、可引用的结构化入口，可直接接摘要、分类、监控与报告生成。</li>
+</ul>
+<div class="callout"><div class="ico">i</div><div><div class="ct">把话说清楚</div>
+<p>它的主要价值是研究辅助，不是交易信号。如果只需要标准财务数据，或已经在用成熟的投研终端，它不是那种工具的替代品。</p></div></div>
+</section>
+<!-- 7 CTA -->
+<section class="cta-box" id="get">
+<h2>下一次研究，就让它在前面开路。</h2>
+<p class="txt">告诉它你想找的短语、表单类型和时间范围。它返回每一条真实申报的公司、CIK、表单、日期与备案号——外加经过验证、能在 sec.gov 上打开的官方链接。</p>
+<div><a class="btn" href="#reallife">先看真实运行案例 ↓</a></div>
+<p class="cta-note">这是 FinChip Studio 出品的 Claude Code Skill。无需 API Key，除了 Skill 本身，无需任何安装。</p>
+</section>
+</main>
+<footer>
+<div class="brand2">SEC Filing Tracker</div>
+<div class="finch-inline-194">搜遍 SEC EDGAR 申报全文，打开的永远是原件。</div>
+<div class="small">仅供信息与研究用途，不构成投资建议，也不是买入、卖出或持有任何证券的推荐。命中是全文匹配，不代表对公司的判断——做任何决定前，请打开链接、阅读原件。</div>
+<div class="small">FinChip Studio 出品的 Skill · sec-filing-tracker v0.1.0</div>
+</footer>
+</div></body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>Interview Simulator | Turn a Resume Into Interview-Ready Answers</title>
+<style>
+:root{
+  --bg:#fff7d6;--paper:#fffdf5;--ink:#18263a;--text:#3f4d60;--muted:#6a7686;--line:#ddcf9a;
+  --blue:#5c88cd;--deep:#18263a;--teal:#6fc7b0;--amber:#f1c436;--red:#ef7b63;
+  --sand:#ddd4c4;--cream:#f8f5ef;--shadow:0 22px 70px rgba(24,38,58,.14);--soft:0 12px 34px rgba(24,38,58,.10);
+  --sans:"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+.finch-page{margin:0;color:var(--ink);background:linear-gradient(90deg,rgba(24,38,58,.055) 1px,transparent 1px),linear-gradient(180deg,#fffbe8 0,#fff7d6 340px,#ddd4c4 980px,#fff7d6 1500px),var(--bg);background-size:72px 72px,auto,auto;font:16px/1.72 var(--sans)}
+img{display:block;max-width:100%}h1,h2,h3,p,figure{margin:0}a{color:inherit}
+.finch-page:before{content:"the interviewer is reading your resume";position: relative;right:-132px;top:150px;z-index:0;transform:rotate(90deg);color:rgba(24,38,58,.13);font-weight:900;font-size:18px;letter-spacing:.08em;pointer-events:none}
+.topbar{position: relative;top:0;z-index:10;background:rgba(255,251,232,.88);border-bottom:1px solid rgba(221,207,154,.86);backdrop-filter:blur(18px)}
+.topin{width:min(1180px,calc(100% - 40px));height:64px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--deep);font-weight:900;letter-spacing:.02em;text-transform:lowercase}.logo:before{content:"";width:12px;height:12px;border-radius:50%;background:conic-gradient(from 40deg,var(--blue),var(--teal),var(--amber),var(--blue))}
+.topnav{display:flex;gap:18px;color:var(--muted);font-size:13px}.topnav a{text-decoration:none}.topnav a:hover{color:var(--blue)}
+.page{width:min(1180px,calc(100% - 40px));margin:auto;padding:34px 0 72px}
+.hero{position:relative;min-height:650px;display:grid;grid-template-columns:minmax(0,1fr) minmax(390px,.9fr);gap:44px;align-items:center;padding:76px 0 58px}
+.hero:before{content:"Yes, they really ask this";position:absolute;left:58%;top:116px;z-index:4;transform:rotate(-7deg);padding:13px 18px;border:2px solid var(--deep);border-radius:8px;background:var(--red);color:#fff;font-size:21px;font-weight:900;box-shadow:7px 7px 0 var(--deep)}
+.hero:after{display:none}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--blue);font-weight:850;font-size:18px;letter-spacing:.12em;text-transform:uppercase}.eyebrow:before{content:"";width:34px;height:2px;background:var(--blue)}
+.hero h1{max-width:840px;margin-top:18px;font-size:clamp(46px,7.4vw,92px);line-height:1.02;letter-spacing:0}
+.hero p{max-width:720px;margin-top:22px;color:var(--text);font-size:clamp(17px,2vw,21px)}
+.hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:30px;max-width:540px}.pill{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:12px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,250,241,.78);color:var(--text);font-size:16px;font-weight:750;white-space:nowrap}
+.hero-visual{position:relative;min-height:585px;display:flex;align-items:flex-end;justify-content:center;isolation:isolate}
+.hero-visual:before{content:"";position:absolute;left:5%;right:0;bottom:20px;height:74%;border:3px solid var(--deep);border-radius:8px;background:repeating-linear-gradient(-12deg,var(--amber) 0 22px,#ffd955 22px 44px,var(--blue) 44px 68px,#7aa4e2 68px 90px);box-shadow:10px 10px 0 var(--deep),var(--shadow);z-index:-2}
+.hero-visual:after{content:"";position:absolute;left:12%;right:8%;bottom:26px;height:30px;border-radius:50%;background:rgba(20,32,51,.16);filter:blur(16px);z-index:-1}
+.hero-cat{width:min(134%,720px);max-width:none;margin:0 -74px -8px 0;object-fit:contain;filter:drop-shadow(0 30px 0 rgba(24,38,58,.10)) drop-shadow(0 28px 36px rgba(20,32,51,.22));transform:rotate(2deg)}
+.hero-card{position:absolute;left:-8px;right:28px;bottom:26px;padding:20px;background:rgba(255,253,245,.94);border:2px solid var(--deep);border-radius:8px;box-shadow:7px 7px 0 var(--deep),var(--shadow);backdrop-filter:blur(10px);transform:rotate(-1.2deg)}
+.hero-card h2{font-size:20px}.hero-card p{margin-top:8px;font-size:14px;color:var(--text)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}.stat{padding:12px;border:1px solid var(--line);border-radius:8px;background:#fffdf8}.stat strong{display:block;color:var(--blue);font-size:23px;line-height:1}.stat span{display:block;margin-top:7px;color:var(--muted);font-size:12px}
+.market-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:3px solid var(--deep);border-radius:8px;overflow:hidden;background:var(--amber);box-shadow:8px 8px 0 var(--deep),var(--soft)}
+.market-strip div{padding:22px;border-right:1px solid rgba(24,38,58,.18)}.market-strip div:last-child{border-right:0}.market-strip strong{display:block;color:var(--deep);font-size:28px;line-height:1.05}.market-strip span{display:block;margin-top:8px;color:#26384b;font-size:14px}
+.section{padding:88px 0;border-bottom:1px solid rgba(24,38,58,.14)}
+.section-head{display:grid;grid-template-columns:1fr;gap:16px;align-items:end;margin-bottom:30px}
+.kicker{color:var(--blue);font-weight:850;font-size:13px;letter-spacing:.12em;text-transform:uppercase}.section h2{margin-top:8px;font-size:clamp(28px,3.45vw,48px);line-height:1.12;letter-spacing:0;text-wrap:balance}.lead{max-width:760px;color:var(--text);font-size:18px}.pain .lead{max-width:100%}
+.cards3,.cards2,.cards4{display:grid;gap:18px}.cards3{grid-template-columns:repeat(3,1fr)}.cards2{grid-template-columns:repeat(2,1fr)}.cards4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--paper);border:2px solid rgba(24,38,58,.18);border-radius:8px;box-shadow:var(--soft);padding:25px}.card h3{font-size:20px;margin-bottom:9px}.card p{color:var(--text)}
+.cards3 .card:nth-child(1),.cards4 .card:nth-child(2),.cases .shot:nth-child(3){transform:rotate(-1deg)}.cards3 .card:nth-child(2),.cards4 .card:nth-child(4),.materials .shot:nth-child(2){transform:rotate(1deg)}.cards3 .card:nth-child(3),.matrix .card:nth-child(3){transform:rotate(.7deg)}
+.pain .card{border-top:6px solid var(--amber)}.pain .card:nth-child(2){border-top-color:var(--blue)}.pain .card:nth-child(3){border-top-color:var(--red)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}.compare-card{padding:28px;border:1px solid var(--line);border-radius:8px;background:var(--paper);box-shadow:var(--soft)}.compare-card.before{border-top:6px solid var(--red)}.compare-card.after{border-top:6px solid var(--teal)}.compare-card b{display:block;margin-bottom:10px;font-size:21px}.compare-card p{color:var(--text)}
+.matrix{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.matrix .card{min-height:178px;padding:20px}.matrix b{display:block;color:var(--blue);font-size:13px;letter-spacing:.08em;text-transform:uppercase}.matrix h3{margin-top:8px;font-size:18px}.matrix p{font-size:14px}
+.materials,.cases{display:grid;gap:18px}.materials,.cases{grid-template-columns:repeat(3,1fr)}.shot{background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:var(--soft);overflow:hidden}.shot img{width:100%;height:360px;object-fit:contain;object-position:top center;background:#fffdf8;border-bottom:1px solid var(--line)}.cases .shot{padding:22px}.cases .shot img{height:300px;border:1px solid var(--line);border-radius:8px}.case-image-blank{height:300px;border:1px solid var(--line);border-radius:8px;background:#fffdf8}.shot figcaption{padding:14px 16px;color:var(--text);font-size:14px}.cases figcaption{padding:14px 0 0}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden}.step{padding:22px;background:var(--paper);border-right:1px solid var(--line)}.step:last-child{border-right:0}.step b{display:block;color:var(--blue)}.step span{display:block;margin-top:6px;color:var(--muted);font-size:13px}
+.position{position:relative;padding:38px;border:3px solid var(--deep);border-radius:8px;color:#fff;background:linear-gradient(135deg,var(--deep),var(--blue));box-shadow:10px 10px 0 var(--amber),var(--shadow)}.position:after{content:"serious practice, sticky memory";position:absolute;right:22px;top:-18px;transform:rotate(4deg);padding:8px 12px;border:2px solid var(--deep);border-radius:8px;background:var(--amber);color:var(--deep);font-weight:900}.position h2{font-size:clamp(30px,3.55vw,50px);max-width:100%;overflow-wrap:break-word;text-wrap:balance}.position p{margin-top:14px;color:#eef4ff;font-size:18px}.position-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}.position-grid div{padding:18px;border:1px solid rgba(255,255,255,.26);border-radius:8px;background:rgba(255,247,214,.12)}.position-grid b{display:block}.position-grid span{display:block;margin-top:6px;color:#eef4ff;font-size:13px}
+.cta{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.65fr);gap:24px;align-items:center;padding:38px;border:3px solid var(--deep);border-radius:8px;color:#fff;background:linear-gradient(135deg,#123250,var(--blue));box-shadow:10px 10px 0 var(--amber),var(--shadow)}.cta h2{font-size:clamp(31px,4.2vw,52px);line-height:1.12}.cta p{margin-top:12px;color:#e7f0fb}.input{padding:20px;border:1px solid rgba(255,255,255,.24);border-radius:8px;background:rgba(255,255,255,.10);color:#f8fbff}.input b{color:#fff}.foot{padding:28px 0;color:var(--muted);font-size:13px;text-align:center}
+@media(max-width:940px){.hero,.section-head,.cta{grid-template-columns:1fr}.hero{min-height:0;padding:44px 0}.hero:before{left:18%;top:420px}.hero-visual{min-height:520px}.hero-cat{width:min(114%,570px);margin-right:-28px}.hero-card{left:12px;right:12px}.market-strip,.cards3,.cards2,.cards4,.compare,.matrix,.materials,.cases,.flow,.position-grid{grid-template-columns:1fr}.market-strip div,.step{border-right:0;border-bottom:1px solid var(--line)}.market-strip div:last-child,.step:last-child{border-bottom:0}}
+@media(max-width:560px){.finch-page{font-size:15px}.topin,.page{width:min(100% - 24px,1180px)}.topnav{display:none}.hero h1{font-size:42px}.hero-visual{min-height:470px}.hero-cat{width:126%;margin-right:-46px}.stats{grid-template-columns:1fr 1fr}.section{padding:62px 0}.card,.cta,.position{padding:22px}.shot img{height:300px}}
+/* visual overrides */
+.round-wheel{width:620px;height:620px;margin-left:-430px;box-shadow:0 0 0 18px rgba(24,38,58,.1),14px 18px 0 rgba(24,38,58,.12);transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.round-stage{grid-template-columns:minmax(220px,.45fr) minmax(0,1.55fr)}.round-case{border-color:var(--round-color,var(--deep));box-shadow:10px 12px 0 color-mix(in srgb,var(--round-color,var(--deep)) 28%,transparent)}
+.round-case{margin-left:-90px;width:calc(100% + 90px)}
+.case-image{display:block;width:100%;max-height:360px;object-fit:contain;margin-top:20px;border:2px solid var(--line);border-radius:8px;background:#fff}
+.cards4 .card:before{background:var(--paper);border:2px solid currentColor}.cards4 .card:nth-child(1):before{color:var(--red)}.cards4 .card:nth-child(2):before{color:var(--blue)}.cards4 .card:nth-child(3):before{color:var(--teal)}.cards4 .card:nth-child(4):before{color:#b68b00}
+.pain h2{max-width:100%;overflow-wrap:anywhere;font-size:clamp(30px,4.6vw,52px)}
+.position h2{width:100%;max-width:100%;text-wrap:wrap;overflow-wrap:anywhere}
+.round-wheel{transform-origin:50% 50%}.round-wheel .wheel-dot:nth-of-type(1){left:65%;top:8%}.round-wheel .wheel-dot:nth-of-type(2){left:82%;top:31%}.round-wheel .wheel-dot:nth-of-type(3){left:80%;top:61%}.round-wheel .wheel-dot:nth-of-type(4){left:60%;top:82%}.round-wheel .wheel-dot:nth-of-type(5){left:36%;top:86%}
+.round-wheel .wheel-dot{transform:rotate(calc(-1 * var(--wheel-rotation,0deg)))}.round-wheel .wheel-dot.active{transform:rotate(calc(-1 * var(--wheel-rotation,0deg))) scale(1.15)}
+.round-wheel .wheel-dot:nth-of-type(1){left:65%;top:15%}.round-wheel .wheel-dot:nth-of-type(2){left:86%;top:35%}.round-wheel .wheel-dot:nth-of-type(3){left:86%;top:58%}.round-wheel .wheel-dot:nth-of-type(4){left:68%;top:80%}.round-wheel .wheel-dot:nth-of-type(5){left:42%;top:88%}
+.cards4 .card{background:radial-gradient(circle at 84% 18%,var(--red) 0 4px,transparent 5px 11px,rgba(239,123,99,.5) 12px 14px,transparent 15px 22px,rgba(92,136,205,.32) 23px 25px,transparent 26px),var(--paper)}.cards4 .card:nth-child(2){background:radial-gradient(circle at 84% 18%,var(--blue) 0 4px,transparent 5px 11px,rgba(92,136,205,.5) 12px 14px,transparent 15px 22px,rgba(241,196,54,.45) 23px 25px,transparent 26px),var(--paper)}.cards4 .card:nth-child(3){background:radial-gradient(circle at 84% 18%,var(--teal) 0 4px,transparent 5px 11px,rgba(111,199,176,.5) 12px 14px,transparent 15px 22px,rgba(239,123,99,.35) 23px 25px,transparent 26px),var(--paper)}.cards4 .card:nth-child(4){background:radial-gradient(circle at 84% 18%,var(--amber) 0 4px,transparent 5px 11px,rgba(241,196,54,.55) 12px 14px,transparent 15px 22px,rgba(92,136,205,.35) 23px 25px,transparent 26px),var(--paper)}
+.cards4 .card{position:relative;overflow:hidden;border:2px solid rgba(24,38,58,.16);border-top:8px solid var(--blue);padding:28px 24px 24px;box-shadow:8px 10px 0 rgba(24,38,58,.08),var(--soft)}.cards4 .card:before{content:attr(data-index);position:absolute;right:43px;top:27px;width:30px;height:30px;display:grid;place-items:center;background:transparent;border:0;border-radius:0;color:var(--deep);font-size:13px;font-weight:900;line-height:1;z-index:1}.cards4 .card:nth-child(1){border-top-color:var(--red);transform:rotate(-1.2deg)}.cards4 .card:nth-child(2){border-top-color:var(--blue);transform:translateY(8px) rotate(.8deg)}.cards4 .card:nth-child(3){border-top-color:var(--teal);transform:rotate(-.7deg)}.cards4 .card:nth-child(4){border-top-color:var(--amber);transform:translateY(8px) rotate(1.2deg)}
+.capability-highlight{display:inline-block;font-size:1.22em;line-height:.9;padding:0 .08em;background:linear-gradient(transparent 48%,var(--amber) 48% 92%,transparent 92%);color:var(--deep)}
+.output-line{white-space:nowrap;font-size:13px}
+.compare{gap:24px;align-items:start}.compare-card{position:relative}.compare-card.before{border:2px dashed #e8a395;border-top:8px solid var(--red);background:#fff3ef;transform:rotate(-2deg);opacity:.82}.compare-card.after{border:3px solid var(--teal);border-top:8px solid var(--teal);background:#edfff8;box-shadow:10px 12px 0 rgba(111,199,176,.28),var(--soft);transform:translateY(-10px) rotate(1.5deg)}.compare-card.before:after,.compare-card.after:after{position:absolute;right:18px;top:-17px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:900}.compare-card.before:after{content:"old way";background:#f3b0a1;color:#7b3024}.compare-card.after:after{content:"new way";background:var(--teal);color:#124536}
+.position{color:var(--deep);background:linear-gradient(135deg,#f7f0d8,#fffaf0)}.position:after{content:"practice that sticks"}.position p{color:var(--text)}.position-grid div{border-color:rgba(24,38,58,.18);background:rgba(255,255,255,.48)}.position-grid span{color:var(--text)}
+.cta{color:var(--deep);background:linear-gradient(135deg,#f6c841,#ef8b70);box-shadow:10px 10px 0 #d9a92e,var(--shadow)}.cta p{color:#493d37}.cta .input{border-color:rgba(24,38,58,.18);background:rgba(255,255,255,.4);color:var(--deep)}.cta .input b{color:var(--deep)}
+.cta{grid-template-columns:1fr}.cta > div:first-child p{max-width:100%;}
+.round-stage{display:grid;grid-template-columns:minmax(260px,.7fr) minmax(0,1.3fr);gap:34px;align-items:center;margin-top:28px;overflow:hidden}.round-wheel{position:relative;width:430px;height:430px;margin-left:-285px;border-radius:50%;background:conic-gradient(from calc(-90deg + var(--wheel-rotation,0deg)),var(--red) 0 20%,var(--amber) 20% 40%,var(--blue) 40% 60%,var(--teal) 60% 80%,#8e9ed0 80% 100%);box-shadow:0 0 0 14px rgba(24,38,58,.1),10px 14px 0 rgba(24,38,58,.12)}.wheel-core{display:none}.round-wheel .wheel-dot{position:absolute;left:50%;top:50%;width:42px;height:42px;padding:0;border:3px solid var(--deep);border-radius:50%;background:var(--paper);font-weight:900;color:var(--deep);cursor:pointer;transform:translate(-50%,-50%) rotate(calc(var(--dot-angle) + var(--wheel-rotation,0deg))) translateY(-146px)}.round-wheel .wheel-dot span{display:grid;place-items:center;width:100%;height:100%;transform:rotate(calc(-1 * (var(--dot-angle) + var(--wheel-rotation,0deg))))}.round-wheel .wheel-dot.active{background:var(--amber);transform:translate(-50%,-50%) rotate(calc(var(--dot-angle) + var(--wheel-rotation,0deg))) translateY(-146px) scale(1.15)}.round-wheel .wheel-dot:nth-of-type(1){left:50%;top:50%;--dot-angle:-54deg}.round-wheel .wheel-dot:nth-of-type(2){left:50%;top:50%;--dot-angle:18deg}.round-wheel .wheel-dot:nth-of-type(3){left:50%;top:50%;--dot-angle:90deg}.round-wheel .wheel-dot:nth-of-type(4){left:50%;top:50%;--dot-angle:162deg}.round-wheel .wheel-dot:nth-of-type(5){left:50%;top:50%;--dot-angle:234deg}.round-case{padding:30px;border:3px solid var(--deep);border-radius:12px;background:var(--paper);box-shadow:10px 12px 0 rgba(24,38,58,.14)}.case-kicker{color:var(--blue);font-weight:900;letter-spacing:.08em}.round-case h3{margin-top:12px;font-size:clamp(24px,3vw,38px);line-height:1.2}.round-case p{margin-top:12px;color:var(--text);font-size:17px}.case-image-placeholder{display:grid;place-content:center;min-height:150px;margin-top:20px;border:2px dashed var(--line);border-radius:8px;text-align:center;color:var(--muted);background:#fffaf0}.round-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.round-tabs button{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fffaf0;color:var(--text);cursor:pointer}.round-tabs button.active{background:var(--deep);color:#fff}
+.round-stage .round-wheel{margin-left:-185px;transform:none!important;transition:none;background:conic-gradient(from calc(-90deg + var(--wheel-rotation,0deg)),var(--red) 0 20%,var(--amber) 20% 40%,var(--blue) 40% 60%,var(--teal) 60% 80%,#8e9ed0 80% 100%)}
+.round-stage .round-wheel .wheel-dot{left:50%!important;top:50%!important;transform:translate(-50%,-50%) rotate(calc(var(--dot-angle) + var(--wheel-rotation,0deg))) translateY(-128px)!important}
+.round-stage .round-wheel .wheel-dot.active{transform:translate(-50%,-50%) rotate(calc(var(--dot-angle) + var(--wheel-rotation,0deg))) translateY(-128px) scale(1.15)!important}
+.round-stage .round-wheel .wheel-dot span{transform:rotate(calc(-1 * (var(--dot-angle) + var(--wheel-rotation,0deg))))}
+.round-stage{grid-template-columns:320px minmax(0,1fr);overflow:visible}
+.round-stage .round-wheel{width:300px;height:300px;margin-left:0}
+.round-stage .round-wheel .wheel-dot{width:40px;height:40px;transform:translate(-50%,-50%) rotate(calc(var(--dot-angle) + var(--wheel-rotation,0deg))) translateY(-92px)!important}
+.round-stage .round-wheel .wheel-dot.active{transform:translate(-50%,-50%) rotate(calc(var(--dot-angle) + var(--wheel-rotation,0deg))) translateY(-92px) scale(1.12)!important}
+.round-stage .round-wheel .wheel-dot:nth-of-type(1){left:50%!important;top:50%!important;--dot-angle:-54deg}
+.round-stage .round-wheel .wheel-dot:nth-of-type(2){left:50%!important;top:50%!important;--dot-angle:18deg}
+.round-stage .round-wheel .wheel-dot:nth-of-type(3){left:50%!important;top:50%!important;--dot-angle:90deg}
+.round-stage .round-wheel .wheel-dot:nth-of-type(4){left:50%!important;top:50%!important;--dot-angle:162deg}
+.round-stage .round-wheel .wheel-dot:nth-of-type(5){left:50%!important;top:50%!important;--dot-angle:234deg}
+.round-stage .round-wheel{overflow:hidden;background:none}
+.round-stage .round-wheel:before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from -90deg,var(--red) 0 20%,var(--amber) 20% 40%,var(--blue) 40% 60%,var(--teal) 60% 80%,#8e9ed0 80% 100%);transform:rotate(var(--wheel-rotation,0deg));transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.round-stage .round-wheel .wheel-dot{z-index:1;transition:transform .7s cubic-bezier(.2,.8,.2,1),background-color .2s ease}
+.round-stage .round-wheel .wheel-dot{background:transparent!important;border:0!important;border-radius:0;color:#fffdf5;font-size:18px;font-weight:950;letter-spacing:.02em;text-shadow:0 2px 0 var(--deep),0 0 10px rgba(24,38,58,.28)}
+.round-stage .round-wheel .wheel-dot.active{background:transparent!important}
+.round-stage .round-wheel .wheel-dot span{font-size:18px;line-height:1;transition:font-size .2s ease,letter-spacing .2s ease}
+.round-stage .round-wheel .wheel-dot.active span{font-size:25px;letter-spacing:.03em}
+.cards4 .card{background:radial-gradient(circle at 84% 18%,rgba(255,253,245,.92) 0 9px,rgba(24,38,58,.18) 10px 12px,transparent 13px 20px,rgba(92,136,205,.24) 21px 24px,transparent 25px),var(--paper)}
+.cards4 .card:nth-child(2){background:radial-gradient(circle at 84% 18%,rgba(255,253,245,.92) 0 9px,rgba(24,38,58,.18) 10px 12px,transparent 13px 20px,rgba(241,196,54,.28) 21px 24px,transparent 25px),var(--paper)}
+.cards4 .card:nth-child(3){background:radial-gradient(circle at 84% 18%,rgba(255,253,245,.92) 0 9px,rgba(24,38,58,.18) 10px 12px,transparent 13px 20px,rgba(111,199,176,.32) 21px 24px,transparent 25px),var(--paper)}
+.cards4 .card:nth-child(4){background:radial-gradient(circle at 84% 18%,rgba(255,253,245,.92) 0 9px,rgba(24,38,58,.18) 10px 12px,transparent 13px 20px,rgba(241,196,54,.34) 21px 24px,transparent 25px),var(--paper)}
+.cards4 .card:before{right:43px;top:27px;width:30px;height:30px;color:var(--deep)!important;font-size:16px;font-weight:950;text-shadow:0 1px 0 rgba(255,253,245,.85);z-index:1}
+.cards4 .card{background-position:top right;padding-right:58px}
+.cards4 .card h3{padding-right:34px}
+.cards4 .card:before{right:18px;top:24px}
+
+
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#edf0ff;color:#18224a;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}
+.finch-rounds{display:grid;gap:24px;min-width:0}.round-case{height:auto;max-height:none}
+</style></head>
+<body><div class="finch-page">
+<nav class="topbar"><div class="topin"><div class="logo">finchip</div><div class="topnav"><a href="#market">Market Pain</a><a href="#position">Positioning</a><a href="#proof">Proof</a><a href="#scenes">Use Cases</a></div></div></nav>
+<main class="page">
+<header class="hero">
+<div>
+<div class="eyebrow">Interview Simulator Skill</div>
+<h1>Make every resume line survive follow-up questions.</h1>
+<div class="hero-actions"><span class="pill">Pre-interview warmup</span><span class="pill">Grounded in your work</span><span class="pill">Layered follow-ups</span><span class="pill">Practice without uploading</span></div>
+</div>
+<div aria-label="Interview Simulator cover character" class="hero-visual"><img alt="Interview Simulator character" class="hero-cat finch-media-ratio" height="549" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/interview-simulator/information-en/%E7%8C%AB-92b4f2cabf0f.png" width="481"/><aside class="hero-card"><h2>A pre-interview practice tool that reads your resume closely, asks hard follow-ups, and never invents experience for you.</h2></aside></div>
+</header>
+<section aria-label="Market signals" class="market-strip" id="market">
+<div><strong>High Demand</strong><span>Graduates and job seekers need repeated, realistic interview practice before high-stakes rounds.</span></div>
+<div><strong>Accessible</strong><span>AI-assisted interview tools are shaping user expectations around low-cost practice.</span></div>
+<div><strong>Repeatable</strong><span>Candidates need to rehearse the same resume against different roles, companies, and interview styles.</span></div>
+<div><strong>Compliant</strong><span>Career centers, bootcamps, and coaching programs need clear pre-interview tools, not live interview aids.</span></div>
+</section>
+<section class="section pain">
+<div class="section-head">
+<div><h2>Question banks are everywhere. Candidates still freeze when asked to <span class="capability-highlight">“tell me more.”</span></h2></div>
+<p class="lead">Interview guides, question banks, STAR templates, and general-purpose models already exist. Real interviews are harder because the follow-ups keep drilling into your own resume.</p>
+</div>
+<div class="cards3">
+<article class="card"><h3>A polished resume is not a spoken answer</h3><p>A two-line project can become a dozen follow-ups: what you owned, why you chose that approach, where the metric came from, and whether the result can be verified.</p></article>
+<article class="card"><h3>Scripted answers break under pressure</h3><p>Candidates memorize nice answers, then struggle when the interviewer rephrases the question, asks for details, or follows the thread one layer deeper.</p></article>
+<article class="card"><h3>Human mock interviews are not always available</h3><p>Friends may not know the role. Coaches require scheduling and cost more. The market needs a middle layer between solo question drills and live mock interviews.</p></article>
+</div>
+</section>
+<section class="section">
+<div class="section-head">
+<div><h2>Stop drilling random questions. Put the resume under pressure.</h2></div>
+<p class="lead">When question generation becomes basic infrastructure, the real edge comes from personalization, continuity, and factual constraints.</p>
+</div>
+<div class="compare">
+<div class="compare-card before"><b>Traditional prep: many questions, weak personal fit</b><p>Question banks answer “what does this role usually ask?” General models still require users to design prompts, rounds, interviewer roles, and factual boundaries.</p></div>
+<div class="compare-card after"><b>Interview Simulator: questions grow from my resume</b><p>Projects, responsibilities, skills, and job requirements directly shape the questions. The system also explains the assessed ability, why the question matters, and how to answer.</p></div>
+</div>
+</section>
+<section class="section" id="position">
+<div class="position">
+<h2>No live interview assist. Just pressure testing before the real round.</h2>
+<div class="position-grid">
+<div><b>Versus question banks</b><span>Fits the candidate’s own projects and responsibilities, not just generic role questions.</span></div>
+<div><b>Versus general LLMs</b><span>Fixed workflow, steadier output, and no need to write complex prompts.</span></div>
+<div><b>Versus mock interviews</b><span>No scheduling required; repeat practice on the same resume at low cost.</span></div>
+<div><b>Versus upload-first tools</b><span>Can practice around local resume text, reducing exposure of sensitive career data.</span></div>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="section-head">
+<div><h2>One resume, <span class="capability-highlight">five</span> interviewer lenses.</h2></div>
+</div>
+<div class="round-stage">
+<div aria-label="Five-round interview wheel" class="round-wheel"><div class="wheel-core">ROUND<br/><strong>01</strong></div></div>
+<div class="finch-rounds"><div class="round-case"><div class="case-kicker">Question Lens · <span>HR</span></div><h3>Motivation and fit: why are you here, and why are you a match?</h3><img alt="HR — Motivation and fit: why are you here, and why are you a match?" class="case-image finch-media-ratio" height="1207" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/interview-simulator/information-en/round-en-1-a102006536de.png" width="1123"/></div><div class="round-case"><div class="case-kicker">Question Lens · <span>ability coding</span></div><h3>Technical depth: did you really build it and understand it?</h3><img alt="ability coding — Technical depth: did you really build it and understand it?" class="case-image finch-media-ratio" height="1200" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/interview-simulator/information-en/round-en-2-f64e7b530e28.png" width="1132"/></div><div class="round-case"><div class="case-kicker">Question Lens · <span>ability project</span></div><h3>Project deep dive: do your decisions and results hold up?</h3><img alt="ability project — Project deep dive: do your decisions and results hold up?" class="case-image finch-media-ratio" height="1216" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/interview-simulator/information-en/round-en-3-b190263e1aa6.png" width="1135"/></div><div class="round-case"><div class="case-kicker">Question Lens · <span>Business</span></div><h3>Business judgment: what value did your solution create?</h3><img alt="Business — Business judgment: what value did your solution create?" class="case-image finch-media-ratio" height="1204" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/interview-simulator/information-en/round-en-4-95d91b16d5e4.png" width="1132"/></div><div class="round-case"><div class="case-kicker">Question Lens · <span>CEO</span></div><h3>Leadership and collaboration: can you get things done?</h3><img alt="CEO — Leadership and collaboration: can you get things done?" class="case-image finch-media-ratio" height="1216" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/interview-simulator/information-en/round-en-5-6615308536fd.png" width="1129"/></div></div>
+</div>
+</section>
+<section class="section" id="proof">
+<div class="section-head">
+<div><h2>Turn polished resume claims into answers that hold up under follow-up.</h2></div>
+<p class="lead">Each output demonstrates a concrete value: personalization, depth, question logic, and factual discipline.</p>
+</div>
+<div class="cases">
+<figure class="shot"><img alt="English first answer output" class="finch-media-ratio" height="906" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/interview-simulator/instruction-en/plan-output-en-ec57a9e0c3f0.png" width="1141"/><figcaption>First output: builds a structured interview plan from the resume and target role, highlighting the experiences most likely to be challenged.</figcaption></figure>
+<figure class="shot"><img alt="English second answer output" class="finch-media-ratio" height="981" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/interview-simulator/instruction-en/questions-output-en-f9b57e186128.png" width="1165"/><figcaption>Second output: drills into a selected project through ownership, technical choices, collaboration, and measurable results.</figcaption></figure>
+<figure class="shot"><img alt="English third answer output" class="finch-media-ratio" height="645" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/interview-simulator/information-en/%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%9B%9E%E7%AD%942-en-5c65c842c4a6.png" width="1123"/><figcaption>Third output: continues the answer flow with deeper follow-up prompts and concrete guidance for the next response.</figcaption></figure>
+</div>
+</section>
+<section class="section" id="scenes">
+<div class="section-head">
+<div><h2>Before the real interview, rehearse until the story holds.</h2></div>
+</div>
+<div class="cards4">
+<article class="card" data-index="01"><h3>Final prep before interviews</h3><p>For candidates who already have interview opportunities and need to prioritize the experiences worth rehearsing first.</p></article>
+<article class="card" data-index="02"><h3>Resume content audit</h3><p>Turns broad claims like “owned a core project” or “improved efficiency” into concrete follow-up questions.</p></article>
+<article class="card" data-index="03"><h3>Role switches and career pivots</h3><p>Reviews past experience through the target role’s lens and identifies what to emphasize or explain further.</p></article>
+<article class="card" data-index="04"><h3>Career center coaching</h3><p>Generates differentiated questions for large student groups, suitable for courses, bootcamps, and self-practice.</p></article>
+</div>
+</section>
+<section class="section">
+<div class="cta">
+<div><h2>Sweat through the follow-ups here,<br/>then show up steadier in the real interview.</h2><p>It helps candidates identify likely follow-up points, close gaps around real experience, and build a more stable professional narrative before the interview.</p></div>
+</div>
+</section>
+<footer class="foot">Interview Simulator · Structured interview practice grounded in your resume</footer>
+</main>
+</div></body>
+</html>
