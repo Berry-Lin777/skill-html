@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Twitter Autopilot Skill Information</title>
+<style>
+    :root{color-scheme:light;--ink:#122033;--muted:#5c6b7c;--blue:#1668e3;--deep:#071a33;--line:#dbe5f0;--soft:#f3f7fb;--white:#fff;--green:#12805c;--red:#c13c4a}
+    *{box-sizing:border-box}
+    html,.finch-page{margin:0;padding:0;width:100%;background:#eaf1f8;color:var(--ink)}
+    .finch-page{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.68}
+    .page{width:100%;overflow-wrap:anywhere;background-color:#eaf1f8;background-image:linear-gradient(180deg,#dfeaf6 0,#f4f7fb 420px,#eaf1f8 100%);color:var(--ink);padding:28px 16px 56px}
+    .document{width:100%;max-width:1160px;margin:0 auto;background:var(--white);border:1px solid rgba(7,26,51,.08);border-radius:28px;box-shadow:0 24px 70px rgba(24,52,83,.13);overflow:hidden}
+    .masthead{padding:28px clamp(22px,5vw,68px);display:flex;gap:20px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .masthead h1{font-size:clamp(20px,3vw,30px);line-height:1.2;margin:0;letter-spacing:-.02em}
+    .masthead p{margin:4px 0 0;color:var(--muted);font-size:14px}
+    .mark{flex:0 0 auto;width:48px;height:48px;border-radius:15px;background:#050505;color:#fff;display:grid;place-items:center;font-weight:800;font-size:22px}
+    .hero{padding:clamp(44px,8vw,92px) clamp(22px,7vw,86px);background:radial-gradient(circle at 82% 10%,rgba(66,153,255,.28),transparent 31%),linear-gradient(135deg,#061629,#0a294f);color:#fff}
+    .eyebrow{margin:0 0 20px;text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:800;color:#80bbff}
+    .hero h2{margin:0;max-width:900px;font-size:clamp(36px,6vw,70px);line-height:1.04;letter-spacing:-.045em}
+    .hero h3{margin:34px 0 12px;font-size:clamp(20px,3vw,30px)}
+    .hero p{max-width:850px;margin:12px 0;color:#dce9f7;font-size:clamp(16px,2vw,19px)}
+    .section{padding:clamp(44px,7vw,78px) clamp(22px,7vw,86px);border-top:1px solid var(--line)}
+    .section-head{margin-bottom:32px}
+    .section h2{margin:0;font-size:clamp(29px,4.5vw,48px);line-height:1.08;letter-spacing:-.035em}
+    .section h3{margin:0 0 14px;font-size:clamp(22px,3vw,31px);line-height:1.2;letter-spacing:-.025em}
+    .section p{margin:0 0 16px;color:#3d4b5a;font-size:17px}
+    .lead{font-size:clamp(19px,2.5vw,24px)!important;line-height:1.55;color:var(--ink)!important;max-width:930px}
+    .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0 26px}
+    .compare-card{padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--soft)}
+    .compare-card strong{display:inline-flex;margin-bottom:10px;padding:4px 10px;border-radius:999px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:#e6edf5;color:#526377}
+    .compare-card.after{background:#effaf6;border-color:#c9e8dc}
+    .compare-card.after strong{background:#d8f1e8;color:var(--green)}
+    .compare-card p{margin:0;font-size:16px}
+    .outcome{padding-left:18px;border-left:3px solid var(--blue);font-weight:700;color:var(--ink)!important}
+    .visual{margin:28px 0 0;padding:14px;border-radius:22px;background:#edf3f8;border:1px solid var(--line)}
+    .visual img{display:block;width:100%;max-width:100%;height:auto;border-radius:14px;background:#fff}
+    .story{padding:28px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#fff,#f7faff)}
+    .story+.story{margin-top:26px}
+    .story h3{color:#103f78}
+    .story p:last-of-type{margin-bottom:0}
+    .gallery{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+    .gallery figure{margin:0;padding:9px;border:1px solid var(--line);border-radius:16px;background:#edf3f8}
+    .gallery img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:8/5;object-fit:contain;border-radius:10px;background:#fff}
+    .gallery .wide{grid-column:1/-1}
+    .feature-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 0;padding:0;list-style:none}
+    .feature-list li{position:relative;padding:20px 20px 20px 44px;border:1px solid var(--line);border-radius:16px;background:#fff;color:#3d4b5a}
+    .feature-list li:before{content:"";position:absolute;left:20px;top:30px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+    .feature-list strong{color:var(--ink)}
+    .advantages{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .advantage{padding:22px;border-radius:18px;background:var(--soft);border:1px solid var(--line)}
+    .advantage h3{font-size:20px;margin-bottom:8px}
+    .advantage p{font-size:16px;margin:0}
+    .cta{background:#0a2342;color:#fff}
+    .cta h2,.cta h3{color:#fff}
+    .cta p{color:#dce9f7}
+    .cta .official{display:inline-block;margin:8px 0 22px;padding:11px 16px;border:1px solid #4b78a9;border-radius:12px;color:#fff;font-weight:700}
+    @media(max-width:760px){.page{padding:0}.document{border:0;border-radius:0}.masthead{align-items:flex-start}.compare,.feature-list,.advantages,.gallery{grid-template-columns:1fr}.gallery .wide{grid-column:auto}.section-head{grid-template-columns:1fr}.section{padding-left:20px;padding-right:20px}.hero{padding-left:20px;padding-right:20px}.story{padding:20px}.mark{width:42px;height:42px}}
+  
+
+html,body{margin:0;padding:0;width:100%;}
+.finch-page{position:relative;isolation:isolate;width:100%;background-color:#eaf1f8;color:#122033;}
+img,video{max-width:100%!important;height:auto!important;} .finch-media-ratio{aspect-ratio:auto 16 / 9;} .reveal{opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important;} .finch-page::before,.finch-page::after{pointer-events:none;position:absolute;}
+</style></head>
+<body><div class="finch-page">
+<main class="page">
+<article class="document">
+<header class="masthead">
+<div><h1>Twitter Autopilot Skill Information</h1><p>Product information for X research, social listening, and account actions</p></div>
+<div aria-hidden="true" class="mark">X</div>
+</header>
+<section class="hero">
+<p class="eyebrow">01 Title / Hero</p>
+<h2>Still searching X manually, copying links, and rebuilding the same tables? This Skill can handle the research, analysis, and account actions in one workflow.</h2>
+<h3>Twitter Autopilot</h3>
+<p>Describe the accounts, keywords, time range, and output you need in natural language. Twitter Autopilot can read public profiles and recent activity, find popular posts, organize replies and quote posts, analyze brand sentiment, and publish, like, or follow after OAuth authorization.</p>
+<p>The value goes beyond finding a few posts. The Skill connects search, screening, deduplication, classification, source tracking, and execution, turning a question into a structured result with links, coverage details, and clear limits.</p>
+</section>
+<section class="section">
+<div class="section-head"><h2>02 Before / After</h2></div>
+<div class="story">
+<h3>01 From manual searching to structured intelligence</h3>
+<div class="compare"><div class="compare-card"><strong>Before</strong><p>Users repeatedly switch between keywords and accounts on X, open posts one by one, record timestamps and engagement figures, and manually merge posts about the same event. Sources are easy to lose, and the actual search coverage is difficult to explain.</p></div><div class="compare-card after"><strong>After</strong><p>Specify the account, keywords, time window, ranking method, and required fields. The result can include publication times, original links, engagement metrics, sample size, and the actual time range covered.</p></div></div>
+<p class="outcome">The work moves from “finding a few relevant posts” to producing research material that can be reviewed, cited, and analyzed further.</p>
+<figure class="visual"><img alt="From manual X searching to structured intelligence" height="911" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image20.png" width="1727"/></figure>
+</div>
+<div class="story">
+<h3>02 From scattered comments to sentiment and demand categories</h3>
+<div class="compare"><div class="compare-card"><strong>Before</strong><p>Brand mentions, product praise, support complaints, and feature requests appear in the same search results. Manual sentiment judgment takes time and can accidentally include advertisements, repeated replies, or unrelated uses of the same word.</p></div><div class="compare-card after"><strong>After</strong><p>Twitter Autopilot can classify relevant results as positive, negative, or neutral, remove obvious false positives, identify recurring advantages, problems, and feature requests, and preserve representative source links and classification criteria.</p></div></div>
+<p class="outcome">The work moves from browsing comments by intuition to documenting themes, evidence, and sample boundaries.</p>
+<figure class="visual"><img alt="From scattered comments to categorized sentiment" height="910" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image21.png" width="1728"/></figure>
+</div>
+<div class="story">
+<h3>03 From analysis to account action</h3>
+<div class="compare"><div class="compare-card"><strong>Before</strong><p>After the research is complete, users must reopen X, locate the target account or post, and manually publish, like, follow, or reverse an action. Research and execution are separated, increasing the chance of selecting the wrong target.</p></div><div class="compare-card after"><strong>After</strong><p>After OAuth authorization, the same conversation can publish text or media posts, like or unlike posts, and follow or unfollow accounts. The result is confirmed from the response returned by the service.</p></div></div>
+<p class="outcome">The work moves from researching first and acting elsewhere to carrying out the clearly specified action and returning the resulting link or status.</p>
+<figure class="visual"><img alt="From separated research and execution to authorized account actions" height="911" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image22.png" width="1727"/></figure>
+</div>
+</section>
+<section class="section">
+<div class="section-head"><h2>03 Pain Point / Use Case</h2></div>
+<p class="lead">The difficult part of researching X is rarely the absence of a search box. Public information is large, fast-moving, and distributed across profiles, timelines, replies, quote posts, and conversation threads. Search, analysis, and execution often require separate tools.</p>
+<p>Native search works well for quick browsing, but users still need to resolve duplicate posts, accounts with similar names, the difference between reposts and quote posts, time zones, pagination, and engagement metrics. Brand research also contains advertisements, automated replies, unrelated keywords, and repeated comments from the same user. A disputed post may require the original post, the visible thread, replies, and quote posts before the discussion can be understood.</p>
+<p>The practical questions are direct: Who posted what? What happened recently? How did users respond? Where is the supporting link? How much content did the API actually return? Can the next action be completed from the same workflow? For market, brand, communications, investment-research, and content teams, structure and traceability determine whether the result can be used in a report or operating process.</p>
+</section>
+<section class="section">
+<div class="section-head"><h2>04 Transition</h2></div>
+<p class="lead">Twitter Autopilot is designed to do more than search for posts. It connects account discovery, timeline retrieval, topic search, conversation context, structured analysis, and account actions.</p>
+<p>The user defines the research objective and scope. The Skill calls the relevant endpoints, organizes the result, preserves source links, and states the limits of the retrieved sample. When an account action is required, OAuth provides authorization to write the confirmed content or action to X.</p>
+</section>
+<section class="section">
+<div class="section-head"><h2>05 Solution</h2></div>
+<p class="lead">The workflow is straightforward: define the subject and task, then specify the time range, result count, ranking method, output fields, and analytical boundaries. Twitter Autopilot organizes the response around whether the result can be verified and used again.</p>
+<ul class="feature-list">
+<li><strong>Account research:</strong> Retrieve public bios, verification status, follower data, recent posts, mentions, followers, and following relationships.</li>
+<li><strong>Content search:</strong> Search recent or popular posts by keyword, with optional account, date, and language filters.</li>
+<li><strong>Conversation analysis:</strong> Read post details, replies, quote posts, reposters, and available thread context while reporting pagination and unavailable content.</li>
+<li><strong>Social listening:</strong> Merge duplicate events, exclude obvious false positives, and summarize viewpoints, controversies, sentiment, and feature requests.</li>
+<li><strong>Industry research:</strong> Compare brands, discover creators, monitor trends, and preserve an original source link for every finding.</li>
+<li><strong>Account actions:</strong> After OAuth authorization, publish or reply, like or unlike, and follow or unfollow.</li>
+<li><strong>Coverage reporting:</strong> State the actual time coverage, raw and relevant sample sizes, deduplication rules, pagination status, and content the API could not retrieve.</li>
+</ul>
+</section>
+<section class="section">
+<div class="section-head"><h2>06 Real Cases / Outputs</h2></div>
+<p>The following examples come from actual English-language Twitter Autopilot test runs. Long results are divided only at complete section, paragraph, and table-row boundaries so they can be used as readable HTML cards, carousels, or enlarged previews.</p>
+<div class="story"><h3>Case 01 Review the latest 20 posts from an account</h3><p>The Skill retrieved the latest 20 posts from @elonmusk, distinguished reposts and quote posts, summarized themes including AI, Tesla, politics, and public debate, and listed publication times, original links, and every engagement metric returned by the API.</p><p>This example shows how an account timeline becomes a structured activity report while preserving the actual time coverage and differences between post types.</p><div class="gallery"><figure><img alt="Account activity report, part 1" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image1.png" width="1440"/></figure><figure><img alt="Account activity report, part 2" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image2.png" width="1440"/></figure><figure class="wide"><img alt="Account activity report, part 3" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image3.png" width="1440"/></figure></div></div>
+<div class="story"><h3>Case 02 Search popular AI discussions</h3><p>The Skill searched for popular AI posts from the previous seven days, organized ten representative results, merged posts covering the same model launch or event, and summarized the main viewpoints and controversies around expanding capabilities, safety, human responsibility, creative identity, privacy, and regulation.</p><p>This example demonstrates topic search, popularity ranking, event deduplication, and viewpoint synthesis while preserving a link and engagement figures for every representative post.</p><div class="gallery"><figure><img alt="Popular AI discussion analysis, part 1" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image4.png" width="1440"/></figure><figure><img alt="Popular AI discussion analysis, part 2" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image5.png" width="1440"/></figure><figure><img alt="Popular AI discussion analysis, part 3" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image6.png" width="1440"/></figure><figure><img alt="Popular AI discussion analysis, part 4" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image7.png" width="1440"/></figure></div></div>
+<div class="story"><h3>Case 03 Analyze Lenovo sentiment and feature requests</h3><p>The Skill searched for posts and account mentions related to Lenovo from the previous seven days, removed obvious false positives, and classified the relevant sample as positive, negative, or neutral. The result identified recurring strengths such as dependable work devices, performance, battery life, and experimental designs, as well as repair delays, refund problems, hardware reliability, product value, security concerns, and user requests.</p><p>This example demonstrates sentiment classification, false-positive removal, recurring-theme extraction, representative sourcing, and explicit sample limitations.</p><div class="gallery"><figure><img alt="Lenovo sentiment analysis, part 1" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image8.png" width="1440"/></figure><figure><img alt="Lenovo sentiment analysis, part 2" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image9.png" width="1440"/></figure><figure><img alt="Lenovo sentiment analysis, part 3" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image10.png" width="1440"/></figure><figure><img alt="Lenovo sentiment analysis, part 4" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image11.png" width="1440"/></figure></div></div>
+<div class="story"><h3>Case 04 Compare Xiaomi, Huawei, and OPPO</h3><p>The Skill reviewed seven days of official activity and retrieved mentions for three brands, focusing on product launches, feature updates, partnerships, and marketing campaigns. The output separates observed facts, retrieved user responses, and interpretation, with a source link for every finding.</p><p>This example demonstrates cross-brand comparison, separation of evidence from judgment, and careful interpretation when posting frequency and sample sizes differ.</p><div class="gallery"><figure><img alt="Cross-brand comparison, part 1" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image12.png" width="1440"/></figure><figure><img alt="Cross-brand comparison, part 2" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image13.png" width="1440"/></figure></div></div>
+<div class="story"><h3>Case 05 Read the full context of a disputed post</h3><p>For one football discussion post, the Skill retrieved the original content, available conversation context, replies, and quote posts. It explained what triggered the discussion, grouped opposing and partially sympathetic viewpoints, and reported the number of reply, thread, and quote-post records returned and whether more pages were available.</p><p>This example shows how a single post can become a structured contextual analysis with viewpoint groups, source links, engagement evidence, and retrieval limits.</p><div class="gallery"><figure><img alt="Disputed post context, part 1" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image14.png" width="1440"/></figure><figure><img alt="Disputed post context, part 2" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image15.png" width="1440"/></figure><figure><img alt="Disputed post context, part 3" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image16.png" width="1440"/></figure><figure><img alt="Disputed post context, part 4" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image17.png" width="1440"/></figure></div></div>
+<div class="story"><h3>Case 06 Publish a post and perform account actions</h3><p>After OAuth authorization, Twitter Autopilot published the specified text as a standalone post and returned the resulting URL. The same action workflow also followed a target account and liked its latest post.</p><p>This example demonstrates write actions in addition to public-data retrieval and shows why success should be confirmed from the returned service result.</p><div class="gallery"><figure><img alt="Publishing a post successfully" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image18.png" width="1440"/></figure><figure><img alt="Following an account and liking a post successfully" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information-en/image19.png" width="1440"/></figure></div></div>
+</section>
+<section class="section">
+<div class="section-head"><h2>07 Core Advantages</h2></div>
+<div class="advantages">
+<div class="advantage"><h3>01 One Skill for retrieval, analysis, and execution</h3><p>Account profiles, timelines, popular searches, replies, quote posts, threads, and account actions can remain in one workflow. Users do not need to move targets and context between multiple tools.</p></div>
+<div class="advantage"><h3>02 Outputs preserve sources and sample boundaries</h3><p>Results can include original links, engagement metrics, actual time coverage, sample counts, pagination status, and missing-content notes. This makes the output more suitable for reports, competitor research, and social-listening reviews.</p></div>
+<div class="advantage"><h3>03 Natural-language instructions support many research tasks</h3><p>Users specify the subject, time range, number of results, ranking method, and output format. The same interface supports account monitoring, topic research, brand sentiment, competitor comparison, and creator discovery.</p></div>
+<div class="advantage"><h3>04 Conversation structure can be analyzed beyond the original post</h3><p>Available replies, quote posts, and thread context help explain why a discussion began, which viewpoints appeared, and how those viewpoints differed.</p></div>
+<div class="advantage"><h3>05 Account actions do not require sharing a password</h3><p>Publishing, liking, and following use browser-based OAuth. Users do not need to provide an X password or login cookie in the conversation, and the service response confirms the action result.</p></div>
+<div class="advantage"><h3>06 Compatible with multiple agent tools</h3><p>The Skill follows the Agent Skills specification and can be used with compatible environments including Codex, Claude Code, Cursor, Gemini CLI, OpenCode, Goose, OpenClaw, and Hermes.</p></div>
+</div>
+</section>
+<section class="section">
+<div class="section-head"><h2>08 Why It Matters</h2></div>
+<p class="lead">X is not a static database. Accounts keep publishing, engagement figures continue to change, and the same event is reposted, quoted, and reframed. Valuable context is distributed across pages and conversation chains.</p>
+<p>Twitter Autopilot consolidates the work normally spread across searching, copying, deduplicating, classifying, building tables, and performing account actions. Users can see the supporting sources and understand what the API did and did not cover in that run.</p>
+<p>Connecting accounts, content, engagement, context, and execution makes X easier to use as an input for continuous monitoring, research decisions, communications, and content operations.</p>
+</section>
+<section class="section cta">
+<div class="section-head"><h2>09 CTA</h2></div>
+<h3>TWITTER AUTOPILOT</h3>
+<div class="official">Official Skill: Twitter Autopilot</div>
+<p>Install the complete SKILL.md, scripts, and references, then configure the local AISA_API_KEY. Reading public X data does not require signing in to X. Publishing, liking, and following require browser-based OAuth authorization.</p>
+<p>Tell Twitter Autopilot which accounts, keywords, time range, and output format you need. It will return X data with original links, actual coverage, and sample notes, and it can continue to publishing or interaction when an authorized action is required.</p>
+</section>
+</article>
+</main>
+</div></body>
+</html>

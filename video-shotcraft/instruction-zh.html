@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Video Shotcraft 中文使用说明：从安装 Skill、准备素材、撰写制作输入、选择模式，到交付视频工程与最终检查。" name="description"/>
+<title>Video Shotcraft Instruction · 中文使用说明</title>
+<style>
+    :root{
+      --bg:#0d1715;
+      --panel:#14231f;
+      --panel-2:#1d332c;
+      --ink:#f4efe4;
+      --muted:#b8c4bb;
+      --dim:#71847a;
+      --gold:#ef9b68;
+      --gold-2:#ffc39b;
+      --line:rgba(190,218,197,.18);
+      --line-strong:rgba(239,155,104,.58);
+      --shadow:rgba(0,0,0,.48);
+      /* 全页中英文统一使用同一套无衬线字体，避免中英文字形割裂 */
+      --ui-font:"Noto Serif SC","Source Han Serif SC","Songti SC","STSong","SimSun",Georgia,serif;
+      --serif:var(--ui-font);
+      --sans:var(--ui-font);
+      --mono:var(--ui-font);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--bg)}
+    .finch-page{
+      margin:0;color:var(--ink);background:
+        radial-gradient(circle at 72% 12%,rgba(116,128,92,.16),transparent 28rem),
+        radial-gradient(circle at 18% 42%,rgba(215,180,122,.08),transparent 26rem),
+        linear-gradient(180deg,#11110f,#181713 48%,#10100e);
+      font-family:var(--sans);font-size:15px;line-height:1.78;
+      -webkit-font-smoothing:antialiased;
+    }
+    .finch-page:before{
+      content:"";position: relative;inset:0;pointer-events:none;z-index:10;opacity:0;
+    }
+    .finch-page:after{
+      content:"";position: relative;inset:0;z-index:11;pointer-events:none;opacity:.055;
+      background-image:none'/%3E%3C/svg%3E");
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    /* 页面主体按 A4 纸张宽度（210mm ≈ 794px）排版 */
+    .page{width:min(1080px,calc(100% - 56px));margin:0 auto;padding:34px 0 74px}
+    .topbar{
+      position: relative;top:0;z-index:20;margin:0 calc(50% - 50vw) 0;padding:0 calc(50vw - 50%);
+      background:rgba(7,7,7,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{height:62px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+    .brand{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--gold)}
+    .nav{display:flex;gap:24px;color:var(--muted);font-size:13px}
+    .nav a:hover{color:var(--gold-2)}
+    .hero{
+      position:relative;min-height:590px;display:grid;align-items:end;padding:110px 0 64px;
+      border-bottom:1px solid var(--line);
+    }
+    .hero:before{
+      display:none;
+    }
+    .hero-grid{position:relative;z-index:1;display:block;width:100%;max-width:none}
+    .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+    h1{
+      margin:18px 0 24px;font-family:var(--serif);font-size:clamp(44px,7vw,88px);
+      line-height:1.08;font-weight:700;letter-spacing:.02em;
+    }
+    h1 span{color:var(--gold)}
+    .hero p{max-width:820px;color:var(--muted);font-size:17px}
+    .hero-card{
+      border:1px solid var(--line-strong);background:linear-gradient(145deg,rgba(23,20,16,.92),rgba(17,16,14,.56));
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;width:100%;max-width:none;margin:34px 0 0;padding:22px 24px;
+      box-shadow:0 22px 70px var(--shadow),inset 0 1px 0 rgba(255,255,255,.07);
+    }
+    .hero-card>div{min-width:0}
+    .hero-card>div+div{border-left:1px solid var(--line);padding-left:24px}
+    .hero-card dt{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--gold)}
+    .hero-card dd{margin:7px 0 20px;color:var(--muted)}
+    section{padding:96px 0;border-bottom:1px solid var(--line)}
+    .section-head{display:grid;grid-template-columns:118px minmax(0,1fr);gap:28px;margin-bottom:28px}
+    .step-no{
+      display:inline-flex;align-items:center;justify-content:center;width:92px;height:92px;
+      border:none;background:transparent;
+      box-shadow:none;
+      font-family:var(--mono);font-size:15px;letter-spacing:.14em;color:var(--gold);padding:0;text-align:center;
+    }
+    h2{margin:0;font-family:var(--serif);font-size:clamp(28px,4.2vw,50px);line-height:1.16;font-weight:700}
+    .lead{max-width:920px;color:var(--muted);font-size:16px;margin:14px 0 0}
+    .content{
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px;align-items:start;
+      margin-left:146px;
+    }
+    /* 制作输入文字较长，改为上下排列，避免左右两栏高度失衡 */
+    #prompt .content{grid-template-columns:minmax(0,1fr);gap:28px}
+    #prompt .content .shot{max-width:none;width:100%;margin:0}
+    #prompt .content .shot img{width:100%;max-height:none;height:auto;object-fit:contain}
+    #prompt .content .shot figcaption{text-align:center}
+    #deliver .content{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch}
+    #deliver .content .shot{max-width:none}
+    #deliver .content .panel,#deliver .content .shot{height:100%;align-self:stretch}
+    #deliver .content .shot{display:flex;flex-direction:column}
+    #deliver .content .shot img{max-height:220px}
+    #install .content{grid-template-columns:minmax(0,1fr)}
+    #prepare .content{grid-template-columns:minmax(0,1fr)}
+    #mode .content{grid-template-columns:minmax(0,1fr)}
+    .panel,.shot{
+      border:1px solid var(--line);background:linear-gradient(145deg,rgba(23,20,16,.9),rgba(12,11,10,.82));
+      box-shadow:0 18px 58px var(--shadow);padding:26px;
+    }
+    .label{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+    #prepare .label,#organize .label,#deliver .label{display:block;text-align:center;font-size:15px;letter-spacing:.16em}
+    .panel p{color:var(--muted)}
+    .deliver-list span,.final-list span,.mode-list span{font-size:16px;line-height:1.7}
+    .check-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+    .check{
+      min-height:108px;padding:17px;border:1px solid var(--line);background:rgba(215,180,122,.035);
+    }
+    .check b{display:block;color:var(--ink);font-size:16px;margin-bottom:5px}
+    .check span{color:var(--muted);font-size:14px}
+    .prompt{
+      position:relative;margin-top:20px;padding:22px 128px 22px 22px;border:1px solid var(--line-strong);
+      background:#0b0a09;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+    .prompt-title{display:block;margin-bottom:10px;color:var(--gold);font-family:var(--mono);font-size:12px;letter-spacing:.14em}
+    .prompt-text{white-space:pre-line;font-family:var(--sans);font-size:15px;color:#e7dfd1;line-height:1.72}
+    .prompt-text a{color:var(--gold-2);text-decoration:underline;text-underline-offset:4px}
+    .copy-btn{
+      position:absolute;right:16px;top:16px;border:1px solid var(--gold);background:var(--gold);color:#070707;
+      padding:9px 14px;font-weight:700;font-size:13px;cursor:pointer;transition:.22s;
+    }
+    .copy-btn:hover{background:var(--gold-2);transform:translateY(-1px)}
+    .shot{padding:16px;position:relative;overflow:hidden}
+    .shot:before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(135deg,rgba(215,180,122,.14),transparent 34%,rgba(116,128,92,.08));
+    }
+    .shot img{
+      position:relative;z-index:1;width:100%;height:auto;max-height:360px;object-fit:contain;
+      border:1px solid rgba(255,255,255,.1);background:#f5f1e8;
+    }
+    #deliver .shot img+img{margin-top:16px}
+    #organize .shot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    #organize .content{grid-template-columns:minmax(0,1fr);gap:28px}
+    #organize .content>*{width:100%;max-width:none}
+    #organize .content .shot{margin:0}
+    #organize .shot img{width:100%;height:100%;max-height:none;object-fit:cover}
+    #organize .shot figcaption{grid-column:1/-1;margin-top:0;text-align:center}
+    #deliver .shot figcaption{text-align:center}
+    .shot figcaption{position:relative;z-index:1;margin-top:13px;color:var(--muted);font-size:14px}
+    .content.no-shot{grid-template-columns:minmax(0,1fr);max-width:none;margin-left:146px}
+    .mode-list,.deliver-list,.final-list{margin:20px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+    .mode-list li,.deliver-list li,.final-list li{
+      display:grid;grid-template-columns:126px 1fr;gap:18px;padding:17px 0;border-bottom:1px solid var(--line);
+      color:var(--muted);
+    }
+    .mode-list b,.deliver-list b,.final-list b{color:var(--gold);font-family:var(--mono);font-size:12px;letter-spacing:.1em}
+    .mode-list b small{display:block;margin-top:5px;color:var(--dim);font-size:10px;font-weight:400;letter-spacing:.08em}
+    .summary{
+      padding:94px 0 30px;text-align:center;border-bottom:0;
+      background:radial-gradient(ellipse at 50% 20%,rgba(116,128,92,.13),transparent 58%);
+    }
+    .summary h2{margin:auto;max-width:860px}
+    .summary p{max-width:760px;margin:22px auto 0;color:var(--muted)}
+    footer{padding:32px 0 0;text-align:center;color:var(--dim);font-family:var(--mono);font-size:11px;letter-spacing:.14em}
+    @media(max-width:940px){
+      .hero-grid,.content,.content.no-shot{grid-template-columns:1fr}
+      .content{margin-left:0}
+      .meta{grid-template-columns:repeat(2,1fr)}
+      .meta div:nth-child(2){border-right:0}
+      .meta div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+      .section-head{grid-template-columns:1fr;gap:14px}
+      .step-no{width:auto;height:auto;min-height:44px;padding:10px 16px;justify-content:flex-start}
+      .nav{flex-wrap:wrap;gap:10px 18px;justify-content:flex-end}
+      .nav a{display:inline-block!important}
+    }
+    @media(max-width:620px){
+      .page{width:calc(100% - 28px);padding-top:18px}
+      .topbar-inner{height:auto;padding:14px 0;align-items:flex-start;flex-direction:column}
+      .nav{justify-content:flex-start}
+      .hero{min-height:auto;padding:66px 0 44px}
+      .hero-card{padding:20px}
+      .hero-card{grid-template-columns:1fr;gap:0}
+      .hero-card>div+div{border-left:0;padding-left:0;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+      .meta,.check-grid{grid-template-columns:1fr}
+      .meta div{border-right:0!important;border-bottom:1px solid var(--line)}
+      .meta div:last-child{border-bottom:0}
+      section{padding:64px 0}
+      .panel{padding:20px}
+      .shot img{height:auto;max-height:360px}
+      .prompt{padding:66px 18px 20px}
+      .copy-btn{left:18px;right:auto}
+      .mode-list li,.deliver-list li,.final-list li{grid-template-columns:1fr;gap:4px}
+    }
+  
+
+html,body{margin:0;padding:0;width:100%;}
+.finch-page{position:relative;isolation:isolate;width:100%;background-color:#0b0b0c;color:#ece8df;}
+img,video{max-width:100%!important;height:auto!important;} .finch-media-ratio{aspect-ratio:auto 16 / 9;} .reveal{opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important;} .finch-page::before,.finch-page::after{pointer-events:none;position:absolute;}
+</style></head>
+<body><div class="finch-page">
+<main class="page">
+<header class="topbar">
+<div class="topbar-inner">
+<a class="brand" href="#top">VIDEO SHOTCRAFT / INSTRUCTION</a>
+<nav class="nav">
+<a href="#install">安装</a>
+<a href="#prepare">素材</a>
+<a href="#prompt">指令</a>
+<a href="#mode">模式</a>
+<a href="#check">终检</a>
+</nav>
+</div>
+</header>
+<section class="hero" id="top">
+<div class="hero-grid">
+<div>
+<div class="kicker">Codex Skill · Video Shotcraft</div>
+<h1>把真实产品，<br/><span>剪成高级大片。</span></h1>
+</div>
+<div class="hero-card">
+<div><dt>运行环境</dt><dd>Codex 本地工作区</dd></div>
+<div><dt>适用任务</dt><dd>产品宣传片、功能 Demo、网页或 App 展示视频</dd></div>
+<div><dt>核心产物</dt><dd>Remotion 工程、带 BGM 成片、无 BGM 成片、QA 记录、动效工作台</dd></div>
+</div>
+</div>
+</section>
+<section id="install">
+<div class="section-head">
+<div class="step-no">STEP 01</div>
+<div><h2>安装 Video Shotcraft Skill</h2><p class="lead">开始使用前，先把镜头卡、模板、组件、音频资源和工作流说明加载到当前 Codex 环境。</p></div>
+</div>
+<div class="content">
+<div class="panel">
+<span class="label">发给 Codex</span>
+<div class="prompt" data-copy="安装 video-shotcraft skill（https://github.com/Vincentwei1021/video-shotcraft）。安装完成后，重新打开或刷新当前工作区，以加载 skill 说明、镜头卡、模板、组件和音频资源。">
+<span class="prompt-title">INSTALL PROMPT</span>
+<div class="prompt-text">安装 video-shotcraft skill（<a href="https://github.com/Vincentwei1021/video-shotcraft" rel="noopener noreferrer" target="_blank">打开 GitHub 仓库</a>）。
+
+安装完成后，重新打开或刷新当前工作区，以加载 skill 说明、镜头卡、模板、组件和音频资源。</div>
+</div>
+</div>
+</div>
+</section>
+<section id="prepare">
+<div class="section-head">
+<div class="step-no">STEP 02</div>
+<div><h2>准备输入素材</h2></div>
+</div>
+<div class="content">
+<div class="panel">
+<span class="label">素材</span>
+<div class="check-grid">
+<div class="check"><b>项目入口</b><span>项目目录或网页地址</span></div>
+<div class="check"><b>视觉材料</b><span>截图 / 录屏 / 图片 / 音频</span></div>
+<div class="check"><b>文字材料</b><span>产品文案或补充说明</span></div>
+</div>
+<p>本案例的素材是一个已嵌入图文的 HTML。</p>
+</div>
+</div>
+</section>
+<section id="prompt">
+<div class="section-head">
+<div class="step-no">STEP 03</div>
+<div><h2>写清制作输入</h2><p class="lead">把素材、主题、重点和交付要求一次说清楚。</p></div>
+</div>
+<div class="content">
+<div class="panel">
+<span class="label">可直接改写使用</span>
+<p class="mode-note">本案例没有预先选择模式。按照 skill 的工作流，Codex 会先只读检查产品页面和素材，再根据项目目标推荐最合适的路线。</p>
+<div class="prompt">
+<span class="prompt-title">PRODUCTION PROMPT</span>
+<div class="prompt-text">请使用 video-shotcraft，根据以下素材做一支产品介绍视频。
+
+素材：
+- 项目目录或网页地址：【填写路径或链接】
+- 截图 / 录屏 / 图片 / 音频：【填写路径】
+- 产品文案或补充说明：【填写路径或直接粘贴】
+
+主题：
+【产品名称】：【一句话定位】
+视频不是操作教程，而是介绍它如何帮助【目标观众】解决【核心问题】。
+
+重点展示：
+1. 【功能或页面 1】
+2. 【功能或页面 2】
+3. 【功能或页面 3】
+4. 【结果、价值或转化点】
+
+结构：
+痛点 → 产品定位 → 输入素材 → 核心流程 → 关键结果 → 价值总结
+
+风格：
+专业、清爽、有轻微科技感；优先使用真实页面或真实录屏，截图文字要清楚，动效服务理解，不要过度炫技。
+
+输出：
+- 时长：【例如 30 秒】
+- 比例：【例如 16:9】
+- 分辨率：【例如 1920x1080】
+- 语言：【中文 / 英文】
+- 音频：【使用 BGM + SFX / 仅 SFX / 无音频】
+- 交付带 BGM 和无 BGM 两版成片，并保留可继续调整的工程。</div>
+</div>
+</div>
+<figure class="shot">
+<img alt="制作输入 prompt 示例截图" class="finch-media-ratio" height="388" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-prompt-d50155e8d137.jpg" width="531"/>
+<figcaption>输入示例</figcaption>
+</figure>
+</div>
+</section>
+<section id="mode">
+<div class="section-head">
+<div class="step-no">STEP 04</div>
+<div><h2>选择制作模式</h2><p class="lead">已指定模式时直接执行；<u>未指定时，Codex 先检查产品页面和素材，再推荐路径</u>。</p></div>
+</div>
+<div class="content">
+<div class="panel">
+<ul class="mode-list">
+<li><b>01 · 模板模式<small>Direct template use</small></b><span>沿用 Ink Press 的镜头结构，替换产品截图、文案和品牌信息，适合快速复刻成熟模板片。</span></li>
+<li><b>02 · 自主创作<small>Autonomous free creation</small></b><span>由 Codex 自主决定视觉方向、镜头安排、分镜、素材采集、声音设计和最终渲染。</span></li>
+<li><b>03 · 共同创作<small>Guided co-creation</small></b><span>用户分阶段确认视觉方向、镜头映射和最终分镜，适合对表达方向要求明确的项目。</span></li>
+</ul>
+<div class="prompt">
+<span class="prompt-title">MODE PROMPT</span>
+<div class="prompt-text">我希望使用【模板模式 / 自主创作 / 共同创作】制作这支视频。
+
+如果我没有选模式，请先只读检查产品页面和素材，说明 Ink Press 模板、自主创作、共同创作分别是否适合，并推荐一种路径后再继续。</div>
+</div>
+</div>
+</div>
+</section>
+<section id="organize">
+<div class="section-head">
+<div class="step-no">STEP 05</div>
+<div><h2>组织页面和素材</h2><p class="lead">Video Shotcraft 的核心不是生成假 UI，而是把真实页面拍出镜头感。页面状态、数据边界和文字清晰度要在制作前确认。</p></div>
+</div>
+<div class="content">
+<div class="panel">
+<span class="label">采集前确认</span>
+<ul class="final-list">
+<li><b>真实页面</b><span>展示产品时优先使用真实页面、真实截图或真实录屏。假 UI 只适合抽象开场或独立组件。</span></li>
+<li><b>页面状态</b><span>为每个功能准备清晰、可复现的状态，例如输入、处理中、结果页、详情页和导出页。</span></li>
+<li><b>清晰度</b><span>检查截图分辨率，避免放大后文字模糊、裁切、遮挡或替换错误。</span></li>
+<li><b>数据安全</b><span>冻结演示数据；敏感内容先脱敏，再采集和制作。</span></li>
+</ul>
+</div>
+<figure class="shot">
+<img alt="输入素材示例截图" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out1-7c1bb9192311.png" width="1920"/>
+<img alt="产品介绍示例截图" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out2-71627e323fab.png" width="1920"/>
+<img alt="深挖追问镜头示例截图" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out3-5c61a8f2511b.png" width="1920"/>
+<img alt="回答训练示例截图" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out4-aa4ee4cb4c40.png" width="1920"/>
+<figcaption>渲染结果示例</figcaption>
+</figure>
+</div>
+</section>
+<section id="deliver">
+<div class="section-head">
+<div class="step-no">STEP 06</div>
+<div><h2>确认输出文件</h2><p class="lead">一次完整交付不只是一个 mp4，而是一套能复看、能调、能继续迭代的视频工程。</p></div>
+</div>
+<div class="content">
+<div class="panel">
+<span class="label">交付清单</span>
+<ul class="deliver-list">
+<li><b>工程目录</b><span>Remotion 项目、素材、时间线、设计说明和可复现渲染配置。</span></li>
+<li><b>成片两版</b><span>带 BGM 版，以及无 BGM 但保留 SFX 的版本，方便后期重新配乐。</span></li>
+<li><b>QA 记录</b><span>关键帧检查、最终审查记录、敏感信息检查和渲染参数。</span></li>
+<li><b>动效工作台</b><span>镜头、字幕、转场、音效拆成可视化轨道，可继续微调后导出。</span></li>
+</ul>
+</div>
+<figure class="shot">
+<img alt="输出文件示例截图" class="finch-media-ratio" height="261" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/instruction-zh/zh-file1-a1918c575a09.png" width="518"/>
+<img alt="工程文件夹示例截图" class="finch-media-ratio" height="266" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/instruction-zh/zh-file2-366f7ec2f203.png" width="458"/>
+<figcaption>输出示例</figcaption>
+</figure>
+</div>
+</section>
+<section id="check">
+<div class="section-head">
+<div class="step-no">STEP 07</div>
+<div><h2>最终检查清单</h2><p class="lead">交付前要确认它真的在介绍产品：看得清、听得懂、节奏稳、重点有停留，且没有泄露敏感信息。</p></div>
+</div>
+<div class="content no-shot">
+<div class="panel">
+<span class="label">继续迭代时发给 Codex</span>
+<ul class="final-list">
+<li><b>主题</b><span>是否清楚说明产品、观众和价值，而不是只讲操作步骤。</span></li>
+<li><b>镜头</b><span>是否按既定结构推进，每个镜头只表达一个动作，重点信息是否有停留。</span></li>
+<li><b>画面</b><span>页面文字是否清晰，有无遮挡、裁切、变形或替换错误。</span></li>
+<li><b>声音</b><span>旁白、BGM 和 SFX 是否平衡，音乐是否盖住人声或关键信息。</span></li>
+<li><b>交付</b><span>是否输出两版成片、完成独立终检，并确认没有敏感信息。</span></li>
+</ul>
+<div class="prompt">
+<span class="prompt-title">REVISION PROMPT</span>
+<div class="prompt-text">请基于刚才的视频继续优化：检查主题是否清楚、镜头是否按结构推进、页面文字是否清晰、重点信息是否有停留、BGM 和 SFX 是否盖住人声，并重新输出带 BGM 与无 BGM 两版成片。若发现敏感信息、遮挡、裁切或替换错误，请先修正再渲染。</div>
+</div>
+</div>
+</div>
+</section>
+<footer>VIDEO SHOTCRAFT INSTRUCTION ZH · REAL UI / SHOT CARDS / REMOTION / QA</footer>
+</main>
+</div></body>
+</html>

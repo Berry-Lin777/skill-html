@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Video Shotcraft Gallery Delivery turns real product pages, shot recipe cards, Remotion engineering, and sound design into editable, reviewable cinematic product films." name="description"/>
+<title>Video Shotcraft Gallery Delivery — Turn real products into cinematic films</title>
+<style>
+/* ============ Design system ============ */
+:root{
+  --bg:#0b0b0c;
+  --bg-2:#101012;
+  --ink:#ece8df;
+  --ink-dim:#9a958b;
+  --ink-faint:#5f5b54;
+  --brass:#c8a468;
+  --brass-dim:rgba(200,164,104,.28);
+  --hair:rgba(236,232,223,.09);
+  --hair-2:rgba(236,232,223,.16);
+  --serif:"Songti SC","Noto Serif SC","STSong",Georgia,"Times New Roman",serif;
+  --sans:"Inter","PingFang SC","Microsoft YaHei",-apple-system,Arial,sans-serif;
+  --mono:"SF Mono","JetBrains Mono","Courier New",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--bg)}
+.finch-page{
+  background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:15px;line-height:1.8;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+::selection{background:var(--brass);color:#0b0b0c}
+.finch-page::after{ /* film grain */
+  content:"";position: relative;inset:0;z-index:99;pointer-events:none;opacity:.05;
+  background-image:none'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none}
+img,video{display:block;max-width:100%}
+.wrap{width:min(1160px,calc(100% - 48px));margin:0 auto}
+.wide-copy{max-width:1040px}
+.mark{color:var(--brass);font-weight:600}
+.mark-soft{color:#d8b779}
+
+/* ============ Top navigation ============ */
+.topbar{
+  position: relative;inset:0 0 auto 0;z-index:50;
+  background:rgba(11,11,12,.72);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--hair);
+}
+.topbar .wrap{height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink)}
+.logo em{color:var(--brass);font-style:normal}
+.nav{display:flex;align-items:center;gap:28px;font-size:12px;color:var(--ink-dim)}
+.nav a{transition:color .2s}
+.nav a:hover{color:var(--ink)}
+.nav .cta{
+  color:var(--brass);border:1px solid var(--brass-dim);
+  display:inline-flex;align-items:center;height:34px;padding:0 14px;line-height:1;
+  transition:background .2s,color .2s;
+}
+.nav .cta:hover{background:var(--brass);color:#0b0b0c}
+
+/* ============ Hero ============ */
+.hero{
+  position:relative;min-height: auto;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:120px 0 64px;overflow:hidden;
+}
+.hero-media{position:absolute;inset:0;z-index:-1}
+.hero-media video{width:100%;height:100%;object-fit:cover;filter:grayscale(.25) contrast(1.1) brightness(.5)}
+.hero-media .cover-lens{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:center;filter:contrast(1.12) saturate(.9) brightness(.42);
+  mix-blend-mode:screen;opacity:.72;
+}
+.hero-materials{
+  position:absolute;inset:8% 4% 38%;display:grid;grid-template-columns:1.35fr .8fr .8fr;
+  grid-template-rows:1fr 1fr;gap:14px;opacity:.54;transform:rotate(-1.5deg) scale(1.04);
+  filter:grayscale(.18) contrast(1.08);pointer-events:none;
+}
+.hero-materials img{width:100%;height:100%;object-fit:cover;object-position:top;border:1px solid rgba(236,232,223,.18);box-shadow:0 18px 50px rgba(0,0,0,.34)}
+.hero-materials img:first-child{grid-row:1 / span 2;object-position:center}
+.hero-materials img:nth-child(2){grid-column:2 / span 2}
+.hero-media::after{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 72% 44%,rgba(200,164,104,.13),transparent 30%),
+    linear-gradient(90deg,rgba(11,11,12,.92),rgba(11,11,12,.68) 46%,rgba(11,11,12,.34)),
+    linear-gradient(180deg,rgba(11,11,12,.58),rgba(11,11,12,.35) 45%,var(--bg) 96%);
+}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:56px}
+.hero-kicker{
+  display:flex;align-items:center;gap:12px;margin-bottom:26px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--brass);
+}
+.hero-kicker::before{content:"";width:34px;height:1px;background:var(--brass)}
+.hero h1{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(44px,7.2vw,96px);line-height:1.06;letter-spacing:.01em;
+  max-width:15em;
+}
+.hero h1 .thin{color:var(--ink-dim);font-weight:400}
+.hero h1 .brass{color:var(--brass)}
+.hero-side{width:300px;flex-shrink:0;font-family:var(--mono);font-size:11px;color:var(--ink-faint);line-height:2}
+.hero-side dt{color:var(--ink-dim);letter-spacing:.1em}
+.hero-side dd{margin-bottom:14px;color:var(--ink-faint)}
+.hero-side dd b{color:var(--brass);font-weight:400;font-size:15px}
+.hero-lead{max-width:1040px;font-size:17px;color:var(--ink-dim);line-height:1.9}
+.position-line{
+  max-width:1040px;margin-top:26px;padding:20px 24px;
+  border-left:2px solid var(--brass);background:rgba(200,164,104,.05);
+  font-size:15px;color:var(--ink);
+}
+.position-line b{color:var(--brass);font-weight:600}
+.hero-actions{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:13px 24px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--hair-2);color:var(--ink);transition:.25s;
+}
+.btn::after{content:"→";transition:transform .25s}
+.btn:hover{border-color:var(--brass);color:var(--brass)}
+.btn:hover::after{transform:translateX(4px)}
+.btn.solid{background:var(--brass);border-color:var(--brass);color:#0b0b0c}
+.btn.solid:hover{background:#dbb880;color:#0b0b0c}
+
+/* marquee */
+.marquee{
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  overflow:hidden;padding:14px 0;background:var(--bg-2);
+}
+.marquee-track{display:flex;gap:48px;width:max-content;animation:scroll 30s linear infinite;
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);white-space:nowrap}
+.marquee-track span i{color:var(--brass);font-style:normal;margin-right:48px}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ============ Sections ============ */
+section{padding:110px 0;border-top:1px solid var(--hair)}
+section:has(.wave-divider) + section{border-top:none}
+.sec-head{display:block;margin-bottom:60px}
+.sec-index{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.2em}
+.sec-head h2{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(30px,4.4vw,52px);line-height:1.15;letter-spacing:.01em;
+  max-width:1040px;
+}
+.sec-head p{width:100%;max-width:1040px;color:var(--ink-dim);font-size:15px;margin-top:18px}
+
+/* ============ 01 Pain ============ */
+.pain-list{border-top:1px solid var(--hair-2)}
+.pain-item{
+  display:grid;grid-template-columns:1fr 1.25fr;gap:56px;align-items:baseline;
+  padding:34px 8px;border-bottom:1px solid var(--hair-2);
+  transition:background .25s,padding-left .25s;
+}
+.pain-item:hover{background:rgba(236,232,223,.025);padding-left:20px}
+.pain-item .no{font-family:var(--mono);font-size:13px;color:var(--brass)}
+.pain-item h3{font-family:var(--serif);font-size:22px;font-weight:700;line-height:1.4}
+.pain-item h3,.demand-card h3,.step h3,.aud-cell h3{color:var(--brass)}
+.pain-item p{color:var(--ink-dim);font-size:14px}
+
+/* ============ 02 Demand ============ */
+.demand-triangle{
+  position:relative;margin-top:12px;
+}
+.demand-triangle::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%,rgba(200,164,104,.08),transparent 48%);
+  pointer-events:none;
+}
+.demand-grid{position:relative;z-index:1;width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.demand-card{
+  min-height:250px;border:1px solid rgba(236,232,223,.11);
+  background:linear-gradient(145deg,rgba(16,16,18,.82),rgba(16,16,18,.45));
+  backdrop-filter:blur(14px);padding:30px;transition:border-color .25s,transform .25s;
+  box-shadow:0 18px 60px rgba(0,0,0,.28);
+}
+.demand-card:hover{border-color:var(--brass-dim);transform:translateY(-4px)}
+.demand-card .tag{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.18em}
+.demand-card h3{font-family:var(--serif);font-size:24px;font-weight:700;margin:18px 0 12px;line-height:1.35}
+.demand-card p{color:var(--ink-dim);font-size:14px}
+.demand-card h3{max-width:14em}
+
+/* ============ 03 Case ============ */
+.case-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:start}
+.screen{
+  border:1px solid var(--hair-2);background:#000;padding:10px;
+}
+.screen video{width:100%;aspect-ratio:16/10;object-fit:cover}
+.screen-cap{
+  display:flex;justify-content:space-between;margin-top:12px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);
+}
+.case-quote{border-left:2px solid var(--brass);padding-left:28px}
+.case-quote h3{font-family:var(--serif);font-size:clamp(26px,3vw,36px);font-weight:700;line-height:1.3;margin-bottom:20px}
+.case-quote h3 span{color:var(--brass)}
+.case-quote>p{color:var(--ink-dim);font-size:14px}
+.case-facts{margin-top:36px;border-top:1px solid var(--hair-2)}
+.case-facts li{
+  list-style:none;display:grid;grid-template-columns:88px 1fr;gap:16px;
+  padding:16px 0;border-bottom:1px solid var(--hair);font-size:13px;color:var(--ink-dim);
+}
+.case-facts li b{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.1em;font-weight:400;padding-top:3px}
+.shot-wall{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.shot{margin:0}
+.shot img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;border:1px solid var(--hair);filter:saturate(.85);transition:filter .3s,transform .3s}
+.shot:hover img{filter:saturate(1);transform:translateY(-3px)}
+.shot figcaption{font-size:11px;color:var(--ink-faint);margin-top:10px;line-height:1.6}
+
+/* ============ 04 Steps ============ */
+.steps{border-top:1px solid var(--hair-2)}
+.step{
+  display:grid;grid-template-columns:110px 200px 1fr;gap:32px;align-items:baseline;
+  padding:26px 8px;border-bottom:1px solid var(--hair-2);transition:background .25s,padding-left .25s;
+}
+.step:hover{background:rgba(200,164,104,.04);padding-left:20px}
+.step .no{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.14em}
+.step h3{font-family:var(--serif);font-size:21px;font-weight:700}
+.step p{color:var(--ink-dim);font-size:14px}
+
+/* ============ 05 Audience ============ */
+.audience-stage{
+  position:relative;padding:26px 0;overflow:hidden;
+  background:radial-gradient(circle at 50% 50%,rgba(200,164,104,.08),transparent 42%);
+}
+.audience-stage::before{
+  content:"";position:absolute;inset:8% 14%;border-radius:50%;
+  background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(200,164,104,.07),transparent 65%);
+  filter:blur(2px);transform:rotate(-8deg);
+}
+.audience-grid{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.aud-cell{
+  min-height:170px;padding:26px;
+  background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(16,16,18,.34) 42%,rgba(16,16,18,.74));
+  border:1px solid rgba(236,232,223,.12);backdrop-filter:blur(16px);
+  box-shadow:0 24px 70px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.08);
+  transition:transform .35s,border-color .25s,box-shadow .25s;
+}
+.aud-cell::after{
+  content:"";position:absolute;inset:auto 24px 18px 24px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--brass),transparent);opacity:.34;
+}
+.aud-cell:hover{transform:translateY(-8px) scale(1.015);border-color:rgba(200,164,104,.42);box-shadow:0 30px 90px rgba(0,0,0,.42),0 0 38px rgba(200,164,104,.12)}
+.aud-cell .no{display:none}
+.aud-cell h3{font-family:var(--serif);font-size:20px;font-weight:700;margin:0 0 10px}
+.aud-cell p{font-size:13px;color:var(--ink-dim)}
+
+/* ============ 06 Closing ============ */
+.finale{padding:140px 0;text-align:center;border-top:1px solid var(--hair);
+  background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(200,164,104,.08),transparent 70%)}
+.finale .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--brass);text-transform:uppercase}
+.finale h2{font-family:var(--serif);font-weight:700;font-size:clamp(32px,5vw,64px);line-height:1.25;margin:24px auto;max-width:16em}
+.finale h2 span{color:var(--brass)}
+.finale p{max-width:680px;margin:0 auto;color:var(--ink-dim);font-size:15px}
+.finale .hero-actions{justify-content:center;margin-top:44px}
+
+footer{
+  border-top:1px solid var(--hair);padding:32px 0;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-faint);text-align:center;
+}
+
+.wave-divider{height:96px;position:relative;overflow:hidden;background:var(--bg)}
+.wave-divider canvas{width:100%;height:100%;display:block;opacity:.58}
+.wave-divider::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--bg),transparent 42%,var(--bg))}
+
+/* ============ Motion ============ */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.marquee-track{animation:none}}
+
+/* ============ Responsive ============ */
+@media(max-width:960px){
+  .hero-top{flex-direction:column}
+  .hero-side{width:100%;display:flex;gap:32px;flex-wrap:wrap}
+  .case-layout{grid-template-columns:1fr}
+  .shot-wall{grid-template-columns:repeat(2,1fr)}
+  .demand-triangle,.demand-grid{display:block}
+  .demand-card,.demand-card:nth-child(n){position:relative;width:100%;left:auto;right:auto;top:auto;bottom:auto;transform:none;margin-bottom:18px}
+  .demand-card:nth-child(1):hover,.demand-card:hover{transform:translateY(-4px)}
+  .audience-stage,.audience-grid{min-height:auto}
+  .aud-cell,.aud-cell:nth-child(n){position:relative;width:100%;left:auto;right:auto;top:auto;bottom:auto;margin-bottom:16px}
+  .pain-item{grid-template-columns:1fr;gap:12px}
+  .step{grid-template-columns:80px 1fr;gap:16px}
+  .step p{grid-column:2}
+}
+@media(max-width:620px){
+  .wrap{width:calc(100% - 32px)}
+  .nav a:not(.cta){display:none}
+  section{padding:76px 0}
+  .audience-grid{grid-template-columns:1fr}
+  .shot-wall{grid-template-columns:1fr}
+}
+
+.finch-inline-19{border-top:none;padding-top:120px}
+html,body{margin:0;padding:0;width:100%;}
+.finch-page{position:relative;isolation:isolate;width:100%;background-color:#0b0b0c;color:#ece8df;}
+img,video{max-width:100%!important;height:auto!important;} .finch-media-ratio{aspect-ratio:auto 16 / 9;} .reveal{opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important;} .finch-page::before,.finch-page::after{pointer-events:none;position:absolute;}
+</style></head>
+<body><div class="finch-page">
+<header class="topbar">
+<div class="wrap">
+<a class="logo" href="#top">VIDEO SHOTCRAFT <em>/</em> GALLERY DELIVERY</a>
+<nav class="nav">
+<a href="#pain">Pain</a>
+<a href="#demand">Demand</a>
+<a href="#cases">Case</a>
+<a href="#steps">Steps</a>
+<a class="cta" href="#summary">Summary</a>
+</nav>
+</div>
+</header>
+<main id="top">
+<!-- HERO -->
+<section class="hero finch-inline-19">
+<div class="hero-media">
+<video class="finch-media-ratio" controls="" loop="" muted="" playsinline="" preload="metadata" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-video-c466e1a6221c.mp4"></video>
+<img alt="" class="cover-lens finch-media-ratio" height="1133" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/cover-lens-e519bf836533.jpg" width="1700"/>
+<div aria-hidden="true" class="hero-materials">
+<img alt="" class="finch-media-ratio" height="190" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-prompt-9328dac3f0f8.png" width="928"/>
+<img alt="" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-out1-1801720fee7a.png" width="1920"/>
+<img alt="" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-out2-79f2c2787b46.png" width="1920"/>
+<img alt="" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-out3-17a2f0248263.png" width="1920"/>
+</div>
+</div>
+<div class="wrap">
+<div class="hero-top">
+<div>
+<div class="hero-kicker">Agent-ready cinematic product films</div>
+<h1>Stop generating fake shots.<br/><span class="thin">Turn</span> <span class="brass">real products</span><br/>into cinematic films.</h1>
+</div>
+<dl class="hero-side">
+<div><dt>SHOT CARDS</dt><dd><b>157</b> shot recipe cards</dd></div>
+<div><dt>MOTION STYLES</dt><dd><b>214</b> motion styles</dd></div>
+<div><dt>TEMPLATE</dt><dd><b>36.2s</b> reusable template film</dd></div>
+</dl>
+</div>
+<p class="hero-lead">Video Shotcraft Gallery Delivery connects <span class="mark">real pages</span>, <span class="mark">shot cards</span>, <span class="mark">2.5D camera moves</span>, <span class="mark">sound</span>, and a <span class="mark">Remotion project</span>, so product videos can feel polished and stay editable.</p>
+</div>
+</section>
+<!-- Marquee -->
+<div aria-hidden="true" class="marquee">
+<div class="marquee-track">
+<span>REAL UI <i>·</i> SHOT CARDS <i>·</i> CINEMATIC MOTION <i>·</i> REMOTION PIPELINE <i>·</i> SOUND DESIGN <i>·</i> VERSIONABLE FILMS <i>·</i> DELIVERY QA <i>·</i> MOTION WORKBENCH <i>·</i></span>
+<span>REAL UI <i>·</i> SHOT CARDS <i>·</i> CINEMATIC MOTION <i>·</i> REMOTION PIPELINE <i>·</i> SOUND DESIGN <i>·</i> VERSIONABLE FILMS <i>·</i> DELIVERY QA <i>·</i> MOTION WORKBENCH <i>·</i></span>
+<span>REAL UI <i>·</i> SHOT CARDS <i>·</i> CINEMATIC MOTION <i>·</i> REMOTION PIPELINE <i>·</i> SOUND DESIGN <i>·</i> VERSIONABLE FILMS <i>·</i> DELIVERY QA <i>·</i> MOTION WORKBENCH <i>·</i></span>
+</div>
+</div>
+<!-- 01 Pain -->
+<section id="pain">
+<div class="wrap">
+<div class="sec-head reveal">
+<h2>Pretty fake shots do not sell <span class="mark">real products</span></h2>
+<p>The biggest risk in software product films is looking impressive while no one understands <span class="mark">what the product actually does</span>. The interface has to be real, the flow has to be legible, and the shots must remain editable; otherwise even beautiful <span class="mark">AI visuals</span> only sidestep the product itself.</p>
+</div>
+<div class="pain-list">
+<div class="pain-item reveal">
+<h3>AI visuals look good,<br/>but the product is fake</h3>
+<p>Viewers want to see <span class="mark">real pages</span>, <span class="mark">real features</span>, and <span class="mark">real outcomes</span>. A fictional UI, however polished, has a hard time building trust.</p>
+</div>
+<div class="pain-item reveal">
+<h3>Editing tools are mature,<br/>but the labor is heavy</h3>
+<p><span class="mark">Scripts</span>, <span class="mark">storyboards</span>, screenshots, camera moves, captions, sound effects, beat timing, and revisions all need attention. Small teams rarely have time to make a polished film for every release.</p>
+</div>
+<div class="pain-item reveal">
+<h3>Remotion is powerful,<br/>but shot language is hard</h3>
+<p><span class="mark">Programmatic rendering</span> solves how to generate the film, but not how to make it feel like an ad. <span class="mark">Shots, rhythm, and sound</span> still need a mature method.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 02 Demand -->
+<section id="demand">
+<div class="wrap">
+<div class="sec-head reveal">
+<h2>Product video needs to move from generation to <span class="mark">delivery</span></h2>
+<p>What teams need is not a lucky one-off clip, but a finished project that can be <span class="mark">revised</span>, <span class="mark">reused</span>, and tracked in <span class="mark">version control</span>.</p>
+</div>
+<div class="demand-triangle">
+<div class="demand-grid">
+<article class="demand-card reveal">
+<span class="tag">LAUNCH</span>
+<h3>Launch fast without looking like a screen recording</h3>
+<p><span class="mark">Home pages</span>, <span class="mark">feature pages</span>, dashboards, and workflows need to become product narratives people can remember in 30-60 seconds.</p>
+</article>
+<article class="demand-card reveal">
+<span class="tag">VISIBILITY</span>
+<h3>Good work deserves to be seen</h3>
+<p>Developers already have <span class="mark">working pages</span>. The missing piece is turning them into <span class="mark">video assets</span> for websites, social posts, and portfolios.</p>
+</article>
+<article class="demand-card reveal">
+<span class="tag">CLARITY</span>
+<h3>Complex demos need a simple story</h3>
+<p><span class="mark">Push-ins</span>, <span class="mark">annotations</span>, flying cards, and rhythmic captions break a complex feature path into shots viewers can follow.</p>
+</article>
+</div>
+</div>
+</div>
+</section>
+<!-- 03 Case -->
+<section id="cases">
+<div class="wrap">
+<div class="sec-head reveal">
+<h2>Case study: <span class="mark">Shotcraft Gallery Promo</span></h2>
+<p>This case starts directly from the Gallery <span class="mark">real pages</span>: <span class="mark">shot cards</span>, <span class="mark">camera moves</span>, <span class="mark">sound effects</span>, the <span class="mark">Remotion project</span>, and <span class="mark">QA</span> all run through to final delivery, with both BGM and no-BGM versions.</p>
+</div>
+<div class="case-layout">
+<div class="reveal">
+<div class="screen">
+<video class="finch-media-ratio" controls="" muted="" playsinline="" preload="metadata" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-video-c466e1a6221c.mp4"></video>
+</div>
+<div class="screen-cap"><span>DELIVERED FILM</span><span>REAL UI / REMOTION TIMELINE</span></div>
+</div>
+<div class="case-quote reveal">
+<h3>It turns the shot library itself<br/>into a <span>product</span>.</h3>
+<ul class="case-facts">
+<li><b>REAL CAPTURE</b> prioritizes <span class="mark">real page textures</span> and states, preserving the product credibility already present in the UI.</li>
+<li><b>CINEMATIC CAMERA</b> uses a <span class="mark">2.5D page camera</span> for push-ins, angled views, floating motion, transitions, and focus guidance.</li>
+<li><b>SOUND DESIGN</b> places <span class="mark">riser, impact, camera, UI, and text</span> effects into the timeline instead of dropping music on at the end.</li>
+</ul>
+</div>
+</div>
+<div class="shot-wall">
+<figure class="shot reveal"><img alt="Full Gallery sample library screenshot" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-out1-1801720fee7a.png" width="1920"/><figcaption><span class="mark">Sample library</span> — search, filter, preview, and copy shot names</figcaption></figure>
+<figure class="shot reveal"><img alt="Shot detail page screenshot" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-out2-79f2c2787b46.png" width="1920"/><figcaption><span class="mark">Shot detail</span> — use cases, parameters, reference implementation, and samples</figcaption></figure>
+<figure class="shot reveal"><img alt="Project delivery page screenshot" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-out3-17a2f0248263.png" width="1920"/><figcaption><span class="mark">Project delivery</span> — films, source project, QA, and archived assets</figcaption></figure>
+<figure class="shot reveal"><img alt="Recipe card documentation page screenshot" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-out4-00acde30d47f.png" width="1920"/><figcaption><span class="mark">Recipe cards</span> — turning mature motion patterns into executable directing language</figcaption></figure>
+</div>
+</div>
+</section>
+<!-- 04 Steps -->
+<section id="steps">
+<div class="wrap">
+<div class="sec-head reveal">
+<h2>Workflow</h2>
+<p>The user provides a <span class="mark">product directory</span>, website, screenshots, recordings, audio, or copy. The Skill turns those inputs into a <span class="mark">storyboard</span>, <span class="mark">project</span>, <span class="mark">finished film</span>, and an adjustable workbench.</p>
+</div>
+<div class="steps">
+<div class="step reveal"><span class="no">STEP 01</span><h3>Install the Skill</h3><p>Load the <span class="mark">shot cards</span>, templates, components, audio, and production notes.</p></div>
+<div class="step reveal"><span class="no">STEP 02</span><h3>Prepare the assets</h3><p>Provide the project directory, website URL, screenshots, recordings, <span class="mark">product positioning</span>, and must-show features.</p></div>
+<div class="step reveal"><span class="no">STEP 03</span><h3>Clarify the brief</h3><p>Define the theme, structure, style, duration, aspect ratio, language, <span class="mark">BGM</span>, and output requirements.</p></div>
+<div class="step reveal"><span class="no">STEP 04</span><h3>Choose the mode</h3><p>Pick the <span class="mark">Ink Press template</span>, autonomous creation, or guided collaboration based on project risk.</p></div>
+<div class="step reveal"><span class="no">STEP 05</span><h3>Stage the pages</h3><p>Freeze demo data, capture <span class="mark">real page states</span>, and avoid blurred text, overlaps, and sensitive information.</p></div>
+<div class="step reveal"><span class="no">STEP 06</span><h3>Render and deliver</h3><p>Deliver the project directory, BGM and no-BGM films, <span class="mark">QA notes</span>, and Motion Workbench.</p></div>
+</div>
+</div>
+</section>
+<!-- 05 Audience -->
+<section id="audience">
+<div class="wrap">
+<div class="sec-head reveal">
+<h2>Give every <span class="mark">good product</span> a <span class="mark">high-quality demo</span></h2>
+</div>
+<div class="audience-stage">
+<div class="audience-grid">
+<div class="aud-cell reveal"><h3>Independent developers</h3><p>They have a <span class="mark">product</span>, a <span class="mark">page</span>, and a <span class="mark">launch need</span>, but not enough time for professional storyboarding and motion design.</p></div>
+<div class="aud-cell reveal"><h3>AI product teams</h3><p>They need to quickly explain <span class="mark">new features</span>, <span class="mark">new agents</span>, and <span class="mark">new workflows</span> while keeping the visuals real and credible.</p></div>
+<div class="aud-cell reveal"><h3>SaaS / B2B tools</h3><p>Complex interfaces and business workflows do not fit pure text-to-video; they need <span class="mark">cinematic expression</span> built on <span class="mark">real UI</span>.</p></div>
+<div class="aud-cell reveal"><h3>Frontend engineers</h3><p>They want to upgrade portfolios from <span class="mark">static screenshots</span> into <span class="mark">showcase assets</span> with camera moves, rhythm, and texture.</p></div>
+<div class="aud-cell reveal"><h3>Plugin and template authors</h3><p>They ship small products often, making it natural to reuse <span class="mark">shot cards</span> and <span class="mark">template structures</span> for a steady video production rhythm.</p></div>
+<div class="aud-cell reveal"><h3>Sales and growth teams</h3><p>They need <span class="mark">demos</span> that are sharper and more memorable than recordings for websites, social posts, launches, and presentations.</p></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 06 Closing -->
+<section class="finale" id="summary">
+<div class="wrap reveal">
+<div class="eyebrow">FINAL TAKE</div>
+<h2>You build the product.<br/>The Agent turns it into a <span>commercial-grade film</span>.</h2>
+<p>The value of Video Shotcraft Gallery Delivery is not replacing editing software or randomly generating attractive visuals. It builds an <span class="mark">agent-executable</span> motion directing system: <span class="mark">real screenshots</span>, <span class="mark">shot language</span>, <span class="mark">sound design</span>, templates, code implementation, and <span class="mark">QA standards</span>, all flowing into an <span class="mark">editable, reusable, reviewable</span> product video project.</p>
+<div class="hero-actions">
+<a class="btn solid" href="https://vincentwei1021.github.io/video-shotcraft/library.html">Browse Motion Library</a>
+<a class="btn" href="https://vincentwei1021.github.io/video-shotcraft/">Visit Video Shotcraft</a>
+</div>
+</div>
+</section>
+</main>
+<footer>VIDEO SHOTCRAFT GALLERY DELIVERY — REAL UI / SHOT CARDS / REMOTION / SOUND DESIGN / QA</footer>
+</div></body>
+</html>

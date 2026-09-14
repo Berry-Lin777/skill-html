@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>Twitter Autopilot User Guide</title>
+<style>
+    :root {
+      color-scheme: light;
+      --ink: #14202b;
+      --muted: #5e6b76;
+      --line: #dfe5e9;
+      --soft: #f5f7f8;
+      --paper: #ffffff;
+      --blue: #1d5f8a;
+      --navy: #173a55;
+      --warm: #f4efe7;
+      --shadow: 0 18px 48px rgba(20, 32, 43, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, .finch-page {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background: #edf1f3;
+      color: var(--ink);
+    }
+
+    .finch-page {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.72;
+      overflow-wrap: anywhere;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100%;
+      background: #edf1f3;
+      color: var(--ink);
+      padding: clamp(18px, 4vw, 56px);
+    }
+
+    .document {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid rgba(23, 58, 85, 0.08);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero {
+      padding: clamp(34px, 7vw, 88px) clamp(24px, 7vw, 82px) clamp(34px, 6vw, 72px);
+      background:
+        radial-gradient(circle at 82% 12%, rgba(29, 95, 138, 0.14), transparent 34%),
+        linear-gradient(145deg, #fbfcfc 0%, #eef4f6 100%);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      margin: 0 0 42px;
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 900px;
+      margin-bottom: 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.7rem, 7vw, 5.7rem);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      color: #0c1720;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2.2vw, 1.42rem);
+      line-height: 1.55;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0 0 34px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tags li {
+      padding: 7px 13px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(23, 58, 85, 0.12);
+      border-radius: 999px;
+      color: var(--navy);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .intro {
+      max-width: 850px;
+      margin-bottom: 18px;
+      font-size: 1.06rem;
+    }
+
+    .principle {
+      max-width: 900px;
+      margin: 0;
+      padding: 18px 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-left: 4px solid var(--blue);
+      border-radius: 0 14px 14px 0;
+    }
+
+    .content {
+      padding: 0 clamp(24px, 7vw, 82px) clamp(54px, 8vw, 96px);
+    }
+
+    section { padding-top: clamp(54px, 8vw, 92px); }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .section-index {
+      display: grid;
+      place-items: center;
+      min-width: 44px;
+      height: 44px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: var(--navy);
+      color: #fff;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      color: #0c1720;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.65rem, 3.6vw, 2.55rem);
+      line-height: 1.22;
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      margin: 36px 0 12px;
+      color: var(--navy);
+      font-size: 1.15rem;
+      line-height: 1.4;
+    }
+
+    p { margin-bottom: 18px; }
+
+    ul {
+      margin: 12px 0 24px;
+      padding-left: 1.25rem;
+    }
+
+    li { margin-bottom: 8px; }
+
+    .prompt-label {
+      margin: 26px 0 10px;
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .prompt {
+      margin-bottom: 26px;
+      padding: 20px 22px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      color: #1e2a34;
+      font-weight: 600;
+      line-height: 1.7;
+    }
+
+    figure {
+      margin: 30px 0 32px;
+      padding: clamp(10px, 2vw, 18px);
+      background: #f7f9fa;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    figcaption {
+      padding: 13px 6px 2px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .table-wrap {
+      width: 100%;
+      margin: 28px 0 8px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    th, td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--navy);
+      color: #fff;
+      font-size: 0.92rem;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    tbody tr:nth-child(even) { background: #f5f8fa; }
+
+    .templates {
+      display: grid;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .templates .prompt { margin: 0; }
+
+    .reminder {
+      margin-top: 34px;
+      padding: 24px;
+      background: var(--warm);
+      border-radius: 18px;
+    }
+
+    .reminder p:last-child { margin-bottom: 0; }
+
+    .document-footer {
+      padding: 22px clamp(24px, 7vw, 82px) 28px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 700px) {
+      .finch-page { font-size: 15px; }
+      .page { padding: 0; }
+      .document { border: 0; border-radius: 0; box-shadow: none; }
+      .brand { margin-bottom: 28px; }
+      .section-heading { grid-template-columns: auto minmax(0, 1fr); gap: 12px; }
+      .section-index { min-width: 36px; height: 36px; padding: 0 10px; font-size: 0.9rem; }
+      .table-wrap { border-radius: 12px; }
+      th, td { padding: 13px 12px; }
+      table { font-size: 0.84rem; }
+    }
+  
+
+html,body{margin:0;padding:0;width:100%;}
+.finch-page{position:relative;isolation:isolate;width:100%;background-color:#eaf1f8;color:#122033;}
+img,video{max-width:100%!important;height:auto!important;} .finch-media-ratio{aspect-ratio:auto 16 / 9;} .reveal{opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important;} .finch-page::before,.finch-page::after{pointer-events:none;position:absolute;}
+</style></head>
+<body><div class="finch-page">
+<div class="page">
+<main class="document">
+<header class="hero">
+<p class="brand">FINCHIP STUDIO  USER GUIDE</p>
+<h1>Twitter Autopilot User Guide</h1>
+<p class="subtitle">Use Natural Language to Read Search Analyze and Manage X Content</p>
+<figure>
+<img alt="Twitter Autopilot search, analysis, publishing, and engagement examples" height="960" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image1.png" width="1800"/>
+</figure>
+<ul aria-label="Capabilities" class="tags">
+<li>Search</li>
+<li>Analyze</li>
+<li>Publish</li>
+<li>Engage</li>
+</ul>
+<p class="intro">Twitter Autopilot reads public X profiles and timelines, searches topics and accounts, analyzes replies and quote posts, and, after OAuth authorization, publishes posts, likes posts, and follows accounts. This guide uses real English-language examples to explain installation, configuration, prompt design, result interpretation, and write actions.</p>
+<p class="principle"><strong>Usage principle</strong>  State the target, time range, result count, and output format clearly. For publishing, liking, following, or reversing an action, identify the exact target and rely on the API’s explicit success response.</p>
+</header>
+<div class="content">
+<section>
+<div class="section-heading">
+<span class="section-index">1</span>
+<h2>Installation and Initial Setup</h2>
+</div>
+<p>A complete installation includes SKILL.md, scripts, and references. The usual Codex installation path is ~/.codex/skills/twitter-autopilot. After installation, start a new conversation or restart the application so the skill can be loaded again.</p>
+<h3>1 Install and Verify the Skill</h3>
+<p>Send the following prompt to the AI. It will read the repository instructions, select the correct installation directory for the current tool, and check the required runtime dependencies.</p>
+<p class="prompt">Install this skill for me: https://github.com/FinchipAIOrg/twitter-autopilot. Read the repository instructions first, choose the correct installation location for my current AI tool, and install SKILL.md, scripts, and references completely. Check whether Python 3, curl, and a POSIX shell are available. When finished, tell me the installation path and whether I need to restart the application or start a new conversation to load it.</p>
+<h3>2 Configure AISA API KEY</h3>
+<p>Reading public data requires AISA_API_KEY. Obtain the key from AIsa and store it in a secure local location. Never send the key in chat or ask the AI to display its contents.</p>
+<p class="prompt">The key has been saved locally. Read it from the local file and inject it as AISA_API_KEY. Query the public profile of @elonmusk to verify that the API works. Do not display the key.</p>
+<figure>
+<img alt="Read the local key and verify API access" height="1053" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image2.png" width="1453"/>
+<figcaption>Figure 1  Read the local key and verify API access</figcaption>
+</figure>
+<h3>3 Authorize an X Account</h3>
+<p>Reading public content usually does not require signing in to X. Publishing posts, liking or unliking posts, and following or unfollowing accounts require OAuth authorization. Ask the AI to generate an authorization link, complete sign-in and approval in the browser, then return to the same conversation. Never provide an X password or login cookie to the AI.</p>
+<p>If AIsa offers a pay-as-you-go plan, you may select it. Confirm the balance, fees, and expiration terms shown on the AIsa page at the time of purchase.</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">2</span>
+<h2>How to Write an Effective Prompt</h2>
+</div>
+<p>A clear request usually contains five types of information. The AI may still complete a query when one is missing, but the result scope and presentation are more likely to differ from your intent.</p>
+<ul>
+<li>Action: retrieve, search, compare, analyze, publish, like, or follow.</li>
+<li>Target: an account, keyword, post URL, list, or community.</li>
+<li>Scope: how many recent posts, how many days, popular or latest results, and whether to retrieve replies and quotes.</li>
+<li>Output: an English summary, table, links, publication times, engagement metrics, or sentiment categories.</li>
+<li>Boundaries: state the sample size, actual coverage, unavailable content, and the distinction between facts and interpretation.</li>
+</ul>
+<p class="prompt-label">Example prompt</p>
+<p class="prompt">Use twitter-autopilot to retrieve the latest 20 posts from @[account]. Summarize the main topics in English. List each publication time, original URL, and all engagement metrics returned by the API.</p>
+<figure>
+<img alt="Specify the account, count, language, and output fields" height="465" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image3.png" width="1461"/>
+<figcaption>Figure 2  Specify the account count language and output fields</figcaption>
+</figure>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">3</span>
+<h2>Review an Account’s Recent Activity</h2>
+</div>
+<p>Use this workflow to track founders, official brand accounts, or industry leaders. Distinguish original posts, replies, reposts, and quote posts because engagement figures on a repost usually belong to the reposted source post.</p>
+<p class="prompt-label">Recommended prompt</p>
+<p class="prompt">Use twitter-autopilot to retrieve the latest 20 posts from @elonmusk. Summarize the main topics in English. For every returned post, list its publication time, post type, original URL, and all engagement metrics returned by the API. Clearly distinguish original posts, replies, reposts, and quote posts. State the actual time range covered by the results.</p>
+<figure>
+<img alt="Topics and details from the latest 20 posts, part 1" height="1651" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image4.png" width="2137"/>
+<figcaption>Figure 3  Topics and details from the latest 20 posts Part 1</figcaption>
+</figure>
+<figure>
+<img alt="Topics and details from the latest 20 posts, part 2" height="1616" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image5.png" width="2020"/>
+<figcaption>Figure 3  Topics and details from the latest 20 posts Part 2</figcaption>
+</figure>
+<p>Check the actual time range first, then review how many original posts, replies, reposts, and quote posts appear in the sample. Publication time is based on each returned activity item; engagement figures for reposts may match the source post.</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">4</span>
+<h2>Search a Topic and Summarize Popular Discussion</h2>
+</div>
+<p>Topic search helps identify what has attracted attention in a field. When popular results are requested, the AI prioritizes high-engagement samples. This does not cover every relevant post.</p>
+<figure>
+<img alt="Define seven days, popular results, deduplication, and sample scope" height="545" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image6.png" width="1461"/>
+<figcaption>Figure 4  Define seven days popular results deduplication and sample scope</figcaption>
+</figure>
+<figure>
+<img alt="AI topic search results and main controversies" height="2793" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image7.png" width="2171"/>
+<figcaption>Figure 5  AI topic search results and main controversies</figcaption>
+</figure>
+<p>Merging duplicate content prevents multiple retellings of one announcement from occupying several positions. Claims about research breakthroughs, hiring figures, or news headlines should be identified as statements made in posts and verified against primary sources.</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">5</span>
+<h2>Analyze Brand Sentiment and User Needs</h2>
+</div>
+<p>Brand monitoring can organize product advantages, defect reports, after-sales issues, and user requests. Classify sentiment from the post text and preserve mixed evaluations that contain both positive and negative information.</p>
+<figure>
+<img alt="Sentiment analysis request for Lenovo posts and mentions" height="595" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image8.png" width="1461"/>
+<figcaption>Figure 6  Sentiment analysis request for Lenovo posts and mentions</figcaption>
+</figure>
+<figure>
+<img alt="Lenovo sample classification and main feedback, part 1" height="1764" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image9.png" width="2064"/>
+<figcaption>Figure 7  Lenovo sample classification and main feedback Part 1</figcaption>
+</figure>
+<figure>
+<img alt="Lenovo feature requests and sample limits, part 2" height="1797" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image10.png" width="2129"/>
+<figcaption>Figure 7  Lenovo feature requests and sample limits Part 2</figcaption>
+</figure>
+<p>Positive, negative, and neutral labels describe the retrieved sample and do not represent all users. Report the search terms, deduplication method, actual API coverage, and number of records included in the analysis.</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">6</span>
+<h2>Compare Competitor Activity</h2>
+</div>
+<p>When comparing brands, use consistent accounts, time windows, and focus areas, and require a source for every finding. Present official announcements as facts and label marketing lessons or strategy suggestions as interpretation.</p>
+<figure>
+<img alt="Seven-day comparison request for Xiaomi, Huawei, and OPPO" height="595" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image11.png" width="1461"/>
+<figcaption>Figure 8  Seven-day comparison request for Xiaomi Huawei and OPPO</figcaption>
+</figure>
+<figure>
+<img alt="Official activity, user responses, and practices worth studying" height="2453" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image12.png" width="2107"/>
+<figcaption>Figure 9  Official activity user responses and practices worth studying</figcaption>
+</figure>
+<p>Posting frequency may vary widely across accounts in the same period. If an announcement type is absent from the retrieved official sample, state only that it was not observed in this search. Do not infer that the brand conducted no related activity.</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">7</span>
+<h2>Discover Relevant Creators</h2>
+</div>
+<p>Account discovery is useful for building a candidate list. Reviewing both public bios and recent posts filters out accounts that mention a keyword in the bio but do not publish related content consistently.</p>
+<figure>
+<img alt="Request for an AI creator candidate list" height="575" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image13.png" width="1461"/>
+<figcaption>Figure 10  Request for an AI creator candidate list</figcaption>
+</figure>
+<figure>
+<img alt="Candidate accounts, bios, content focus, and representative posts" height="2511" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image14.png" width="2079"/>
+<figcaption>Figure 11  Candidate accounts bios content focus and representative posts</figcaption>
+</figure>
+<p>When only a research list is needed, explicitly say not to follow or contact anyone. This separates discovery from external interaction and avoids changing account state before candidates have been evaluated.</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">8</span>
+<h2>Read a Single Post in Full Context</h2>
+</div>
+<p>After providing a post URL, you can retrieve the original text, conversation context, replies, and quote posts. This is useful for explaining what triggered a dispute, the main viewpoints on each side, and content unavailable because of API or account restrictions.</p>
+<p class="prompt-label">Recommended prompt</p>
+<p class="prompt">Use twitter-autopilot to read this post: [post URL]. Retrieve the available conversation context, replies, and quote posts. Explain in English what the original post says, what triggered the discussion, and the main supporting and opposing viewpoints. Include links to the original post and key responses. Report the engagement metrics returned by the API, the number of replies, thread records, and quote posts retrieved, whether additional pages were available, and any content that could not be obtained. Do not treat the retrieved replies and quotes as a complete or representative sample of all reactions.</p>
+<figure>
+<img alt="Single-post context and viewpoint analysis, part 1" height="1513" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image15.png" width="2064"/>
+<figcaption>Figure 12  Single-post context and viewpoint analysis Part 1</figcaption>
+</figure>
+<figure>
+<img alt="Single-post context and viewpoint analysis, part 2" height="1568" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image16.png" width="2099"/>
+<figcaption>Figure 12  Single-post context and viewpoint analysis Part 2</figcaption>
+</figure>
+<p>The reply or quote count displayed on the original post may exceed the records returned by the API. Deleted, private, restricted, or unavailable paginated content may be missing, so conclusions should describe the main viewpoints in the visible sample.</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">9</span>
+<h2>Publish Posts and Perform Account Actions</h2>
+</div>
+<p>Write actions change the state of the authorized X account, so the content or target must be explicit. If OAuth is active, the action can run directly. If authorization has expired, the AI will return a new authorization link.</p>
+<h3>1 Publish a Text Post</h3>
+<p class="prompt">Use twitter-autopilot to publish the following text exactly as a standalone X post: [post content]. Return the actual post URL if successful; otherwise explain why it failed.</p>
+<figure>
+<img alt="Successful text post with the actual URL returned" height="721" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image17.png" width="1453"/>
+<figcaption>Figure 13  Successful text post with the actual URL returned</figcaption>
+</figure>
+<h3>2 Publish an Image or Video</h3>
+<p>Attach the media file and state the caption explicitly in the prompt. When only one image is provided, do not ask for duplicates. If no caption is needed, explicitly request a media post without text.</p>
+<p class="prompt">Use twitter-autopilot to publish the attached image to X with this caption: [caption]. Return the actual post URL if successful; otherwise explain why it failed.</p>
+<h3>3 Follow an Account and Like a Post</h3>
+<p class="prompt">Use twitter-autopilot to follow @elonmusk and like their latest post.</p>
+<figure>
+<img alt="Successful follow and like actions" height="660" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction-en/image18.png" width="1453"/>
+<figcaption>Figure 14  Successful follow and like actions</figcaption>
+</figure>
+<p>After retrieving several posts, you can say “like item 2” or “unlike item 5.” If multiple accounts have similar names, confirm the exact account first.</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">10</span>
+<h2>Interpret Results and Resolve Common Issues</h2>
+</div>
+<p>Twitter Autopilot returns public data accessible at query time. Engagement figures continue to change, popular results depend on ranking, and a retrieved sample does not replace comprehensive monitoring or statistical sampling.</p>
+<ul>
+<li>Use original links as verification entry points. A summary cannot replace the source post and full context.</li>
+<li>Request the actual coverage, number of API records, deduplicated count, and classification criteria.</li>
+<li>Describe official-account posts as official statements. Product performance, incidents, research findings, and customer complaints still require independent verification.</li>
+<li>Reply samples may contain duplicates, giveaway templates, bot content, and multiple comments from the same user.</li>
+<li>Treat publishing, liking, or following as complete only after the API explicitly returns success.</li>
+</ul>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th scope="col">Common situation</th>
+<th scope="col">Recommended action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AISA_API_KEY is missing</td>
+<td>Store the key in a secure local file or environment variable, then ask the AI to read it locally. Never paste the key into the chat.</td>
+</tr>
+<tr>
+<td>Authorization is required</td>
+<td>Ask the AI to generate an OAuth authorization link. Sign in and approve access in the browser, then return to the same conversation.</td>
+</tr>
+<tr>
+<td>Search returned few results</td>
+<td>Expand the time window, add English keywords or account names, and request the actual time coverage and sample size.</td>
+</tr>
+<tr>
+<td>Replies or quotes are incomplete</td>
+<td>Request pagination details and a list of unavailable content. Private, deleted, region-restricted, or API-limited records may be missing.</td>
+</tr>
+<tr>
+<td>A write action failed</td>
+<td>Rely on the API response. Request the error reason, and do not treat an authorization link or submitted request as a successful action.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">11</span>
+<h2>Reusable Prompt Templates</h2>
+</div>
+<p>Replace the bracketed placeholders with your own target.</p>
+<div class="templates">
+<p class="prompt">Use twitter-autopilot to retrieve @[account]’s profile with bio, followers, URL, and retrieval time.</p>
+<p class="prompt">Use twitter-autopilot to retrieve @[account]’s latest [number] posts with types, times, URLs, and metrics.</p>
+<p class="prompt">Use twitter-autopilot to search [number] days of popular [keyword] posts; merge duplicates and report scope.</p>
+<p class="prompt">Use twitter-autopilot to search [number] days of [brand] mentions; classify sentiment and link examples.</p>
+<p class="prompt">Use twitter-autopilot to compare three accounts over [number] days; separate facts, responses, and interpretation.</p>
+<p class="prompt">Use twitter-autopilot to shortlist [number] [field] creators from bios and recent posts. Do not contact them.</p>
+<p class="prompt">Use twitter-autopilot to read [URL] with context, replies, and quotes; summarize both sides and gaps.</p>
+<p class="prompt">Use twitter-autopilot to publish this text exactly: [content]. Return the URL or explain the failure.</p>
+<p class="prompt">Use twitter-autopilot to publish the attached image with [caption]. Return the URL or explain the failure.</p>
+<p class="prompt">Use twitter-autopilot to follow @[account] and like the latest post. Return both URLs after success.</p>
+</div>
+<div class="reminder">
+<p><strong>Usage note</strong></p>
+<p>Read keys only from secure local storage. Identify exact write targets and check the API response. Preserve source links and sample boundaries.</p>
+</div>
+</section>
+</div>
+<footer class="document-footer">Twitter Autopilot</footer>
+</main>
+</div>
+</div></body>
+</html>

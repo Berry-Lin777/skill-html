@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Video Shotcraft Gallery Delivery：用真实产品页面、镜头配方卡、Remotion 工程和声音设计，交付可修改、可验收的电影感产品宣传片。" name="description"/>
+<title>Video Shotcraft Gallery Delivery — 把真实产品拍成高级大片</title>
+<style>
+/* ============ 设计系统 ============ */
+:root{
+  --bg:#0b0b0c;
+  --bg-2:#101012;
+  --ink:#ece8df;
+  --ink-dim:#9a958b;
+  --ink-faint:#5f5b54;
+  --brass:#c8a468;
+  --brass-dim:rgba(200,164,104,.28);
+  --hair:rgba(236,232,223,.09);
+  --hair-2:rgba(236,232,223,.16);
+  --serif:"Songti SC","Noto Serif SC","STSong",Georgia,"Times New Roman",serif;
+  --sans:"Inter","PingFang SC","Microsoft YaHei",-apple-system,Arial,sans-serif;
+  --mono:"SF Mono","JetBrains Mono","Courier New",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--bg)}
+.finch-page{
+  background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:15px;line-height:1.8;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+::selection{background:var(--brass);color:#0b0b0c}
+.finch-page::after{ /* 胶片颗粒 */
+  content:"";position: relative;inset:0;z-index:99;pointer-events:none;opacity:.05;
+  background-image:none'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none}
+img,video{display:block;max-width:100%}
+.wrap{width:min(1160px,calc(100% - 48px));margin:0 auto}
+.wide-copy{max-width:1040px}
+.mark{color:var(--brass);font-weight:600}
+.mark-soft{color:#d8b779}
+
+/* ============ 顶部导航 ============ */
+.topbar{
+  position: relative;inset:0 0 auto 0;z-index:50;
+  background:rgba(11,11,12,.72);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--hair);
+}
+.topbar .wrap{height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink)}
+.logo em{color:var(--brass);font-style:normal}
+.nav{display:flex;align-items:center;gap:28px;font-size:12px;color:var(--ink-dim)}
+.nav a{transition:color .2s}
+.nav a:hover{color:var(--ink)}
+.nav .cta{
+  color:var(--brass);border:1px solid var(--brass-dim);
+  display:inline-flex;align-items:center;height:34px;padding:0 14px;line-height:1;
+  transition:background .2s,color .2s;
+}
+.nav .cta:hover{background:var(--brass);color:#0b0b0c}
+
+/* ============ Hero ============ */
+.hero{
+  position:relative;min-height: auto;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:120px 0 64px;overflow:hidden;
+}
+.hero-media{position:absolute;inset:0;z-index:-1}
+.hero-media video{width:100%;height:100%;object-fit:cover;filter:grayscale(.25) contrast(1.1) brightness(.5)}
+.hero-media .cover-lens{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:center;filter:contrast(1.12) saturate(.9) brightness(.42);
+  mix-blend-mode:screen;opacity:.72;
+}
+.hero-materials{
+  position:absolute;inset:8% 4% 38%;display:grid;grid-template-columns:1.35fr .8fr .8fr;
+  grid-template-rows:1fr 1fr;gap:14px;opacity:.54;transform:rotate(-1.5deg) scale(1.04);
+  filter:grayscale(.18) contrast(1.08);pointer-events:none;
+}
+.hero-materials img{width:100%;height:100%;object-fit:cover;object-position:top;border:1px solid rgba(236,232,223,.18);box-shadow:0 18px 50px rgba(0,0,0,.34)}
+.hero-materials img:first-child{grid-row:1 / span 2;object-position:center}
+.hero-materials img:nth-child(2){grid-column:2 / span 2}
+.hero-media::after{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 72% 44%,rgba(200,164,104,.13),transparent 30%),
+    linear-gradient(90deg,rgba(11,11,12,.92),rgba(11,11,12,.68) 46%,rgba(11,11,12,.34)),
+    linear-gradient(180deg,rgba(11,11,12,.58),rgba(11,11,12,.35) 45%,var(--bg) 96%);
+}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:56px}
+.hero-kicker{
+  display:flex;align-items:center;gap:12px;margin-bottom:26px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--brass);
+}
+.hero-kicker::before{content:"";width:34px;height:1px;background:var(--brass)}
+.hero h1{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(44px,7.2vw,96px);line-height:1.06;letter-spacing:.01em;
+  max-width:15em;
+}
+.hero h1 .thin{color:var(--ink-dim);font-weight:400}
+.hero h1 .brass{color:var(--brass)}
+.hero-side{width:300px;flex-shrink:0;font-family:var(--mono);font-size:11px;color:var(--ink-faint);line-height:2}
+.hero-side dt{color:var(--ink-dim);letter-spacing:.1em}
+.hero-side dd{margin-bottom:14px;color:var(--ink-faint)}
+.hero-side dd b{color:var(--brass);font-weight:400;font-size:15px}
+.hero-lead{max-width:1040px;font-size:17px;color:var(--ink-dim);line-height:1.9}
+.position-line{
+  max-width:1040px;margin-top:26px;padding:20px 24px;
+  border-left:2px solid var(--brass);background:rgba(200,164,104,.05);
+  font-size:15px;color:var(--ink);
+}
+.position-line b{color:var(--brass);font-weight:600}
+.hero-actions{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:13px 24px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--hair-2);color:var(--ink);transition:.25s;
+}
+.btn::after{content:"→";transition:transform .25s}
+.btn:hover{border-color:var(--brass);color:var(--brass)}
+.btn:hover::after{transform:translateX(4px)}
+.btn.solid{background:var(--brass);border-color:var(--brass);color:#0b0b0c}
+.btn.solid:hover{background:#dbb880;color:#0b0b0c}
+
+/* 跑马灯 */
+.marquee{
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  overflow:hidden;padding:14px 0;background:var(--bg-2);
+}
+.marquee-track{display:flex;gap:48px;width:max-content;animation:scroll 30s linear infinite;
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);white-space:nowrap}
+.marquee-track span i{color:var(--brass);font-style:normal;margin-right:48px}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ============ 章节通用 ============ */
+section{padding:110px 0;border-top:1px solid var(--hair)}
+section:has(.wave-divider) + section{border-top:none}
+.sec-head{display:block;margin-bottom:60px}
+.sec-index{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.2em}
+.sec-head h2{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(30px,4.4vw,52px);line-height:1.15;letter-spacing:.01em;
+  max-width:1040px;
+}
+.sec-head p{width:100%;max-width:1040px;color:var(--ink-dim);font-size:15px;margin-top:18px}
+
+/* ============ 01 痛点 ============ */
+.pain-list{border-top:1px solid var(--hair-2)}
+.pain-item{
+  display:grid;grid-template-columns:1fr 1.25fr;gap:56px;align-items:baseline;
+  padding:34px 8px;border-bottom:1px solid var(--hair-2);
+  transition:background .25s,padding-left .25s;
+}
+.pain-item:hover{background:rgba(236,232,223,.025);padding-left:20px}
+.pain-item .no{font-family:var(--mono);font-size:13px;color:var(--brass)}
+.pain-item h3{font-family:var(--serif);font-size:22px;font-weight:700;line-height:1.4}
+.pain-item h3,.demand-card h3,.step h3,.aud-cell h3{color:var(--brass)}
+.pain-item p{color:var(--ink-dim);font-size:14px}
+
+/* ============ 02 需求 ============ */
+.demand-triangle{
+  position:relative;margin-top:12px;
+}
+.demand-triangle::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%,rgba(200,164,104,.08),transparent 48%);
+  pointer-events:none;
+}
+.demand-grid{position:relative;z-index:1;width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.demand-card{
+  min-height:250px;border:1px solid rgba(236,232,223,.11);
+  background:linear-gradient(145deg,rgba(16,16,18,.82),rgba(16,16,18,.45));
+  backdrop-filter:blur(14px);padding:30px;transition:border-color .25s,transform .25s;
+  box-shadow:0 18px 60px rgba(0,0,0,.28);
+}
+.demand-card:hover{border-color:var(--brass-dim);transform:translateY(-4px)}
+.demand-card .tag{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.18em}
+.demand-card h3{font-family:var(--serif);font-size:24px;font-weight:700;margin:18px 0 12px;line-height:1.35}
+.demand-card p{color:var(--ink-dim);font-size:14px}
+.demand-card h3{max-width:14em}
+
+/* ============ 03 案例 ============ */
+.case-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:start}
+.screen{
+  border:1px solid var(--hair-2);background:#000;padding:10px;
+}
+.screen video{width:100%;aspect-ratio:16/10;object-fit:cover}
+.screen-cap{
+  display:flex;justify-content:space-between;margin-top:12px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);
+}
+.case-quote{border-left:2px solid var(--brass);padding-left:28px}
+.case-quote h3{font-family:var(--serif);font-size:clamp(26px,3vw,36px);font-weight:700;line-height:1.3;margin-bottom:20px}
+.case-quote h3 span{color:var(--brass)}
+.case-quote>p{color:var(--ink-dim);font-size:14px}
+.case-facts{margin-top:36px;border-top:1px solid var(--hair-2)}
+.case-facts li{
+  list-style:none;display:grid;grid-template-columns:88px 1fr;gap:16px;
+  padding:16px 0;border-bottom:1px solid var(--hair);font-size:13px;color:var(--ink-dim);
+}
+.case-facts li b{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.1em;font-weight:400;padding-top:3px}
+.shot-wall{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.shot{margin:0}
+.shot img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;border:1px solid var(--hair);filter:saturate(.85);transition:filter .3s,transform .3s}
+.shot:hover img{filter:saturate(1);transform:translateY(-3px)}
+.shot figcaption{font-size:11px;color:var(--ink-faint);margin-top:10px;line-height:1.6}
+
+/* ============ 04 步骤 ============ */
+.steps{border-top:1px solid var(--hair-2)}
+.step{
+  display:grid;grid-template-columns:110px 200px 1fr;gap:32px;align-items:baseline;
+  padding:26px 8px;border-bottom:1px solid var(--hair-2);transition:background .25s,padding-left .25s;
+}
+.step:hover{background:rgba(200,164,104,.04);padding-left:20px}
+.step .no{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.14em}
+.step h3{font-family:var(--serif);font-size:21px;font-weight:700}
+.step p{color:var(--ink-dim);font-size:14px}
+
+/* ============ 05 受众 ============ */
+.audience-stage{
+  position:relative;padding:26px 0;overflow:hidden;
+  background:radial-gradient(circle at 50% 50%,rgba(200,164,104,.08),transparent 42%);
+}
+.audience-stage::before{
+  content:"";position:absolute;inset:8% 14%;border-radius:50%;
+  background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(200,164,104,.07),transparent 65%);
+  filter:blur(2px);transform:rotate(-8deg);
+}
+.audience-grid{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.aud-cell{
+  min-height:170px;padding:26px;
+  background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(16,16,18,.34) 42%,rgba(16,16,18,.74));
+  border:1px solid rgba(236,232,223,.12);backdrop-filter:blur(16px);
+  box-shadow:0 24px 70px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.08);
+  transition:transform .35s,border-color .25s,box-shadow .25s;
+}
+.aud-cell::after{
+  content:"";position:absolute;inset:auto 24px 18px 24px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--brass),transparent);opacity:.34;
+}
+.aud-cell:hover{transform:translateY(-8px) scale(1.015);border-color:rgba(200,164,104,.42);box-shadow:0 30px 90px rgba(0,0,0,.42),0 0 38px rgba(200,164,104,.12)}
+.aud-cell .no{display:none}
+.aud-cell h3{font-family:var(--serif);font-size:20px;font-weight:700;margin:0 0 10px}
+.aud-cell p{font-size:13px;color:var(--ink-dim)}
+
+/* ============ 06 结语 ============ */
+.finale{padding:140px 0;text-align:center;border-top:1px solid var(--hair);
+  background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(200,164,104,.08),transparent 70%)}
+.finale .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--brass);text-transform:uppercase}
+.finale h2{font-family:var(--serif);font-weight:700;font-size:clamp(32px,5vw,64px);line-height:1.25;margin:24px auto;max-width:16em}
+.finale h2 span{color:var(--brass)}
+.finale p{max-width:680px;margin:0 auto;color:var(--ink-dim);font-size:15px}
+.finale .hero-actions{justify-content:center;margin-top:44px}
+
+footer{
+  border-top:1px solid var(--hair);padding:32px 0;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-faint);text-align:center;
+}
+
+.wave-divider{height:96px;position:relative;overflow:hidden;background:var(--bg)}
+.wave-divider canvas{width:100%;height:100%;display:block;opacity:.58}
+.wave-divider::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--bg),transparent 42%,var(--bg))}
+
+/* ============ 动效 ============ */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.marquee-track{animation:none}}
+
+/* ============ 响应式 ============ */
+@media(max-width:960px){
+  .hero-top{flex-direction:column}
+  .hero-side{width:100%;display:flex;gap:32px;flex-wrap:wrap}
+  .case-layout{grid-template-columns:1fr}
+  .shot-wall{grid-template-columns:repeat(2,1fr)}
+  .demand-triangle,.demand-grid{display:block}
+  .demand-card,.demand-card:nth-child(n){position:relative;width:100%;left:auto;right:auto;top:auto;bottom:auto;transform:none;margin-bottom:18px}
+  .demand-card:nth-child(1):hover,.demand-card:hover{transform:translateY(-4px)}
+  .audience-stage,.audience-grid{min-height:auto}
+  .aud-cell,.aud-cell:nth-child(n){position:relative;width:100%;left:auto;right:auto;top:auto;bottom:auto;margin-bottom:16px}
+  .pain-item{grid-template-columns:1fr;gap:12px}
+  .step{grid-template-columns:80px 1fr;gap:16px}
+  .step p{grid-column:2}
+}
+@media(max-width:620px){
+  .wrap{width:calc(100% - 32px)}
+  .nav a:not(.cta){display:none}
+  section{padding:76px 0}
+  .audience-grid{grid-template-columns:1fr}
+  .shot-wall{grid-template-columns:1fr}
+}
+
+.finch-inline-19{border-top:none;padding-top:120px}
+html,body{margin:0;padding:0;width:100%;}
+.finch-page{position:relative;isolation:isolate;width:100%;background-color:#0b0b0c;color:#ece8df;}
+img,video{max-width:100%!important;height:auto!important;} .finch-media-ratio{aspect-ratio:auto 16 / 9;} .reveal{opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important;} .finch-page::before,.finch-page::after{pointer-events:none;position:absolute;}
+</style></head>
+<body><div class="finch-page">
+<header class="topbar">
+<div class="wrap">
+<a class="logo" href="#top">VIDEO SHOTCRAFT <em>/</em> GALLERY DELIVERY</a>
+<nav class="nav">
+<a href="#pain">痛点</a>
+<a href="#demand">需求</a>
+<a href="#cases">案例</a>
+<a href="#steps">流程</a>
+<a class="cta" href="#summary">总结</a>
+</nav>
+</div>
+</header>
+<main id="top">
+<!-- HERO -->
+<section class="hero finch-inline-19">
+<div class="hero-media">
+<video class="finch-media-ratio" controls="" loop="" muted="" playsinline="" preload="metadata" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-video-ebf26d4aaf76.mp4"></video>
+<img alt="" class="cover-lens finch-media-ratio" height="1133" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/cover-lens-e519bf836533.jpg" width="1700"/>
+<div aria-hidden="true" class="hero-materials">
+<img alt="" class="finch-media-ratio" height="388" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-prompt-d50155e8d137.jpg" width="531"/>
+<img alt="" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out1-7c1bb9192311.png" width="1920"/>
+<img alt="" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out2-71627e323fab.png" width="1920"/>
+<img alt="" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out3-5c61a8f2511b.png" width="1920"/>
+</div>
+</div>
+<div class="wrap">
+<div class="hero-top">
+<div>
+<div class="hero-kicker">可交付的电影感产品视频</div>
+<h1>别再生成假镜头。<br/><span class="thin">把</span><span class="brass">真实产品</span><span class="thin">，</span><br/>拍成高级大片。</h1>
+</div>
+<dl class="hero-side">
+<div><dt>镜头卡</dt><dd><b>157</b> 镜头配方卡</dd></div>
+<div><dt>动效样式</dt><dd><b>214</b> 运动样式</dd></div>
+<div><dt>模板片</dt><dd><b>36.2s</b> 可复用模板片</dd></div>
+</dl>
+</div>
+<p class="hero-lead">Video Shotcraft Gallery Delivery 把<span class="mark">真实页面</span>、<span class="mark">镜头卡</span>、<span class="mark">2.5D 运镜</span>、<span class="mark">声音</span>和 <span class="mark">Remotion 工程</span>串起来，让产品视频可以拍得高级，也可以继续改。</p>
+</div>
+</section>
+<!-- 跑马灯 -->
+<div aria-hidden="true" class="marquee">
+<div class="marquee-track">
+<span>真实界面 <i>·</i> 镜头卡 <i>·</i> 电影运镜 <i>·</i> REMOTION 流水线 <i>·</i> 声音设计 <i>·</i> 可版本管理成片 <i>·</i> 交付 QA <i>·</i> 动效工作台 <i>·</i></span>
+<span>真实界面 <i>·</i> 镜头卡 <i>·</i> 电影运镜 <i>·</i> REMOTION 流水线 <i>·</i> 声音设计 <i>·</i> 可版本管理成片 <i>·</i> 交付 QA <i>·</i> 动效工作台 <i>·</i></span>
+<span>真实界面 <i>·</i> 镜头卡 <i>·</i> 电影运镜 <i>·</i> REMOTION 流水线 <i>·</i> 声音设计 <i>·</i> 可版本管理成片 <i>·</i> 交付 QA <i>·</i> 动效工作台 <i>·</i></span>
+</div>
+</div>
+<!-- 01 痛点 -->
+<section id="pain">
+<div class="wrap">
+<div class="sec-head reveal">
+<h2>漂亮假镜头，卖不动<span class="mark">真产品</span></h2>
+<p>软件产品片最怕“看起来很炫，但没人知道<span class="mark">产品到底能干什么</span>”。界面要是真的，流程要看得懂，镜头还得能返修；否则再好看的 <span class="mark">AI 画面</span>，也只是在绕开产品本身。</p>
+</div>
+<div class="pain-list">
+<div class="pain-item reveal">
+<h3>AI 画面很好看，<br/>但产品是假的</h3>
+<p>观众想看到<span class="mark">真实页面</span>、<span class="mark">真实功能</span>、<span class="mark">真实操作结果</span>。虚构 UI 再漂亮，也很难帮产品建立信任。</p>
+</div>
+<div class="pain-item reveal">
+<h3>剪辑软件很成熟，<br/>但人力太重</h3>
+<p><span class="mark">脚本</span>、<span class="mark">分镜</span>、截图、运镜、字幕、音效、卡点、返修都要人盯。小团队很难每次发版都做一支像样的产品片。</p>
+</div>
+<div class="pain-item reveal">
+<h3>Remotion 很强，<br/>但镜头语言难</h3>
+<p><span class="mark">工程化渲染</span>解决了“怎么生成”，但没有解决“怎么拍得像广告片”。<span class="mark">镜头、节奏和声音</span>仍然需要一套成熟方法。</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 02 需求 -->
+<section id="demand">
+<div class="wrap">
+<div class="sec-head reveal">
+<h2>产品视频要从“生成”走向“<span class="mark">可交付</span>”</h2>
+<p>真正有用的不是一段碰运气的视频，而是一份能<span class="mark">改稿</span>、能<span class="mark">复用</span>、能进<span class="mark">版本管理</span>的成片工程。</p>
+</div>
+<div class="demand-triangle">
+<div class="demand-grid">
+<article class="demand-card reveal">
+<span class="tag">发布</span>
+<h3>发布要快，但质感不能像录屏</h3>
+<p><span class="mark">首页</span>、<span class="mark">功能页</span>、数据面板和工作流，需要被剪成 30-60 秒内就能记住的产品叙事。</p>
+</article>
+<article class="demand-card reveal">
+<span class="tag">可见度</span>
+<h3>好作品要被看见</h3>
+<p>开发者已经有<span class="mark">可运行页面</span>，缺的是把它变成官网、社媒和作品集都能用的<span class="mark">视频资产</span>。</p>
+</article>
+<article class="demand-card reveal">
+<span class="tag">清晰度</span>
+<h3>复杂 Demo 要讲得简单</h3>
+<p><span class="mark">推近</span>、<span class="mark">标注</span>、卡片飞入、节奏字幕，把一条复杂功能路径拆成观众能跟上的镜头。</p>
+</article>
+</div>
+</div>
+</div>
+</section>
+<!-- 03 案例 -->
+<section id="cases">
+<div class="wrap">
+<div class="sec-head reveal">
+<h2>实操案例：<span class="mark">Shotcraft Gallery 宣传片</span></h2>
+<p>这个案例直接拿 Gallery <span class="mark">真实页面</span>开拍：<span class="mark">镜头卡</span>、<span class="mark">运镜</span>、<span class="mark">音效</span>、<span class="mark">Remotion 工程</span>和 <span class="mark">QA</span> 全部跑通，最后交付带 BGM 与无 BGM 两个版本。</p>
+</div>
+<div class="case-layout">
+<div class="reveal">
+<div class="screen">
+<video class="finch-media-ratio" controls="" muted="" playsinline="" poster="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out1-7c1bb9192311.png" preload="metadata" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-video-ebf26d4aaf76.mp4"></video>
+</div>
+<div class="screen-cap"><span>交付成片</span><span>真实界面 / REMOTION 时间线</span></div>
+</div>
+<div class="case-quote reveal">
+<h3>它把「镜头库」本身，<br/>拍成了一个<span>产品</span>。</h3>
+<ul class="case-facts">
+<li><b>真实截图</b>优先采集<span class="mark">真实网页纹理</span>和页面状态，保留产品本来的可信度。</li>
+<li><b>电影运镜</b>用 <span class="mark">2.5D 页面相机</span>做推近、侧斜、悬浮、切换和焦点引导。</li>
+<li><b>声音设计</b><span class="mark">riser、impact、camera、ui、text</span> 等音效进入时间线，而不是最后随手铺一条音乐。</li>
+</ul>
+</div>
+</div>
+<div class="shot-wall">
+<figure class="shot reveal"><img alt="中文样片输出截图" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out1-7c1bb9192311.png" width="1920"/><figcaption><span class="mark">中文输出</span> — 真实输入转成可展示的镜头素材</figcaption></figure>
+<figure class="shot reveal"><img alt="中文镜头输出截图" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out2-71627e323fab.png" width="1920"/><figcaption><span class="mark">镜头结果</span> — 让功能路径变成观众能跟上的画面</figcaption></figure>
+<figure class="shot reveal"><img alt="中文项目输出截图" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out3-5c61a8f2511b.png" width="1920"/><figcaption><span class="mark">项目输出</span> — 成片、工程、QA 与素材归档</figcaption></figure>
+<figure class="shot reveal"><img alt="中文配方卡输出截图" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-zh/zh-out4-aa4ee4cb4c40.png" width="1920"/><figcaption><span class="mark">中文素材</span> — 把中文输入沉淀成可执行导演语言</figcaption></figure>
+</div>
+</div>
+</section>
+<!-- 04 步骤 -->
+<section id="steps">
+<div class="wrap">
+<div class="sec-head reveal">
+<h2>实操步骤</h2>
+<p>用户提供<span class="mark">产品目录</span>、网页、截图、录屏、音频或文案；Skill 负责把素材转成<span class="mark">分镜</span>、<span class="mark">工程</span>、<span class="mark">成片</span>和可继续调整的工作台。</p>
+</div>
+<div class="steps">
+<div class="step reveal"><span class="no">步骤 01</span><h3>安装 Skill</h3><p>加载<span class="mark">镜头卡</span>、模板、组件、音频和制作说明。</p></div>
+<div class="step reveal"><span class="no">步骤 02</span><h3>准备素材</h3><p>项目目录、网页地址、截图、录屏、<span class="mark">产品定位</span>和必须展示的功能。</p></div>
+<div class="step reveal"><span class="no">步骤 03</span><h3>写清输入</h3><p>明确主题、结构、风格、时长、比例、语言、<span class="mark">BGM</span> 和输出要求。</p></div>
+<div class="step reveal"><span class="no">步骤 04</span><h3>选择模式</h3><p><span class="mark">Ink Press 模板</span>、自主自由创作或共同创作，按项目风险选择路径。</p></div>
+<div class="step reveal"><span class="no">步骤 05</span><h3>组织页面</h3><p>冻结演示数据，采集<span class="mark">真实页面状态</span>，避免文字模糊、遮挡和敏感信息。</p></div>
+<div class="step reveal"><span class="no">步骤 06</span><h3>渲染交付</h3><p>输出工程目录、带 BGM / 无 BGM 成片、<span class="mark">QA 记录</span>和 Motion Workbench。</p></div>
+</div>
+</div>
+</section>
+<!-- 05 受众 -->
+<section id="audience">
+<div class="wrap">
+<div class="sec-head reveal">
+<h2>让每个<span class="mark">好产品</span>，都能拥有一支<span class="mark">高水准 Demo</span></h2>
+</div>
+<div class="audience-stage">
+<div class="audience-grid">
+<div class="aud-cell reveal"><h3>独立开发者</h3><p>有<span class="mark">产品</span>、有<span class="mark">页面</span>、有<span class="mark">发布需求</span>，但缺少专业分镜和动效制作时间。</p></div>
+<div class="aud-cell reveal"><h3>AI 产品团队</h3><p>需要快速把<span class="mark">新功能</span>、<span class="mark">新 Agent</span>、<span class="mark">新工作流</span>讲清楚，并让画面保持真实可信。</p></div>
+<div class="aud-cell reveal"><h3>SaaS / B 端工具</h3><p>复杂界面和业务流程不适合纯文生视频，更需要<span class="mark">真实 UI</span> 上的<span class="mark">镜头化表达</span>。</p></div>
+<div class="aud-cell reveal"><h3>前端工程师</h3><p>想把作品集从<span class="mark">静态截图</span>提升为带镜头、节奏和质感的<span class="mark">展示资产</span>。</p></div>
+<div class="aud-cell reveal"><h3>插件和模板作者</h3><p>经常发布小产品，适合复用<span class="mark">镜头卡</span>和<span class="mark">模板结构</span>，形成稳定的视频生产节奏。</p></div>
+<div class="aud-cell reveal"><h3>销售与增长团队</h3><p>需要比录屏更精炼、更有记忆点的 <span class="mark">Demo</span>，用于官网、社媒、发布和演示。</p></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 06 结语 -->
+<section class="finale" id="summary">
+<div class="wrap reveal">
+<div class="eyebrow">最终结论</div>
+<h2>你负责产品，<br/>Agent 负责把它拍成<span>商业片</span>。</h2>
+<p>Video Shotcraft Gallery Delivery 的价值，不是替代剪辑软件，也不是随机生成漂亮画面。它真正建立的是一套 <span class="mark">Agent 可执行</span>的动效导演系统：<span class="mark">真实截图</span>、<span class="mark">镜头语言</span>、<span class="mark">声音设计</span>、模板、代码实现和 <span class="mark">QA 标准</span>，最终汇成<span class="mark">可修改、可复用、可验收</span>的产品视频工程。</p>
+<div class="hero-actions">
+<a class="btn solid" href="https://vincentwei1021.github.io/video-shotcraft/library.html">浏览动态样片库</a>
+<a class="btn" href="https://vincentwei1021.github.io/video-shotcraft/">访问 Video Shotcraft</a>
+</div>
+</div>
+</section>
+</main>
+<footer>VIDEO SHOTCRAFT GALLERY DELIVERY — 真实界面 / 镜头卡 / REMOTION / 声音设计 / QA</footer>
+</div></body>
+</html>

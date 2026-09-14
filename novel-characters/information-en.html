@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<!-- 独立单文件版本：样式与图片均已内嵌。 -->
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="novel-characters product introduction: profiles, image prompts, voice prompts, model sheets and an interactive report — grown from a novel with one sentence." name="description"/>
+<title>novel-characters | Turn a novel into production-ready character assets</title>
+<style>
+:root {
+  --ink: #0b0d12;
+  --ink-2: #121620;
+  --paper: #f4ead7;
+  --paper-2: #dfcfb4;
+  --cream: #fff7e8;
+  --muted: #aca69b;
+  --line: rgba(255, 247, 232, 0.14);
+  --orange: #f16028;
+  --gold: #f4b942;
+  --teal: #0d7280;
+  --violet: #9270ff;
+  --green: #71b98b;
+  --red: #b93037;
+  --shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+  --radius: 28px;
+  --max: 1180px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+.finch-page {
+  margin: 0;
+  color: var(--cream);
+  background:
+    radial-gradient(circle at 8% 2%, rgba(13, 114, 128, .18), transparent 27rem),
+    radial-gradient(circle at 91% 12%, rgba(244, 185, 66, .13), transparent 32rem),
+    var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+.finch-page::before {
+  content: "";
+  position: relative;
+  inset: 0;
+  pointer-events: none;
+  opacity: .17;
+  background-image: radial-gradient(rgba(255,255,255,.5) .55px, transparent .55px);
+  background-size: 6px 6px;
+  mix-blend-mode: soft-light;
+  z-index: 20;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+/* ---------- nav ---------- */
+.site-nav {
+  position: relative;
+  top: 0;
+  z-index: 15;
+  backdrop-filter: blur(20px);
+  background: rgba(11, 13, 18, .78);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  width: min(calc(100% - 40px), var(--max));
+  height: 72px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 800; letter-spacing: -.02em; }
+.brand-mark {
+  width: 34px; height: 34px; border-radius: 11px;
+  display: grid; place-items: center;
+  background: conic-gradient(from 210deg, var(--teal), var(--gold), var(--orange), var(--teal));
+  color: var(--ink); font-size: 17px; box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+}
+.nav-links { margin-left: auto; display: flex; gap: 20px; align-items: center; font-size: 14px; color: #d7d1c7; flex-wrap: wrap; }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: #fff; }
+.nav-cta { border: 1px solid rgba(255,255,255,.25); padding: 8px 14px; border-radius: 99px; }
+
+/* ---------- layout ---------- */
+.container { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+.section { padding: 96px 0; position: relative; }
+.section.compact { padding: 64px 0; }
+.section.paper {
+  color: #201c18;
+  background:
+    linear-gradient(90deg, transparent 49.7%, rgba(50,35,20,.035) 50%, transparent 50.3%),
+    radial-gradient(rgba(53,35,19,.14) .55px, transparent .55px),
+    var(--paper);
+  background-size: auto, 7px 7px, auto;
+}
+.section.paper::before, .section.paper::after { content: ""; position: absolute; left: 0; right: 0; height: 18px; background: linear-gradient(135deg, transparent 7px, var(--paper) 0) 0 0/14px 14px repeat-x; }
+.section.paper::before { top: -14px; }
+.section.paper::after { bottom: -14px; transform: rotate(180deg); }
+
+.eyebrow { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 18px; color: var(--gold); font-weight: 800; letter-spacing: .16em; text-transform: uppercase; font-size: 12px; }
+.eyebrow::before { content: ""; width: 28px; height: 2px; background: currentColor; }
+.paper .eyebrow { color: #0d6a76; }
+.section-head { margin-bottom: 46px; }
+.section-head.split { display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: end; }
+.section-head h2, .hero h1 { margin: 0; letter-spacing: -.05em; line-height: 1.08; }
+.section-head h2 { font-size: clamp(34px, 4.6vw, 58px); max-width: 860px; }
+.section-head p { margin: 10px 0 0; color: #bcb5aa; font-size: 17px; max-width: 760px; }
+.paper .section-head p { color: #62594e; }
+.lead { font-size: clamp(17px, 2vw, 22px); color: #c7c1b7; max-width: 780px; }
+.paper .lead { color: #5c5347; }
+
+/* ---------- hero ---------- */
+.hero { min-height: auto; display: grid; align-items: center; padding: 64px 0 80px; position: relative; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 56px; }
+.hero h1 { font-size: clamp(44px, 5.8vw, 84px); max-width: 800px; }
+.hero h1 em { font-style: normal; color: var(--gold); text-shadow: 5px 5px 0 rgba(13,114,128,.5); }
+.hero-copy .lead { margin: 26px 0 32px; }
+.hero-kicker { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 22px; }
+.tag { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; color: #d8d1c4; font-size: 13px; background: rgba(255,255,255,.035); }
+.tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(244,185,66,.12); }
+.button-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border-radius: 14px; text-decoration: none; font-weight: 800; border: 1px solid rgba(255,255,255,.2); transition: transform .2s ease, background .2s ease; }
+.button:hover { transform: translateY(-2px); }
+.button.primary { background: var(--orange); color: #fff; border-color: var(--orange); box-shadow: 0 12px 40px rgba(241,96,40,.24); }
+.button.secondary { background: rgba(255,255,255,.05); }
+
+.hero-art { position: relative; min-height: 560px; }
+.hero-frame { position: absolute; inset: 0; overflow: hidden; border-radius: 44% 44% 24px 24px; border: 1px solid rgba(255,255,255,.18); box-shadow: var(--shadow); background: var(--teal); transform: rotate(2deg); }
+.hero-frame img { width: 100%; height: 100%; object-fit: cover; }
+.hero-stamp { position: absolute; z-index: 2; width: 128px; aspect-ratio: 1; border-radius: 50%; background: var(--paper); color: #241c13; display: grid; place-items: center; text-align: center; font-weight: 900; line-height: 1.15; right: -26px; top: 48px; transform: rotate(9deg); box-shadow: 0 12px 35px rgba(0,0,0,.25); border: 8px double #241c13; font-size: 14px; padding: 10px; }
+.hero-proof { position: absolute; z-index: 2; bottom: 18px; left: -30px; right: 20px; display: grid; grid-template-columns: repeat(3, 1fr); background: rgba(10,12,17,.88); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 16px 18px; transform: rotate(-1deg); }
+.hero-proof div { padding: 0 14px; border-right: 1px solid var(--line); }
+.hero-proof div:last-child { border: 0; }
+.hero-proof strong { display: block; font-size: 21px; color: var(--gold); }
+.hero-proof span { font-size: 12px; color: #bdb6aa; }
+
+/* ---------- ticker ---------- */
+.ticker { overflow: hidden; border-block: 1px solid var(--line); background: #0f131b; }
+.ticker-track { display: flex; width: max-content; gap: 42px; padding: 14px 0; animation: ticker 26s linear infinite; color: #d8d0c4; text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 800; }
+.ticker-track span::after { content: "✦"; color: var(--teal); margin-left: 42px; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+/* ---------- grids & cards ---------- */
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; }
+.card { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.038); padding: 26px; position: relative; overflow: hidden; }
+.card h3 { font-size: 21px; margin: 0 0 10px; letter-spacing: -.03em; }
+.card p { color: #bdb5aa; margin: 0; }
+.paper .card { background: rgba(255,255,255,.42); border-color: rgba(37,29,20,.14); }
+.paper .card p { color: #62594e; }
+.card-number { font-family: Georgia, serif; font-style: italic; color: var(--teal); font-size: 36px; line-height: 1; margin-bottom: 18px; }
+.card .mini-label { display: inline-flex; padding: 5px 10px; border-radius: 999px; background: rgba(13,114,128,.16); color: #7fd4de; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; margin-bottom: 14px; }
+.paper .card .mini-label { background: rgba(13,114,128,.12); color: #0d6a76; }
+
+/* ---------- prose ---------- */
+.prose { max-width: 820px; }
+.prose p { color: #c9c2b7; margin: 0 0 18px; font-size: 17px; }
+.prose p strong { color: #f1eadf; }
+.paper .prose p { color: #463f35; }
+.paper .prose p strong { color: #241f18; }
+
+/* ---------- figures ---------- */
+.figure { margin: 34px 0 0; }
+.figure img { width: 100%; border-radius: 20px; border: 1px solid var(--line); box-shadow: var(--shadow); }
+.paper .figure img { border-color: rgba(37,29,20,.18); box-shadow: 0 24px 70px rgba(53,35,19,.18); }
+.figure figcaption { margin: 14px auto 0; max-width: 860px; color: #a49d92; font-size: 13.5px; line-height: 1.65; }
+.paper .figure figcaption { color: #6a5e51; }
+.figure figcaption strong { color: #d8d1c4; }
+.paper .figure figcaption strong { color: #3d3327; }
+.figure.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.figure.duo img { height: 100%; object-fit: cover; }
+
+/* ---------- prompt block ---------- */
+.prompt-block {
+  margin: 22px 0;
+  padding: 22px 26px;
+  border-radius: 20px;
+  border: 1px solid rgba(244,185,66,.3);
+  background: linear-gradient(135deg, rgba(13,114,128,.15), rgba(244,185,66,.08));
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.6;
+  color: #f4ede2;
+  position: relative;
+}
+.prompt-block::before { content: "✎"; position: absolute; top: -14px; left: 20px; background: var(--gold); color: var(--ink); border-radius: 99px; width: 28px; height: 28px; display: grid; place-items: center; font-size: 15px; }
+.paper .prompt-block { border-color: rgba(13,114,128,.32); color: #2c261d; background: linear-gradient(135deg, rgba(13,114,128,.1), rgba(244,185,66,.12)); }
+.prompt-block code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .92em; background: rgba(255,255,255,.09); padding: 1px 7px; border-radius: 7px; }
+.paper .prompt-block code { background: rgba(32,28,24,.08); }
+
+/* ---------- process steps ---------- */
+.process { display: grid; gap: 0; counter-reset: flow; }
+.process-step { display: grid; grid-template-columns: 92px .72fr 1.28fr; gap: 26px; align-items: start; padding: 34px 0; border-top: 1px solid var(--line); }
+.paper .process-step { border-top-color: rgba(37,29,20,.14); }
+.process-step::before { counter-increment: flow; content: "0" counter(flow); font-family: Georgia, serif; font-style: italic; font-size: 42px; color: var(--teal); line-height: 1; }
+.paper .process-step::before { color: #0d6a76; }
+.process-step h3 { margin: 0 0 8px; font-size: 23px; letter-spacing: -.02em; }
+.process-step .step-copy p { margin: 0 0 12px; color: #bdb5aa; }
+.paper .process-step .step-copy p { color: #5c5347; }
+.process-step .step-copy p strong { color: #f1eadf; }
+.paper .process-step .step-copy p strong { color: #241f18; }
+
+/* ---------- steps list (checklist) ---------- */
+.check-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.check-list li { display: flex; gap: 12px; align-items: flex-start; color: #c9c2b7; }
+.paper .check-list li { color: #463f35; }
+.check-list li::before { content: "✓"; flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: rgba(113,185,139,.16); color: var(--green); font-weight: 900; font-size: 14px; margin-top: 2px; }
+.warn-list li::before { content: "!"; background: rgba(244,185,66,.15); color: var(--gold); }
+
+/* ---------- stat band ---------- */
+.stat-band { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,.14); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 40px 0 0; }
+.stat { background: var(--ink-2); padding: 26px; }
+.stat:first-child { background: var(--teal); }
+.stat strong { display: block; font-size: clamp(26px, 3.6vw, 46px); line-height: 1.05; letter-spacing: -.04em; }
+.stat span { display: block; color: #bab3a8; margin-top: 8px; font-size: 13px; }
+.stat:first-child span { color: rgba(255,255,255,.78); }
+
+/* ---------- master summary ---------- */
+.master-summary {
+  margin: 26px 0 0;
+  padding: 30px;
+  border-radius: 24px;
+  border: 1px solid rgba(244,185,66,.28);
+  background: linear-gradient(135deg, rgba(13,114,128,.14), rgba(241,96,40,.1));
+  font-size: clamp(19px, 2.3vw, 27px);
+  line-height: 1.55;
+  letter-spacing: -.02em;
+  color: #f4ede2;
+}
+.master-summary strong { color: var(--gold); }
+.paper .master-summary { color: #2c261d; }
+.paper .master-summary strong { color: #b3651f; }
+
+/* ---------- footer ---------- */
+.site-footer { border-top: 1px solid var(--line); padding: 56px 0 64px; background: #0a0c11; }
+.footer-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: start; }
+.footer-grid h2 { margin: 0 0 12px; font-size: clamp(28px, 3.6vw, 46px); letter-spacing: -.04em; line-height: 1.1; }
+.footer-grid p { color: #a49d92; margin: 0 0 22px; }
+.footer-meta { color: #7b7469; font-size: 13px; display: grid; gap: 6px; }
+.footer-meta strong { color: #b5aea3; }
+
+.copy-note { font-size: 12.5px; color: #8d867b; margin: 8px 0 0; }
+
+@media (max-width: 960px) {
+  .hero-grid, .footer-grid, .section-head.split { grid-template-columns: 1fr; }
+  .hero-art { min-height: 420px; margin-top: 20px; }
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .process-step { grid-template-columns: 60px 1fr; }
+  .process-step .step-copy { grid-column: 2; }
+  .figure.duo { grid-template-columns: 1fr; }
+  .hero-proof { position: static; transform: none; margin-top: 16px; }
+  .nav-links { display: none; }
+}
+
+  
+.finch-inline-97{margin-top:34px;}
+.finch-inline-104{margin-top:34px;}
+.finch-inline-123{margin-top:34px;}
+.finch-inline-134{margin-top:34px;}
+.finch-inline-185{margin-top:36px;}
+html,body{margin:0;padding:0;width:100%;}
+.finch-page{position:relative;isolation:isolate;width:100%;background-color:#0b0d12;color:#fff7e8;}
+img,video{max-width:100%!important;height:auto!important;} .finch-media-ratio{aspect-ratio:auto 16 / 9;} .reveal{opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important;} .finch-page::before,.finch-page::after{pointer-events:none;position:absolute;}
+</style></head>
+<body><div class="finch-page">
+<header class="site-nav">
+<div class="nav-inner">
+<a class="brand" href="#top"><span class="brand-mark">N</span>novel-characters</a>
+<nav class="nav-links"><a href="#problem">The problem</a><a href="#how">How it works</a><a href="#case">A real run</a><a href="#advantages">Why it wins</a><a href="#who">Who it is for</a><a class="nav-cta" href="#footer">Try it now</a></nav>
+</div>
+</header>
+<section class="hero" id="top">
+<div class="container hero-grid">
+<div class="hero-copy">
+<div class="hero-kicker">
+<span class="tag"><i></i>SKILL Product Introduction</span>
+<span class="tag"><i></i>novel-characters</span>
+<span class="tag"><i></i>v1.11.0</span>
+</div>
+<h1>Turn a novel into <em>production-ready character assets</em></h1>
+<p class="lead">Profiles, image prompts, voice prompts, 16:9 model sheets and an interactive report — grown from hundreds of thousands of words with a single sentence.</p>
+<div class="button-row">
+<a class="button primary" href="#case">See a real run</a>
+<a class="button secondary" href="#how">How it works</a>
+</div>
+</div>
+<div class="hero-art">
+<div class="hero-frame"><img alt="Mr. Darcy, portrait bust (semi-realistic painterly)" class="finch-media-ratio" height="497" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/novel-characters/information-en/4cdfe5252e64333cfadaa2b94b42975c9bd8f6e4a6b18-4cdfe5252e64.png" width="389"/></div>
+<div class="hero-stamp">Every trait cites the source text</div>
+<div class="hero-proof">
+<div><strong>Profiles</strong><span>traceable to verbatim quotes</span></div>
+<div><strong>Sheets</strong><span>16:9 three-zone layout</span></div>
+<div><strong>Prompts</strong><span>image / negative / TTS</span></div>
+</div>
+</div>
+</div>
+</section>
+<div class="ticker"><div class="ticker-track"><span>Verbatim quotes</span><span>Three-zone sheets</span><span>Voice IDs</span><span>One-line restyle</span><span>Structured JSON</span><span>Interactive report</span><span>Verbatim quotes</span><span>Three-zone sheets</span><span>Voice IDs</span><span>One-line restyle</span><span>Structured JSON</span><span>Interactive report</span></div></div>
+<section class="section paper" id="problem">
+<div class="container">
+<div class="section-head">
+<p class="eyebrow">The problem</p>
+<h2>The costliest rework is "everyone has a different character in mind"</h2>
+</div>
+<div class="grid-3">
+<div class="card">
+<div class="card-number">01</div>
+<h3>Designs from memory</h3>
+<p>Artists sketch designs from impression, drifting away from the novel; reviews turn into shouting matches with no ground truth.</p>
+</div>
+<div class="card">
+<div class="card-number">02</div>
+<h3>One person becomes three</h3>
+<p>The same character answers to three names in the novel and ends up as three rows in the spreadsheet — the more you reconcile, the messier it gets.</p>
+</div>
+<div class="card">
+<div class="card-number">03</div>
+<h3>No provenance</h3>
+<p>Nobody can tell which line is from the book and which is invented; and a voice note like "deep and magnetic" gives a TTS engine nothing to execute.</p>
+</div>
+</div>
+<div class="master-summary">These problems share one root: <strong>character designs without evidence, without standards, and without reuse.</strong></div>
+</div>
+</section>
+<section class="section" id="how">
+<div class="container">
+<div class="section-head">
+<p class="eyebrow">How it works</p>
+<h2>Read the source, keep the evidence, ship the standards</h2>
+</div>
+<div class="prose">
+<p>While reading the book, novel-characters records each person's appearance, behavior and verbatim quotes, automatically merging different names for the same person. Every line of the profile <strong>points back to the text</strong>. Image prompts are written to a professional model-sheet spec — bust portrait pins the face, three-view pins the body, detail strips pin the wardrobe — and ethnicity, era and region are mandatory, so the model cannot paint a Regency heroine as a modern Western face. The voice prompt is a <strong>parameterized voice ID</strong> that plugs straight into text-to-voice engines.</p>
+<p>What you receive is the whole set: structured JSON for downstream programs, Markdown for collaboration, an interactive HTML report for people, and full-size PNG sheets for artists.</p>
+</div>
+<figure class="figure">
+<img alt="Interactive report · character detail: profile, relationships, voice design and " class="finch-media-ratio" height="1540" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/novel-characters/information-en/c74e2eac663c1c0b6040e42c5b5566f85580f44ccc37a-c74e2eac663c.png" width="2486"/>
+<figcaption><strong>Interactive report · character detail:</strong> profile, relationships, voice design and the model sheet on one page, with a jump-to table on the right.</figcaption>
+</figure>
+<div class="prose finch-inline-97">
+<p>The report is not just pretty. Under every profile sits the <strong>source-evidence section</strong> — each trait paired with a verbatim quote, so nobody has to argue about "whether that line is actually in the book" in a review. Every prompt has one-click copy.</p>
+</div>
+<figure class="figure">
+<img alt="Report · evidence and prompts: verbatim quotes prove provenance; image, three-vi" class="finch-media-ratio" height="1558" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/novel-characters/information-en/33bb2105c39c9120adfe9be126b186fc84603ac6be370-33bb2105c39c.png" width="2484"/>
+<figcaption><strong>Report · evidence and prompts:</strong> verbatim quotes prove provenance; image, three-view, negative and voice prompts copy in one click.</figcaption>
+</figure>
+<div class="prose finch-inline-104">
+<p>Relationships get a <strong>full graph</strong> — who owes whom what, at a glance — and clicking jumps to the character.</p>
+</div>
+<figure class="figure">
+<img alt="Report · relationship graph: ring layout of the whole cast; hover to light up li" class="finch-media-ratio" height="1580" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/novel-characters/information-en/c11f86fda1763349fa028e332738d079f33c3b6fd718f-c11f86fda176.png" width="2524"/>
+<figcaption><strong>Report · relationship graph:</strong> ring layout of the whole cast; hover to light up lines, click to jump.</figcaption>
+</figure>
+</div>
+</section>
+<section class="section paper" id="case">
+<div class="container">
+<div class="section-head">
+<p class="eyebrow">A real run</p>
+<h2>Pride and Prejudice: from the full novel to four leads</h2>
+</div>
+<div class="prose">
+<p>In a real session, the user attached the full text of <em>Pride and Prejudice</em> with a single sentence. The Agent identified 55 characters, fully profiled the 10 most important, and drew a model sheet for each. Then the user asked to keep only the four leads — the list collapsed instantly, and everyone deselected was archived, recoverable at any time.</p>
+</div>
+<figure class="figure">
+<img alt="One sentence in, a full cast out: the Agent reports 10 main characters profiled," class="finch-media-ratio" height="1460" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/novel-characters/information-en/d0796fdae9110f5b98541c61b8e612197acc20e8a3882-d0796fdae911.png" width="1548"/>
+<figcaption><strong>One sentence in, a full cast out:</strong> the Agent reports 10 main characters profiled, 10 model sheets, validation passed, and links to all deliverables.</figcaption>
+</figure>
+<div class="prose finch-inline-123">
+<p>Changing the whole visual style is another one-liner. Below, Mr. Darcy moves from semi-realistic painterly to a Ghibli-inspired animation style — identity, costume and layout untouched, only the rendering shifts. And there is no fear of starting over: the previous sheets are backed up automatically.</p>
+</div>
+<div class="figure duo">
+<figure class="figure">
+<img alt="Mr. Darcy · semi-realistic painterly: the baseline edition of the same character" class="finch-media-ratio" height="941" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/novel-characters/information-en/66ce86d939fcfc058163a8be85f92a591a1176e71d719-66ce86d939fc.png" width="1672"/>
+<figcaption><strong>Mr. Darcy · semi-realistic painterly:</strong> the baseline edition of the same character design.</figcaption>
+</figure>
+<figure class="figure">
+<img alt="Mr. Darcy · Ghibli-inspired: switched in one line; identity and layout unchanged" class="finch-media-ratio" height="941" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/novel-characters/information-en/413584770a7846d9be85e4a2bd7c0b00d1235d7c44e44-413584770a78.png" width="1672"/>
+<figcaption><strong>Mr. Darcy · Ghibli-inspired:</strong> switched in one line; identity and layout unchanged.</figcaption>
+</figure>
+</div>
+<div class="prose finch-inline-134">
+<p>And when a single character looks off, you do not rerun the batch: "Mr. Darcy’s portrait does not match his three-view model sheet. Regenerate only his image" — and only that one sheet is replaced.</p>
+</div>
+<figure class="figure">
+<img alt="Targeted regeneration: only Darcy’s sheet is replaced; portrait and three-" class="finch-media-ratio" height="1300" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/novel-characters/information-en/c8ecec5d56dec71522ce9c465fccdbabc02385172f62b-c8ecec5d56de.png" width="1618"/>
+<figcaption><strong>Targeted regeneration:</strong> only Darcy’s sheet is replaced; portrait and three-view now share the same facial structure, hairline and expression.</figcaption>
+</figure>
+</div>
+</section>
+<section class="section" id="advantages">
+<div class="container">
+<div class="section-head">
+<p class="eyebrow">Why it wins</p>
+<h2>Five reasons to put it in your pipeline</h2>
+</div>
+<div class="grid-3">
+<div class="card">
+<span class="mini-label">Traceable</span>
+<h3>Profiles backed by the text</h3>
+<p>Every key trait carries a verbatim quote; inferences are labeled. Quote fidelity is enforced by script, not by model goodwill.</p>
+</div>
+<div class="card">
+<span class="mini-label">Plug and play</span>
+<h3>Deliverables fit the pipeline</h3>
+<p>Image, negative and TTS prompts are written the way engines expect — copy and go. cast.json is stable enough to edit externally and feed back.</p>
+</div>
+<div class="card">
+<span class="mini-label">Zero parameters</span>
+<h3>Plain language drives it</h3>
+<p>"Only the top four." "Switch to Ghibli style." "No images this time." "Regenerate just this one." All natural sentences.</p>
+</div>
+<div class="card">
+<span class="mini-label">Style control</span>
+<h3>Consistent, switchable looks</h3>
+<p>Two whole-batch presets — semi-realistic painterly and Ghibli-inspired — plus first-sheet-as-reference to pin the batch style.</p>
+</div>
+<div class="card">
+<span class="mini-label">Cost-aware</span>
+<h3>Gets cheaper as it runs</h3>
+<p>Cards and images persist independently: shrinking the list reuses existing sheets, fixing one character regenerates one image, and resumed runs never pay twice.</p>
+</div>
+<div class="card">
+<span class="mini-label">Long-term asset</span>
+<h3>What stays is the asset</h3>
+<p>IDs, profiles, quotes and prompts live on in JSON: restyle the batch, grow or shrink the cast, re-render the report anytime.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section paper compact" id="who">
+<div class="container">
+<div class="section-head">
+<p class="eyebrow">Who it is for</p>
+<h2>Three teams, three uses</h2>
+</div>
+<div class="grid-3">
+<div class="card">
+<h3>AI drama / animation studios</h3>
+<p>Artists and production planners lock every lead character of a show within a week, straight into storyboarding and voice pipelines.</p>
+</div>
+<div class="card">
+<h3>Web-novel IP evaluation</h3>
+<p>Audit the character assets of back-catalog titles in bulk — judge the cast before negotiating the license.</p>
+</div>
+<div class="card">
+<h3>Solo creators</h3>
+<p>A one-person studio gets industrial-grade character designs and saves the time and cost of outsourcing key art.</p>
+</div>
+</div>
+<div class="prose finch-inline-185">
+<p><strong>Honest limits:</strong> it does not guarantee zero cross-image drift — sheets in one batch can differ slightly, so for feature-length consistency its output is best used upstream of LoRA training or reference-image workflows. Image generation depends on local codex; without it you still get everything except the PNGs. And the output stops at the character layer — storyboards, animation and final frames belong to the next stage of the pipeline.</p>
+</div>
+</div>
+</section>
+<section class="section" id="cta">
+<div class="container footer-grid">
+<div>
+<h2>Read the novel once — never guess a character from scratch again.</h2>
+<p>Try it now: attach a novel as .txt and say —</p>
+<div class="prompt-block">Use novel-characters to analyze this book, extract the main characters, and generate character model sheets and a report.</div>
+</div>
+</div>
+</section>
+<footer class="site-footer" id="footer">
+<div class="container footer-grid">
+<div>
+<h2>novel-characters</h2>
+<p>novel-characters product introduction: profiles, image prompts, voice prompts, model sheets and an interactive report — grown from a novel with one sentence.</p>
+</div>
+<div class="footer-meta"><span>Document type: English product introduction (Information)</span><span>Skill version: v1.11.0 · Released: September 8, 2026</span><span>Case data from a real run on Pride and Prejudice</span></div>
+</div>
+</footer>
+</div></body>
+</html>

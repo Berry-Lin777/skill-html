@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>Twitter Autopilot 中文版使用教程</title>
+<style>
+    :root {
+      color-scheme: light;
+      --ink: #14202b;
+      --muted: #5e6b76;
+      --line: #dfe5e9;
+      --soft: #f5f7f8;
+      --paper: #ffffff;
+      --blue: #1d5f8a;
+      --blue-soft: #eaf3f8;
+      --navy: #173a55;
+      --warm: #f4efe7;
+      --shadow: 0 18px 48px rgba(20, 32, 43, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, .finch-page {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background: #edf1f3;
+      color: var(--ink);
+    }
+
+    .finch-page {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.78;
+      overflow-wrap: anywhere;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100%;
+      background: #edf1f3;
+      color: var(--ink);
+      padding: clamp(18px, 4vw, 56px);
+    }
+
+    .document {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid rgba(23, 58, 85, 0.08);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero {
+      padding: clamp(34px, 7vw, 88px) clamp(24px, 7vw, 82px) clamp(34px, 6vw, 72px);
+      background:
+        radial-gradient(circle at 82% 12%, rgba(29, 95, 138, 0.14), transparent 34%),
+        linear-gradient(145deg, #fbfcfc 0%, #eef4f6 100%);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      margin: 0 0 42px;
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 850px;
+      margin-bottom: 12px;
+      font-family: Georgia, "Times New Roman", "Songti SC", serif;
+      font-size: clamp(2.5rem, 7vw, 5.6rem);
+      line-height: 1.04;
+      letter-spacing: -0.045em;
+      color: #0c1720;
+    }
+
+    .subtitle {
+      max-width: 720px;
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2.2vw, 1.42rem);
+      line-height: 1.6;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0 0 34px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tags li {
+      padding: 7px 13px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(23, 58, 85, 0.12);
+      border-radius: 999px;
+      color: var(--navy);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .intro {
+      max-width: 850px;
+      margin-bottom: 18px;
+      font-size: 1.06rem;
+    }
+
+    .principle {
+      max-width: 900px;
+      margin: 0;
+      padding: 18px 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-left: 4px solid var(--blue);
+      border-radius: 0 14px 14px 0;
+    }
+
+    .content {
+      padding: 0 clamp(24px, 7vw, 82px) clamp(54px, 8vw, 96px);
+    }
+
+    section {
+      padding-top: clamp(54px, 8vw, 92px);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .section-index {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      color: #0c1720;
+      font-family: Georgia, "Times New Roman", "Songti SC", serif;
+      font-size: clamp(1.65rem, 3.6vw, 2.55rem);
+      line-height: 1.25;
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      margin: 36px 0 12px;
+      color: var(--navy);
+      font-size: 1.15rem;
+      line-height: 1.45;
+    }
+
+    p { margin-bottom: 18px; }
+
+    a {
+      color: var(--blue);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    ul {
+      margin: 12px 0 24px;
+      padding-left: 1.25rem;
+    }
+
+    li { margin-bottom: 8px; }
+
+    .prompt-label {
+      margin: 26px 0 10px;
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .prompt {
+      margin-bottom: 26px;
+      padding: 20px 22px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      color: #1e2a34;
+      font-weight: 600;
+      line-height: 1.75;
+    }
+
+    figure {
+      margin: 30px 0 32px;
+      padding: clamp(10px, 2vw, 18px);
+      background: #f7f9fa;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    figcaption {
+      padding: 13px 6px 2px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .table-wrap {
+      width: 100%;
+      margin: 28px 0 8px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    th, td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--navy);
+      color: #fff;
+      font-size: 0.92rem;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    tbody tr:nth-child(even) { background: #f5f8fa; }
+
+    .templates {
+      display: grid;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .templates .prompt { margin: 0; }
+
+    .reminder {
+      margin-top: 34px;
+      padding: 24px;
+      background: var(--warm);
+      border-radius: 18px;
+    }
+
+    .reminder p:last-child { margin-bottom: 0; }
+
+    .document-footer {
+      padding: 22px clamp(24px, 7vw, 82px) 28px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 700px) {
+      .finch-page { font-size: 15px; }
+      .page { padding: 0; }
+      .document { border: 0; border-radius: 0; box-shadow: none; }
+      .brand { margin-bottom: 28px; }
+      .section-heading { grid-template-columns: 36px minmax(0, 1fr); gap: 12px; }
+      .section-index { width: 36px; height: 36px; font-size: 0.9rem; }
+      .table-wrap { border-radius: 12px; }
+      th, td { padding: 13px 12px; }
+      table { font-size: 0.88rem; }
+    }
+  
+
+html,body{margin:0;padding:0;width:100%;}
+.finch-page{position:relative;isolation:isolate;width:100%;background-color:#eaf1f8;color:#122033;}
+img,video{max-width:100%!important;height:auto!important;} .finch-media-ratio{aspect-ratio:auto 16 / 9;} .reveal{opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important;} .finch-page::before,.finch-page::after{pointer-events:none;position:absolute;}
+</style></head>
+<body><div class="finch-page">
+<div class="page">
+<main class="document">
+<header class="hero">
+<p class="brand">FINCHIP STUDIO　使用教程</p>
+<h1>Twitter Autopilot 中文版使用教程</h1>
+<p class="subtitle">使用自然语言读取搜索分析和管理 X 内容</p>
+<figure>
+<img alt="Twitter Autopilot 查询、分析、发布和互动示例" height="960" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image1.png" width="1800"/>
+</figure>
+<ul aria-label="功能" class="tags">
+<li>查询</li>
+<li>分析</li>
+<li>发布</li>
+<li>互动</li>
+</ul>
+<p class="intro">Twitter Autopilot 用于读取 X 的公开资料和动态，搜索主题与账号，分析回复和引用，并在完成 OAuth 授权后发布内容、点赞或关注账号。本文按真实操作截图说明安装配置、提问方式、结果解读和写入操作。</p>
+<p class="principle"><strong>使用原则</strong>　先写清对象、时间范围、结果数量和输出格式；涉及发布、点赞、关注或取消操作时，必须明确目标并以接口返回的成功结果为准。</p>
+</header>
+<div class="content">
+<section>
+<div class="section-heading">
+<span class="section-index">一</span>
+<h2>安装与首次配置</h2>
+</div>
+<p>完整安装应包含 SKILL.md、scripts 和 references。Codex 的常用安装目录是 ~/.codex/skills/twitter-autopilot。安装后，建议新建对话或重启应用，让系统重新加载 Skill。</p>
+<h3>1 安装并确认 Skill</h3>
+<p>可直接向 AI 发送下面的提示词。它会阅读仓库说明，选择当前工具对应的安装目录，并检查运行依赖。</p>
+<p class="prompt">帮我安装这个 skill：https://github.com/FinchipAIOrg/twitter-autopilot。先阅读仓库说明，根据我当前使用的 AI 工具选择正确的安装位置，完整安装 SKILL.md、scripts 和 references。检查 Python 3、curl 和 POSIX shell 是否可用。完成后告诉我安装路径，以及是否需要重启应用或新建对话才能加载。</p>
+<h3>2 配置 AISA API KEY</h3>
+<p>读取公开数据需要 AISA_API_KEY。应从 AIsa 获取密钥并保存在本地安全位置，不要在聊天中发送密钥，也不要让 AI 输出密钥内容。</p>
+<p class="prompt">密钥已保存，请从本地文件读取并注入 AISA_API_KEY，查询 @实际账号 的公开资料，验证 API 是否可用，不要显示密钥。</p>
+<figure>
+<img alt="从本地文件读取密钥并完成接口验证" height="387" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image2.png" width="1508"/>
+<figcaption>图 1　从本地文件读取密钥并完成接口验证</figcaption>
+</figure>
+<h3>3 完成 X 账号授权</h3>
+<p>查询公开内容通常不需要登录 X。发布推文、点赞、取消点赞、关注和取消关注需要 OAuth 授权。让 AI 生成授权链接后，在浏览器中完成登录和确认，再回到同一对话继续操作。不要向 AI 提供 X 密码或登录 Cookie。</p>
+<p>AIsa 支持按量付费方案时可以选择 pay as you go，但余额、费用和有效期应以 AIsa 页面当时显示的信息为准。</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">二</span>
+<h2>如何写出有效提示词</h2>
+</div>
+<p>一条清楚的请求通常包含五项信息。缺少其中某项时，AI仍可能完成查询，但结果范围和呈现方式更容易偏离预期。</p>
+<ul>
+<li>动作：查看、搜索、比较、分析、发布、点赞或关注。</li>
+<li>对象：账号、关键词、推文链接、列表或社区。</li>
+<li>范围：最近多少条、过去多少天、热门或最新、是否读取回复和引用。</li>
+<li>输出：中文概括、表格、链接、发布时间、互动数据或情绪分类。</li>
+<li>边界：说明样本数量、实际覆盖时间、不可见内容，以及事实和判断的区别。</li>
+</ul>
+<p class="prompt-label">示例提示词</p>
+<p class="prompt">请使用 twitter-autopilot，查看 @账号 最近的 20 条推文。用中文概括重点，并列出发布时间、原文链接和接口返回的互动数据。</p>
+<figure>
+<img alt="明确账号、数量、语言和输出字段" height="169" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image3.png" width="1066"/>
+<figcaption>图 2　明确账号 数量 语言和输出字段</figcaption>
+</figure>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">三</span>
+<h2>查看账号最近动态</h2>
+</div>
+<p>适合跟踪创始人、品牌官方账号或行业意见领袖。结果中应区分独立推文、转发和引用推文，因为转发项的互动数字通常属于被转发原帖。</p>
+<p class="prompt-label">推荐提示词</p>
+<p class="prompt">请使用 twitter-autopilot，查看 @elonmusk 最近的 20 条推文。用中文概括重点，并列出发布时间、原文链接和接口返回的互动数据。</p>
+<figure>
+<img alt="最近 20 条动态的主题概括和明细第 1 部分" height="1608" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image4.png" width="1564"/>
+<figcaption>图 3　最近 20 条动态的主题概括和明细 第1部分</figcaption>
+</figure>
+<figure>
+<img alt="最近 20 条动态的主题概括和明细第 2 部分" height="960" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image5.png" width="1564"/>
+<figcaption>图 3　最近 20 条动态的主题概括和明细 第2部分</figcaption>
+</figure>
+<p>阅读结果时先确认实际时间范围，再看样本由多少条独立推文、转发和引用组成。发布时间按动态本身计算；转发项显示的互动数据可能与原帖一致。</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">四</span>
+<h2>搜索主题并整理热门讨论</h2>
+</div>
+<p>主题搜索适合了解某个领域近期最受关注的内容。指定热门结果时，AI会优先整理高互动样本；这不等于覆盖所有相关推文。</p>
+<figure>
+<img alt="指定七天、热门结果、去重和样本范围" height="194" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image6.png" width="1048"/>
+<figcaption>图 4　指定七天 热门结果 去重和样本范围</figcaption>
+</figure>
+<figure>
+<img alt="AI 主题搜索结果及主要争议" height="1848" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image7.png" width="1839"/>
+<figcaption>图 5　AI 主题搜索结果及主要争议</figcaption>
+</figure>
+<p>要求合并重复内容，可以避免同一新闻被多个账号转述后重复占位。对于科研突破、招聘数字或新闻标题，结果应标明它们是推文中的说法，并提醒读者继续核验原始资料。</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">五</span>
+<h2>品牌舆情和需求分析</h2>
+</div>
+<p>品牌舆情查询适合梳理产品优点、故障反馈、售后问题和用户需求。情绪分类应根据推文正文判断，并保留含有正负两面信息的混合评价。</p>
+<figure>
+<img alt="联想相关推文和账号提及的情绪分析请求" height="249" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image8.png" width="1066"/>
+<figcaption>图 6　联想相关推文和账号提及的情绪分析请求</figcaption>
+</figure>
+<figure>
+<img alt="联想舆情样本的分类依据和主要反馈第 1 部分" height="2080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image9.png" width="2040"/>
+<figcaption>图 7　联想舆情样本的分类依据和主要反馈 第1部分</figcaption>
+</figure>
+<figure>
+<img alt="联想舆情样本的用户需求与样本限制第 2 部分" height="1143" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image10.png" width="2040"/>
+<figcaption>图 7　联想舆情样本的用户需求与样本限制 第2部分</figcaption>
+</figure>
+<p>报告中的正面、负面和中性是检索样本的分类，不代表全部用户意见。应同时说明检索关键词、去重方式、接口实际覆盖时间和纳入分析的记录数。</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">六</span>
+<h2>比较竞争品牌动态</h2>
+</div>
+<p>比较多个品牌时，最好统一账号、时间窗口和关注主题，并要求逐项附来源。将官方发布内容列为事实，将营销启示或策略建议明确标为判断。</p>
+<figure>
+<img alt="小米、华为和 OPPO 七天动态对比请求" height="258" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image11.png" width="1066"/>
+<figcaption>图 8　小米 华为和 OPPO 七天动态对比请求</figcaption>
+</figure>
+<figure>
+<img alt="官方动态、用户回应和参考做法对照表" height="1490" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image12.png" width="2084"/>
+<figcaption>图 9　官方动态 用户回应和参考做法对照表</figcaption>
+</figure>
+<p>同一时间窗口内，不同账号的发帖频率可能差异很大。没有在主账号样本中发现某类公告，只能说明本次检索没有观察到，不能推断品牌没有开展相关活动。</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">七</span>
+<h2>寻找相关创作者</h2>
+</div>
+<p>账号发现适合建立候选名单。要求结合公开简介和近期推文，可以过滤只在简介中出现关键词、但近期并不持续创作相关内容的账号。</p>
+<figure>
+<img alt="AI 领域创作者候选名单请求" height="206" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image13.png" width="1026"/>
+<figcaption>图 10　AI 领域创作者候选名单请求</figcaption>
+</figure>
+<figure>
+<img alt="候选账号、简介、内容方向和代表性推文" height="1165" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image14.png" width="2084"/>
+<figcaption>图 11　候选账号 简介 内容方向和代表性推文</figcaption>
+</figure>
+<p>如果只需要研究名单，应明确写出暂不关注或联系。这样可以把账号发现与外部互动分开，避免在尚未评估候选人时改变账号状态。</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">八</span>
+<h2>读取单条推文的完整语境</h2>
+</div>
+<p>提供推文链接后，可以同时读取正文、对话上下文、回复和引用内容。适合分析争议从何而起、不同阵营的主要观点，以及哪些内容因接口或账号权限不可见。</p>
+<p class="prompt-label">推荐提示词</p>
+<p class="prompt">请使用 twitter-autopilot，读取这条推文：【推文链接】，并获取可用的上下文、回复和引用内容。用中文解释原文在说什么、讨论因何而起、支持和反对的主要观点分别是什么。附关键推文链接，并说明未能获取的内容。</p>
+<figure>
+<img alt="单条推文语境和观点分析第 1 部分" height="1717" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image15.png" width="1696"/>
+<figcaption>图 12　单条推文语境和观点分析 第1部分</figcaption>
+</figure>
+<figure>
+<img alt="单条推文语境和观点分析第 2 部分" height="1738" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image16.png" width="1696"/>
+<figcaption>图 12　单条推文语境和观点分析 第2部分</figcaption>
+</figure>
+<p>原帖显示的回复数或引用数可能高于接口实际返回数量。被删除、私密、限制可见或分页失败的内容都可能缺失，因此结论应表述为可见样本中的主要观点。</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">九</span>
+<h2>发布推文和执行互动</h2>
+</div>
+<p>写入操作会改变 X 账号状态，必须明确说明内容或目标。OAuth 已完成时可以直接执行；若授权失效，AI会返回新的授权链接。</p>
+<h3>1 发布文字推文</h3>
+<p class="prompt">请使用 twitter-autopilot，将下面这段文字原样发布为一条独立的 X 推文：【推文内容】。成功后返回实际推文链接；失败时说明原因。</p>
+<figure>
+<img alt="文字推文发布成功并返回实际链接" height="571" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image17.png" width="1508"/>
+<figcaption>图 13　文字推文发布成功并返回实际链接</figcaption>
+</figure>
+<h3>2 发布图片或视频</h3>
+<p>把媒体文件作为附件上传，并在提示词中明确配文。只有一张图片时，不要要求复制成多图；没有提供配文时，应明确发送无文字的媒体推文。</p>
+<p class="prompt">请使用 twitter-autopilot，将我提供的【图片】发布到 X，配文为：【配文】。成功后返回实际推文链接；失败时说明原因。</p>
+<h3>3 关注账号并点赞</h3>
+<p class="prompt">请使用 twitter-autopilot，关注 @elonmusk，并点赞其最新推文。</p>
+<figure>
+<img alt="关注账号并点赞最新推文的成功结果" height="447" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/instruction/image18.png" width="1508"/>
+<figcaption>图 14　关注账号并点赞最新推文的成功结果</figcaption>
+</figure>
+<p>如果先查询了多条推文，可以继续说“点赞第 2 条”或“取消第 5 条的点赞”。目标账号存在同名候选时，应先确认准确账号。</p>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">十</span>
+<h2>结果解读与常见问题</h2>
+</div>
+<p>Twitter Autopilot 返回的是查询当时可访问的公开数据。互动数字会继续变化，热门结果受排序机制影响，搜索样本也不能替代全量舆情或统计抽样。</p>
+<ul>
+<li>把原文链接作为核验入口，摘要不能代替原帖和完整上下文。</li>
+<li>要求报告实际覆盖时间、接口返回数量、去重后数量和分类依据。</li>
+<li>把官方账号发布的内容称为官方说法；产品性能、事故、科研结论和用户投诉仍需独立核实。</li>
+<li>回复区可能包含重复留言、抽奖模板、机器人内容和同一用户的多次发言。</li>
+<li>发布、点赞或关注只有在接口明确返回成功后才能视为完成。</li>
+</ul>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th scope="col">常见情况</th>
+<th scope="col">处理方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>找不到 AISA_API_KEY</td>
+<td>在本地安全文件或系统环境变量中配置密钥，再让 AI 从本地读取。不要把密钥粘贴到聊天中。</td>
+</tr>
+<tr>
+<td>提示需要授权</td>
+<td>让 AI 生成 OAuth 授权链接，在浏览器中登录并确认权限；完成后回到原对话继续。</td>
+</tr>
+<tr>
+<td>搜索结果很少</td>
+<td>扩大时间范围，补充英文关键词或账号名，并要求说明接口实际覆盖的时间与样本数。</td>
+</tr>
+<tr>
+<td>回复或引用不完整</td>
+<td>要求说明分页情况和不可见内容。私密、删除、地区限制或接口返回机制都可能造成缺失。</td>
+</tr>
+<tr>
+<td>写入操作失败</td>
+<td>以接口实际返回为准。要求返回错误原因，不要把生成授权链接或提交请求当作发布成功。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section>
+<div class="section-heading">
+<span class="section-index">十一</span>
+<h2>快速提问模板</h2>
+</div>
+<p>将方括号中的内容替换成自己的目标即可直接使用。</p>
+<div class="templates">
+<p class="prompt">请使用 twitter-autopilot，查询 @[账号] 的公开资料，并列出简介、关注者数量、账号链接和接口返回时间。</p>
+<p class="prompt">请使用 twitter-autopilot，查看 @[账号] 最近的 [数量] 条推文。区分独立推文、转发和引用，并附发布时间、原文链接及互动数据。</p>
+<p class="prompt">请使用 twitter-autopilot，搜索过去 [天数] 天关于 [关键词] 的热门推文，合并重复内容，整理 [数量] 条，并说明实际覆盖时间和样本数。</p>
+<p class="prompt">请使用 twitter-autopilot，搜索最近 [天数] 天提到 [品牌] 的推文和账号提及。按正面、负面和中性分类，附代表性链接并说明分类依据。</p>
+<p class="prompt">请使用 twitter-autopilot，比较 @[账号一]、@[账号二] 和 @[账号三] 过去 [天数] 天的动态。区分官方事实、用户回应和你的判断。</p>
+<p class="prompt">请使用 twitter-autopilot，搜索 [领域] 相关账号，结合公开资料和近期推文筛选最多 [数量] 位创作者。只整理候选名单，暂不关注或联系。</p>
+<p class="prompt">请使用 twitter-autopilot，读取这条推文：[链接]，获取可用的上下文、回复和引用内容，总结支持与反对观点，并说明未能获取的内容。</p>
+<p class="prompt">请使用 twitter-autopilot，将下面文字原样发布为一条独立推文：[内容]。成功后返回实际链接；失败时说明原因。</p>
+<p class="prompt">请使用 twitter-autopilot，将我提供的图片发布到 X，配文为：[配文]。成功后返回实际链接；失败时说明原因。</p>
+<p class="prompt">请使用 twitter-autopilot，关注 @[账号]，并点赞其最新推文。成功后返回账号和推文链接。</p>
+</div>
+<div class="reminder">
+<p><strong>使用提醒</strong></p>
+<p>涉及密钥时只允许从本地安全位置读取；涉及发布、关注和点赞时，先确认目标及内容，再查看接口返回的实际结果。研究型查询应保留来源链接和样本边界。</p>
+</div>
+</section>
+</div>
+<footer class="document-footer">Twitter Autopilot</footer>
+</main>
+</div>
+</div></body>
+</html>

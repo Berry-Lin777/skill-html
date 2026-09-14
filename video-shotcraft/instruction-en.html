@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Video Shotcraft English instruction: install the Skill, prepare assets, write the production prompt, choose a mode, and deliver the video project with final QA." name="description"/>
+<title>Video Shotcraft Instruction · English Guide</title>
+<style>
+    :root{
+      --bg:#0d1715;
+      --panel:#14231f;
+      --panel-2:#1d332c;
+      --ink:#f4efe4;
+      --muted:#b8c4bb;
+      --dim:#71847a;
+      --gold:#ef9b68;
+      --gold-2:#ffc39b;
+      --line:rgba(190,218,197,.18);
+      --line-strong:rgba(239,155,104,.58);
+      --shadow:rgba(0,0,0,.48);
+      /* Use one sans-serif stack across the page so English UI text stays visually consistent. */
+      --ui-font:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      --serif:var(--ui-font);
+      --sans:var(--ui-font);
+      --mono:var(--ui-font);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--bg)}
+    .finch-page{
+      margin:0;color:var(--ink);background:
+        radial-gradient(circle at 72% 12%,rgba(116,128,92,.16),transparent 28rem),
+        radial-gradient(circle at 18% 42%,rgba(215,180,122,.08),transparent 26rem),
+        linear-gradient(180deg,#11110f,#181713 48%,#10100e);
+      font-family:var(--sans);font-size:15px;line-height:1.78;
+      -webkit-font-smoothing:antialiased;
+    }
+    .finch-page:before{
+      content:"";position: relative;inset:0;pointer-events:none;z-index:10;opacity:0;
+    }
+    .finch-page:after{
+      content:"";position: relative;inset:0;z-index:11;pointer-events:none;opacity:.055;
+      background-image:none'/%3E%3C/svg%3E");
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    /* Lay out the main page near A4 paper width (210mm ~= 794px), with room for screen viewing. */
+    .page{width:min(1080px,calc(100% - 56px));margin:0 auto;padding:34px 0 74px}
+    .topbar{
+      position: relative;top:0;z-index:20;margin:0 calc(50% - 50vw) 0;padding:0 calc(50vw - 50%);
+      background:rgba(7,7,7,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{height:62px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+    .brand{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--gold)}
+    .nav{display:flex;gap:24px;color:var(--muted);font-size:13px}
+    .nav a:hover{color:var(--gold-2)}
+    .hero{
+      position:relative;min-height:590px;display:grid;align-items:end;padding:110px 0 64px;
+      border-bottom:1px solid var(--line);
+    }
+    .hero:before{
+      display:none;
+    }
+    .hero-grid{position:relative;z-index:1;display:block;width:100%;max-width:none}
+    .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+    h1{
+      margin:18px 0 24px;font-family:var(--serif);font-size:clamp(44px,7vw,88px);
+      line-height:1.08;font-weight:700;letter-spacing:.02em;
+    }
+    h1 span{color:var(--gold)}
+    .hero p{max-width:820px;color:var(--muted);font-size:17px}
+    .hero-card{
+      border:1px solid var(--line-strong);background:linear-gradient(145deg,rgba(23,20,16,.92),rgba(17,16,14,.56));
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;width:100%;max-width:none;margin:34px 0 0;padding:22px 24px;
+      box-shadow:0 22px 70px var(--shadow),inset 0 1px 0 rgba(255,255,255,.07);
+    }
+    .hero-card>div{min-width:0}
+    .hero-card>div+div{border-left:1px solid var(--line);padding-left:24px}
+    .hero-card dt{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--gold)}
+    .hero-card dd{margin:7px 0 20px;color:var(--muted)}
+    section{padding:96px 0;border-bottom:1px solid var(--line)}
+    .section-head{display:grid;grid-template-columns:118px minmax(0,1fr);gap:28px;margin-bottom:28px}
+    .step-no{
+      display:inline-flex;align-items:center;justify-content:center;width:92px;height:92px;
+      border:none;background:transparent;
+      box-shadow:none;
+      font-family:var(--mono);font-size:15px;letter-spacing:.14em;color:var(--gold);padding:0;text-align:center;
+    }
+    h2{margin:0;font-family:var(--serif);font-size:clamp(28px,4.2vw,50px);line-height:1.16;font-weight:700}
+    .lead{max-width:920px;color:var(--muted);font-size:16px;margin:14px 0 0}
+    .content{
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px;align-items:start;
+      margin-left:146px;
+    }
+    /* The production prompt is long, so stack this section to avoid uneven column heights. */
+    #prompt .content{grid-template-columns:minmax(0,1fr);gap:28px}
+    #prompt .content .shot{max-width:none;width:100%;margin:0}
+    #prompt .content .shot img{width:100%;max-height:none;height:auto;object-fit:contain}
+    #prompt .content .shot figcaption{text-align:center}
+    #deliver .content{grid-template-columns:minmax(0,1fr);gap:28px;align-items:stretch}
+    #deliver .content .panel,#deliver .content .shot{width:100%;max-width:none}
+    #deliver .content .panel,#deliver .content .shot{height:auto;align-self:stretch}
+    #deliver .content .shot{margin:0}
+    #deliver .content .shot{display:flex;flex-direction:column}
+    #deliver .content .shot img{max-height:220px}
+    #install .content{grid-template-columns:minmax(0,1fr)}
+    #prepare .content{grid-template-columns:minmax(0,1fr)}
+    #mode .content{grid-template-columns:minmax(0,1fr)}
+    .panel,.shot{
+      border:1px solid var(--line);background:linear-gradient(145deg,rgba(23,20,16,.9),rgba(12,11,10,.82));
+      box-shadow:0 18px 58px var(--shadow);padding:26px;
+    }
+    .label{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+    #prepare .label,#organize .label,#deliver .label{display:block;text-align:center;font-size:15px;letter-spacing:.16em}
+    .panel p{color:var(--muted)}
+    .deliver-list span,.final-list span,.mode-list span{font-size:16px;line-height:1.7}
+    .check-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+    .check{
+      min-height:108px;padding:17px;border:1px solid var(--line);background:rgba(215,180,122,.035);
+    }
+    .check b{display:block;color:var(--ink);font-size:16px;margin-bottom:5px}
+    .check span{color:var(--muted);font-size:14px}
+    .prompt{
+      position:relative;margin-top:20px;padding:22px 128px 22px 22px;border:1px solid var(--line-strong);
+      background:#0b0a09;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+    .prompt-title{display:block;margin-bottom:10px;color:var(--gold);font-family:var(--mono);font-size:12px;letter-spacing:.14em}
+    .prompt-text{white-space:pre-line;font-family:var(--sans);font-size:15px;color:#e7dfd1;line-height:1.72}
+    .prompt-text a{color:var(--gold-2);text-decoration:underline;text-underline-offset:4px}
+    .copy-btn{
+      position:absolute;right:16px;top:16px;border:1px solid var(--gold);background:var(--gold);color:#070707;
+      padding:9px 14px;font-weight:700;font-size:13px;cursor:pointer;transition:.22s;
+    }
+    .copy-btn:hover{background:var(--gold-2);transform:translateY(-1px)}
+    .shot{padding:16px;position:relative;overflow:hidden}
+    .shot:before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(135deg,rgba(215,180,122,.14),transparent 34%,rgba(116,128,92,.08));
+    }
+    .shot img{
+      position:relative;z-index:1;width:100%;height:auto;max-height:360px;object-fit:contain;
+      border:1px solid rgba(255,255,255,.1);background:#f5f1e8;
+    }
+    #deliver .shot img+img{margin-top:16px}
+    #organize .shot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    #organize .content{grid-template-columns:minmax(0,1fr);gap:28px}
+    #organize .content>*{width:100%;max-width:none}
+    #organize .content .shot{margin:0}
+    #organize .shot img{width:100%;height:100%;max-height:none;object-fit:cover}
+    #organize .shot figcaption{grid-column:1/-1;margin-top:0;text-align:center}
+    #deliver .shot figcaption{text-align:center}
+    .shot figcaption{position:relative;z-index:1;margin-top:13px;color:var(--muted);font-size:14px}
+    .content.no-shot{grid-template-columns:minmax(0,1fr);max-width:none;margin-left:146px}
+    .mode-list,.deliver-list,.final-list{margin:20px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+    .mode-list li,.deliver-list li,.final-list li{
+      display:grid;grid-template-columns:126px 1fr;gap:18px;padding:17px 0;border-bottom:1px solid var(--line);
+      color:var(--muted);
+    }
+    .mode-list b,.deliver-list b,.final-list b{color:var(--gold);font-family:var(--mono);font-size:12px;letter-spacing:.1em}
+    .mode-list b small{display:block;margin-top:5px;color:var(--dim);font-size:10px;font-weight:400;letter-spacing:.08em}
+    .summary{
+      padding:94px 0 30px;text-align:center;border-bottom:0;
+      background:radial-gradient(ellipse at 50% 20%,rgba(116,128,92,.13),transparent 58%);
+    }
+    .summary h2{margin:auto;max-width:860px}
+    .summary p{max-width:760px;margin:22px auto 0;color:var(--muted)}
+    footer{padding:32px 0 0;text-align:center;color:var(--dim);font-family:var(--mono);font-size:11px;letter-spacing:.14em}
+    @media(max-width:940px){
+      .hero-grid,.content,.content.no-shot{grid-template-columns:1fr}
+      .content{margin-left:0}
+      .meta{grid-template-columns:repeat(2,1fr)}
+      .meta div:nth-child(2){border-right:0}
+      .meta div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+      .section-head{grid-template-columns:1fr;gap:14px}
+      .step-no{width:auto;height:auto;min-height:44px;padding:10px 16px;justify-content:flex-start}
+      .nav{flex-wrap:wrap;gap:10px 18px;justify-content:flex-end}
+      .nav a{display:inline-block!important}
+    }
+    @media(max-width:620px){
+      .page{width:calc(100% - 28px);padding-top:18px}
+      .topbar-inner{height:auto;padding:14px 0;align-items:flex-start;flex-direction:column}
+      .nav{justify-content:flex-start}
+      .hero{min-height:auto;padding:66px 0 44px}
+      .hero-card{padding:20px}
+      .hero-card{grid-template-columns:1fr;gap:0}
+      .hero-card>div+div{border-left:0;padding-left:0;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+      .meta,.check-grid{grid-template-columns:1fr}
+      .meta div{border-right:0!important;border-bottom:1px solid var(--line)}
+      .meta div:last-child{border-bottom:0}
+      section{padding:64px 0}
+      .panel{padding:20px}
+      .shot img{height:auto;max-height:360px}
+      .prompt{padding:66px 18px 20px}
+      .copy-btn{left:18px;right:auto}
+      .mode-list li,.deliver-list li,.final-list li{grid-template-columns:1fr;gap:4px}
+    }
+  
+
+html,body{margin:0;padding:0;width:100%;}
+.finch-page{position:relative;isolation:isolate;width:100%;background-color:#0b0b0c;color:#ece8df;}
+img,video{max-width:100%!important;height:auto!important;} .finch-media-ratio{aspect-ratio:auto 16 / 9;} .reveal{opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important;} .finch-page::before,.finch-page::after{pointer-events:none;position:absolute;}
+</style></head>
+<body><div class="finch-page">
+<main class="page">
+<header class="topbar">
+<div class="topbar-inner">
+<a class="brand" href="#top">VIDEO SHOTCRAFT / INSTRUCTION</a>
+<nav class="nav">
+<a href="#install">Install</a>
+<a href="#prepare">Assets</a>
+<a href="#prompt">Prompt</a>
+<a href="#mode">Mode</a>
+<a href="#check">Final QA</a>
+</nav>
+</div>
+</header>
+<section class="hero" id="top">
+<div class="hero-grid">
+<div>
+<div class="kicker">Codex Skill · Video Shotcraft</div>
+<h1>Turn real products<br/><span>into cinematic films.</span></h1>
+</div>
+<div class="hero-card">
+<div><dt>Runtime</dt><dd>Codex local workspace</dd></div>
+<div><dt>Best for</dt><dd>Product promos, feature demos, and web or app showcase videos</dd></div>
+<div><dt>Core deliverables</dt><dd>Remotion project, final cut with BGM, final cut without BGM, QA notes, and motion workbench</dd></div>
+</div>
+</div>
+</section>
+<section id="install">
+<div class="section-head">
+<div class="step-no">STEP 01</div>
+<div><h2>Install The Video Shotcraft Skill</h2><p class="lead">Before you start, load the shot cards, template, components, audio assets, and workflow notes into the current Codex environment.</p></div>
+</div>
+<div class="content">
+<div class="panel">
+<span class="label">Send to Codex</span>
+<div class="prompt" data-copy="Install the video-shotcraft skill (https://github.com/Vincentwei1021/video-shotcraft). After installation, reopen or refresh the current workspace so the skill instructions, shot cards, template, components, and audio assets are loaded.">
+<span class="prompt-title">INSTALL PROMPT</span>
+<div class="prompt-text">Install the video-shotcraft skill (<a href="https://github.com/Vincentwei1021/video-shotcraft" rel="noopener noreferrer" target="_blank">open the GitHub repository</a>).
+
+After installation, reopen or refresh the current workspace so the skill instructions, shot cards, template, components, and audio assets are loaded.</div>
+</div>
+</div>
+</div>
+</section>
+<section id="prepare">
+<div class="section-head">
+<div class="step-no">STEP 02</div>
+<div><h2>Prepare The Input Assets</h2></div>
+</div>
+<div class="content">
+<div class="panel">
+<span class="label">Assets</span>
+<div class="check-grid">
+<div class="check"><b>Project entry</b><span>Project directory or webpage URL</span></div>
+<div class="check"><b>Visual assets</b><span>Screenshots / screen recordings / images / audio</span></div>
+<div class="check"><b>Written assets</b><span>Product copy or supporting notes</span></div>
+</div>
+<p>This example uses an HTML file with embedded images and written content.</p>
+</div>
+</div>
+</section>
+<section id="prompt">
+<div class="section-head">
+<div class="step-no">STEP 03</div>
+<div><h2>Write A Clear Production Prompt</h2><p class="lead">Describe the assets, theme, focus points, and delivery requirements in one complete request.</p></div>
+</div>
+<div class="content">
+<div class="panel">
+<span class="label">Ready to adapt</span>
+<p class="mode-note">This example does not choose a mode in advance. Following the skill workflow, Codex first performs a read-only review of the product page and assets, then recommends the best route for the project goal.</p>
+<div class="prompt" data-copy="Using video-shotcraft's autonomous creative mode, create a promotional video for the official Gallery website:
+https://vincentwei1021.github.io/video-shotcraft/
+
+Focus on showcasing the number of shots available, category search, animated sample cards, and the ability to go from a single prompt to a complete promotional video.
+Use publicly available page data and keep the video length between 20 and 30 seconds.">
+<span class="prompt-title">PRODUCTION PROMPT</span>
+<div class="prompt-text">Using video-shotcraft's autonomous creative mode, create a promotional video for the official Gallery website:
+https://vincentwei1021.github.io/video-shotcraft/
+
+Focus on showcasing the number of shots available, category search, animated sample cards, and the ability to go from a single prompt to a complete promotional video.
+Use publicly available page data and keep the video length between 20 and 30 seconds.</div>
+</div>
+</div>
+<figure class="shot">
+<img alt="Production prompt example screenshot" class="finch-media-ratio" height="190" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-prompt-9328dac3f0f8.png" width="928"/>
+<figcaption>Input example</figcaption>
+</figure>
+</div>
+</section>
+<section id="mode">
+<div class="section-head">
+<div class="step-no">STEP 04</div>
+<div><h2>Choose A Production Mode</h2><p class="lead">If a mode is specified, Codex runs it directly. <u>If no mode is specified, Codex first reviews the product page and assets, then recommends a route</u>.</p></div>
+</div>
+<div class="content">
+<div class="panel">
+<ul class="mode-list">
+<li><b>01 · Template mode<small>Direct template use</small></b><span>Reuse the Ink Press shot structure while replacing product screenshots, copy, and brand details. Best for quickly adapting a proven template film.</span></li>
+<li><b>02 · Autonomous creation<small>Autonomous free creation</small></b><span>Let Codex decide the visual direction, shot plan, storyboard, asset capture, sound design, and final render.</span></li>
+<li><b>03 · Guided co-creation<small>Guided co-creation</small></b><span>Review the visual direction, shot mapping, and final storyboard in stages. Best when the project has a clear preferred message or creative direction.</span></li>
+</ul>
+<div class="prompt" data-copy="I want to use [Template mode / Autonomous creation / Guided co-creation] for this video.
+
+If I have not selected a mode, first perform a read-only review of the product page and assets. Explain whether the Ink Press template, autonomous creation, and guided co-creation are each suitable, then recommend one route before continuing.">
+<span class="prompt-title">MODE PROMPT</span>
+<div class="prompt-text">I want to use [Template mode / Autonomous creation / Guided co-creation] for this video.
+
+If I have not selected a mode, first perform a read-only review of the product page and assets. Explain whether the Ink Press template, autonomous creation, and guided co-creation are each suitable, then recommend one route before continuing.</div>
+</div>
+</div>
+</div>
+</section>
+<section id="organize">
+<div class="section-head">
+<div class="step-no">STEP 05</div>
+<div><h2>Organize Pages And Assets</h2><p class="lead">Video Shotcraft is not about generating fake UI. It is about filming real product pages with a strong sense of camera work. Confirm page states, data boundaries, and text clarity before production.</p></div>
+</div>
+<div class="content">
+<div class="panel">
+<span class="label">Before capture</span>
+<ul class="final-list">
+<li><b>Real pages</b><span>When showcasing the product, prioritize real pages, real screenshots, or real screen recordings. Fake UI is only suitable for abstract openings or standalone components.</span></li>
+<li><b>Page states</b><span>Prepare clear and reproducible states for each feature, such as input, processing, result, detail, and export screens.</span></li>
+<li><b>Clarity</b><span>Check screenshot resolution to avoid blurry text, cropping, obstruction, or replacement mistakes after zooming.</span></li>
+<li><b>Data safety</b><span>Freeze demo data. Redact sensitive content before capture and production.</span></li>
+</ul>
+</div>
+<figure class="shot">
+<img alt="Input assets scene example screenshot" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-out1-1801720fee7a.png" width="1920"/>
+<img alt="Product introduction scene example screenshot" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-out2-79f2c2787b46.png" width="1920"/>
+<img alt="Follow-up analysis scene example screenshot" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-out3-17a2f0248263.png" width="1920"/>
+<img alt="Answer training scene example screenshot" class="finch-media-ratio" height="1080" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/information-en/en-out4-00acde30d47f.png" width="1920"/>
+<figcaption>Rendered result examples</figcaption>
+</figure>
+</div>
+</section>
+<section id="deliver">
+<div class="section-head">
+<div class="step-no">STEP 06</div>
+<div><h2>Confirm Output Files</h2><p class="lead">A complete delivery is more than one mp4. It is a video project that can be reviewed, adjusted, and iterated.</p></div>
+</div>
+<div class="content">
+<div class="panel">
+<span class="label">Delivery checklist</span>
+<ul class="deliver-list">
+<li><b>Project folder</b><span>Remotion project, assets, timeline, design notes, and reproducible render configuration.</span></li>
+<li><b>Two final cuts</b><span>A version with BGM, plus a version without BGM that keeps SFX for easier music replacement later.</span></li>
+<li><b>QA notes</b><span>Keyframe checks, final review notes, sensitive information checks, and render parameters.</span></li>
+<li><b>Motion workbench</b><span>Shots, captions, transitions, and sound effects are split into visual tracks for further tuning and export.</span></li>
+</ul>
+</div>
+<figure class="shot">
+<img alt="Output files example screenshot" class="finch-media-ratio" height="461" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/video-shotcraft/instruction-en/en-file1-3808fc1e5060.png" width="1096"/>
+<figcaption>Output example</figcaption>
+</figure>
+</div>
+</section>
+<section id="check">
+<div class="section-head">
+<div class="step-no">STEP 07</div>
+<div><h2>Final QA Checklist</h2><p class="lead">Before delivery, confirm that the video truly introduces the product: clear to read, easy to understand, steady in rhythm, held on key points, and free of sensitive information leaks.</p></div>
+</div>
+<div class="content no-shot">
+<div class="panel">
+<span class="label">Send to Codex for further iteration</span>
+<ul class="final-list">
+<li><b>Theme</b><span>Does the video clearly explain the product, audience, and value instead of only walking through operations?</span></li>
+<li><b>Shots</b><span>Does it follow the intended structure, does each shot express one action, and do key details get enough hold time?</span></li>
+<li><b>Visuals</b><span>Is page text legible, with no obstruction, cropping, distortion, or replacement mistakes?</span></li>
+<li><b>Sound</b><span>Are voiceover, BGM, and SFX balanced, and does the music avoid covering voice or key information?</span></li>
+<li><b>Delivery</b><span>Were both final cuts exported, was an independent final review completed, and was sensitive information cleared?</span></li>
+</ul>
+<div class="prompt" data-copy="Please keep optimizing the video based on the current version: check whether the theme is clear, whether the shots follow the structure, whether page text is legible, whether key information has enough hold time, and whether BGM or SFX covers the voice. Re-export both the version with BGM and the version without BGM. If you find sensitive information, obstruction, cropping, or replacement mistakes, fix them before rendering.">
+<span class="prompt-title">REVISION PROMPT</span>
+<div class="prompt-text">Please keep optimizing the video based on the current version: check whether the theme is clear, whether the shots follow the structure, whether page text is legible, whether key information has enough hold time, and whether BGM or SFX covers the voice. Re-export both the version with BGM and the version without BGM. If you find sensitive information, obstruction, cropping, or replacement mistakes, fix them before rendering.</div>
+</div>
+</div>
+</div>
+</section>
+<footer>VIDEO SHOTCRAFT INSTRUCTION EN · REAL UI / SHOT CARDS / REMOTION / QA</footer>
+</main>
+</div></body>
+</html>

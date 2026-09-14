@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Twitter Autopilot Skill Information</title>
+<style>
+    :root{color-scheme:light;--ink:#122033;--muted:#5c6b7c;--blue:#1668e3;--deep:#071a33;--line:#dbe5f0;--soft:#f3f7fb;--white:#fff;--green:#12805c}
+    *{box-sizing:border-box}
+    html,.finch-page{margin:0;padding:0;width:100%;background:#eaf1f8;color:var(--ink)}
+    .finch-page{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;line-height:1.75}
+    .page{width:100%;overflow-wrap:anywhere;background-color:#eaf1f8;background-image:linear-gradient(180deg,#dfeaf6 0,#f4f7fb 420px,#eaf1f8 100%);color:var(--ink);padding:28px 16px 56px}
+    .document{width:100%;max-width:1160px;margin:0 auto;background:var(--white);border:1px solid rgba(7,26,51,.08);border-radius:28px;box-shadow:0 24px 70px rgba(24,52,83,.13);overflow:hidden}
+    .masthead{padding:28px clamp(22px,5vw,68px);display:flex;gap:20px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .masthead h1{font-size:clamp(20px,3vw,30px);line-height:1.2;margin:0;letter-spacing:-.02em}
+    .masthead p{margin:4px 0 0;color:var(--muted);font-size:14px}
+    .mark{flex:0 0 auto;width:48px;height:48px;border-radius:15px;background:#050505;color:#fff;display:grid;place-items:center;font-weight:800;font-size:22px}
+    .hero{padding:clamp(44px,8vw,92px) clamp(22px,7vw,86px);background:radial-gradient(circle at 82% 10%,rgba(66,153,255,.28),transparent 31%),linear-gradient(135deg,#061629,#0a294f);color:#fff}
+    .eyebrow{margin:0 0 20px;text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:800;color:#80bbff}
+    .hero h2{margin:0;max-width:900px;font-size:clamp(36px,6vw,70px);line-height:1.12;letter-spacing:-.045em}
+    .hero h3{margin:34px 0 12px;font-size:clamp(20px,3vw,30px)}
+    .hero p{max-width:850px;margin:12px 0;color:#dce9f7;font-size:clamp(16px,2vw,19px)}
+    .section{padding:clamp(44px,7vw,78px) clamp(22px,7vw,86px);border-top:1px solid var(--line)}
+    .section-head{margin-bottom:32px}
+    .section h2{margin:0;font-size:clamp(29px,4.5vw,48px);line-height:1.08;letter-spacing:-.035em}
+    .section h3{margin:0 0 14px;font-size:clamp(22px,3vw,31px);line-height:1.3;letter-spacing:-.025em}
+    .section p{margin:0 0 16px;color:#3d4b5a;font-size:17px}
+    .lead{font-size:clamp(19px,2.5vw,24px)!important;line-height:1.7;color:var(--ink)!important;max-width:930px}
+    .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0 26px}
+    .compare-card{padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--soft)}
+    .compare-card strong{display:inline-flex;margin-bottom:10px;padding:4px 10px;border-radius:999px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:#e6edf5;color:#526377}
+    .compare-card.after{background:#effaf6;border-color:#c9e8dc}
+    .compare-card.after strong{background:#d8f1e8;color:var(--green)}
+    .compare-card p{margin:0;font-size:16px}
+    .outcome{padding-left:18px;border-left:3px solid var(--blue);font-weight:700;color:var(--ink)!important}
+    .visual{margin:28px 0 0;padding:14px;border-radius:22px;background:#edf3f8;border:1px solid var(--line)}
+    .visual img{display:block;width:100%;max-width:100%;height:auto;border-radius:14px;background:#fff}
+    .story{padding:28px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#fff,#f7faff)}
+    .story+.story{margin-top:26px}
+    .story h3{color:#103f78}
+    .story p:last-of-type{margin-bottom:0}
+    .gallery{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+    .gallery figure{margin:0;padding:9px;border:1px solid var(--line);border-radius:16px;background:#edf3f8}
+    .gallery img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:8/5;object-fit:contain;border-radius:10px;background:#fff}
+    .gallery .wide{grid-column:1/-1}
+    .feature-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 0;padding:0;list-style:none}
+    .feature-list li{position:relative;padding:20px 20px 20px 44px;border:1px solid var(--line);border-radius:16px;background:#fff;color:#3d4b5a}
+    .feature-list li:before{content:"";position:absolute;left:20px;top:30px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+    .feature-list strong{color:var(--ink)}
+    .advantages{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .advantage{padding:22px;border-radius:18px;background:var(--soft);border:1px solid var(--line)}
+    .advantage h3{font-size:20px;margin-bottom:8px}
+    .advantage p{font-size:16px;margin:0}
+    .cta{background:#0a2342;color:#fff}
+    .cta h2,.cta h3{color:#fff}
+    .cta p{color:#dce9f7}
+    .cta .official{display:inline-block;margin:8px 0 22px;padding:11px 16px;border:1px solid #4b78a9;border-radius:12px;color:#fff;font-weight:700}
+    @media(max-width:760px){.page{padding:0}.document{border:0;border-radius:0}.masthead{align-items:flex-start}.compare,.feature-list,.advantages,.gallery{grid-template-columns:1fr}.gallery .wide{grid-column:auto}.section-head{grid-template-columns:1fr}.section{padding-left:20px;padding-right:20px}.hero{padding-left:20px;padding-right:20px}.story{padding:20px}.mark{width:42px;height:42px}}
+  
+
+html,body{margin:0;padding:0;width:100%;}
+.finch-page{position:relative;isolation:isolate;width:100%;background-color:#eaf1f8;color:#122033;}
+img,video{max-width:100%!important;height:auto!important;} .finch-media-ratio{aspect-ratio:auto 16 / 9;} .reveal{opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important;} .finch-page::before,.finch-page::after{pointer-events:none;position:absolute;}
+</style></head>
+<body><div class="finch-page">
+<main class="page">
+<article class="document">
+<header class="masthead">
+<div><h1>Twitter Autopilot Skill Information</h1><p>X 数据检索、舆情分析与账号操作的外宣文案</p></div>
+<div aria-hidden="true" class="mark">X</div>
+</header>
+<section class="hero">
+<p class="eyebrow">01 Title / 首屏</p>
+<h2>做 X 调研还在反复搜索、复制链接和整理表格？这个 Skill 可以直接完成检索、分析和账号操作</h2>
+<h3>Twitter Autopilot</h3>
+<p>用自然语言说明账号、关键词、时间范围和输出要求，Twitter Autopilot 就能读取公开资料与近期动态，搜索热门内容，整理回复和引用，分析品牌舆情，并在完成 OAuth 授权后发布推文、点赞或关注账号。</p>
+<p>它解决的不只是“查到几条推文”，而是把搜索、筛选、去重、归类、溯源和执行连接起来，让用户从一个问题直接走到一份带来源、范围和结果说明的可用输出。</p>
+</section>
+<section class="section">
+<div class="section-head"><h2>02 Before / After</h2></div>
+<div class="story">
+<h3>01 从手动搜索到结构化情报</h3>
+<div class="compare"><div class="compare-card"><strong>Before</strong><p>用户需要在 X 中反复切换关键词和账号，逐条打开推文、记录时间与互动数据，再手动合并同一事件的重复内容。结果容易遗漏来源，也很难说明实际检索范围。</p></div><div class="compare-card after"><strong>After</strong><p>说明账号、关键词、时间窗口、排序方式和输出字段后，直接得到带发布时间、原文链接、互动数据、样本数量和实际覆盖时间的结构化结果。</p></div></div>
+<p class="outcome">从“找到一些相关内容”，变成“拿到一份可以继续判断和引用的调研材料”。</p>
+<figure class="visual"><img alt="从手动搜索到结构化情报" height="911" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image17.png" width="1727"/></figure>
+</div>
+<div class="story">
+<h3>02 从零散评论到舆情与需求分类</h3>
+<div class="compare"><div class="compare-card"><strong>Before</strong><p>品牌提及、产品反馈、售后投诉和功能需求混在搜索结果中。人工判断情绪不仅耗时，还容易把广告、重复回复和无关同名词计入样本。</p></div><div class="compare-card after"><strong>After</strong><p>Twitter Autopilot 可以按正面、负面和中性整理相关内容，排除明显误匹配，归纳高频优点、问题和功能需求，并为每项发现保留代表性原文链接与分类依据。</p></div></div>
+<p class="outcome">从“浏览评论区凭感觉判断”，变成“基于可见样本梳理主题、证据和边界”。</p>
+<figure class="visual"><img alt="从零散评论到舆情与需求分类" height="910" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image18.png" width="1728"/></figure>
+</div>
+<div class="story">
+<h3>03 从分析结果到账号行动</h3>
+<div class="compare"><div class="compare-card"><strong>Before</strong><p>调研结束后，用户还要重新打开 X，寻找目标账号或推文，再手动发布内容、点赞、关注或取消操作。查询和执行彼此分离，目标也容易选错。</p></div><div class="compare-card after"><strong>After</strong><p>完成 OAuth 授权后，可以在同一对话中发布文字或媒体推文、点赞或取消点赞、关注或取消关注，并根据接口返回确认操作是否成功。</p></div></div>
+<p class="outcome">从“分析完再去手动执行”，变成“在明确目标和内容后直接完成操作并返回结果链接”。</p>
+<figure class="visual"><img alt="从分析结果到账号行动" height="911" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image19.png" width="1727"/></figure>
+</div>
+</section>
+<section class="section">
+<div class="section-head"><h2>03 Pain Point / Use Case</h2></div>
+<p class="lead">X 调研最麻烦的地方，往往不是缺少搜索入口，而是公开信息数量大、更新快、上下文分散，而且搜索、分析和执行通常需要多套工具配合。</p>
+<p>平台内搜索适合快速浏览，但用户仍要自己处理重复内容、账号同名、转发与引用的区别、时区、分页和互动数据。品牌研究还会遇到广告信息、机器人回复、无关关键词和同一用户多次发言。单条争议推文则需要同时读取原文、对话线程、回复和引用，才能理解讨论因何而起。</p>
+<p>真正的需求更直接：谁发布了什么，最近发生了什么，用户如何回应，证据链接在哪里，接口实际看到了多少内容，以及下一步能否直接发布或互动。对市场、品牌、公关、投资研究和内容团队来说，这些信息是否结构化、可核验，决定了输出能否进入报告或工作流程。</p>
+</section>
+<section class="section">
+<div class="section-head"><h2>04 Transition</h2></div>
+<p class="lead">所以 Twitter Autopilot 不应该只是一个“搜推文”的工具。它要把账号发现、动态读取、主题搜索、上下文获取、数据整理和账号操作接在一起。</p>
+<p>用户给出研究目标和范围，Skill 负责调用对应接口、整理结果、保留来源，并明确说明样本限制。需要执行操作时，再通过 OAuth 把已经确认的内容和目标写入 X。</p>
+</section>
+<section class="section">
+<div class="section-head"><h2>05 Solution</h2></div>
+<p class="lead">Twitter Autopilot 的工作流很清楚：先确定对象和任务，再说明时间、数量、排序、输出和边界要求。Skill 围绕“结果能否核验和继续使用”组织输出，而不是只返回一组搜索片段。</p>
+<ul class="feature-list">
+<li><strong>账号研究：</strong> 查询公开简介、认证信息、关注者数据、近期推文、提及、关注者和关注关系。</li>
+<li><strong>内容检索：</strong> 按关键词搜索最新或热门推文，并支持账号、时间、语言等查询条件。</li>
+<li><strong>上下文分析：</strong> 读取单条推文详情、回复、引用、转发者和完整对话线程，说明可用分页与缺失内容。</li>
+<li><strong>舆情整理：</strong> 合并重复事件，排除明显误匹配，归纳主要观点、争议、情绪和功能需求。</li>
+<li><strong>行业研究：</strong> 比较品牌动态、筛选创作者、跟踪趋势，并为每项发现保留原文链接。</li>
+<li><strong>账号操作：</strong> 完成 OAuth 后发布或回复推文、点赞或取消点赞、关注或取消关注。</li>
+<li><strong>结果边界：</strong> 报告实际覆盖时间、原始样本量、相关样本量、去重方式及接口未能获取的内容。</li>
+</ul>
+</section>
+<section class="section">
+<div class="section-head"><h2>06 Real Cases / Outputs</h2></div>
+<p>以下案例均来自 Twitter Autopilot 的实际中文测试结果。长结果按完整段落和表格行拆成连续横图，适合在后续 HTML 页面中作为横向案例卡片、轮播截图图或局部放大图使用。</p>
+<div class="story"><h3>Case 01 查看账号最近 20 条动态</h3><p>读取 @elonmusk 最近 20 条动态，区分独立推文、回复、转发和引用推文，概括 AI、Tesla、政治与公共讨论等主题，并列出发布时间、原文链接及接口返回的互动数据。</p><p>这个案例展示了从账号时间线到结构化动态清单的完整过程，同时说明了实际覆盖时间和不同内容类型的差异。</p><div class="gallery"><figure><img alt="账号动态清单第一部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image1.png" width="1440"/></figure><figure><img alt="账号动态清单第二部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image2.png" width="1440"/></figure><figure class="wide"><img alt="账号动态清单第三部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image3.png" width="1440"/></figure></div></div>
+<div class="story"><h3>Case 02 搜索 AI 热门讨论</h3><p>搜索过去 7 天与 AI 有关的热门内容，从原始结果中整理 10 条代表性推文，将同一模型发布或同一事件的重复讨论合并，并总结能力扩展、安全、人类责任、创作身份和监管等主要观点与争议。</p><p>这个案例展示了主题搜索、热门排序、事件去重和观点归纳，同时保留每条代表性推文的链接与互动数据。</p><div class="gallery"><figure><img alt="AI 热门讨论第一部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image4.png" width="1440"/></figure><figure><img alt="AI 热门讨论第二部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image5.png" width="1440"/></figure><figure class="wide"><img alt="AI 热门讨论第三部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image6.png" width="1440"/></figure></div></div>
+<div class="story"><h3>Case 03 分析 Lenovo 舆情和功能需求</h3><p>搜索过去 7 天与 Lenovo 有关的推文和账号提及，排除不指向品牌的“联想”等误匹配，再按正面、负面和中性分类。结果归纳了设备耐用性、性能和电池等优点，也整理了维修、退款、硬件可靠性、材料和价格等问题。</p><p>这个案例展示了品牌舆情分类、误匹配排除、高频主题提取和样本边界说明。</p><div class="gallery"><figure><img alt="Lenovo 舆情分析第一部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image7.png" width="1440"/></figure><figure><img alt="Lenovo 舆情分析第二部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image8.png" width="1440"/></figure><figure class="wide"><img alt="Lenovo 舆情分析第三部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image9.png" width="1440"/></figure></div></div>
+<div class="story"><h3>Case 04 对比 Xiaomi、Huawei 和 OPPO</h3><p>统一查看三个品牌过去 7 天的官方动态与账号提及，重点比较产品发布、功能更新、合作和营销活动。输出把官方事实、用户回应和可借鉴做法分列呈现，并为每项发现附上来源链接。</p><p>这个案例展示了跨品牌对比、事实与判断分离，以及在发帖频率和样本量不同的情况下如何保持结论克制。</p><div class="gallery"><figure class="wide"><img alt="Xiaomi、Huawei 和 OPPO 对比" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image10.png" width="1440"/></figure></div></div>
+<div class="story"><h3>Case 05 读取争议推文的完整语境</h3><p>围绕一条足球讨论推文，同时获取原文、可用线程、回复和引用内容，解释讨论的比赛背景，并整理支持、反对和部分同情观点。结果还报告了接口返回的回复、线程和引用数量，以及是否存在下一页。</p><p>这个案例展示了单条内容如何从一句话扩展为带上下文、观点分组和获取限制的完整分析。</p><div class="gallery"><figure><img alt="争议推文语境第一部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image11.png" width="1440"/></figure><figure><img alt="争议推文语境第二部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image12.png" width="1440"/></figure><figure><img alt="争议推文语境第三部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image13.png" width="1440"/></figure><figure><img alt="争议推文语境第四部分" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image14.png" width="1440"/></figure></div></div>
+<div class="story"><h3>Case 06 发布推文并执行互动</h3><p>在完成 OAuth 授权后，Twitter Autopilot 成功发布指定文字，并返回实际推文链接；同一套操作流程也完成了关注目标账号和点赞其最新推文。</p><p>这个案例展示了读取与分析之外的写入能力，以及为什么必须以接口明确返回的成功结果为准。</p><div class="gallery"><figure><img alt="成功发布推文" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image15.png" width="1440"/></figure><figure><img alt="成功关注账号并点赞推文" height="900" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/twitter-autopilot/information/image16.png" width="1440"/></figure></div></div>
+</section>
+<section class="section">
+<div class="section-head"><h2>07 Core Advantages</h2></div>
+<div class="advantages">
+<div class="advantage"><h3>01 一个 Skill 覆盖查询、分析和执行</h3><p>从账号资料、时间线和热门搜索，到回复、引用、线程与实际账号操作，用户不需要在多个工具之间反复转移目标和上下文。</p></div>
+<div class="advantage"><h3>02 输出保留来源和样本边界</h3><p>结果可以同时提供原文链接、互动数据、实际覆盖时间、样本数量、分页情况和缺失说明，更适合进入报告、竞品研究和舆情复盘。</p></div>
+<div class="advantage"><h3>03 自然语言适配多种研究场景</h3><p>用户只需要说明对象、时间、数量、排序和输出方式，就能完成账号跟踪、主题研究、品牌舆情、竞品比较和创作者筛选。</p></div>
+<div class="advantage"><h3>04 能够读取单条内容的讨论结构</h3><p>除原帖之外，还可以获取可见回复、引用和线程上下文，帮助用户理解争议来源、主要阵营和观点差异。</p></div>
+<div class="advantage"><h3>05 写入操作不需要分享账号密码</h3><p>发布、点赞和关注通过浏览器 OAuth 完成授权。用户无需在对话中提供 X 密码或登录 Cookie，操作结果由接口明确返回。</p></div>
+<div class="advantage"><h3>06 兼容多种 Agent 工具</h3><p>Skill 遵循 Agent Skills 规范，可用于 Codex、Claude Code、Cursor、Gemini CLI、OpenCode、Goose、OpenClaw、Hermes 等兼容环境。</p></div>
+</div>
+</section>
+<section class="section">
+<div class="section-head"><h2>08 Why It Matters</h2></div>
+<p class="lead">X 上的信息不是静态数据库。账号持续更新，互动数字不断变化，同一事件会被转发、引用和重新解释，真正有价值的上下文散落在不同页面和讨论链中。</p>
+<p>Twitter Autopilot 的意义，是把原本分散在搜索、复制、去重、分类、表格整理和账号操作中的工作收拢到一次自然语言请求之后。用户可以看到来源，也能知道本次接口实际覆盖了什么、没有覆盖什么。</p>
+<p>当账号、内容、互动、上下文和执行能够连接起来，X 才更容易从一个需要人工浏览的平台，变成可以支持持续监测、研究判断和内容运营的数据入口。</p>
+</section>
+<section class="section cta">
+<div class="section-head"><h2>09 CTA</h2></div>
+<h3>TWITTER AUTOPILOT</h3>
+<div class="official">官方 Skill 链接： Twitter Autopilot</div>
+<p>安装完整的 SKILL.md、scripts 和 references，配置本地 AISA_API_KEY。读取公开数据无需登录 X；发布、点赞和关注等账号操作需要在浏览器中完成 OAuth 授权。</p>
+<p>告诉 Twitter Autopilot 你要研究的账号、关键词、时间范围和输出方式。你将得到带原文链接、实际覆盖范围和样本说明的 X 数据结果；需要执行操作时，还可以继续发布内容或完成互动。</p>
+</section>
+</article>
+</main>
+</div></body>
+</html>
