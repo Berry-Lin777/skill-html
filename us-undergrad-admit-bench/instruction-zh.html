@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>US Undergrad Admit Bench 中文操作手册</title><style>
+:root{--ink:#172033;--muted:#506779;--red:#a51c30;--blue:#1a6287;--line:rgba(45,79,109,.16);--campus-art:url("https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/06cd702dab762eb3f14d1dd0d30ccccf86e900c4232e0-06cd702dab76.png")}
+*{box-sizing:border-box}html{scroll-behavior:smooth}.finch-page{margin:0;position:relative;color:var(--ink);font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;line-height:1.66;background:#edf5fa}
+.finch-page:before{content:"";position: relative;inset:0;z-index:-3;background-image:linear-gradient(rgba(255,255,255,.46),rgba(255,255,255,.58)),var(--campus-art);background-size:cover;background-position:center bottom;opacity:.95}
+.finch-page:after{content:"";position: relative;inset:0;z-index:-2;pointer-events:none;background-image:url("https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/abbc1503c9978e1a69efb5f50fee20fe1c55949926a73-abbc1503c997.png"),url("https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/16f5a709edeb7e4480ee6829b8d9951b07bda5ff729b4-16f5a709edeb.png"),url("https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/309bce47ee222b01bd2c6e8adbcce53dc13fd86be19b8-309bce47ee22.png"),url("https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/43e802dbeb16db28bbdec834df408dd8d608fc0c2242d-43e802dbeb16.png"),url("https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/e2dcdc2ef8ef37f3b90e209e0bf69feab3cdc33d1969e-e2dcdc2ef8ef.png"),url("https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/07b43496c26a3d32cf45cc6f017dfbb31068b0497bc20-07b43496c26a.jpg");background-repeat:no-repeat;background-position:-38px 15%,calc(100% + 25px) 31%,22px 50%,calc(100% + 20px) 67%,-45px 84%,calc(100% + 34px) 96%;background-size:250px auto,265px auto,285px auto,235px auto,245px auto,280px auto;opacity:.14;filter:grayscale(.12) saturate(.82);mix-blend-mode:multiply}
+.hero{position:relative;overflow:hidden;padding:68px 7vw 48px;background:linear-gradient(102deg,rgba(255,255,255,.94),rgba(255,255,255,.74) 56%,rgba(244,250,253,.5)),var(--campus-art) center bottom/cover no-repeat;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:12px;letter-spacing:.15em;color:#8f1d34;font-weight:900}.hero h1{max-width:1030px;margin:14px 0 16px;font-size:clamp(38px,5vw,68px);line-height:1.08;letter-spacing:-.035em}.hero .sub{max-width:880px;margin:0;color:#46586b;font-size:clamp(17px,2vw,23px)}.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px}.chip{padding:7px 12px;border:1px solid rgba(38,84,112,.2);border-radius:999px;background:rgba(255,255,255,.7);font-size:13px;box-shadow:0 8px 28px rgba(31,65,87,.07);backdrop-filter:blur(12px)}
+.campus-ribbon{display:grid;grid-template-columns:1.15fr 1.35fr 1fr 1.15fr 1fr;gap:11px;align-items:stretch;max-width:1120px;margin-top:34px}.campus-tile{min-height:84px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:11px;border:1px solid rgba(43,77,103,.14);border-radius:15px;background:rgba(255,255,255,.72);box-shadow:0 12px 38px rgba(38,67,88,.09);backdrop-filter:blur(16px)}.campus-tile img{display:block;width:100%;height:60px;object-fit:contain;filter:saturate(.9);mix-blend-mode:multiply}.campus-tile.photo{padding:0}.campus-tile.photo img{height:100%;min-height:84px;object-fit:cover;mix-blend-mode:normal}.campus-tile.ap img{object-position:left center}
+.guide-shell{max-width:1120px;margin:34px auto 90px;padding:0 28px}.doc-content{position:relative;padding:46px clamp(24px,5vw,68px);border:1px solid var(--line);border-radius:28px;background:rgba(255,255,255,.76);box-shadow:0 24px 80px rgba(31,65,87,.12);backdrop-filter:blur(18px)}
+.doc-content,.doc-content p,.doc-content li,.doc-content td,.doc-content th{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif!important;color:#26333d!important;font-size:16px!important;line-height:1.7!important}.doc-content p{margin:0 0 14px!important}.doc-content font{font-family:inherit!important}.doc-content h1,.doc-content h2,.doc-content h3{font-family:inherit!important;color:#17324d!important;line-height:1.25!important;letter-spacing:-.02em!important}.doc-content h1{margin:52px 0 18px!important;padding:14px 0 12px!important;font-size:clamp(28px,4vw,42px)!important;border-bottom:2px solid rgba(165,28,48,.25)!important}.doc-content h2{margin:36px 0 14px!important;font-size:clamp(22px,3vw,30px)!important;color:#245b78!important}.doc-content h3{margin:28px 0 12px!important;font-size:20px!important}.doc-content a{color:#145d83!important;text-underline-offset:3px}.doc-content hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+.doc-content table{width:100%!important;max-width:100%!important;margin:22px auto!important;border-collapse:separate!important;border-spacing:0!important;overflow:hidden;border:1px solid rgba(43,77,103,.16)!important;border-radius:14px;background:rgba(255,255,255,.78)!important;box-shadow:0 10px 32px rgba(31,65,87,.06)}.doc-content col{width:auto!important}.doc-content td,.doc-content th{width:auto!important;padding:11px 13px!important;border:0!important;border-right:1px solid rgba(43,77,103,.12)!important;border-bottom:1px solid rgba(43,77,103,.12)!important;background:transparent!important;vertical-align:top!important}.doc-content tr:first-child td,.doc-content thead td,.doc-content thead th{font-weight:800!important;color:#fff!important;background:#245b78!important}.doc-content tr:last-child td{border-bottom:0!important}.doc-content td:last-child,.doc-content th:last-child{border-right:0!important}
+.doc-content img{display:block!important;width:auto!important;max-width:100%!important;height:auto!important;margin:22px auto 8px!important;border-radius:14px;box-shadow:0 14px 44px rgba(24,54,73,.14);border:1px solid rgba(43,77,103,.15)}.doc-content center{max-width:100%}.doc-content pre{overflow: visible;padding:16px;border-radius:12px;background:#172033;color:#edf7fb}.doc-content blockquote{margin:20px 0;padding:16px 20px;border-left:4px solid var(--red);border-radius:0 12px 12px 0;background:rgba(244,248,251,.8)}
+.footer{text-align:center;padding:22px;color:#66798a;font-size:12px}
+@media(max-width:850px){.campus-ribbon{grid-template-columns:repeat(3,1fr)}.guide-shell{padding:0 14px}.doc-content{padding:30px 22px}.doc-content table{display:block;overflow: visible}.hero{padding:52px 24px 42px}}
+@media(max-width:560px){.finch-page:after{background-size:150px auto,155px auto,170px auto,145px auto,155px auto,170px auto;opacity:.09}.campus-ribbon{grid-template-columns:1fr 1fr}.campus-tile:first-child{grid-column:1/-1}.hero h1{font-size:39px}.doc-content,.doc-content p,.doc-content li,.doc-content td,.doc-content th{font-size:15px!important}.doc-content{padding:24px 17px}.doc-content td,.doc-content th{min-width:115px;padding:9px!important}}
+@media print{.finch-page:before,.finch-page:after{display:none}.hero{background:#f2f8fb}.guide-shell{max-width:none;margin:0;padding:0}.doc-content{border:0;box-shadow:none;padding:24px;background:#fff}.doc-content img,.doc-content table{break-inside:avoid}}
+
+.finch-inline-29{grid-column:span 2}
+.finch-inline-33{margin-bottom: 0.67in}
+.finch-inline-38{font-size: 11pt}
+.finch-inline-41{font-size: 11pt}
+.finch-inline-43{letter-spacing: 0.3pt; line-height: 100%; border-top: none; border-bottom: 1.00pt solid #4f81bd; border-left: none; border-right: none; padding-top: 0in; padding-bottom: 0.06in; padding-left: 0in; padding-right: 0in; margin-bottom: 0.11in}
+.finch-inline-46{font-size: 30pt}
+.finch-inline-49{letter-spacing: 0.8pt; margin-bottom: 0.11in}
+.finch-inline-52{font-size: 13pt}
+.finch-inline-56{font-size: 13pt}
+.finch-inline-59{font-size: 13pt}
+.finch-inline-62{margin-bottom: 0.35in}
+.finch-inline-69{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-73{font-size: 10pt}
+.finch-inline-76{font-size: 10pt}
+.finch-inline-80{font-size: 10pt}
+.finch-inline-82{font-size: 10pt}
+.finch-inline-84{font-size: 10pt}
+.finch-inline-86{margin-bottom: 0.01in}
+.finch-inline-96{background: #245b78; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-97{widows: 2; orphans: 2}
+.finch-inline-100{font-size: 9pt}
+.finch-inline-102{background: #245b78; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-103{widows: 2; orphans: 2}
+.finch-inline-106{font-size: 9pt}
+.finch-inline-108{background: #245b78; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-109{widows: 2; orphans: 2}
+.finch-inline-112{font-size: 9pt}
+.finch-inline-116{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-117{widows: 2; orphans: 2}
+.finch-inline-120{font-size: 9pt}
+.finch-inline-121{font-size: 9pt}
+.finch-inline-122{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-123{text-align: start; widows: 2; orphans: 2}
+.finch-inline-126{font-size: 9pt}
+.finch-inline-128{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-129{text-align: start; widows: 2; orphans: 2}
+.finch-inline-131{font-size: 9pt}
+.finch-inline-133{font-size: 9pt}
+.finch-inline-135{margin-bottom: 0.01in}
+.finch-inline-138{margin-top: 0.76in}
+.finch-inline-143{margin-top: 0in; page-break-before: always}
+.finch-inline-147{margin-bottom: 0.04in; line-height: 120%}
+.finch-inline-164{background: #fff4e5; border: none; padding: 0in}
+.finch-inline-168{font-size: 10pt}
+.finch-inline-172{font-size: 10pt}
+.finch-inline-175{font-size: 10pt}
+.finch-inline-177{font-size: 10pt}
+.finch-inline-178{margin-bottom: 0.01in}
+.finch-inline-183{margin-bottom: 0.04in; line-height: 120%}
+.finch-inline-187{margin-bottom: 0.04in; line-height: 120%}
+.finch-inline-191{margin-bottom: 0.04in; line-height: 120%}
+.finch-inline-195{margin-bottom: 0.04in; line-height: 120%}
+.finch-inline-207{background: #245b78; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-208{widows: 2; orphans: 2}
+.finch-inline-211{font-size: 9pt}
+.finch-inline-213{background: #245b78; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-214{widows: 2; orphans: 2}
+.finch-inline-217{font-size: 9pt}
+.finch-inline-219{background: #245b78; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-220{widows: 2; orphans: 2}
+.finch-inline-223{font-size: 9pt}
+.finch-inline-225{font-size: 9pt}
+.finch-inline-228{font-size: 9pt}
+.finch-inline-232{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-233{widows: 2; orphans: 2}
+.finch-inline-235{font-size: 9pt}
+.finch-inline-236{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-237{orphans: 2; text-align: start; widows: 2}
+.finch-inline-240{font-size: 9pt}
+.finch-inline-241{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-242{orphans: 2; text-align: start; widows: 2}
+.finch-inline-244{font-size: 9pt}
+.finch-inline-246{font-size: 9pt}
+.finch-inline-247{font-size: 9pt}
+.finch-inline-249{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-250{widows: 2; orphans: 2}
+.finch-inline-252{font-size: 9pt}
+.finch-inline-253{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-254{orphans: 2; text-align: start; widows: 2}
+.finch-inline-257{font-size: 9pt}
+.finch-inline-258{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-259{orphans: 2; text-align: start; widows: 2}
+.finch-inline-261{font-size: 9pt}
+.finch-inline-263{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-264{widows: 2; orphans: 2}
+.finch-inline-266{font-size: 9pt}
+.finch-inline-267{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-268{orphans: 2; text-align: start; widows: 2}
+.finch-inline-271{font-size: 9pt}
+.finch-inline-272{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-273{orphans: 2; text-align: start; widows: 2}
+.finch-inline-275{font-size: 9pt}
+.finch-inline-277{font-size: 9pt}
+.finch-inline-278{font-size: 9pt}
+.finch-inline-280{font-size: 9pt}
+.finch-inline-282{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-283{widows: 2; orphans: 2}
+.finch-inline-285{font-size: 9pt}
+.finch-inline-286{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-287{orphans: 2; text-align: start; widows: 2}
+.finch-inline-290{font-size: 9pt}
+.finch-inline-291{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-292{orphans: 2; text-align: start; widows: 2}
+.finch-inline-294{font-size: 9pt}
+.finch-inline-296{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-297{widows: 2; orphans: 2}
+.finch-inline-299{font-size: 9pt}
+.finch-inline-300{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-301{orphans: 2; text-align: start; widows: 2}
+.finch-inline-304{font-size: 9pt}
+.finch-inline-305{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-306{orphans: 2; text-align: start; widows: 2}
+.finch-inline-308{font-size: 9pt}
+.finch-inline-310{font-size: 9pt}
+.finch-inline-311{font-size: 9pt}
+.finch-inline-313{font-size: 9pt}
+.finch-inline-314{font-size: 9pt}
+.finch-inline-316{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-317{widows: 2; orphans: 2}
+.finch-inline-319{font-size: 9pt}
+.finch-inline-320{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-321{orphans: 2; text-align: start; widows: 2}
+.finch-inline-324{font-size: 9pt}
+.finch-inline-325{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-326{orphans: 2; text-align: start; widows: 2}
+.finch-inline-328{font-size: 9pt}
+.finch-inline-330{font-size: 9pt}
+.finch-inline-331{font-size: 9pt}
+.finch-inline-333{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-334{widows: 2; orphans: 2}
+.finch-inline-336{font-size: 9pt}
+.finch-inline-337{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-338{orphans: 2; text-align: start; widows: 2}
+.finch-inline-341{font-size: 9pt}
+.finch-inline-342{border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-343{orphans: 2; text-align: start; widows: 2}
+.finch-inline-345{font-size: 9pt}
+.finch-inline-347{font-size: 9pt}
+.finch-inline-348{font-size: 9pt}
+.finch-inline-350{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-351{widows: 2; orphans: 2}
+.finch-inline-353{font-size: 9pt}
+.finch-inline-354{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-355{orphans: 2; text-align: start; widows: 2}
+.finch-inline-358{font-size: 9pt}
+.finch-inline-359{background: #f7fafc; border: 1px solid #000000; padding: 0.06in 0.08in}
+.finch-inline-360{orphans: 2; text-align: start; widows: 2}
+.finch-inline-362{font-size: 9pt}
+.finch-inline-364{font-size: 9pt}
+.finch-inline-365{margin-bottom: 0.01in}
+.finch-inline-373{font-size: 12pt}
+.finch-inline-376{font-size: 12pt}
+.finch-inline-389{font-size: 12pt}
+.finch-inline-392{font-size: 12pt}
+.finch-inline-400{font-size: 12pt}
+.finch-inline-403{font-size: 12pt}
+.finch-inline-408{margin-left: 0.18in; margin-top: 0.04in; margin-bottom: 0.1in; margin-right: 0.18in; background: #f1f3f5}
+.finch-inline-411{font-size: 9pt}
+.finch-inline-416{font-size: 12pt}
+.finch-inline-419{font-size: 12pt}
+.finch-inline-434{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-438{font-size: 10pt}
+.finch-inline-441{font-size: 10pt}
+.finch-inline-443{font-size: 10pt}
+.finch-inline-445{font-size: 10pt}
+.finch-inline-446{margin-bottom: 0.01in}
+.finch-inline-449{margin-bottom: 0.01in}
+.finch-inline-452{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-454{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-457{font-size: 9pt}
+.finch-inline-462{font-size: 9pt}
+.finch-inline-466{font-size: 9pt}
+.finch-inline-470{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-472{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-475{font-size: 9pt}
+.finch-inline-480{font-size: 9pt}
+.finch-inline-484{font-size: 9pt}
+.finch-inline-488{margin-bottom: 0.01in}
+.finch-inline-498{font-size: 14pt}
+.finch-inline-503{font-size: 12pt}
+.finch-inline-506{font-size: 12pt}
+.finch-inline-513{margin-left: 0.18in; margin-top: 0.04in; margin-bottom: 0.1in; margin-right: 0.18in; background: #f1f3f5}
+.finch-inline-516{font-size: 9pt}
+.finch-inline-529{background: #fbecec; border: none; padding: 0in}
+.finch-inline-533{font-size: 10pt}
+.finch-inline-537{font-size: 10pt}
+.finch-inline-540{font-size: 10pt}
+.finch-inline-542{font-size: 10pt}
+.finch-inline-544{font-size: 10pt}
+.finch-inline-546{font-size: 10pt}
+.finch-inline-548{font-size: 10pt}
+.finch-inline-550{font-size: 10pt}
+.finch-inline-552{margin-bottom: 0.01in}
+.finch-inline-558{font-size: 12pt}
+.finch-inline-561{font-size: 12pt}
+.finch-inline-577{font-size: 12pt}
+.finch-inline-580{font-size: 12pt}
+.finch-inline-590{background: #fbecec; border: none; padding: 0in}
+.finch-inline-594{font-size: 10pt}
+.finch-inline-597{font-size: 10pt}
+.finch-inline-599{font-size: 10pt}
+.finch-inline-601{font-size: 10pt}
+.finch-inline-602{margin-bottom: 0.01in}
+.finch-inline-605{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-607{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-610{font-size: 9pt}
+.finch-inline-614{font-size: 9pt}
+.finch-inline-618{font-size: 9pt}
+.finch-inline-622{font-size: 9pt}
+.finch-inline-626{font-size: 9pt}
+.finch-inline-630{font-size: 9pt}
+.finch-inline-634{font-size: 9pt}
+.finch-inline-637{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-639{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-642{font-size: 9pt}
+.finch-inline-647{font-size: 9pt}
+.finch-inline-651{font-size: 9pt}
+.finch-inline-656{font-size: 9pt}
+.finch-inline-660{font-size: 9pt}
+.finch-inline-664{margin-bottom: 0.01in}
+.finch-inline-676{font-size: 14pt}
+.finch-inline-681{font-size: 12pt}
+.finch-inline-684{font-size: 12pt}
+.finch-inline-694{font-size: 12pt}
+.finch-inline-697{font-size: 12pt}
+.finch-inline-702{margin-left: 0.18in; margin-top: 0.04in; margin-bottom: 0.1in; margin-right: 0.18in; background: #f1f3f5}
+.finch-inline-705{font-size: 9pt}
+.finch-inline-709{font-size: 12pt}
+.finch-inline-712{font-size: 12pt}
+.finch-inline-721{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-725{font-size: 10pt}
+.finch-inline-728{font-size: 10pt}
+.finch-inline-730{font-size: 10pt}
+.finch-inline-731{font-size: 10pt}
+.finch-inline-733{font-size: 10pt}
+.finch-inline-734{font-size: 10pt}
+.finch-inline-736{font-size: 10pt}
+.finch-inline-737{margin-bottom: 0.01in}
+.finch-inline-743{font-size: 12pt}
+.finch-inline-746{font-size: 12pt}
+.finch-inline-766{background: #fff4e5; border: none; padding: 0in}
+.finch-inline-770{font-size: 10pt}
+.finch-inline-774{font-size: 10pt}
+.finch-inline-777{font-size: 10pt}
+.finch-inline-779{font-size: 10pt}
+.finch-inline-781{font-size: 10pt}
+.finch-inline-783{font-size: 10pt}
+.finch-inline-785{margin-bottom: 0.01in}
+.finch-inline-792{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-796{font-size: 10pt}
+.finch-inline-799{font-size: 10pt}
+.finch-inline-801{font-size: 10pt}
+.finch-inline-802{font-size: 10pt}
+.finch-inline-804{font-size: 10pt}
+.finch-inline-805{font-size: 10pt}
+.finch-inline-807{font-size: 10pt}
+.finch-inline-808{font-size: 10pt}
+.finch-inline-810{font-size: 10pt}
+.finch-inline-811{margin-bottom: 0.01in}
+.finch-inline-814{margin-bottom: 0.01in}
+.finch-inline-817{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-819{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-822{font-size: 9pt}
+.finch-inline-826{font-size: 9pt}
+.finch-inline-830{font-size: 9pt}
+.finch-inline-834{font-size: 9pt}
+.finch-inline-838{font-size: 9pt}
+.finch-inline-841{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-843{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-846{font-size: 9pt}
+.finch-inline-850{font-size: 9pt}
+.finch-inline-854{font-size: 9pt}
+.finch-inline-858{font-size: 9pt}
+.finch-inline-862{font-size: 9pt}
+.finch-inline-865{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-867{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-870{font-size: 9pt}
+.finch-inline-875{font-size: 9pt}
+.finch-inline-879{font-size: 9pt}
+.finch-inline-884{font-size: 9pt}
+.finch-inline-888{font-size: 9pt}
+.finch-inline-893{font-size: 9pt}
+.finch-inline-897{font-size: 9pt}
+.finch-inline-901{margin-bottom: 0.01in}
+.finch-inline-913{font-size: 14pt}
+.finch-inline-918{font-size: 12pt}
+.finch-inline-921{font-size: 12pt}
+.finch-inline-936{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-940{font-size: 10pt}
+.finch-inline-943{font-size: 10pt}
+.finch-inline-945{font-size: 10pt}
+.finch-inline-947{font-size: 10pt}
+.finch-inline-948{font-size: 10pt}
+.finch-inline-950{font-size: 10pt}
+.finch-inline-951{font-size: 10pt}
+.finch-inline-953{font-size: 10pt}
+.finch-inline-954{font-size: 10pt}
+.finch-inline-956{font-size: 10pt}
+.finch-inline-957{font-size: 10pt}
+.finch-inline-959{font-size: 10pt}
+.finch-inline-960{font-size: 10pt}
+.finch-inline-962{font-size: 10pt}
+.finch-inline-963{font-size: 10pt}
+.finch-inline-965{font-size: 10pt}
+.finch-inline-966{font-size: 10pt}
+.finch-inline-968{font-size: 10pt}
+.finch-inline-969{font-size: 10pt}
+.finch-inline-971{font-size: 10pt}
+.finch-inline-972{font-size: 10pt}
+.finch-inline-974{font-size: 10pt}
+.finch-inline-975{margin-bottom: 0.01in}
+.finch-inline-981{font-size: 12pt}
+.finch-inline-984{font-size: 12pt}
+.finch-inline-987{font-size: 12pt}
+.finch-inline-990{font-size: 12pt}
+.finch-inline-998{font-size: 12pt}
+.finch-inline-1001{font-size: 12pt}
+.finch-inline-1014{font-size: 12pt}
+.finch-inline-1017{font-size: 12pt}
+.finch-inline-1025{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-1029{font-size: 10pt}
+.finch-inline-1033{font-size: 10pt}
+.finch-inline-1035{font-size: 10pt}
+.finch-inline-1037{font-size: 10pt}
+.finch-inline-1039{font-size: 10pt}
+.finch-inline-1041{font-size: 10pt}
+.finch-inline-1043{font-size: 10pt}
+.finch-inline-1045{font-size: 10pt}
+.finch-inline-1047{font-size: 10pt}
+.finch-inline-1049{font-size: 10pt}
+.finch-inline-1051{font-size: 10pt}
+.finch-inline-1053{font-size: 10pt}
+.finch-inline-1055{font-size: 10pt}
+.finch-inline-1057{font-size: 10pt}
+.finch-inline-1059{font-size: 10pt}
+.finch-inline-1061{margin-bottom: 0.01in}
+.finch-inline-1064{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1066{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1069{font-size: 9pt}
+.finch-inline-1073{font-size: 9pt}
+.finch-inline-1077{font-size: 9pt}
+.finch-inline-1081{font-size: 9pt}
+.finch-inline-1085{font-size: 9pt}
+.finch-inline-1088{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1090{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1093{font-size: 9pt}
+.finch-inline-1098{font-size: 9pt}
+.finch-inline-1102{font-size: 9pt}
+.finch-inline-1106{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1108{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1111{font-size: 9pt}
+.finch-inline-1115{font-size: 9pt}
+.finch-inline-1119{font-size: 9pt}
+.finch-inline-1123{font-size: 9pt}
+.finch-inline-1127{font-size: 9pt}
+.finch-inline-1130{margin-bottom: 0.01in}
+.finch-inline-1133{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1135{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1138{font-size: 9pt}
+.finch-inline-1142{font-size: 9pt}
+.finch-inline-1146{font-size: 9pt}
+.finch-inline-1150{font-size: 9pt}
+.finch-inline-1154{font-size: 9pt}
+.finch-inline-1157{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1159{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1162{font-size: 9pt}
+.finch-inline-1167{font-size: 9pt}
+.finch-inline-1171{font-size: 9pt}
+.finch-inline-1175{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1177{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1180{font-size: 9pt}
+.finch-inline-1185{font-size: 9pt}
+.finch-inline-1189{font-size: 9pt}
+.finch-inline-1194{font-size: 9pt}
+.finch-inline-1198{font-size: 9pt}
+.finch-inline-1202{margin-bottom: 0.01in}
+.finch-inline-1212{font-size: 14pt}
+.finch-inline-1217{font-size: 12pt}
+.finch-inline-1220{font-size: 12pt}
+.finch-inline-1235{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-1239{font-size: 10pt}
+.finch-inline-1243{font-size: 10pt}
+.finch-inline-1246{font-size: 10pt}
+.finch-inline-1248{font-size: 10pt}
+.finch-inline-1250{margin-bottom: 0.01in}
+.finch-inline-1256{font-size: 12pt}
+.finch-inline-1259{font-size: 12pt}
+.finch-inline-1269{font-size: 12pt}
+.finch-inline-1272{font-size: 12pt}
+.finch-inline-1279{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-1283{font-size: 10pt}
+.finch-inline-1287{font-size: 10pt}
+.finch-inline-1289{font-size: 10pt}
+.finch-inline-1291{font-size: 10pt}
+.finch-inline-1293{font-size: 10pt}
+.finch-inline-1295{font-size: 10pt}
+.finch-inline-1297{font-size: 10pt}
+.finch-inline-1299{font-size: 10pt}
+.finch-inline-1301{font-size: 10pt}
+.finch-inline-1303{margin-bottom: 0.01in}
+.finch-inline-1306{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1308{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1311{font-size: 9pt}
+.finch-inline-1315{font-size: 9pt}
+.finch-inline-1319{font-size: 9pt}
+.finch-inline-1323{font-size: 9pt}
+.finch-inline-1327{font-size: 9pt}
+.finch-inline-1331{font-size: 9pt}
+.finch-inline-1335{font-size: 9pt}
+.finch-inline-1338{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1340{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1343{font-size: 9pt}
+.finch-inline-1348{font-size: 9pt}
+.finch-inline-1352{font-size: 9pt}
+.finch-inline-1356{margin-bottom: 0.01in}
+.finch-inline-1366{font-size: 14pt}
+.finch-inline-1371{font-size: 12pt}
+.finch-inline-1374{font-size: 12pt}
+.finch-inline-1376{font-size: 12pt}
+.finch-inline-1385{font-size: 12pt}
+.finch-inline-1388{font-size: 12pt}
+.finch-inline-1398{font-size: 12pt}
+.finch-inline-1401{font-size: 12pt}
+.finch-inline-1411{background: #fff4e5; border: none; padding: 0in}
+.finch-inline-1415{font-size: 10pt}
+.finch-inline-1418{font-size: 10pt}
+.finch-inline-1420{font-size: 10pt}
+.finch-inline-1421{font-size: 10pt}
+.finch-inline-1423{font-size: 10pt}
+.finch-inline-1424{font-size: 10pt}
+.finch-inline-1426{font-size: 10pt}
+.finch-inline-1427{margin-bottom: 0.01in}
+.finch-inline-1434{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-1438{font-size: 10pt}
+.finch-inline-1441{font-size: 10pt}
+.finch-inline-1443{font-size: 10pt}
+.finch-inline-1444{font-size: 10pt}
+.finch-inline-1446{font-size: 10pt}
+.finch-inline-1447{font-size: 10pt}
+.finch-inline-1449{font-size: 10pt}
+.finch-inline-1450{font-size: 10pt}
+.finch-inline-1452{font-size: 10pt}
+.finch-inline-1453{font-size: 10pt}
+.finch-inline-1455{font-size: 10pt}
+.finch-inline-1456{margin-bottom: 0.01in}
+.finch-inline-1459{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1461{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1464{font-size: 9pt}
+.finch-inline-1468{font-size: 9pt}
+.finch-inline-1472{font-size: 9pt}
+.finch-inline-1476{font-size: 9pt}
+.finch-inline-1480{font-size: 9pt}
+.finch-inline-1484{font-size: 9pt}
+.finch-inline-1487{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1489{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1492{font-size: 9pt}
+.finch-inline-1497{font-size: 9pt}
+.finch-inline-1501{font-size: 9pt}
+.finch-inline-1505{margin-bottom: 0.01in}
+.finch-inline-1508{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1510{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1513{font-size: 9pt}
+.finch-inline-1517{font-size: 9pt}
+.finch-inline-1521{font-size: 9pt}
+.finch-inline-1524{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1526{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1529{font-size: 9pt}
+.finch-inline-1534{font-size: 9pt}
+.finch-inline-1538{font-size: 9pt}
+.finch-inline-1542{margin-bottom: 0.01in}
+.finch-inline-1552{font-size: 14pt}
+.finch-inline-1557{font-size: 12pt}
+.finch-inline-1560{font-size: 12pt}
+.finch-inline-1568{font-size: 12pt}
+.finch-inline-1571{font-size: 12pt}
+.finch-inline-1579{font-size: 12pt}
+.finch-inline-1582{font-size: 12pt}
+.finch-inline-1591{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-1595{font-size: 10pt}
+.finch-inline-1598{font-size: 10pt}
+.finch-inline-1600{font-size: 10pt}
+.finch-inline-1601{font-size: 10pt}
+.finch-inline-1603{font-size: 10pt}
+.finch-inline-1604{font-size: 10pt}
+.finch-inline-1606{font-size: 10pt}
+.finch-inline-1607{margin-bottom: 0.01in}
+.finch-inline-1610{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1612{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1615{font-size: 9pt}
+.finch-inline-1620{font-size: 9pt}
+.finch-inline-1624{font-size: 9pt}
+.finch-inline-1628{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1630{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1633{font-size: 9pt}
+.finch-inline-1638{font-size: 9pt}
+.finch-inline-1642{font-size: 9pt}
+.finch-inline-1646{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1648{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1651{font-size: 9pt}
+.finch-inline-1656{font-size: 9pt}
+.finch-inline-1660{font-size: 9pt}
+.finch-inline-1665{font-size: 9pt}
+.finch-inline-1669{font-size: 9pt}
+.finch-inline-1673{margin-bottom: 0.01in}
+.finch-inline-1682{font-size: 14pt}
+.finch-inline-1687{font-size: 12pt}
+.finch-inline-1690{font-size: 12pt}
+.finch-inline-1697{font-size: 12pt}
+.finch-inline-1700{font-size: 12pt}
+.finch-inline-1708{font-size: 12pt}
+.finch-inline-1711{font-size: 12pt}
+.finch-inline-1719{background: #fbecec; border: none; padding: 0in}
+.finch-inline-1723{font-size: 10pt}
+.finch-inline-1727{font-size: 10pt}
+.finch-inline-1729{margin-bottom: 0.01in}
+.finch-inline-1736{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-1740{font-size: 10pt}
+.finch-inline-1743{font-size: 10pt}
+.finch-inline-1745{font-size: 10pt}
+.finch-inline-1746{font-size: 10pt}
+.finch-inline-1748{font-size: 10pt}
+.finch-inline-1749{font-size: 10pt}
+.finch-inline-1751{font-size: 10pt}
+.finch-inline-1752{margin-bottom: 0.01in}
+.finch-inline-1755{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1757{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1760{font-size: 9pt}
+.finch-inline-1764{font-size: 9pt}
+.finch-inline-1768{font-size: 9pt}
+.finch-inline-1772{font-size: 9pt}
+.finch-inline-1776{font-size: 9pt}
+.finch-inline-1779{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1781{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1784{font-size: 9pt}
+.finch-inline-1789{font-size: 9pt}
+.finch-inline-1793{font-size: 9pt}
+.finch-inline-1797{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1799{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1802{font-size: 9pt}
+.finch-inline-1807{font-size: 9pt}
+.finch-inline-1811{font-size: 9pt}
+.finch-inline-1816{font-size: 9pt}
+.finch-inline-1820{font-size: 9pt}
+.finch-inline-1824{margin-bottom: 0.01in}
+.finch-inline-1833{font-size: 14pt}
+.finch-inline-1838{font-size: 12pt}
+.finch-inline-1841{font-size: 12pt}
+.finch-inline-1848{font-size: 12pt}
+.finch-inline-1851{font-size: 12pt}
+.finch-inline-1858{font-size: 12pt}
+.finch-inline-1861{font-size: 12pt}
+.finch-inline-1871{font-size: 12pt}
+.finch-inline-1874{font-size: 12pt}
+.finch-inline-1876{font-size: 12pt}
+.finch-inline-1881{margin-left: 0.18in; margin-top: 0.04in; margin-bottom: 0.1in; margin-right: 0.18in; background: #f1f3f5}
+.finch-inline-1884{font-size: 9pt}
+.finch-inline-1890{background: #fbecec; border: none; padding: 0in}
+.finch-inline-1894{font-size: 10pt}
+.finch-inline-1897{font-size: 10pt}
+.finch-inline-1899{font-size: 10pt}
+.finch-inline-1900{font-size: 10pt}
+.finch-inline-1902{font-size: 10pt}
+.finch-inline-1903{font-size: 10pt}
+.finch-inline-1905{font-size: 10pt}
+.finch-inline-1906{font-size: 10pt}
+.finch-inline-1908{font-size: 10pt}
+.finch-inline-1909{font-size: 10pt}
+.finch-inline-1911{font-size: 10pt}
+.finch-inline-1912{margin-bottom: 0.01in}
+.finch-inline-1919{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-1923{font-size: 10pt}
+.finch-inline-1926{font-size: 10pt}
+.finch-inline-1928{font-size: 10pt}
+.finch-inline-1929{font-size: 10pt}
+.finch-inline-1931{font-size: 10pt}
+.finch-inline-1932{margin-bottom: 0.01in}
+.finch-inline-1935{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1937{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1940{font-size: 9pt}
+.finch-inline-1944{font-size: 9pt}
+.finch-inline-1948{font-size: 9pt}
+.finch-inline-1952{font-size: 9pt}
+.finch-inline-1956{font-size: 9pt}
+.finch-inline-1959{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1961{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1964{font-size: 9pt}
+.finch-inline-1969{font-size: 9pt}
+.finch-inline-1973{font-size: 9pt}
+.finch-inline-1977{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-1979{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-1982{font-size: 9pt}
+.finch-inline-1986{font-size: 9pt}
+.finch-inline-1990{font-size: 9pt}
+.finch-inline-1994{font-size: 9pt}
+.finch-inline-1998{font-size: 9pt}
+.finch-inline-2002{font-size: 9pt}
+.finch-inline-2006{font-size: 9pt}
+.finch-inline-2009{margin-bottom: 0.01in}
+.finch-inline-2018{font-size: 14pt}
+.finch-inline-2023{font-size: 12pt}
+.finch-inline-2026{font-size: 12pt}
+.finch-inline-2037{font-size: 12pt}
+.finch-inline-2040{font-size: 12pt}
+.finch-inline-2052{font-size: 12pt}
+.finch-inline-2055{font-size: 12pt}
+.finch-inline-2065{font-size: 12pt}
+.finch-inline-2068{font-size: 12pt}
+.finch-inline-2076{background: #fbecec; border: none; padding: 0in}
+.finch-inline-2080{font-size: 10pt}
+.finch-inline-2084{font-size: 10pt}
+.finch-inline-2086{font-size: 10pt}
+.finch-inline-2088{margin-bottom: 0.01in}
+.finch-inline-2095{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-2099{font-size: 10pt}
+.finch-inline-2102{font-size: 10pt}
+.finch-inline-2104{font-size: 10pt}
+.finch-inline-2105{font-size: 10pt}
+.finch-inline-2107{font-size: 10pt}
+.finch-inline-2108{margin-bottom: 0.01in}
+.finch-inline-2111{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-2113{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-2116{font-size: 9pt}
+.finch-inline-2120{font-size: 9pt}
+.finch-inline-2124{font-size: 9pt}
+.finch-inline-2128{font-size: 9pt}
+.finch-inline-2132{font-size: 9pt}
+.finch-inline-2136{font-size: 9pt}
+.finch-inline-2139{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-2141{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-2144{font-size: 9pt}
+.finch-inline-2148{font-size: 9pt}
+.finch-inline-2152{font-size: 9pt}
+.finch-inline-2156{font-size: 9pt}
+.finch-inline-2160{font-size: 9pt}
+.finch-inline-2163{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-2165{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-2168{font-size: 9pt}
+.finch-inline-2173{font-size: 9pt}
+.finch-inline-2177{font-size: 9pt}
+.finch-inline-2182{font-size: 9pt}
+.finch-inline-2186{font-size: 9pt}
+.finch-inline-2190{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-2192{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-2195{font-size: 9pt}
+.finch-inline-2199{font-size: 9pt}
+.finch-inline-2203{font-size: 9pt}
+.finch-inline-2207{font-size: 9pt}
+.finch-inline-2211{font-size: 9pt}
+.finch-inline-2214{margin-bottom: 0.01in}
+.finch-inline-2223{font-size: 12pt}
+.finch-inline-2226{font-size: 12pt}
+.finch-inline-2233{font-size: 12pt}
+.finch-inline-2236{font-size: 12pt}
+.finch-inline-2238{font-size: 12pt}
+.finch-inline-2241{font-size: 12pt}
+.finch-inline-2250{font-size: 12pt}
+.finch-inline-2253{font-size: 12pt}
+.finch-inline-2258{margin-left: 0.18in; margin-top: 0.04in; margin-bottom: 0.1in; margin-right: 0.18in; background: #f1f3f5}
+.finch-inline-2261{font-size: 9pt}
+.finch-inline-2266{font-size: 12pt}
+.finch-inline-2269{font-size: 12pt}
+.finch-inline-2283{background: #eaf2f7; border: none; padding: 0in}
+.finch-inline-2287{font-size: 10pt}
+.finch-inline-2290{font-size: 10pt}
+.finch-inline-2292{font-size: 10pt}
+.finch-inline-2293{font-size: 10pt}
+.finch-inline-2295{font-size: 10pt}
+.finch-inline-2296{font-size: 10pt}
+.finch-inline-2298{font-size: 10pt}
+.finch-inline-2299{font-size: 10pt}
+.finch-inline-2301{font-size: 10pt}
+.finch-inline-2302{font-size: 10pt}
+.finch-inline-2304{font-size: 10pt}
+.finch-inline-2305{margin-bottom: 0.01in}
+.finch-inline-2308{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-2310{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-2313{font-size: 9pt}
+.finch-inline-2317{font-size: 9pt}
+.finch-inline-2321{font-size: 9pt}
+.finch-inline-2325{font-size: 9pt}
+.finch-inline-2329{font-size: 9pt}
+.finch-inline-2332{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-2334{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-2337{font-size: 9pt}
+.finch-inline-2341{font-size: 9pt}
+.finch-inline-2345{font-size: 9pt}
+.finch-inline-2349{font-size: 9pt}
+.finch-inline-2353{font-size: 9pt}
+.finch-inline-2356{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-2358{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-2361{font-size: 9pt}
+.finch-inline-2365{font-size: 9pt}
+.finch-inline-2369{font-size: 9pt}
+.finch-inline-2373{font-size: 9pt}
+.finch-inline-2377{font-size: 9pt}
+.finch-inline-2380{margin-bottom: 0.01in}
+.finch-inline-2396{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-2399{margin-top: 0.07in; margin-bottom: 0.04in; page-break-after: avoid}
+.finch-inline-2401{page-break-inside: avoid; line-height: 100%; margin-bottom: 0.11in}
+.finch-inline-2404{font-size: 9pt}
+.finch-inline-2409{font-size: 9pt}
+.finch-inline-2414{font-size: 9pt}
+.finch-inline-2418{margin-bottom: 0.01in}
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#eef3ff;color:#19253d;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}</style></head><body><div class="finch-page"><header class="hero"><div class="eyebrow">INSTRUCTION · COMPLETE ILLUSTRATED GUIDE</div><h1>从安装到申请管理，一步一步完成美本申请工作流</h1><p class="sub">完整保留教程正文、操作步骤、真实截图、故障排查与最终回归检查。</p><div class="chips"><span class="chip">安装与准备</span><span class="chip">Profile 建立</span><span class="chip">学校评估</span><span class="chip">奖学金与 Aid</span><span class="chip">Tracker 管理</span><span class="chip">异常测试</span></div><div class="campus-ribbon"><div class="campus-tile photo"><img alt="MIT Great Dome" class="finch-media-ratio" height="141" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/07b43496c26a3d32cf45cc6f017dfbb31068b0497bc20-07b43496c26a.jpg" width="250"/></div><div class="campus-tile"><img alt="Massachusetts Institute of Technology" class="finch-media-ratio" height="314" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/16f5a709edeb7e4480ee6829b8d9951b07bda5ff729b4-16f5a709edeb.png" width="866"/></div><div class="campus-tile"><img alt="Harvard University" class="finch-media-ratio" height="940" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/abbc1503c9978e1a69efb5f50fee20fe1c55949926a73-abbc1503c997.png" width="1332"/></div><div class="campus-tile photo"><img alt="NYU campus flag" class="finch-media-ratio" height="912" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/e2dcdc2ef8ef37f3b90e209e0bf69feab3cdc33d1969e-e2dcdc2ef8ef.png" width="1428"/></div><div class="campus-tile"><img alt="Columbia University" class="finch-media-ratio" height="354" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/43e802dbeb16db28bbdec834df408dd8d608fc0c2242d-43e802dbeb16.png" width="574"/></div><div class="campus-tile ap finch-inline-29"><img alt="College Board AP — College, here you come." class="finch-media-ratio" height="292" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/309bce47ee222b01bd2c6e8adbcce53dc13fd86be19b8-309bce47ee22.png" width="534"/></div></div></header><main class="guide-shell"><article class="doc-content">
+<p class="western finch-inline-33"><br/>
+<br/>
+</p>
+<p align="center" class="western"><font color="#c28a26"><font class="finch-inline-38" size="2"><b>PILOT
+</b></font><font face="Arial Unicode MS"><font class="finch-inline-41" size="2"><b>完整教程</b></font></font></font></p>
+<p align="center" class="finch-inline-43">
+<font color="#17324d"><font face="Calibri, serif"><font class="finch-inline-46" size="6"><b>US
+Undergrad<br/>
+Admit Bench</b></font></font></font></p>
+<p align="center" class="finch-inline-49">
+<font color="#65717c"><font face="ＭＳ ゴシック"><font class="finch-inline-52" size="3"><i><span lang="zh-CN">从零安装、建立学生档案，到学校评估、奖学金、财务与
+</span></i></font></font><font face="Calibri, serif"><font class="finch-inline-56" size="3"><i>Tracker
+</i></font></font><font face="ＭＳ ゴシック"><font class="finch-inline-59" size="3"><i><span lang="zh-CN">管理</span></i></font></font></font></p>
+<p class="western finch-inline-62"><br/>
+<br/>
+</p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-69" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-73" size="2"><span lang="zh-CN"><b>本教程来自真实
+				</b></span></font></font><font class="finch-inline-76" size="2"><b>Pilot
+				 </b></font></font><font face="Arial Unicode MS"><font color="#26333d"><font class="finch-inline-80" size="2"><span lang="zh-CN">内容根据
+				</span></font></font><font class="finch-inline-82" size="2">2026-08-24
+				</font><font face="Arial Unicode MS"><font class="finch-inline-84" size="2"><span lang="zh-CN">实际运行记录整理。正文保留正确路径；测试中发现的弯路集中放在“避坑与故障排查”。</span></font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-86"><br/>
+<br/>
+</p>
+<center>
+<table cellpadding="6" cellspacing="0" width="624">
+<col width="126"/>
+<col width="295"/>
+<col width="165"/>
+<thead>
+<tr>
+<td bgcolor="#245b78" class="finch-inline-96" width="126"><p align="center" class="western finch-inline-97">
+<font face="Arial Unicode MS"><font color="#ffffff"><font class="finch-inline-100" size="2"><b>版本</b></font></font></font></p>
+</td>
+<td bgcolor="#245b78" class="finch-inline-102" width="295"><p align="center" class="western finch-inline-103">
+<font face="Arial Unicode MS"><font color="#ffffff"><font class="finch-inline-106" size="2"><b>适用对象</b></font></font></font></p>
+</td>
+<td bgcolor="#245b78" class="finch-inline-108" width="165"><p align="center" class="western finch-inline-109">
+<font face="Arial Unicode MS"><font color="#ffffff"><font class="finch-inline-112" size="2"><b>状态</b></font></font></font></p>
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="finch-inline-116" width="126"><p align="center" class="western finch-inline-117">
+<font face="Arial Unicode MS"><font color="#26333d"><font class="finch-inline-120" size="2">中文版
+					</font></font><font class="finch-inline-121" size="2">v1.0</font></font></p>
+</td>
+<td class="finch-inline-122" width="295"><p class="western finch-inline-123">
+<font face="Arial Unicode MS"><font color="#26333d"><font class="finch-inline-126" size="2"><span lang="zh-CN">高中生申请美国本科；内部试用与工程验收</span></font></font></font></p>
+</td>
+<td class="finch-inline-128" width="165"><p class="western finch-inline-129">
+<font color="#26333d"><font class="finch-inline-131" size="2">Pilot
+					</font><font face="Arial Unicode MS"><font class="finch-inline-133" size="2"><span lang="zh-CN">手册，不是录取咨询服务</span></font></font></font></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p class="western finch-inline-135"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-138"><font face="Arial Unicode MS">生成日期：</font>2026-08-25</p>
+<p class="western"><br/>
+<br/>
+</p>
+<h1 class="western finch-inline-143">
+<font face="ＭＳ ゴシック">开始之前</font></h1>
+<ul>
+<li><p class="finch-inline-147"><font face="Arial Unicode MS"><font color="#91520f"><font face="微软雅黑">合成素材边界：</font></font><font face="微软雅黑, sans-serif">Euclid
+	International Honour Roll — DEMO/SYNTHETIC ONLY</font><font face="Arial Unicode MS"><font face="微软雅黑">；哲学论文
+	— </font></font><font face="微软雅黑, sans-serif">DEMO/SYNTHETIC
+	ONLY</font><font face="Arial Unicode MS"><font face="微软雅黑">；</font></font><font face="微软雅黑, sans-serif">AI
+	&amp; Philosophy Reading Lab — DEMO/SYNTHETIC ONLY</font><font face="Arial Unicode MS"><font face="微软雅黑">。三者不得写入真实申请。</font></font></font></p></li>
+</ul>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#fff4e5" class="finch-inline-164" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#c28a26"><font class="finch-inline-168" size="2"><span lang="zh-CN"><b>重要边界
+				 </b></span></font></font><font color="#26333d"><font class="finch-inline-172" size="2"><span lang="zh-CN">这是材料整理和背景校准工具，不是招生顾问。</span></font></font></font><font color="#26333d"><font class="finch-inline-175" size="2">Admit
+				Band </font><font face="Arial Unicode MS"><font class="finch-inline-177" size="2">只说明成绩位于学校官方新生区间的什么位置，绝不是个人录取概率。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-178"><br/>
+<br/>
+</p>
+<ul>
+<li><p class="finch-inline-183"><font face="Arial Unicode MS"><span lang="zh-CN">只适用于高中生申请美国本科，不适用于硕士或博士申请。</span></font></p></li>
+<li><p class="finch-inline-187"><font face="Arial Unicode MS"><span lang="zh-CN">必须由学生点名学校、奖学金或资助信；它不是自动选校或自动搜索引擎。</span></font></p></li>
+<li><p class="finch-inline-191"><font face="Arial Unicode MS"><span lang="zh-CN">不得编造录取统计、学生经历或文书事实；素材不足时只能给提纲。</span></font></p></li>
+<li><p class="finch-inline-195"><font face="Arial Unicode MS"><span lang="zh-CN">贷款不是资助；系统不会代替用户提交申请。</span></font></p></li>
+</ul>
+<h2 class="western"><font face="ＭＳ ゴシック">你将完成什么</font></h2>
+<center>
+<table cellpadding="6" cellspacing="0" width="624">
+<col width="40"/>
+<col width="161"/>
+<col width="385"/>
+<thead>
+<tr>
+<td bgcolor="#245b78" class="finch-inline-207" width="40"><p align="center" class="western finch-inline-208">
+<font face="Arial Unicode MS"><font color="#ffffff"><font class="finch-inline-211" size="2"><b>阶段</b></font></font></font></p>
+</td>
+<td bgcolor="#245b78" class="finch-inline-213" width="161"><p align="center" class="western finch-inline-214">
+<font face="Arial Unicode MS"><font color="#ffffff"><font class="finch-inline-217" size="2"><b>功能</b></font></font></font></p>
+</td>
+<td bgcolor="#245b78" class="finch-inline-219" width="385"><p align="center" class="western finch-inline-220">
+<font face="Arial Unicode MS"><font color="#ffffff"><font class="finch-inline-223" size="2"><b>真实
+					</b></font></font><font class="finch-inline-225" size="2"><b>Pilot
+					</b></font><font face="Arial Unicode MS"><font class="finch-inline-228" size="2"><b>产物</b></font></font></font></p>
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="finch-inline-232" width="40"><p align="center" class="western finch-inline-233">
+<font color="#26333d"><font class="finch-inline-235" size="2">1</font></font></p>
+</td>
+<td class="finch-inline-236" width="161"><p class="western finch-inline-237">
+<font face="Arial Unicode MS"><font color="#26333d"><font class="finch-inline-240" size="2">安装与档案</font></font></font></p>
+</td>
+<td class="finch-inline-241" width="385"><p class="western finch-inline-242">
+<font color="#26333d"><font class="finch-inline-244" size="2">Node
+					</font><font face="Arial Unicode MS"><font class="finch-inline-246" size="2">依赖、</font></font><font class="finch-inline-247" size="2">profile.yml</font></font></p>
+</td>
+</tr>
+<tr>
+<td bgcolor="#f7fafc" class="finch-inline-249" width="40"><p align="center" class="western finch-inline-250">
+<font color="#26333d"><font class="finch-inline-252" size="2">2</font></font></p>
+</td>
+<td bgcolor="#f7fafc" class="finch-inline-253" width="161"><p class="western finch-inline-254">
+<font face="Arial Unicode MS"><font color="#26333d"><font class="finch-inline-257" size="2">成绩校准</font></font></font></p>
+</td>
+<td bgcolor="#f7fafc" class="finch-inline-258" width="385"><p class="western finch-inline-259">
+<font color="#26333d"><font class="finch-inline-261" size="2">Admit
+					Band HTML + JSON</font></font></p>
+</td>
+</tr>
+<tr>
+<td class="finch-inline-263" width="40"><p align="center" class="western finch-inline-264">
+<font color="#26333d"><font class="finch-inline-266" size="2">3</font></font></p>
+</td>
+<td class="finch-inline-267" width="161"><p class="western finch-inline-268">
+<font face="Arial Unicode MS"><font color="#26333d"><font class="finch-inline-271" size="2">学校决策</font></font></font></p>
+</td>
+<td class="finch-inline-272" width="385"><p class="western finch-inline-273">
+<font color="#26333d"><font class="finch-inline-275" size="2">Michigan
+					CS</font><font face="Arial Unicode MS"><font class="finch-inline-277" size="2">、</font></font><font class="finch-inline-278" size="2">Notre
+					Dame Philosophy A–J </font><font face="Arial Unicode MS"><font class="finch-inline-280" size="2">报告</font></font></font></p>
+</td>
+</tr>
+<tr>
+<td bgcolor="#f7fafc" class="finch-inline-282" width="40"><p align="center" class="western finch-inline-283">
+<font color="#26333d"><font class="finch-inline-285" size="2">4</font></font></p>
+</td>
+<td bgcolor="#f7fafc" class="finch-inline-286" width="161"><p class="western finch-inline-287">
+<font face="Arial Unicode MS"><font color="#26333d"><font class="finch-inline-290" size="2">组合比较</font></font></font></p>
+</td>
+<td bgcolor="#f7fafc" class="finch-inline-291" width="385"><p class="western finch-inline-292">
+<font color="#26333d"><font class="finch-inline-294" size="2">Michigan
+					vs Wisconsin</font></font></p>
+</td>
+</tr>
+<tr>
+<td class="finch-inline-296" width="40"><p align="center" class="western finch-inline-297">
+<font color="#26333d"><font class="finch-inline-299" size="2">5</font></font></p>
+</td>
+<td class="finch-inline-300" width="161"><p class="western finch-inline-301">
+<font face="Arial Unicode MS"><font color="#26333d"><font class="finch-inline-304" size="2">执行管理</font></font></font></p>
+</td>
+<td class="finch-inline-305" width="385"><p class="western finch-inline-306">
+<font color="#26333d"><font class="finch-inline-308" size="2">Tracker</font><font face="Arial Unicode MS"><font class="finch-inline-310" size="2">、</font></font><font class="finch-inline-311" size="2">Deadline
+					Dashboard</font><font face="Arial Unicode MS"><font class="finch-inline-313" size="2">、</font></font><font class="finch-inline-314" size="2">Pipeline</font></font></p>
+</td>
+</tr>
+<tr>
+<td bgcolor="#f7fafc" class="finch-inline-316" width="40"><p align="center" class="western finch-inline-317">
+<font color="#26333d"><font class="finch-inline-319" size="2">6</font></font></p>
+</td>
+<td bgcolor="#f7fafc" class="finch-inline-320" width="161"><p class="western finch-inline-321">
+<font face="Arial Unicode MS"><font color="#26333d"><font class="finch-inline-324" size="2">内容与发展</font></font></font></p>
+</td>
+<td bgcolor="#f7fafc" class="finch-inline-325" width="385"><p class="western finch-inline-326">
+<font color="#26333d"><font class="finch-inline-328" size="2">Career
+					Path</font><font face="Arial Unicode MS"><font class="finch-inline-330" size="2">、</font></font><font class="finch-inline-331" size="2">Essay
+					Assistant</font></font></p>
+</td>
+</tr>
+<tr>
+<td class="finch-inline-333" width="40"><p align="center" class="western finch-inline-334">
+<font color="#26333d"><font class="finch-inline-336" size="2">7</font></font></p>
+</td>
+<td class="finch-inline-337" width="161"><p class="western finch-inline-338">
+<font face="Arial Unicode MS"><font color="#26333d"><font class="finch-inline-341" size="2">资金判断</font></font></font></p>
+</td>
+<td class="finch-inline-342" width="385"><p class="western finch-inline-343">
+<font color="#26333d"><font class="finch-inline-345" size="2">BU
+					Trustee Scholarship</font><font face="Arial Unicode MS"><font class="finch-inline-347" size="2">、</font></font><font class="finch-inline-348" size="2">Aid
+					Letter Parser</font></font></p>
+</td>
+</tr>
+<tr>
+<td bgcolor="#f7fafc" class="finch-inline-350" width="40"><p align="center" class="western finch-inline-351">
+<font color="#26333d"><font class="finch-inline-353" size="2">8</font></font></p>
+</td>
+<td bgcolor="#f7fafc" class="finch-inline-354" width="161"><p class="western finch-inline-355">
+<font face="Arial Unicode MS"><font color="#26333d"><font class="finch-inline-358" size="2">边界保护</font></font></font></p>
+</td>
+<td bgcolor="#f7fafc" class="finch-inline-359" width="385"><p class="western finch-inline-360">
+<font color="#26333d"><font class="finch-inline-362" size="2">Internship
+					</font><font face="Arial Unicode MS"><font class="finch-inline-364" size="2">路由、异常输入、端到端回归</font></font></font></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p class="western finch-inline-365"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック">第一部分：从零安装</font></h1>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-373" size="3">1.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-376" size="3">准备环境</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS"><span lang="zh-CN">确认电脑已安装
+</span></font>Node.js 18 <font face="Arial Unicode MS"><span lang="zh-CN">或更高版本。</span></font>Pilot
+<font face="Arial Unicode MS"><span lang="zh-CN">使用 </span></font>Node.js
+22.20.0<font face="Arial Unicode MS"><span lang="zh-CN">。</span></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-389" size="3">2.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-392" size="3"><span lang="zh-CN">解压仓库</span></font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS"><span lang="zh-CN">将压缩包解压到一个固定位置。不要直接在压缩包预览中运行。</span></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-400" size="3">3.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-403" size="3"><span lang="zh-CN">安装依赖</span></font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS"><span lang="zh-CN">在仓库根目录安装依赖。</span></font></p>
+<p class="western finch-inline-408">
+<font color="#24313a"><font face="Courier New, serif"><font class="finch-inline-411" size="2">cd
+us-undergrad-admit-bench-main<br/>
+npm install</font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-416" size="3">4.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-419" size="3">确认关键文件</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">检查
+</font>README.md<font face="Arial Unicode MS">、</font>SKILL.md<font face="Arial Unicode MS">、</font>config/profile.yml<font face="Arial Unicode MS">、</font>modes/<font face="Arial Unicode MS">、</font>scripts/<font face="Arial Unicode MS">、</font>corpus/<font face="Arial Unicode MS">、</font>reports/
+<font face="Arial Unicode MS">与 </font>data/ <font face="Arial Unicode MS">是否存在。</font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-434" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-438" size="2"><b>完成标志
+				 </b></font></font><font color="#26333d"><font class="finch-inline-441" size="2">目录齐全，</font></font></font><font color="#26333d"><font class="finch-inline-443" size="2">npm
+				install </font><font face="Arial Unicode MS"><font class="finch-inline-445" size="2">没有阻断错误。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-446"><br/>
+<br/>
+</p>
+<p class="western finch-inline-449"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-452">
+<img align="bottom" alt="S01 仓库根目录与关键文件" border="0" height="1355" name="Picture 1" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/8ffd0c4d8c86728ed2eb2b78ec1c3b8522a02ed25c6f6-8ffd0c4d8c86.png" width="2048"/>
+</p>
+<p align="center" class="finch-inline-454">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-457" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-462" size="2"><b><font face="微软雅黑, sans-serif">1</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-466" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　仓库根目录与关键文件</span></font></b></font></font></font></p>
+<p align="center" class="western finch-inline-470">
+<img align="bottom" alt="S01 安装完成后的结构与依赖检查" border="0" height="274" name="Picture 2" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/83050e5d682e8048862d9eadea88db3b1701d0d31f6f3-83050e5d682e.png" width="966"/>
+</p>
+<p align="center" class="finch-inline-472">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-475" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-480" size="2"><b><font face="微软雅黑, sans-serif">2</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-484" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　安装完成后的结构与依赖检查</span></font></b></font></font></font></p>
+<p class="western finch-inline-488"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック"><span lang="zh-CN">第二部分：建立学生
+</span></font>Profile</h1>
+<p class="western"><font face="Arial Unicode MS"><font color="#365f91"><font face="宋体"><font class="finch-inline-498" size="4"><span lang="zh-CN">对学生基本情况进行梳理，建立档案，方便择校时的信息对比</span></font></font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-503" size="3">1.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-506" size="3">录入基础成绩</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">把
+</font>GPA<font face="Arial Unicode MS">、</font>SAT/ACT<font face="Arial Unicode MS">、所在国家、申请阶段写入
+</font>config/profile.yml<font face="Arial Unicode MS">。</font>SAT
+<font face="Arial Unicode MS">分项必须有明确标签。</font></p>
+<p class="western finch-inline-513">
+<font color="#24313a"><font face="Courier New, serif"><font class="finch-inline-516" size="2">student:<br/>
+
+ stage: high_school<br/>
+  country: China<br/>
+academics:<br/>
+  gpa:
+"95/100"<br/>
+  sat:<br/>
+    total: 1520<br/>
+    math:
+800<br/>
+    ebrw: 720</font></font></font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#fbecec" class="finch-inline-529" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#a33a32"><font class="finch-inline-533" size="2"><span lang="zh-CN"><b>必须回读确认
+				 </b></span></font></font><font color="#26333d"><font class="finch-inline-537" size="2"><span lang="zh-CN">请确认：</span></font></font></font><font color="#26333d"><font class="finch-inline-540" size="2">SAT
+				1520 = Math 800 + EBRW 720</font><font face="Arial Unicode MS"><font class="finch-inline-542" size="2"><span lang="zh-CN">。</span></font></font><font class="finch-inline-544" size="2">Pilot
+				</font><font face="Arial Unicode MS"><font class="finch-inline-546" size="2"><span lang="zh-CN">第一次把顺序写成
+				</span></font></font><font class="finch-inline-548" size="2">720 +
+				800</font><font face="Arial Unicode MS"><font class="finch-inline-550" size="2"><span lang="zh-CN">，程序没有报错，反而生成了错误结论。</span></font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-552"><br/>
+<br/>
+</p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-558" size="3">2.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-561" size="3">补充课程、活动与预算</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">本次正确测试数据包括
+</font>5 <font face="Arial Unicode MS">门 </font>AP<font face="Arial Unicode MS">（</font>Calculus
+BC<font face="Arial Unicode MS">、</font>Physics C:
+Mechanics<font face="Arial Unicode MS">、</font>Microeconomics<font face="Arial Unicode MS">、</font>Macroeconomics<font face="Arial Unicode MS">、</font>U.S.
+History<font face="Arial Unicode MS">，均 </font>5 <font face="Arial Unicode MS">分）、</font>Ross
+<font face="Arial Unicode MS">数学营、斯坦福夏校、模拟联合国，年度预算
+</font>$200,000<font face="Arial Unicode MS">，不需要资助。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-577" size="3">3.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-580" size="3">只保存真实事实</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">对话中为了测试补造的
+</font>Euclid Honour Roll<font face="Arial Unicode MS">、哲学论文、</font>AI
+&amp; Philosophy Reading Lab <font face="Arial Unicode MS">都必须放入测试
+</font>fixture<font face="Arial Unicode MS">，不能进入真实申请档案。</font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#fbecec" class="finch-inline-590" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#a33a32"><font class="finch-inline-594" size="2"><b>数据卫生
+				 </b></font></font><font color="#26333d"><font class="finch-inline-597" size="2">正式使用前，搜索
+				</font></font></font><font color="#26333d"><font class="finch-inline-599" size="2">DEMO
+				/ SYNTHETIC / TEST DATA</font><font face="Arial Unicode MS"><font class="finch-inline-601" size="2">，并删除或隔离所有虚构事实。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-602"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-605">
+<img align="bottom" alt="S02 教程 Demo Profile 的成绩与 SAT 分项" border="0" height="740" name="Picture 3" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/9fc5c577d118dd59ea29bf4b1bae986a0c86ed192cdec-9fc5c577d118.png" width="1988"/>
+</p>
+<p align="center" class="finch-inline-607">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-610" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-614" size="2"><b><font face="微软雅黑, sans-serif">3</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-618" size="2"><b><font face="微软雅黑">　教程
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-622" size="2"><b><font face="微软雅黑, sans-serif">Demo
+Profile </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-626" size="2"><b><font face="微软雅黑">的成绩与
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-630" size="2"><b><font face="微软雅黑, sans-serif">SAT
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-634" size="2"><b><font face="微软雅黑">分项</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-637">
+<img align="bottom" alt="S02 AP、活动、预算与国际学生字段" border="0" height="1256" name="Picture 4" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/c1208c1b9cc20dc220649f5c4f9771ea3cf85ecd00603-c1208c1b9cc2.png" width="1688"/>
+</p>
+<p align="center" class="finch-inline-639">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-642" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-647" size="2"><b><font face="微软雅黑, sans-serif">4</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-651" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-656" size="2"><b><font face="微软雅黑, sans-serif">AP</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-660" size="2"><b><font face="微软雅黑"><span lang="zh-CN">、活动、预算与国际学生字段</span></font></b></font></font></font></p>
+<p class="western finch-inline-664"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック"><span lang="zh-CN">第三部分：</span></font>Admit
+Band <font face="ＭＳ ゴシック"><span lang="zh-CN">成绩校准</span></font></h1>
+<p class="western"><font face="Arial Unicode MS"><font color="#365f91"><font face="宋体"><font class="finch-inline-676" size="4"><span lang="zh-CN">统计目标学校往年录取的官方成绩区间，判断自己的录取概率</span></font></font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-681" size="3">1.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-684" size="3"><span lang="zh-CN">准备输入</span></font></font></font></font></h2>
+<p class="western">SAT/ACT + <font face="Arial Unicode MS"><span lang="zh-CN">至少一所点名学校即可运行；</span></font>GPA<font face="Arial Unicode MS"><span lang="zh-CN">、预算和活动不是本功能的必填项。</span></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-694" size="3">2.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-697" size="3"><span lang="zh-CN">运行校准脚本</span></font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS"><span lang="zh-CN">在仓库根目录执行：</span></font></p>
+<p class="western finch-inline-702">
+<font color="#24313a"><font face="Courier New, serif"><font class="finch-inline-705" size="2">npm
+run admit-band</font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-709" size="3">3.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-712" size="3">打开结果</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">打开
+</font>reports/admit-band-YYYY-MM-DD.html<font face="Arial Unicode MS">；同时保留同名
+</font>JSON <font face="Arial Unicode MS">作为机器可读证据。</font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-721" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-725" size="2"><b>完成标志
+				 </b></font></font></font><font color="#26333d"><font class="finch-inline-728" size="2">HTML
+				</font><font face="Arial Unicode MS"><font class="finch-inline-730" size="2">中出现学校的
+				</font></font><font class="finch-inline-731" size="2">25th /
+				median / 75th </font><font face="Arial Unicode MS"><font class="finch-inline-733" size="2">位置标签；</font></font><font class="finch-inline-734" size="2">JSON
+				</font><font face="Arial Unicode MS"><font class="finch-inline-736" size="2">可正常解析。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-737"><br/>
+<br/>
+</p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-743" size="3">4.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-746" size="3">正确解读</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS"><span lang="zh-CN">本次
+</span></font>1520<font face="Arial Unicode MS"><span lang="zh-CN">、</span></font>Math
+800<font face="Arial Unicode MS"><span lang="zh-CN">、</span></font>EBRW
+720 <font face="Arial Unicode MS"><span lang="zh-CN">对 </span></font>Michigan
+<font face="Arial Unicode MS"><span lang="zh-CN">的校园整体区间显示：总分接近
+</span></font>75th<font face="Arial Unicode MS"><span lang="zh-CN">，数学高于
+</span></font>75th<font face="Arial Unicode MS"><span lang="zh-CN">，阅读写作接近中位。</span></font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#fff4e5" class="finch-inline-766" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#c28a26"><font class="finch-inline-770" size="2"><span lang="zh-CN"><b>不要这样说
+				 </b></span></font></font><font color="#26333d"><font class="finch-inline-774" size="2"><span lang="zh-CN">不要把“</span></font></font></font><font color="#26333d"><font class="finch-inline-777" size="2">above
+				p75”</font><font face="Arial Unicode MS"><font class="finch-inline-779" size="2"><span lang="zh-CN">写成录取率或“稳录”。它不是
+				</span></font></font><font class="finch-inline-781" size="2">CS
+				</font><font face="Arial Unicode MS"><font class="finch-inline-783" size="2"><span lang="zh-CN">专业单独统计，也不代表个人概率。</span></font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-785"><br/>
+<br/>
+</p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-792" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-796" size="2"><b>真实输出证据
+				 </b></font></font></font><font color="#26333d"><font class="finch-inline-799" size="2">Pilot
+				</font><font face="Arial Unicode MS"><font class="finch-inline-801" size="2">生成了
+				</font></font><font class="finch-inline-802" size="2">outputs/your-admit-band-2026-08-24.html</font><font face="Arial Unicode MS"><font class="finch-inline-804" size="2">、</font></font><font class="finch-inline-805" size="2">notre-dame-admit-band.html
+				</font><font face="Arial Unicode MS"><font class="finch-inline-807" size="2">以及相应
+				</font></font><font class="finch-inline-808" size="2">JSON</font><font face="Arial Unicode MS"><font class="finch-inline-810" size="2">。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-811"><br/>
+<br/>
+</p>
+<p class="western finch-inline-814"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-817">
+<img align="bottom" alt="S03 Admit Band 执行结果" border="0" height="344" name="Picture 5" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/62354a1c915177afae8be2c50ccf231e666c392c4ef7d-62354a1c9151.png" width="1316"/>
+</p>
+<p align="center" class="finch-inline-819">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-822" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-826" size="2"><b><font face="微软雅黑, sans-serif">5</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-830" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-834" size="2"><b><font face="微软雅黑, sans-serif">Admit
+Band </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-838" size="2"><b><font face="微软雅黑">执行结果</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-841">
+<img align="bottom" alt="S03 Admit Band 顶部摘要与非概率声明" border="0" height="889" name="Picture 6" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/7ea29e4e027faa47e0c83f26cd6c7740d2318ecb387a9-7ea29e4e027f.png" width="2048"/>
+</p>
+<p align="center" class="finch-inline-843">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-846" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-850" size="2"><b><font face="微软雅黑, sans-serif">6</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-854" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-858" size="2"><b><font face="微软雅黑, sans-serif">Admit
+Band </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-862" size="2"><b><font face="微软雅黑">顶部摘要与非概率声明</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-865">
+<img align="bottom" alt="S03 Michigan 与 Notre Dame 的官方区间位置" border="0" height="664" name="Picture 7" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/d5c3c816f6291cef7df8e6fc37ae384bc1a0a64632351-d5c3c816f629.png" width="1948"/>
+</p>
+<p align="center" class="finch-inline-867">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-870" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-875" size="2"><b><font face="微软雅黑, sans-serif">7</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-879" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-884" size="2"><b><font face="微软雅黑, sans-serif">Michigan
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-888" size="2"><b><font face="微软雅黑"><span lang="zh-CN">与
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-893" size="2"><b><font face="微软雅黑, sans-serif">Notre
+Dame </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-897" size="2"><b><font face="微软雅黑"><span lang="zh-CN">的官方区间位置</span></font></b></font></font></font></p>
+<p class="western finch-inline-901"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック"><span lang="zh-CN">第四部分：学校
+</span></font>A–J <font face="ＭＳ ゴシック"><span lang="zh-CN">完整评估</span></font></h1>
+<p class="western"><font face="Arial Unicode MS"><font color="#365f91"><font face="宋体"><font class="finch-inline-913" size="4"><span lang="zh-CN">将学校对录取学生的要求进行全方位评估，结合个人信息判断学生处于申请者中的什么位置</span></font></font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-918" size="3">1.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-921" size="3"><span lang="zh-CN">提供完整申请画像</span></font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS"><span lang="zh-CN">学校、专业、</span></font>GPA<font face="Arial Unicode MS"><span lang="zh-CN">、课程难度、</span></font>1–3
+<font face="Arial Unicode MS"><span lang="zh-CN">项关键活动、预算、是否需资助和校园偏好越完整，</span></font>A–J
+<font face="Arial Unicode MS"><span lang="zh-CN">越可靠。</span></font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-936" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-940" size="2"><b>可以直接这样说
+				 </b></font></font><font color="#26333d"><font class="finch-inline-943" size="2">请详细评估
+				</font></font></font><font color="#26333d"><font class="finch-inline-945" size="2">University
+				of Michigan–Ann Arbor </font><font face="Arial Unicode MS"><font class="finch-inline-947" size="2">的
+				</font></font><font class="finch-inline-948" size="2">Computer
+				Science</font><font face="Arial Unicode MS"><font class="finch-inline-950" size="2">。我的
+				</font></font><font class="finch-inline-951" size="2">GPA
+				95/100</font><font face="Arial Unicode MS"><font class="finch-inline-953" size="2">，</font></font><font class="finch-inline-954" size="2">SAT
+				1520</font><font face="Arial Unicode MS"><font class="finch-inline-956" size="2">（</font></font><font class="finch-inline-957" size="2">Math
+				800</font><font face="Arial Unicode MS"><font class="finch-inline-959" size="2">，</font></font><font class="finch-inline-960" size="2">EBRW
+				720</font><font face="Arial Unicode MS"><font class="finch-inline-962" size="2">），</font></font><font class="finch-inline-963" size="2">5
+				</font><font face="Arial Unicode MS"><font class="finch-inline-965" size="2">门
+				</font></font><font class="finch-inline-966" size="2">AP </font><font face="Arial Unicode MS"><font class="finch-inline-968" size="2">均
+				</font></font><font class="finch-inline-969" size="2">5 </font><font face="Arial Unicode MS"><font class="finch-inline-971" size="2">分，每年预算
+				</font></font><font class="finch-inline-972" size="2">20
+				</font><font face="Arial Unicode MS"><font class="finch-inline-974" size="2">万美元，不需要资助。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-975"><br/>
+<br/>
+</p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-981" size="3">2.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-984" size="3"><span lang="zh-CN">检查
+</span></font></font></font><font face="Arial Unicode MS, serif"><font class="finch-inline-987" size="3">A–J
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-990" size="3"><span lang="zh-CN">十个模块</span></font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS"><span lang="zh-CN">学校概况、学术、录取、财务、职业、文化、地点、项目深度、成长机会、主观匹配必须齐全，并附官方来源。</span></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-998" size="3">3.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1001" size="3">检查分类与总分</font></font></font></font></h2>
+<p class="western">Michigan CS <font face="Arial Unicode MS">结果为
+</font>Reach<font face="Arial Unicode MS">、</font>4.4/5<font face="Arial Unicode MS">；</font>Notre
+Dame Philosophy <font face="Arial Unicode MS">为 </font>Hard
+Reach<font face="Arial Unicode MS">、</font>4.2/5<font face="Arial Unicode MS">。分类不能被高
+</font>SAT <font face="Arial Unicode MS">自动改成 </font>Match<font face="Arial Unicode MS">。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1014" size="3">4.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1017" size="3">核验时效性</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS"><span lang="zh-CN">截止日、费用、项目规则和奖学金要求在正式提交前必须重新访问官网核验。</span></font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-1025" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-1029" size="2"><span lang="zh-CN"><b>真实输出证据
+				 </b></span></font></font></font><font color="#26333d"><font class="finch-inline-1033" size="2">outputs/</font><font face="Arial Unicode MS"><font class="finch-inline-1035" size="2"><span lang="zh-CN">密歇根大学安娜堡</span></font></font><font class="finch-inline-1037" size="2">-CS-</font><font face="Arial Unicode MS"><font class="finch-inline-1039" size="2"><span lang="zh-CN">中文测试报告</span></font></font><font class="finch-inline-1041" size="2">.md</font><font face="Arial Unicode MS"><font class="finch-inline-1043" size="2"><span lang="zh-CN">；</span></font></font><font class="finch-inline-1045" size="2">outputs/002-</font><font face="Arial Unicode MS"><font class="finch-inline-1047" size="2"><span lang="zh-CN">圣母大学</span></font></font><font class="finch-inline-1049" size="2">-</font><font face="Arial Unicode MS"><font class="finch-inline-1051" size="2"><span lang="zh-CN">哲学专业</span></font></font><font class="finch-inline-1053" size="2">-</font><font face="Arial Unicode MS"><font class="finch-inline-1055" size="2"><span lang="zh-CN">中文测试报告</span></font></font><font class="finch-inline-1057" size="2">.md</font><font face="Arial Unicode MS"><font class="finch-inline-1059" size="2"><span lang="zh-CN">。</span></font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-1061"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-1064">
+<img align="bottom" alt="S04 Michigan CS 完整评估摘要" border="0" height="1002" name="Picture 8" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/b78703a9f74f9b282ba146afd9d965066d3f5b3a889b2-b78703a9f74f.png" width="1954"/>
+</p>
+<p align="center" class="finch-inline-1066">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1069" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1073" size="2"><b><font face="微软雅黑, sans-serif">8</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1077" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1081" size="2"><b><font face="微软雅黑, sans-serif">Michigan
+CS </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1085" size="2"><b><font face="微软雅黑">完整评估摘要</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1088">
+<img align="bottom" alt="S04 学术匹配与录取匹配证据" border="0" height="1458" name="Picture 9" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/e0baf15b9af1085898434fa92b9ac7256251ceb56124c-e0baf15b9af1.png" width="1938"/>
+</p>
+<p align="center" class="finch-inline-1090">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1093" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1098" size="2"><b><font face="微软雅黑, sans-serif">9</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1102" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　学术匹配与录取匹配证据</span></font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1106">
+<img align="bottom" alt="S04 Michigan CS 加权总分" border="0" height="1074" name="Picture 10" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/3b4d1befad4aa84e1de7dcff485381595b3cb3066defb-3b4d1befad4a.png" width="1962"/>
+</p>
+<p align="center" class="finch-inline-1108">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1111" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1115" size="2"><b><font face="微软雅黑, sans-serif">10</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1119" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1123" size="2"><b><font face="微软雅黑, sans-serif">Michigan
+CS </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1127" size="2"><b><font face="微软雅黑">加权总分</font></b></font></font></font></p>
+<p class="western finch-inline-1130"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-1133">
+<img align="bottom" alt="S05 Notre Dame Philosophy 完整评估摘要" border="0" height="1016" name="Picture 11" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/8db43c7959456efd5cbe72f8d533d0f0db9f2054e46e1-8db43c795945.png" width="1942"/>
+</p>
+<p align="center" class="finch-inline-1135">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1138" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1142" size="2"><b><font face="微软雅黑, sans-serif">11</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1146" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1150" size="2"><b><font face="微软雅黑, sans-serif">Notre
+Dame Philosophy </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1154" size="2"><b><font face="微软雅黑">完整评估摘要</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1157">
+<img align="bottom" alt="S05 录取匹配、专业叙事缺口与保守分类" border="0" height="904" name="Picture 12" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/fca7ef689c09ddd2e83b122da15b549b484b2b5161ea5-fca7ef689c09.png" width="1928"/>
+</p>
+<p align="center" class="finch-inline-1159">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1162" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1167" size="2"><b><font face="微软雅黑, sans-serif">12</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1171" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　录取匹配、专业叙事缺口与保守分类</span></font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1175">
+<img align="bottom" alt="S05 Notre Dame 的建议与合成经历警告" border="0" height="1178" name="Picture 13" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/a18008c7314eefd29ba773f57fd4dfd61239297e521b6-a18008c7314e.png" width="1986"/>
+</p>
+<p align="center" class="finch-inline-1177">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1180" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1185" size="2"><b><font face="微软雅黑, sans-serif">13</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1189" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1194" size="2"><b><font face="微软雅黑, sans-serif">Notre
+Dame </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1198" size="2"><b><font face="微软雅黑"><span lang="zh-CN">的建议与合成经历警告</span></font></b></font></font></font></p>
+<p class="western finch-inline-1202"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック"><span lang="zh-CN">第五部分：比较两所学校</span></font></h1>
+<p class="western"><font face="Arial Unicode MS"><font color="#365f91"><font face="宋体"><font class="finch-inline-1212" size="4"><span lang="zh-CN">若出现在两所学校中犹豫的情况，可对二者全方位进行对比，选出最适合的一所</span></font></font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1217" size="3">1.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1220" size="3"><span lang="zh-CN">先确保至少一所有完整评估</span></font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">本次比较
+</font>Michigan <font face="Arial Unicode MS">与 </font>Wisconsin–Madison
+<font face="Arial Unicode MS">的 </font>CS<font face="Arial Unicode MS">；</font>Michigan
+<font face="Arial Unicode MS">有 </font>A–J <font face="Arial Unicode MS">报告，</font>Wisconsin
+<font face="Arial Unicode MS">仅有公开数据，因此后者必须标记
+</font>provisional<font face="Arial Unicode MS">。</font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-1235" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-1239" size="2"><span lang="zh-CN"><b>可以直接这样说
+				 </b></span></font></font><font color="#26333d"><font class="finch-inline-1243" size="2"><span lang="zh-CN">比较密歇根安娜堡和威斯康星麦迪逊的
+				</span></font></font></font><font color="#26333d"><font class="finch-inline-1246" size="2">CS</font><font face="Arial Unicode MS"><font class="finch-inline-1248" size="2"><span lang="zh-CN">，重点看录取定位、课程、就业、成本和校园环境。</span></font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-1250"><br/>
+<br/>
+</p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1256" size="3">2.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1259" size="3">检查证据状态</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">每个分数应说明是
+</font>evaluated<font face="Arial Unicode MS">、</font>public_data_only<font face="Arial Unicode MS">、</font>missing
+<font face="Arial Unicode MS">或 </font>stale<font face="Arial Unicode MS">，不能把临时公开数据包装成完整评估。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1269" size="3">3.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1272" size="3">输出决策建议</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">比较应说明各自适合谁、主要取舍和下一步，而不是只给总分排名。</font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-1279" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-1283" size="2"><span lang="zh-CN"><b>真实输出证据
+				 </b></span></font></font></font><font color="#26333d"><font class="finch-inline-1287" size="2">outputs/007-</font><font face="Arial Unicode MS"><font class="finch-inline-1289" size="2"><span lang="zh-CN">密歇根</span></font></font><font class="finch-inline-1291" size="2">vs</font><font face="Arial Unicode MS"><font class="finch-inline-1293" size="2"><span lang="zh-CN">威斯康星</span></font></font><font class="finch-inline-1295" size="2">-CS</font><font face="Arial Unicode MS"><font class="finch-inline-1297" size="2"><span lang="zh-CN">对比测试报告</span></font></font><font class="finch-inline-1299" size="2">.md</font><font face="Arial Unicode MS"><font class="finch-inline-1301" size="2"><span lang="zh-CN">。</span></font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-1303"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-1306">
+<img align="bottom" alt="S06 Michigan 与 Wisconsin 的核心比较表" border="0" height="1373" name="Picture 14" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/67ba4285ea3b8ec58406a3af4b8ac4f46245329b0a5df-67ba4285ea3b.png" width="2048"/>
+</p>
+<p align="center" class="finch-inline-1308">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1311" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1315" size="2"><b><font face="微软雅黑, sans-serif">14</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1319" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1323" size="2"><b><font face="微软雅黑, sans-serif">Michigan
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1327" size="2"><b><font face="微软雅黑">与
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1331" size="2"><b><font face="微软雅黑, sans-serif">Wisconsin
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1335" size="2"><b><font face="微软雅黑">的核心比较表</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1338">
+<img align="bottom" alt="S06 基于证据完整度的比较建议" border="0" height="682" name="Picture 15" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/be0a55b646f11cc78e1eb2d2cf0feb78b7c9a3fc6b1ae-be0a55b646f1.png" width="1944"/>
+</p>
+<p align="center" class="finch-inline-1340">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1343" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1348" size="2"><b><font face="微软雅黑, sans-serif">15</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1352" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　基于证据完整度的比较建议</span></font></b></font></font></font></p>
+<p class="western finch-inline-1356"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック">第六部分：</font>Tracker
+<font face="ＭＳ ゴシック">与 </font>Deadline Dashboard</h1>
+<p class="western"><font face="Arial Unicode MS"><font color="#365f91"><font face="宋体"><font class="finch-inline-1366" size="4"><span lang="zh-CN">对申请学校的流程和截止时间进行整理</span></font></font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1371" size="3">1.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1374" size="3">查看申请
+</font></font></font><font face="Arial Unicode MS, serif"><font class="finch-inline-1376" size="3">Tracker</font></font></font></h2>
+<p class="western">data/applications.md <font face="Arial Unicode MS">是主状态表。本轮有
+</font>Michigan CS<font face="Arial Unicode MS">、</font>Notre Dame
+Philosophy<font face="Arial Unicode MS">、</font>BU Trustee
+Scholarship <font face="Arial Unicode MS">三条记录。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1385" size="3">2.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1388" size="3">使用规范状态</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">例如 </font>Evaluated<font face="Arial Unicode MS">、</font>In
+Progress<font face="Arial Unicode MS">、</font>Submitted<font face="Arial Unicode MS">、</font>Decision
+<font face="Arial Unicode MS">等；相同学校与专业不能重复。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1398" size="3">3.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1401" size="3">生成截止日看板</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">将申请、材料、资助、奖学金、放榜和押金日期按时间窗口整理。<span lang="zh-CN">当前功能主要由
+</span></font>Agent <font face="Arial Unicode MS"><span lang="zh-CN">汇总，不是独立脚本。</span></font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#fff4e5" class="finch-inline-1411" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#c28a26"><font class="finch-inline-1415" size="2"><b>已知限制
+				 </b></font></font></font><font color="#26333d"><font class="finch-inline-1418" size="2">Tracker
+				</font><font face="Arial Unicode MS"><font class="finch-inline-1420" size="2">一行只有一个
+				</font></font><font class="finch-inline-1421" size="2">deadline</font><font face="Arial Unicode MS"><font class="finch-inline-1423" size="2">，不能完整表达同一申请的多类日期。教程使用时需同时查看
+				</font></font><font class="finch-inline-1424" size="2">data/deadlines.md</font><font face="Arial Unicode MS"><font class="finch-inline-1426" size="2">。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-1427"><br/>
+<br/>
+</p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-1434" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-1438" size="2"><b>真实输出证据
+				
+				</b></font></font></font><font color="#26333d"><font class="finch-inline-1441" size="2">outputs/003-</font><font face="Arial Unicode MS"><font class="finch-inline-1443" size="2">申请进度</font></font><font class="finch-inline-1444" size="2">Tracker-</font><font face="Arial Unicode MS"><font class="finch-inline-1446" size="2">中文测试报告</font></font><font class="finch-inline-1447" size="2">.md</font><font face="Arial Unicode MS"><font class="finch-inline-1449" size="2">；</font></font><font class="finch-inline-1450" size="2">outputs/004-Deadline-Dashboard-</font><font face="Arial Unicode MS"><font class="finch-inline-1452" size="2">中文测试报告</font></font><font class="finch-inline-1453" size="2">.md</font><font face="Arial Unicode MS"><font class="finch-inline-1455" size="2">。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-1456"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-1459">
+<img align="bottom" alt="S07 S07 合并前的空 Tracker" border="0" height="728" name="Picture 16" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/1e9b06bbd112bf7bb71d583744b58db48cd2b001a9563-1e9b06bbd112.png" width="1998"/>
+</p>
+<p align="center" class="finch-inline-1461">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1464" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1468" size="2"><b><font face="微软雅黑, sans-serif">16</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1472" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1476" size="2"><b><font face="微软雅黑, sans-serif">S07
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1480" size="2"><b><font face="微软雅黑">合并前的空
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1484" size="2"><b><font face="微软雅黑, sans-serif">Tracker</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1487">
+<img align="bottom" alt="S07 合并后的三条申请记录" border="0" height="582" name="Picture 17" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/5c5b5a42c1e6b4228bc3134c68a42b3de1a05c1f9b590-5c5b5a42c1e6.png" width="1986"/>
+</p>
+<p align="center" class="finch-inline-1489">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1492" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1497" size="2"><b><font face="微软雅黑, sans-serif">17</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1501" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　合并后的三条申请记录</span></font></b></font></font></font></p>
+<p class="western finch-inline-1505"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-1508">
+<img align="bottom" alt="S08 截止日期看板概览" border="0" height="900" name="Picture 18" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/ea102948d4cfe3c41d50c52ab2296b4ef5e222c5eb8f6-ea102948d4cf.png" width="1914"/>
+</p>
+<p align="center" class="finch-inline-1510">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1513" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1517" size="2"><b><font face="微软雅黑, sans-serif">18</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1521" size="2"><b><font face="微软雅黑">　截止日期看板概览</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1524">
+<img align="bottom" alt="S08 未核验日期与必须复查的项目" border="0" height="1066" name="Picture 19" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/5ee6e1274054128b6c2f3316e6381e2e21f2fdcfc1f8c-5ee6e1274054.png" width="1954"/>
+</p>
+<p align="center" class="finch-inline-1526">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1529" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1534" size="2"><b><font face="微软雅黑, sans-serif">19</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1538" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　未核验日期与必须复查的项目</span></font></b></font></font></font></p>
+<p class="western finch-inline-1542"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック"><span lang="zh-CN">第七部分：</span></font>Career
+Path</h1>
+<p class="western"><font face="Arial Unicode MS"><font color="#365f91"><font face="宋体"><font class="finch-inline-1552" size="4"><span lang="zh-CN">根据学校官方数据，查看职业路径、未来薪资等等</span></font></font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1557" size="3">1.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1560" size="3"><span lang="zh-CN">点名专业</span></font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS"><span lang="zh-CN">例如：“哲学专业毕业后能做什么？”</span></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1568" size="3">2.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1571" size="3"><span lang="zh-CN">检查四层结果</span></font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS"><span lang="zh-CN">应包括直接职业、需要进一步教育的方向、可组合技能、国际学生身份限制。</span></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1579" size="3">3.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1582" size="3"><span lang="zh-CN">区分全校与专业数据</span></font></font></font></font></h2>
+<p class="western">Notre Dame <font face="Arial Unicode MS"><span lang="zh-CN">的全校就业率和薪资不能被写成哲学专业专属结果。</span></font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-1591" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-1595" size="2"><b>真实输出证据
+				 </b></font></font></font><font color="#26333d"><font class="finch-inline-1598" size="2">outputs/005-</font><font face="Arial Unicode MS"><font class="finch-inline-1600" size="2">哲学专业</font></font><font class="finch-inline-1601" size="2">Career-Path</font><font face="Arial Unicode MS"><font class="finch-inline-1603" size="2">中文测试报告</font></font><font class="finch-inline-1604" size="2">.md</font><font face="Arial Unicode MS"><font class="finch-inline-1606" size="2">。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-1607"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-1610">
+<img align="bottom" alt="S09 哲学专业职业路径概览" border="0" height="1380" name="Picture 20" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/217eef5bdf2d68ccef52613d6d6686dd3bc0ed848fde7-217eef5bdf2d.png" width="1906"/>
+</p>
+<p align="center" class="finch-inline-1612">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1615" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1620" size="2"><b><font face="微软雅黑, sans-serif">20</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1624" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　哲学专业职业路径概览</span></font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1628">
+<img align="bottom" alt="S09 直接就业与深造路线" border="0" height="1295" name="Picture 21" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/08230654ba3c0b922818069edde22045f8df3f8490e2e-08230654ba3c.png" width="2048"/>
+</p>
+<p align="center" class="finch-inline-1630">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1633" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1638" size="2"><b><font face="微软雅黑, sans-serif">21</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1642" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　直接就业与深造路线</span></font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1646">
+<img align="bottom" alt="S09 国际学生的实习、OPT 与身份限制" border="0" height="1261" name="Picture 22" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/7846c636a27a2956f73a5a12f5c542a6a8d17d0ea7b71-7846c636a27a.png" width="2047"/>
+</p>
+<p align="center" class="finch-inline-1648">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1651" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1656" size="2"><b><font face="微软雅黑, sans-serif">22</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1660" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　国际学生的实习、</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1665" size="2"><b><font face="微软雅黑, sans-serif">OPT
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1669" size="2"><b><font face="微软雅黑"><span lang="zh-CN">与身份限制</span></font></b></font></font></font></p>
+<p class="western finch-inline-1673"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック">第八部分：</font>Essay
+Assistant</h1>
+<p class="western"><font face="Arial Unicode MS"><font color="#365f91"><font face="宋体"><font class="finch-inline-1682" size="4"><span lang="zh-CN">为文书撰写提供素材与思路的协助</span></font></font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1687" size="3">1.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1690" size="3">提供真实题目与素材</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">至少提供 </font>Essay
+Prompt<font face="Arial Unicode MS">、真实事件、细节、你的反思和表达习惯。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1697" size="3">2.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1700" size="3">素材不足时停下</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">本轮测试正确停留在
+</font>v0 <font face="Arial Unicode MS">提纲和
+</font>needs_student_material<font face="Arial Unicode MS">，没有把虚构论文写成可提交文书。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1708" size="3">3.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1711" size="3">按状态推进</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">建议使用：</font>needs_student_material
+→ outline → draft → voice_pass → final_review → final<font face="Arial Unicode MS">。</font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#fbecec" class="finch-inline-1719" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#a33a32"><font class="finch-inline-1723" size="2"><span lang="zh-CN"><b>红线
+				 </b></span></font></font><font color="#26333d"><font class="finch-inline-1727" size="2"><span lang="zh-CN">系统可以整理和追问，但不能为学生创造奖项、研究、观点转变或个人经历。</span></font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-1729"><br/>
+<br/>
+</p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-1736" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-1740" size="2"><b>真实输出证据
+				
+				</b></font></font></font><font color="#26333d"><font class="finch-inline-1743" size="2">outputs/006-Essay-Assistant-</font><font face="Arial Unicode MS"><font class="finch-inline-1745" size="2">中文测试报告</font></font><font class="finch-inline-1746" size="2">.md</font><font face="Arial Unicode MS"><font class="finch-inline-1748" size="2">；</font></font><font class="finch-inline-1749" size="2">work/final-regression/essays/philosophy-why-major-v0.md</font><font face="Arial Unicode MS"><font class="finch-inline-1751" size="2">。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-1752"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-1755">
+<img align="bottom" alt="S10 Why Major 请求与真实性规则" border="0" height="532" name="Picture 23" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/03b95cbea672635fe9c3874a3dddb26ecf19bc46f1612-03b95cbea672.png" width="1888"/>
+</p>
+<p align="center" class="finch-inline-1757">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1760" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1764" size="2"><b><font face="微软雅黑, sans-serif">23</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1768" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1772" size="2"><b><font face="微软雅黑, sans-serif">Why
+Major </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1776" size="2"><b><font face="微软雅黑">请求与真实性规则</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1779">
+<img align="bottom" alt="S10 素材门控：当前不具备起草条件" border="0" height="1086" name="Picture 24" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/2d33bbdb49d9a89e9bc92f6091575a2c7aae780c05e84-2d33bbdb49d9.png" width="1946"/>
+</p>
+<p align="center" class="finch-inline-1781">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1784" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1789" size="2"><b><font face="微软雅黑, sans-serif">24</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1793" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　素材门控：当前不具备起草条件</span></font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1797">
+<img align="bottom" alt="S10 仅含占位符的 v0 提纲状态" border="0" height="1014" name="Picture 25" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/c958fe06c57c43e8ff7ae011dc3acc71e886dcd4b497b-c958fe06c57c.png" width="1850"/>
+</p>
+<p align="center" class="finch-inline-1799">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1802" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1807" size="2"><b><font face="微软雅黑, sans-serif">25</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1811" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　仅含占位符的
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1816" size="2"><b><font face="微软雅黑, sans-serif">v0
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1820" size="2"><b><font face="微软雅黑"><span lang="zh-CN">提纲状态</span></font></b></font></font></font></p>
+<p class="western finch-inline-1824"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック">第九部分：</font>Scholarship
+Evaluation</h1>
+<p class="western"><font face="Arial Unicode MS"><font color="#365f91"><font face="宋体"><font class="finch-inline-1833" size="4"><span lang="zh-CN">根据学生提供的信息，多维度评估获得奖学金的概率</span></font></font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1838" size="3">1.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1841" size="3">点名奖学金</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">本次测试对象为
+</font>Boston University Trustee Scholarship<font face="Arial Unicode MS">。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1848" size="3">2.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1851" size="3">提供匹配材料</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">成绩、活动、奖项、国籍</font>/<font face="Arial Unicode MS">资格、预算和写作素材。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1858" size="3">3.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1861" size="3"><span lang="zh-CN">检查评估维度</span></font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS"><span lang="zh-CN">资格、竞争强度、学生匹配、所需材料、时间投入、价值、</span></font>Prompt
+<font face="Arial Unicode MS"><span lang="zh-CN">状态和风险。</span></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-1871" size="3">4.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-1874" size="3">写入
+</font></font></font><font face="Arial Unicode MS, serif"><font class="finch-inline-1876" size="3">Tracker</font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">生成 </font>addition
+<font face="Arial Unicode MS">后执行 </font>merge<font face="Arial Unicode MS">，并检查是否出现重复。</font></p>
+<p class="western finch-inline-1881">
+<font color="#24313a"><font face="Courier New, serif"><font class="finch-inline-1884" size="2">npm
+run merge<br/>
+npm run verify</font></font></font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#fbecec" class="finch-inline-1890" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#a33a32"><font class="finch-inline-1894" size="2"><b>已知路径问题
+				 </b></font></font></font><font color="#26333d"><font class="finch-inline-1897" size="2">Scholarship
+				Mode </font><font face="Arial Unicode MS"><font class="finch-inline-1899" size="2">曾写入
+				</font></font><font class="finch-inline-1900" size="2">batch/tracker-additions/</font><font face="Arial Unicode MS"><font class="finch-inline-1902" size="2">，合并脚本只读取
+				</font></font><font class="finch-inline-1903" size="2">data/tracker-additions/</font><font face="Arial Unicode MS"><font class="finch-inline-1905" size="2">。修复前必须确认
+				</font></font><font class="finch-inline-1906" size="2">addition </font><font face="Arial Unicode MS"><font class="finch-inline-1908" size="2">位于
+				</font></font><font class="finch-inline-1909" size="2">data </font><font face="Arial Unicode MS"><font class="finch-inline-1911" size="2">目录。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-1912"><br/>
+<br/>
+</p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-1919" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-1923" size="2"><b>真实输出证据
+				 </b></font></font></font><font color="#26333d"><font class="finch-inline-1926" size="2">outputs/008-BU-Trustee-Scholarship</font><font face="Arial Unicode MS"><font class="finch-inline-1928" size="2">中文测试报告</font></font><font class="finch-inline-1929" size="2">.md</font><font face="Arial Unicode MS"><font class="finch-inline-1931" size="2">。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-1932"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-1935">
+<img align="bottom" alt="S11 BU Trustee Scholarship 当前周期核验" border="0" height="1333" name="Picture 26" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/10b6c4cae5fc7373f7afd570ecc8eb059e94767e78de7-10b6c4cae5fc.png" width="2048"/>
+</p>
+<p align="center" class="finch-inline-1937">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1940" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1944" size="2"><b><font face="微软雅黑, sans-serif">26</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1948" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1952" size="2"><b><font face="微软雅黑, sans-serif">BU
+Trustee Scholarship </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1956" size="2"><b><font face="微软雅黑">当前周期核验</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1959">
+<img align="bottom" alt="S11 资格匹配与合成经历边界" border="0" height="1472" name="Picture 27" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/3c369b5a6605ad50940b18d4825fd130f4017d8a9da2d-3c369b5a6605.png" width="1570"/>
+</p>
+<p align="center" class="finch-inline-1961">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1964" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1969" size="2"><b><font face="微软雅黑, sans-serif">27</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1973" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　资格匹配与合成经历边界</span></font></b></font></font></font></p>
+<p align="center" class="western finch-inline-1977">
+<img align="bottom" alt="S11 HOLD / Needs Check 与 Tracker 合并结果" border="0" height="1358" name="Picture 28" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/ca505224bbe30d876b759f33313cd395cb4de926100c8-ca505224bbe3.png" width="1578"/>
+</p>
+<p align="center" class="finch-inline-1979">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-1982" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1986" size="2"><b><font face="微软雅黑, sans-serif">28</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1990" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-1994" size="2"><b><font face="微软雅黑, sans-serif">HOLD
+/ Needs Check </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-1998" size="2"><b><font face="微软雅黑">与
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2002" size="2"><b><font face="微软雅黑, sans-serif">Tracker
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2006" size="2"><b><font face="微软雅黑">合并结果</font></b></font></font></font></p>
+<p class="western finch-inline-2009"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック">第十部分：</font>Financial
+Aid Letter Parser</h1>
+<p class="western"><font face="Arial Unicode MS"><font color="#365f91"><font face="宋体"><font class="finch-inline-2018" size="4"><span lang="zh-CN">为学生是否能获取经济资助提供帮助和咨询</span></font></font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-2023" size="3">1.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-2026" size="3">提供完整资助信</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">包括学校
+</font>COA<font face="Arial Unicode MS">、</font>grant/scholarship<font face="Arial Unicode MS">、</font>work-study<font face="Arial Unicode MS">、</font>loan<font face="Arial Unicode MS">、家庭支付和条款。<span lang="zh-CN">隐私信息应先遮盖。</span></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-2037" size="3">2.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-2040" size="3"><span lang="zh-CN">先判断身份资格</span></font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">国际 </font>F-1
+<font face="Arial Unicode MS">学生通常不能使用 </font>Pell<font face="Arial Unicode MS">、</font>Federal
+Work-Study<font face="Arial Unicode MS">、</font>Direct Loan <font face="Arial Unicode MS">或
+</font>Parent PLUS<font face="Arial Unicode MS">；必须先判断，再做预算。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-2052" size="3">3.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-2055" size="3">拆分资金类型</font></font></font></font></h2>
+<p class="western">Gift aid<font face="Arial Unicode MS">、</font>Work<font face="Arial Unicode MS">、</font>Loan<font face="Arial Unicode MS">、</font>Family
+cash <font face="Arial Unicode MS">必须分开；贷款不属于
+</font>aid<font face="Arial Unicode MS">。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-2065" size="3">4.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-2068" size="3">正确计算</font></font></font></font></h2>
+<p class="western">Net Price = COA − gift aid<font face="Arial Unicode MS">；</font>Work-study
+<font face="Arial Unicode MS">作为学年内潜在收入单列，不能直接减少开学前应付金额。</font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#fbecec" class="finch-inline-2076" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#a33a32"><font class="finch-inline-2080" size="2"><span lang="zh-CN"><b>利率时效
+				 </b></span></font></font></font><font color="#26333d"><font class="finch-inline-2084" size="2">Mode
+				</font><font face="Arial Unicode MS"><font class="finch-inline-2086" size="2"><span lang="zh-CN">中曾硬编码旧利率。每次都要按首次放款年度从官方来源重新核验。</span></font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-2088"><br/>
+<br/>
+</p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-2095" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-2099" size="2"><b>真实输出证据
+				 </b></font></font></font><font color="#26333d"><font class="finch-inline-2102" size="2">outputs/009-Financial-Aid-Letter-Parser</font><font face="Arial Unicode MS"><font class="finch-inline-2104" size="2">中文测试报告</font></font><font class="finch-inline-2105" size="2">.md</font><font face="Arial Unicode MS"><font class="finch-inline-2107" size="2">。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-2108"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-2111">
+<img align="bottom" alt="S12 虚构 Northbridge Aid Letter 的 COA" border="0" height="1068" name="Picture 29" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/a7d886d4d3c5edebd4f1a6ba039a990a0039fd094fa64-a7d886d4d3c5.png" width="1958"/>
+</p>
+<p align="center" class="finch-inline-2113">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-2116" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2120" size="2"><b><font face="微软雅黑, sans-serif">29</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2124" size="2"><b><font face="微软雅黑">　虚构
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2128" size="2"><b><font face="微软雅黑, sans-serif">Northbridge
+Aid Letter </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2132" size="2"><b><font face="微软雅黑">的
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2136" size="2"><b><font face="微软雅黑, sans-serif">COA</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-2139">
+<img align="bottom" alt="S12 Gift Aid、工作与贷款的正确拆分" border="0" height="1290" name="Picture 30" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/3149a395d8d1d621315b81205d17a8bca308227d3fb1c-3149a395d8d1.png" width="1916"/>
+</p>
+<p align="center" class="finch-inline-2141">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-2144" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2148" size="2"><b><font face="微软雅黑, sans-serif">30</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2152" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2156" size="2"><b><font face="微软雅黑, sans-serif">Gift
+Aid</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2160" size="2"><b><font face="微软雅黑">、工作与贷款的正确拆分</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-2163">
+<img align="bottom" alt="S12 F-1 联邦资助资格警告" border="0" height="932" name="Picture 31" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/f1d64b0f6c9d29a3ccb4fdc2f1d19992d1fb2a433900e-f1d64b0f6c9d.png" width="1944"/>
+</p>
+<p align="center" class="finch-inline-2165">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-2168" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2173" size="2"><b><font face="微软雅黑, sans-serif">31</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2177" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2182" size="2"><b><font face="微软雅黑, sans-serif">F-1
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2186" size="2"><b><font face="微软雅黑"><span lang="zh-CN">联邦资助资格警告</span></font></b></font></font></font></p>
+<p align="center" class="western finch-inline-2190">
+<img align="bottom" alt="S12 真实 Net Price 与家庭现金需求" border="0" height="1314" name="Picture 32" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/23f04155801529f90731a6f574f031a350f1f37a60e0b-23f041558015.png" width="1956"/>
+</p>
+<p align="center" class="finch-inline-2192">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-2195" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2199" size="2"><b><font face="微软雅黑, sans-serif">32</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2203" size="2"><b><font face="微软雅黑">　真实
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2207" size="2"><b><font face="微软雅黑, sans-serif">Net
+Price </font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2211" size="2"><b><font face="微软雅黑">与家庭现金需求</font></b></font></font></font></p>
+<p class="western finch-inline-2214"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック">第十一部分：</font>Pipeline
+<font face="ＭＳ ゴシック">批量处理</font></h1>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-2223" size="3">1.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-2226" size="3">把项目写入队列</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">在 </font>data/pipeline.md
+<font face="Arial Unicode MS">中加入要处理的学校或奖学金。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-2233" size="3">2.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-2236" size="3">由
+</font></font></font><font face="Arial Unicode MS, serif"><font class="finch-inline-2238" size="3">Agent
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-2241" size="3">分类并执行</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">当前 </font>Pipeline
+<font face="Arial Unicode MS">不是一键程序；分类、调用
+</font>Mode<font face="Arial Unicode MS">、研究和生成报告由
+</font>Agent <font face="Arial Unicode MS">编排。</font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-2250" size="3">3.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-2253" size="3">合并并验证</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">辅助脚本负责把
+</font>additions <font face="Arial Unicode MS">合入
+</font>Tracker<font face="Arial Unicode MS">，并检查状态、重复和报告链接。</font></p>
+<p class="western finch-inline-2258">
+<font color="#24313a"><font face="Courier New, serif"><font class="finch-inline-2261" size="2">npm
+run merge<br/>
+npm run verify</font></font></font></p>
+<h2 class="western"><font color="#245b78"><font face="Arial Unicode MS, serif"><font class="finch-inline-2266" size="3">4.
+</font></font><font face="ＭＳ ゴシック"><font face="Arial Unicode MS"><font class="finch-inline-2269" size="3">确认结果</font></font></font></font></h2>
+<p class="western"><font face="Arial Unicode MS">本轮 </font>Pipeline
+<font face="Arial Unicode MS">更新 </font>1 <font face="Arial Unicode MS">项、新增
+</font>1 <font face="Arial Unicode MS">项，无重复；最终
+</font>verify <font face="Arial Unicode MS">为 </font>0 errors<font face="Arial Unicode MS">、</font>1
+<font face="Arial Unicode MS">个预期 </font>fixture warning<font face="Arial Unicode MS">。</font></p>
+<center>
+<table cellpadding="9" cellspacing="0" width="629">
+<col width="611"/>
+<tr>
+<td bgcolor="#eaf2f7" class="finch-inline-2283" valign="top" width="611"><p class="western">
+<font face="Arial Unicode MS"><font color="#245b78"><font class="finch-inline-2287" size="2"><b>真实输出证据
+				
+				</b></font></font></font><font color="#26333d"><font class="finch-inline-2290" size="2">outputs/010-Pipeline</font><font face="Arial Unicode MS"><font class="finch-inline-2292" size="2">批量处理中文测试报告</font></font><font class="finch-inline-2293" size="2">.md</font><font face="Arial Unicode MS"><font class="finch-inline-2295" size="2">；</font></font><font class="finch-inline-2296" size="2">outputs/013-</font><font face="Arial Unicode MS"><font class="finch-inline-2298" size="2">端到端回归与</font></font><font class="finch-inline-2299" size="2">Pilot</font><font face="Arial Unicode MS"><font class="finch-inline-2301" size="2">总结报告</font></font><font class="finch-inline-2302" size="2">.md</font><font face="Arial Unicode MS"><font class="finch-inline-2304" size="2">。</font></font></font></p>
+</td>
+</tr>
+</table>
+</center>
+<p class="western finch-inline-2305"><br/>
+<br/>
+</p>
+<p align="center" class="western finch-inline-2308">
+<img align="bottom" alt="S13 Pipeline 处理前队列" border="0" height="458" name="Picture 33" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/5833de551c6760a9338658e95f3cf37bb528f17b20e9b-5833de551c67.png" width="1736"/>
+</p>
+<p align="center" class="finch-inline-2310">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-2313" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2317" size="2"><b><font face="微软雅黑, sans-serif">33</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2321" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2325" size="2"><b><font face="微软雅黑, sans-serif">Pipeline
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2329" size="2"><b><font face="微软雅黑">处理前队列</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-2332">
+<img align="bottom" alt="S13 Agent 路由、复用报告与合并摘要" border="0" height="1344" name="Picture 34" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/4d99e8a1c39cbf9a72cf9e68fc186e3068c43bad0ffb8-4d99e8a1c39c.png" width="2048"/>
+</p>
+<p align="center" class="finch-inline-2334">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-2337" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2341" size="2"><b><font face="微软雅黑, sans-serif">34</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2345" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2349" size="2"><b><font face="微软雅黑, sans-serif">Agent
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2353" size="2"><b><font face="微软雅黑">路由、复用报告与合并摘要</font></b></font></font></font></p>
+<p align="center" class="western finch-inline-2356">
+<img align="bottom" alt="S13 Pipeline 最终完整性验证" border="0" height="1410" name="Picture 35" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/0208a8300a7ee09748175279333fdda4fa7a26e99d287-0208a8300a7e.png" width="1922"/>
+</p>
+<p align="center" class="finch-inline-2358">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-2361" size="2"><b><font face="微软雅黑">图
+</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2365" size="2"><b><font face="微软雅黑, sans-serif">35</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2369" size="2"><b><font face="微软雅黑">　</font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2373" size="2"><b><font face="微软雅黑, sans-serif">Pipeline
+</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2377" size="2"><b><font face="微软雅黑">最终完整性验证</font></b></font></font></font></p>
+<p class="western finch-inline-2380"><br/>
+<br/>
+</p>
+<h1 class="western"><font face="ＭＳ ゴシック">第十二部分：</font>Internship
+<font face="ＭＳ ゴシック">路由保护</font></h1>
+<p class="western"><font face="Arial Unicode MS"><font face="宋体"><span lang="zh-CN">可以提供</span></font></font>internship<font face="Arial Unicode MS"><font face="宋体"><span lang="zh-CN">的匹配，并且根据学生身份</span></font></font>/<font face="Arial Unicode MS"><font face="宋体"><span lang="zh-CN">定位自动定向</span></font></font></p>
+<p align="center" class="western finch-inline-2396">
+<br/>
+<br/>
+</p>
+<p class="western finch-inline-2399">
+<img align="bottom" alt="S14 将请求重定向为高中生暑期或研究项目评估" border="0" height="846" name="Picture 37" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/us-undergrad-admit-bench/instruction-zh/04ffd2753b2413644ac75eb1616f5cfa00cb183d58ea8-04ffd2753b24.png" width="1322"/>
+</p>
+<p align="center" class="finch-inline-2401">
+<font color="#555555"><font face="Arial Unicode MS"><font class="finch-inline-2404" size="2"><b><font face="微软雅黑"><span lang="zh-CN">图
+</span></font></b></font></font><font face="Arial, sans-serif"><font class="finch-inline-2409" size="2"><b><font face="微软雅黑, sans-serif">3</font><font face="微软雅黑, sans-serif">6</font></b></font></font><font face="Arial Unicode MS"><font class="finch-inline-2414" size="2"><b><font face="微软雅黑"><span lang="zh-CN">　将请求重定向为高中生暑期或研究项目评估</span></font></b></font></font></font></p>
+<p class="western finch-inline-2418"><br/>
+<br/>
+</p>
+</article></main><div class="footer">US Undergrad Admit Bench · Instruction · 2026-08-26</div></div></body></html>

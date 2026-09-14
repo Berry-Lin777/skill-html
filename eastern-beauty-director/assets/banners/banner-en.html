@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Eastern Drama Visual Director</title>
+<meta content="Turn one idea into director-grade visuals for an Eastern-aesthetics short drama." name="description"/>
+<style>
+    :root { --paper:#f2ead9; --ink:#1b1713; --red:#851f1c; --gold:#a8793e; }
+    * { box-sizing:border-box; }
+    html, .finch-page { margin:0; min-height:100%; }
+    .finch-page { background:#18130f; color:var(--ink); font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .hero { position:relative; isolation:isolate; min-height: auto; overflow:hidden; background:var(--paper); }
+    .hero::before { content:""; position:absolute; inset:0; z-index:-2; opacity:.52; background:
+      radial-gradient(circle at 18% 15%, rgba(255,255,255,.8), transparent 25%),
+      repeating-linear-gradient(97deg, rgba(73,49,27,.025) 0 1px, transparent 1px 5px),
+      linear-gradient(105deg, rgba(255,255,255,.22), rgba(116,75,38,.08)); }
+    .hero::after { content:""; position:absolute; left:-7vw; bottom:-17vw; width:45vw; height:35vw; z-index:-1; opacity:.24; filter:blur(1px); border-radius:50%; background:radial-gradient(ellipse, #27221d 0 5%, transparent 6% 11%, #51473d 12% 13%, transparent 14%); transform:rotate(-10deg); }
+    .visual { position:absolute; inset:0 4vw 0 29%; z-index:-1; background-image:linear-gradient(90deg, var(--paper) 0%, rgba(242,234,217,.7) 11%, transparent 34%), linear-gradient(0deg, rgba(20,15,12,.45), transparent 31%), url("https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/eastern-beauty-director/banners/eastern-drama-hero-cb07d56ad434.png"); background-size:auto 94%; background-repeat:no-repeat; background-position:right center; }
+    .topbar { height:78px; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(24px,5vw,84px); border-bottom:1px solid rgba(39,29,19,.23); }
+    .brand { display:flex; align-items:center; gap:13px; font-family:Georgia, "Times New Roman", serif; letter-spacing:.12em; text-transform:uppercase; font-size:13px; font-weight:700; }
+    .seal { width:34px; height:34px; display:grid; place-items:center; background:var(--red); color:#f3dfbf; border:1px solid #a85b50; font-family:serif; font-size:17px; box-shadow:inset 0 0 0 3px var(--red), inset 0 0 0 4px rgba(245,216,169,.55); }
+    .edition { color:rgba(41,32,25,.62); font-size:11px; letter-spacing:.2em; text-transform:uppercase; }
+    .content { width:min(1420px,100%); min-height: auto; margin:auto; padding:clamp(52px,8vh,100px) clamp(24px,5vw,84px) 38px; display:flex; flex-direction:column; justify-content:space-between; }
+    .copy { width:min(660px,50vw); }
+    .eyebrow { display:flex; align-items:center; gap:14px; margin:0 0 22px; color:var(--red); font:700 12px/1 Inter, sans-serif; letter-spacing:.23em; text-transform:uppercase; }
+    .eyebrow::before { content:""; width:42px; height:1px; background:var(--red); }
+    h1 { max-width:640px; margin:0; font-family:Georgia, "Times New Roman", "Noto Serif", serif; font-size:clamp(45px,5.6vw,88px); line-height:.94; letter-spacing:-.045em; font-weight:500; text-wrap:balance; }
+    h1 em { display:block; color:var(--red); font-weight:500; }
+    .subhead { max-width:575px; margin:28px 0 0; color:#51483f; font-size:clamp(15px,1.25vw,19px); line-height:1.7; }
+    .subhead strong { color:#241d17; font-weight:700; }
+    .actions { display:flex; align-items:center; gap:18px; margin-top:34px; }
+    .cta { appearance:none; border:0; padding:15px 22px; color:#f7ebd5; background:var(--red); font-weight:750; letter-spacing:.01em; box-shadow:0 12px 28px rgba(91,18,16,.2); cursor:pointer; }
+    .note { color:#675d53; font-size:12px; letter-spacing:.04em; }
+    .bottom { display:flex; align-items:flex-end; justify-content:space-between; gap:28px; margin-top:58px; }
+    .features { display:flex; flex-wrap:wrap; gap:8px; max-width:760px; }
+    .chip { display:flex; align-items:center; gap:9px; padding:10px 13px; border:1px solid rgba(48,37,28,.28); background:rgba(242,234,217,.72); backdrop-filter:blur(8px); font-size:11px; font-weight:720; letter-spacing:.055em; text-transform:uppercase; }
+    .chip b { display:grid; place-items:center; width:18px; height:18px; border-radius:50%; background:#29231e; color:#f4e7d0; font-size:9px; }
+    .format { display:flex; align-items:center; gap:13px; min-width:max-content; padding:13px 15px; color:#f6e8d0; background:rgba(25,20,16,.88); border:1px solid rgba(215,173,104,.55); box-shadow:0 15px 40px rgba(0,0,0,.23); }
+    .phone { width:18px; height:29px; border:1px solid #cda465; border-radius:3px; position:relative; }
+    .phone::after { content:""; position:absolute; width:3px; height:3px; border-radius:50%; background:#cda465; left:7px; bottom:2px; }
+    .format small { display:block; color:#c8a36d; font-size:9px; letter-spacing:.18em; text-transform:uppercase; }
+    .format strong { display:block; margin-top:2px; font:500 14px/1.2 Georgia, serif; }
+    .vertical-mark { position:absolute; right:22px; top:110px; color:rgba(59,40,25,.42); font-family:Georgia, serif; font-size:10px; letter-spacing:.27em; writing-mode:vertical-rl; text-transform:uppercase; }
+    @media (max-width:850px) {
+      .hero { min-height: auto; }
+      .visual { inset:36% 3vw 0 0; background-image:linear-gradient(180deg, var(--paper) 0%, transparent 25%), linear-gradient(0deg, rgba(19,14,11,.58), transparent 48%), url("https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/eastern-beauty-director/banners/eastern-drama-hero-cb07d56ad434.png"); background-size:94% auto; background-position:center 34%; }
+      .topbar { height:64px; }
+      .edition, .vertical-mark { display:none; }
+      .content { min-height: auto; padding-top:42px; }
+      .copy { width:100%; }
+      h1 { max-width:690px; font-size:clamp(42px,10vw,70px); }
+      .subhead { max-width:92%; margin-top:18px; line-height:1.55; }
+      .actions { margin-top:23px; }
+      .bottom { margin-top:52vh; align-items:stretch; flex-direction:column; }
+      .features { gap:6px; }
+      .chip { background:rgba(242,234,217,.86); }
+      .format { align-self:flex-end; }
+    }
+    @media (max-width:520px) {
+      .topbar, .content { padding-left:20px; padding-right:20px; }
+      .brand { font-size:11px; }
+      .seal { width:30px; height:30px; }
+      h1 { font-size:clamp(39px,12vw,58px); }
+      .subhead { font-size:14px; }
+      .note { display:none; }
+      .bottom { margin-top:44vh; }
+      .features .chip { font-size:9px; padding:8px 9px; }
+    }
+  
+
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fbfaf7;color:#242424;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}</style></head>
+<body><div class="finch-page">
+<main class="hero">
+<div aria-hidden="true" class="visual"></div>
+<header class="topbar">
+<div class="brand"><span class="seal">映</span><span>Eastern Visual Director</span></div>
+<div class="edition">AI Creative Skill · Director Edition</div>
+</header>
+<section class="content">
+<div class="copy">
+<p class="eyebrow">From spark to screen</p>
+<h1>One idea.<br/><em>Director-grade visuals.</em></h1>
+<p class="subhead">Input a <strong>plot segment, character setup, or visual spark</strong>—and turn it into structured prompts for cinematic, Eastern-aesthetics short drama.</p>
+<div class="actions">
+<span class="note">No directing experience required</span>
+</div>
+</div>
+<div class="bottom">
+<div aria-label="Creative workflow" class="features">
+<span class="chip"><b>01</b>Plot Input</span>
+<span class="chip"><b>02</b>Visual Director Brief</span>
+<span class="chip"><b>03</b>Prompt Output</span>
+<span class="chip"><b>04</b>Generate Directly</span>
+</div>
+<div class="format"><span aria-hidden="true" class="phone"></span><span><small>Native format</small><strong>9:16 Vertical Output</strong></span></div>
+</div>
+</section>
+<div class="vertical-mark">Eastern aesthetics · cinematic intelligence</div>
+</main>
+</div></body>
+</html>
