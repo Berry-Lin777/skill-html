@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="light" name="color-scheme"/><title>QR Life Kit | QR Codes and Shareable Cards</title><style>
+:root{--ink:#14110f;--ink2:#3a342f;--muted:#7a7168;--bg:#f3efe8;--paper:#fffcf7;--line:#ddd4c8;--line2:#ebe4da;--green:#1f6b4a;--green-soft:#e7f3ec;--amber:#8a5a12;--amber-soft:#f7efe2;--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:"Helvetica Neue",Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}*{box-sizing:border-box}html,.finch-page{margin:0;min-width:0;background:var(--bg);color:var(--ink);font:15.5px/1.7 var(--sans)}.finch-page{background-image:radial-gradient(circle at 88% 0,rgba(31,107,74,.08),transparent 38%),linear-gradient(180deg,#e8e2d8 0,var(--bg) 26%,var(--bg) 100%)}.wrap{width:100%;max-width:860px;margin:auto;padding:18px 12px 48px}.sheet{background:var(--paper);border:1px solid var(--line);box-shadow:0 18px 42px rgba(20,17,15,.07);padding:26px 18px 36px;min-width:0}img{display:block;width:100%;max-width:100%;height:auto}h1,h2,h3,p{margin:0;overflow-wrap:break-word}a{color:var(--green);text-underline-offset:2px}code{font:12.5px/1.4 var(--mono);background:var(--green-soft);border:1px solid #c9e2d4;padding:.08em .32em}.kicker{font:700 11px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--green)}h1{margin-top:10px;font:650 clamp(28px,5vw,40px)/1.18 var(--serif);letter-spacing:-.02em;}.lede{margin-top:14px;font-size:16.5px;line-height:1.75;color:var(--ink2);max-width:40em}.save{margin-top:18px;display:inline-block;padding:10px 14px;background:var(--ink);color:#fff;font-weight:650}.fine{margin-top:12px;font-size:12.5px;line-height:1.55;color:var(--muted);max-width:44em}.divider{margin:28px 0 0;border:0;border-top:1px solid var(--line)}.block{margin-top:28px;min-width:0}.block h2{font:650 clamp(22px,3.6vw,28px)/1.25 var(--serif);margin-bottom:10px;}.block h3{font:650 16.5px/1.35 var(--sans);margin:22px 0 8px}.block p{color:var(--ink2);max-width:46em}.block p+p{margin-top:10px}.shot{margin:14px 0 0;border:1px solid var(--line);background:#fff;overflow:hidden}.shot figcaption{padding:10px 12px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line2);background:#faf7f2}.table-wrap{margin-top:14px;border:1px solid var(--line);overflow: visible;background:#fff}table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{padding:11px 12px;text-align:left;vertical-align:top;border-top:1px solid var(--line2)}th{background:var(--green-soft);font-weight:700;border-top:0}td:first-child{font-weight:650;color:var(--ink)}.soft,.callout{margin-top:14px;padding:12px 14px;background:var(--green-soft);border-left:3px solid var(--green);color:var(--ink2);font-size:13.5px}.callout{background:var(--amber-soft);border-left-color:var(--amber);color:var(--amber)}.foot{margin-top:24px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}@media(min-width:700px){.sheet{padding:36px 42px 48px}}@media(max-width:520px){td:first-child{white-space:normal}}
+
+/* approved monitor frame */
+.shot{width:74%;max-width:620px;margin:22px auto 0;border:0!important;background:transparent!important;overflow:visible!important;box-shadow:none!important;min-width:0}
+.grid .shot,.pair .shot{width:100%;max-width:none;margin-top:0}
+
+.bezel{background:#1b1a18;border:1px solid #0c0b0a;border-radius:20px;padding:0 14px 16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 18px 36px rgba(20,17,15,.2)}
+.bezel-bar{display:flex;align-items:center;gap:7px;position:relative;height:40px;margin:0 -14px 12px;padding:0 14px;background:linear-gradient(180deg,#2f2c28,#221f1c);border-bottom:1px solid #3f3b36;border-radius:19px 19px 0 0}
+.bezel-bar::after{background:#12110f;border:1px solid #3a3631;color:#e4dccf}
+.bezel-screen{padding:7px;background:linear-gradient(180deg,#f8f3ea,#efe6d8);border-radius:10px;box-shadow:inset 0 0 0 1px rgba(20,17,15,.08)}
+.bezel-stand::before{background:linear-gradient(180deg,#b7b09f,#7d776c)}
+.bezel-stand::after{background:linear-gradient(180deg,#f3ece1,#cfc6b6);box-shadow:0 4px 10px rgba(20,17,15,.14)}
+
+.bezel-bar i{display:block;width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.bezel-bar i:nth-child(1){background:radial-gradient(circle at 32% 30%,#ff9d98,#ff5f57 68%)}
+.bezel-bar i:nth-child(2){background:radial-gradient(circle at 32% 30%,#ffe08a,#febc2e 68%)}
+.bezel-bar i:nth-child(3){background:radial-gradient(circle at 32% 30%,#7aed8a,#28c840 68%)}
+.bezel-bar::after{content:"qr-life-kit · preview";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:46%;max-width:64%;padding:6px 14px;border-radius:999px;font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-align:center;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pair .bezel-bar::after,.grid .bezel-bar::after{content:"preview"}
+.bezel-screen img{width:100%;height:auto!important;display:block;border-radius:5px;object-fit:contain}
+.bezel-stand{height:30px;position:relative;margin-top:4px}
+.bezel-stand::before{content:"";position:absolute;left:50%;top:0;width:16px;height:15px;margin-left:-8px;border-radius:0 0 3px 3px;box-shadow:inset 1px 0 0 rgba(255,255,255,.2)}
+.bezel-stand::after{content:"";position:absolute;left:50%;bottom:0;width:46%;height:9px;margin-left:-23%;border-radius:3px 3px 11px 11px}
+.pair .bezel-stand,.grid .bezel-stand{display:none}
+.shot figcaption{margin-top:8px;padding:0 2px;border:0!important;background:transparent!important;text-align:center}
+.bezel-screen{position:relative}
+.bezel-screen .tag{z-index:2}
+.io-board,.type-board,.file-board,.form-board,.mode-board,.check-board{margin-top:16px;min-width:0}
+.io-board{padding:14px 12px 10px;background:linear-gradient(rgba(200,200,200,.28) 1px,transparent 1px) 0 0/100% 26px,#f6f4ef;border:1px solid var(--line,var(--l,#ddd4c8));border-radius:12px}
+.io-head{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;margin-bottom:10px;font:700 11px/1 var(--sans,sans-serif);letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168))}
+.io-head span:last-child{text-align:right}
+.io-row{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;align-items:stretch;margin-bottom:8px;min-width:0}
+.io-in,.io-out{min-width:0;padding:11px 12px;border-radius:8px;font-size:13.5px;line-height:1.4;color:var(--ink,var(--i,#14110f))}
+.io-in{background:#fff;border:1px solid var(--line,var(--l,#ddd4c8))}
+.io-out{background:var(--green-soft,var(--soft,#e7f3ec));border:1px solid #c9e2d4}
+.io-k{display:none;font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168));margin-bottom:6px}
+.io-arrow{display:flex;align-items:center;justify-content:center;color:var(--green,var(--accent,var(--a,#1f6b4a)));font:700 16px/1 sans-serif}
+.io-arrow::before{content:"→"}
+.type-board,.file-board,.form-board,.check-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.type-board{grid-template-columns:1fr 1fr}.file-board,.form-board,.check-board{grid-template-columns:1fr 1fr}.form-board.cols-3,.check-board.cols-3{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:700px){.type-board{grid-template-columns:1fr 1fr 1fr 1fr}}
+.form-card,.type-card,.file-card,.check-card,.mode-card{min-width:0;background:#fff;border:1px solid var(--line,var(--l,#ddd4c8));padding:13px 12px 12px;border-top:4px solid var(--green,var(--accent,var(--a,#1f6b4a)))}
+.form-card .mark,.type-card .mark,.file-card .mark,.check-card .mark,.mode-tag{font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--green,var(--accent,var(--a,#1f6b4a)));white-space:nowrap;margin-bottom:7px}
+.form-card h3,.type-card h3,.file-card h3,.check-card h3,.mode-card h3{margin:0 0 6px;font:650 16px/1.2 var(--serif,Georgia,serif);color:var(--ink,var(--i,#14110f))}
+.form-card p,.type-card p,.file-card p,.check-card p,.mode-card p{margin:0;font-size:13px;line-height:1.45;color:var(--ink2,var(--i,#3a342f))}
+.mode-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.mode-board{grid-template-columns:1fr 1fr}}
+.mode-card.is-pick{background:var(--green-soft,var(--accent-soft,var(--s,#eef5f7)))}
+.mode-foot{grid-column:1/-1;margin:0;padding:10px 12px;background:#f7f8f9;border:1px solid var(--line,var(--l,#ddd));font-size:13px;line-height:1.5;color:var(--ink2,var(--i,#3a342f))}
+@media(max-width:639px){.io-head{display:none}.io-row,.io-head{grid-template-columns:1fr}.io-arrow{height:18px}.io-arrow::before{content:"↓"}.io-k{display:block}}
+h1,h2,h3,p{overflow-wrap:break-word}
+@media(min-width:700px){.step h2,.head h2{white-space:nowrap}}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;border-left:0;border-right:0;background:transparent;padding:10px 0 2px}
+.meta span,.meta div{display:inline;padding:0;border:0;white-space:nowrap}
+
+
+
+.meta{display:flex!important;flex-wrap:wrap;align-items:baseline;gap:6px 18px;background:transparent}
+.meta span,.meta div{display:inline!important;border:0!important;background:transparent!important;padding:0!important;white-space:nowrap}
+
+.finchip-page{width:100%;max-width:100%;min-width:0;background-color:var(--bg);background-image:radial-gradient(circle at 88% 0,rgba(31,107,74,.08),transparent 38%),linear-gradient(180deg,#e8e2d8 0,var(--bg) 26%,var(--bg) 100%);color:var(--ink)}
+
+
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fff;color:#202020;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}
+.finch-page{background-color:var(--bg);color:var(--ink)}
+</style></head><body><div class="finch-page"><div class="finchip-page"><main class="wrap"><article class="sheet">
+<p class="kicker">QR Life Kit · Information</p><h1>Turn everyday details into QR codes people can actually use</h1>
+<p class="lede">QR Life Kit creates static QR codes and matching cards for websites, Wi-Fi, contacts, email, SMS, phone numbers, locations, calendar events, and plain text—all on your own machine.</p>
+<p class="save">The result is more than one QR image: you get files for sharing, files for print, and a scan report for the finished artwork.</p>
+<p class="fine">The payload is stored directly in the QR. There is no short-link service in the middle. Contact, Wi-Fi, and event details are not encrypted, so share them with the same care as the original information.</p><hr class="divider"/>
+<section class="block"><h2>Why not use a random QR website?</h2><p>Making a quick URL code is easy. The harder questions come later: Will it stay sharp in print? Does it still scan after you place it on a card? Is the link tied to someone else's redirect service? Did you upload a Wi-Fi password or contact record to a third party?</p><p>QR Life Kit keeps the whole job together and local: prepare the payload, build the QR, lay out the card, scan the finished artwork, and save everything in one output folder.</p>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Finished Emma Wilson QR business card" class="finch-media-ratio" height="600" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/9075436bd9ca557c77864023f049babfe2e4adcde204c-9075436bd9ca.png" width="1050"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>A finished contact card: the QR stays high-contrast while the design sits safely around it.</figcaption></figure></section>
+<section class="block"><h2>Nine useful payloads—not just URLs</h2><div aria-label="Nine useful QR payload types" class="type-board" role="img">
+<article class="type-card"><div class="mark">Opens a page</div><h3>URL</h3><p>Websites, menus, signup pages, portfolios</p></article>
+<article class="type-card"><div class="mark">Join network</div><h3>Wi‑Fi</h3><p>Shops, hotels, guest networks</p></article>
+<article class="type-card"><div class="mark">Save contact</div><h3>vCard</h3><p>Business cards and events</p></article>
+<article class="type-card"><div class="mark">Opens a draft</div><h3>Email / SMS</h3><p>Enquiries, bookings, replies</p></article>
+<article class="type-card"><div class="mark">Opens dialer</div><h3>Phone</h3><p>Support and store lines</p></article>
+<article class="type-card"><div class="mark">Opens maps</div><h3>Location</h3><p>Venues, shops, meeting points</p></article>
+<article class="type-card"><div class="mark">Adds event</div><h3>Calendar</h3><p>Meetings, talks, performances</p></article>
+<article class="type-card"><div class="mark">Shows text</div><h3>Plain text</h3><p>Codes, notes, short instructions</p></article>
+</div><div class="soft">One workflow covers screen sharing, printed material, and event signage, even when the payload changes.</div></section>
+<section class="block"><h2>1. Describe what you need</h2><p>You do not need to learn vCard syntax or Wi-Fi escaping rules. Tell your Agent what the QR is for, which details it should contain, and where it will be used. The Agent chooses the payload type and asks only for the fields that matter.</p>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="English QR business card prompt in Claude Code" class="finch-media-ratio" height="1253" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/957f8f3f8a41a336784e0ee542d11d74a986f6d264951-957f8f3f8a41.png" width="2048"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>The brief contains the profile, contact details, and design direction. The Agent handles the formatting.</figcaption></figure></section>
+<section class="block"><h2>2. Build the QR and the card</h2><p>Each run creates a standalone QR plus a card for sharing or print. Built-in options include paper, midnight, and sunset themes, with square or portrait formats.</p><p>The code itself stays dark on white with a proper quiet zone. Logos, gradients, and decoration belong around the QR—not over it.</p>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="High-contrast standalone QR" class="finch-media-ratio" height="1752" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/4c6764136c0c07e15731099ad4576443e13cd22bfa519-4c6764136c0c.png" width="1752"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Use the PNG on screen. Use the SVG when the QR needs to scale cleanly in print.</figcaption></figure></section>
+<section class="block"><h2>3. Scan the finished artwork</h2><p>A generated QR is only the first checkpoint. QR Life Kit decodes both <code>qr.png</code> and the final <code>card.png</code>, then compares each result with the original payload. <code>verification.json</code> says passed only when both match.</p>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Passed verification report" class="finch-media-ratio" height="756" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/10ac90a772a29deff68a43faf65ba274e1f16ae495779-10ac90a772a2.png" width="1666"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Both raw_qr and card_png are true: the standalone code and the composed card decode correctly.</figcaption></figure><div class="callout">Verification reads the payload. It does not open a website, join Wi-Fi, send a message, place a call, or add a contact.</div></section>
+<section class="block"><h2>What is in the output folder?</h2><div aria-label="Files in the output folder" class="file-board" role="img">
+<article class="file-card"><div class="mark">Share</div><h3>card.png</h3><p>Share the finished card in chat, email, or social</p></article>
+<article class="file-card"><div class="mark">Print</div><h3>card.html</h3><p>Open and print the full card in a browser</p></article>
+<article class="file-card"><div class="mark">On screen</div><h3>qr.png</h3><p>Standalone QR for screens</p></article>
+<article class="file-card"><div class="mark">Print-ready</div><h3>qr.svg</h3><p>Lossless QR for professional print</p></article>
+<article class="file-card"><div class="mark">Checks</div><h3>verification.json</h3><p>Two scan-check results</p></article>
+<article class="file-card"><div class="mark">Index</div><h3>manifest.json</h3><p>Hashes and build metadata</p></article>
+<article class="file-card"><div class="mark">Spec</div><h3>spec-redacted.json</h3><p>Reproducible spec without secrets</p></article>
+</div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Agent lists the QR Life Kit deliverables" class="finch-media-ratio" height="1145" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/9cfc56ccd50d6c378aa6e225b5eec322fa8be7a6c7e67-9cfc56ccd50d.png" width="2048"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>The Agent lists the share, print, verification, and reproducibility files at the end of the run.</figcaption></figure></section>
+<section class="block"><h2>Who is it for?</h2><p>Shops and event teams can make menu, Wi-Fi, and calendar cards. Freelancers and conference attendees can make contact cards. Teams can turn links, locations, or phone numbers into consistent printed material.</p><div class="soft">If you only need a quick QR, the build is short. If the file is going to a client or a printer, the complete output and final-artwork scan check are where the kit earns its keep.</div></section>
+<footer class="foot"><p>Purchase and download: <a href="https://finchip.ai/skills/qr-life-kit-finchip">QR Life Kit on FinChip</a> · Local static QR generation · No hosted redirect, tracking code, or API key.</p></footer>
+</article></main></div></div></body></html>

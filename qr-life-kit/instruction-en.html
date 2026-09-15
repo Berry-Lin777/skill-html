@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>QR Life Kit | Make a QR Business Card</title>
+<style>
+:root{--ink:#14191f;--ink2:#303944;--muted:#68727e;--desk:#e7e9ec;--paper:#fff;--line:#c9cfd6;--line2:#e5e8ec;--accent:#174c5b;--soft:#edf5f6;--warn:#73501d;--warnbg:#faf5ea;--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:"Helvetica Neue",Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}*{box-sizing:border-box}html,.finch-page{margin:0;min-width:0;background:var(--desk);color:var(--ink);font:15px/1.68 var(--sans)}.finch-page{background-image:linear-gradient(180deg,#dfe2e6 0,var(--desk) 260px)}.wrap{width:100%;max-width:900px;margin:auto;padding:20px 12px 56px}.doc{min-width:0;background:var(--paper);border:1px solid var(--line);box-shadow:0 20px 45px rgba(20,25,31,.07);padding:28px 22px 38px}img{display:block;width:100%;max-width:100%;height:auto}h1,h2,h3,p{margin:0;overflow-wrap:break-word}a{color:var(--accent);text-underline-offset:2px}code{font:12.5px/1.45 var(--mono);background:var(--soft);border:1px solid #d5e4e7;padding:.08em .32em;overflow-wrap:break-word}.mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px 18px;padding-bottom:14px;margin-bottom:22px;border-bottom:2px solid var(--ink)}.org{font:700 11px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase}.docname{margin-top:6px;font:500 12.5px/1.35 var(--serif);color:var(--ink2)}.mast-r{text-align:right;font:12px/1.45 var(--mono);color:var(--muted)}h1{font:650 clamp(26px,5vw,36px)/1.18 var(--serif);letter-spacing:-.025em;margin-bottom:12px}.lede{color:var(--ink2);padding-bottom:16px;border-bottom:1px solid var(--line2)}.meta{display:grid;margin-top:16px;border:1px solid var(--line);background:#fbfcfd}.meta span{padding:9px 12px;font-size:12.5px;color:var(--ink2);border-top:1px solid var(--line2)}.meta span:first-child{border-top:0}.note,.warn{margin-top:12px;padding:11px 14px 11px 12px;font-size:13px;border-left:2px solid var(--accent);background:var(--soft);color:var(--ink2)}.warn{border-left-color:var(--warn);background:var(--warnbg);color:var(--warn)}.toc{margin:28px 0 8px;border-top:1px solid var(--ink)}.toc-head{padding:12px 0 10px;border-bottom:1px solid var(--line2);font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase}.toc ol{list-style:none;margin:0;padding:0}.toc li{border-bottom:1px dotted var(--line)}.toc a{display:grid;grid-template-columns:2.2em minmax(0,1fr) auto;gap:8px 10px;align-items:baseline;padding:10px 0;text-decoration:none;color:var(--ink)}.toc .n{font:700 12px var(--mono);color:var(--accent)}.toc .t{font:600 14px/1.35 var(--serif)}.toc .d{font-size:12px;color:var(--muted);text-align:right}.step{padding:30px 0 10px;border-top:1px solid var(--line2)}.step-head{display:grid;grid-template-columns:3rem 1fr;gap:12px;margin-bottom:14px}.num{font:650 28px/1 var(--serif);color:var(--accent)}h2{font:650 clamp(20px,3.4vw,25px)/1.28 var(--serif);letter-spacing:-.015em}.facts{display:grid;margin-bottom:16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fbfcfd}.facts>div{padding:14px 16px}.facts>div+div{border-top:1px solid var(--line2)}dt{margin:0 0 6px;font:700 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}dd{margin:0;color:var(--ink2);font-size:13.5px}dd ol,dd ul{margin:4px 0 0;padding-left:1.15em}.prompt-label{margin-bottom:8px;font:700 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.prompt{margin:0 0 16px;padding:14px 16px;background:#f7f8f9;border:1px solid var(--line);border-left:3px solid var(--ink);font:13px/1.62 var(--mono);white-space:pre-wrap;overflow-wrap:break-word}.shot{position:relative;margin:14px 0 0;border:1px solid var(--line);background:#fff;overflow:hidden}.chat img{background:#090d13}.shot figcaption{padding:9px 12px;background:#f7f8fa;border-top:1px solid var(--line2);font:11.5px/1.45 var(--mono);color:var(--muted)}.tag{position:absolute;top:12px;right:12px;max-width:72%;padding:7px 10px;background:#fff;border:1px solid var(--ink);box-shadow:3px 3px 0 var(--accent);font:700 12px/1.35 var(--sans)}.compare{margin:14px 0 16px;border:1px solid var(--line);overflow: visible}.compare table{width:100%;border-collapse:collapse;font-size:13px}.compare th,.compare td{padding:11px 13px;border-top:1px solid var(--line2);text-align:left;vertical-align:top}.compare tr:first-child th,.compare tr:first-child td{border-top:0}.compare th{width:27%;font-family:var(--serif)}.deliver{margin:18px 0 16px;padding:20px;border:2px solid var(--ink);background:#fbfcfd;text-align:center}.eyebrow{font:700 10px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}.deliver .big{margin:9px 0 7px;font:650 clamp(24px,5vw,34px)/1.2 var(--serif)}.deliver .path{font:700 13px/1.55 var(--mono);overflow-wrap:break-word}.end{margin-top:18px;padding-top:30px;border-top:2px solid var(--ink)}.end h3{margin:18px 0 8px;padding-top:12px;border-top:1px solid var(--line2);font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}.end ul,.end ol{margin:0;padding-left:1.2em;color:var(--ink2);font-size:13.5px}.end li{margin:.4em 0}.foot{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);font:11.5px/1.55 var(--mono);color:var(--muted)}@media(min-width:640px){.meta{grid-template-columns:1fr 1fr}.meta span:nth-child(2){border-top:0}.meta span:nth-child(odd){border-right:1px solid var(--line2)}}@media(min-width:700px){.doc{padding:40px 48px 52px}.facts{grid-template-columns:1fr 1fr}.facts>div+div{border-top:0;border-left:1px solid var(--line2)}}@media(max-width:520px){.toc a{grid-template-columns:2em 1fr}.toc .d{grid-column:2;text-align:left}.compare th{width:34%}.tag{position:static;display:block;max-width:none;box-shadow:none;border-width:0 0 1px}}
+
+/* approved monitor frame */
+.shot{width:74%;max-width:620px;margin:22px auto 0;border:0!important;background:transparent!important;overflow:visible!important;box-shadow:none!important;min-width:0}
+.grid .shot,.pair .shot{width:100%;max-width:none;margin-top:0}
+
+.bezel{background:#171d24;border:1px solid #0b0f14;border-radius:20px;padding:0 14px 16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 18px 36px rgba(18,24,32,.2)}
+.bezel-bar{display:flex;align-items:center;gap:7px;position:relative;height:40px;margin:0 -14px 12px;padding:0 14px;background:linear-gradient(180deg,#2d3640,#1e262e);border-bottom:1px solid #3d4854;border-radius:19px 19px 0 0}
+.bezel-bar::after{background:#10151a;border:1px solid #3a4450;color:#e4ebf0}
+.bezel-screen{padding:7px;background:linear-gradient(180deg,#f4f7f9,#e6ebf0);border-radius:10px;box-shadow:inset 0 0 0 1px rgba(18,24,32,.08)}
+.bezel-stand::before{background:linear-gradient(180deg,#b7c0c8,#7d8791)}
+.bezel-stand::after{background:linear-gradient(180deg,#eef2f5,#c5ced6);box-shadow:0 4px 10px rgba(18,24,32,.14)}
+
+.bezel-bar i{display:block;width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.bezel-bar i:nth-child(1){background:radial-gradient(circle at 32% 30%,#ff9d98,#ff5f57 68%)}
+.bezel-bar i:nth-child(2){background:radial-gradient(circle at 32% 30%,#ffe08a,#febc2e 68%)}
+.bezel-bar i:nth-child(3){background:radial-gradient(circle at 32% 30%,#7aed8a,#28c840 68%)}
+.bezel-bar::after{content:"qr-life-kit · walkthrough";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:46%;max-width:64%;padding:6px 14px;border-radius:999px;font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-align:center;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pair .bezel-bar::after,.grid .bezel-bar::after{content:"preview"}
+.bezel-screen img{width:100%;height:auto!important;display:block;border-radius:5px;object-fit:contain}
+.bezel-stand{height:30px;position:relative;margin-top:4px}
+.bezel-stand::before{content:"";position:absolute;left:50%;top:0;width:16px;height:15px;margin-left:-8px;border-radius:0 0 3px 3px;box-shadow:inset 1px 0 0 rgba(255,255,255,.2)}
+.bezel-stand::after{content:"";position:absolute;left:50%;bottom:0;width:46%;height:9px;margin-left:-23%;border-radius:3px 3px 11px 11px}
+.pair .bezel-stand,.grid .bezel-stand{display:none}
+.shot figcaption{margin-top:8px;padding:0 2px;border:0!important;background:transparent!important;text-align:center}
+.bezel-screen{position:relative}
+.bezel-screen .tag{z-index:2}
+.io-board,.type-board,.file-board,.form-board,.mode-board,.check-board{margin-top:16px;min-width:0}
+.io-board{padding:14px 12px 10px;background:linear-gradient(rgba(200,200,200,.28) 1px,transparent 1px) 0 0/100% 26px,#f6f4ef;border:1px solid var(--line,var(--l,#ddd4c8));border-radius:12px}
+.io-head{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;margin-bottom:10px;font:700 11px/1 var(--sans,sans-serif);letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168))}
+.io-head span:last-child{text-align:right}
+.io-row{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;align-items:stretch;margin-bottom:8px;min-width:0}
+.io-in,.io-out{min-width:0;padding:11px 12px;border-radius:8px;font-size:13.5px;line-height:1.4;color:var(--ink,var(--i,#14110f))}
+.io-in{background:#fff;border:1px solid var(--line,var(--l,#ddd4c8))}
+.io-out{background:var(--green-soft,var(--soft,#e7f3ec));border:1px solid #c9e2d4}
+.io-k{display:none;font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168));margin-bottom:6px}
+.io-arrow{display:flex;align-items:center;justify-content:center;color:var(--green,var(--accent,var(--a,#1f6b4a)));font:700 16px/1 sans-serif}
+.io-arrow::before{content:"→"}
+.type-board,.file-board,.form-board,.check-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.type-board{grid-template-columns:1fr 1fr}.file-board,.form-board,.check-board{grid-template-columns:1fr 1fr}.form-board.cols-3,.check-board.cols-3{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:700px){.type-board{grid-template-columns:1fr 1fr 1fr 1fr}}
+.form-card,.type-card,.file-card,.check-card,.mode-card{min-width:0;background:#fff;border:1px solid var(--line,var(--l,#ddd4c8));padding:13px 12px 12px;border-top:4px solid var(--green,var(--accent,var(--a,#1f6b4a)))}
+.form-card .mark,.type-card .mark,.file-card .mark,.check-card .mark,.mode-tag{font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--green,var(--accent,var(--a,#1f6b4a)));white-space:nowrap;margin-bottom:7px}
+.form-card h3,.type-card h3,.file-card h3,.check-card h3,.mode-card h3{margin:0 0 6px;font:650 16px/1.2 var(--serif,Georgia,serif);color:var(--ink,var(--i,#14110f))}
+.form-card p,.type-card p,.file-card p,.check-card p,.mode-card p{margin:0;font-size:13px;line-height:1.45;color:var(--ink2,var(--i,#3a342f))}
+.mode-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.mode-board{grid-template-columns:1fr 1fr}}
+.mode-card.is-pick{background:var(--green-soft,var(--accent-soft,var(--s,#eef5f7)))}
+.mode-foot{grid-column:1/-1;margin:0;padding:10px 12px;background:#f7f8f9;border:1px solid var(--line,var(--l,#ddd));font-size:13px;line-height:1.5;color:var(--ink2,var(--i,#3a342f))}
+@media(max-width:639px){.io-head{display:none}.io-row,.io-head{grid-template-columns:1fr}.io-arrow{height:18px}.io-arrow::before{content:"↓"}.io-k{display:block}}
+h1,h2,h3,p{overflow-wrap:break-word}
+@media(min-width:700px){.step h2,.head h2{white-space:nowrap}}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;border-left:0;border-right:0;background:transparent;padding:10px 0 2px}
+.meta span,.meta div{display:inline;padding:0;border:0;white-space:nowrap}
+
+
+
+
+.meta{display:flex!important;flex-wrap:wrap;align-items:baseline;gap:6px 18px;background:transparent}
+.meta span,.meta div{display:inline!important;border:0!important;background:transparent!important;padding:0!important;white-space:nowrap}
+
+.finchip-page{width:100%;max-width:100%;min-width:0;background-color:var(--desk);background-image:linear-gradient(180deg,#dfe2e6 0,var(--desk) 260px);color:var(--ink)}
+
+
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fff;color:#202020;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}
+.finch-page{background-color:var(--desk);color:var(--ink)}
+</style></head>
+<body><div class="finch-page"><div class="finchip-page"><main class="wrap"><article class="doc">
+<header class="mast"><div><div class="org">QR Life Kit</div><div class="docname">QR business card | Step-by-step guide</div></div><div class="mast-r">Agent · Claude Code<br/>EN / vCard demo</div></header>
+<section><h1>Make your first QR business card</h1><p class="lede">We’ll use a fictional product designer, Emma Wilson, as the example. By the end, you’ll have a finished business card that people can scan to save her contact details.</p>
+<div class="meta"><span>Used here: Claude Code</span><span>Contact format: vCard 3.0</span><span>Card format: landscape</span><span>Output folder: emma-wilson-card</span></div>
+<div class="note">Before you start, <a href="https://finchip.ai/skills/qr-life-kit-finchip">purchase and download QR Life Kit</a>. Unzip it, then open the folder with your own Agent. Everything is created locally; there is no API key to set up.</div>
+<div class="warn">This is a self-service guide, not legal advice or a promise that every scanner will behave the same way. A contact QR is readable by anyone who has the image, so only include details you are comfortable sharing.</div></section>
+<nav class="toc"><div class="toc-head">In this guide</div><ol>
+<li><a href="#s1"><span class="n">01</span><span class="t">Send the full brief</span><span class="d">Profile, purpose, and style</span></a></li>
+<li><a href="#s2"><span class="n">02</span><span class="t">Let the Agent build</span><span class="d">vCard and card composition</span></a></li>
+<li><a href="#s3"><span class="n">03</span><span class="t">Check verification</span><span class="d">Raw QR and composed card</span></a></li>
+<li><a href="#s4"><span class="n">04</span><span class="t">Collect the deliverables</span><span class="d">Share and print files</span></a></li>
+<li><a href="#end"><span class="n">—</span><span class="t">Edit or rerun</span><span class="d">Work from the output folder</span></a></li>
+</ol></nav>
+<section class="step" id="s1"><div class="step-head"><div class="num">01</div><h2>Start with one clear brief</h2></div>
+<dl class="facts"><div><dt>Purpose</dt><dd>Put the profile, contact details, and design direction in one message so the Agent can get started without extra back-and-forth.</dd></div><div><dt>What you do</dt><dd><ol><li>Open the downloaded Skill folder with your own Agent.</li><li>Start a new conversation.</li><li>Paste the plain-language request below, replacing the demo details with your own.</li></ol></dd></div></dl>
+<div class="prompt-label">Copy and send this</div><div class="prompt">Create a QR code business card for a fictional person.
+
+Name: Emma Wilson
+Title: Product Designer
+Introduction: Emma is a product designer focusing on digital experiences, user research, and creative technology.
+
+Email: emma.wilson@example.com
+Website: https://www.emmawilsondesign.com
+LinkedIn: https://www.linkedin.com/in/emmawilson
+Instagram: @emma.designs
+
+Please create a clean, modern, professional QR code card suitable for networking events and easy scanning. Also recommend the best QR format, the information layout, and a suitable visual design concept. Save the output in C:\Users\LENOVO\emma-wilson-card\.</div>
+<figure class="shot chat"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="The complete English Emma Wilson prompt in Claude Code" class="finch-media-ratio" height="1253" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/957f8f3f8a41a336784e0ee542d11d74a986f6d264951-957f8f3f8a41.png" width="2048"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Exhibit 01 · The full brief sent in Claude Code.</figcaption></figure>
+</section>
+<section class="step" id="s2"><div class="step-head"><div class="num">02</div><h2>Let the Agent build the card</h2></div>
+<dl class="facts"><div><dt>Purpose</dt><dd>This turns the brief into a vCard QR and a finished business-card layout.</dd></div><div><dt>What you do</dt><dd>Let it run. If it asks where to save the files, choose a new empty folder. The QR check may take a moment.</dd></div></dl>
+<div class="prompt-label">Copy and send this</div><div class="prompt">Continue with the build. Check that both the QR and the finished card scan correctly, then show me where you saved the files.</div>
+<figure class="shot chat"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="The Agent reviews the finished card and explains the vCard choice" class="finch-media-ratio" height="1124" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/54637ca6d6c6ba30d03e23c0a0de875874f4e520e4206-54637ca6d6c6.png" width="2048"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Exhibit 02 · The Agent reviews the card and recommends vCard for a save-to-contacts QR.</figcaption></figure>
+<figure class="shot chat"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="The Agent lists deliverables and reports the verification gate passed" class="finch-media-ratio" height="1145" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/9cfc56ccd50d6c378aa6e225b5eec322fa8be7a6c7e67-9cfc56ccd50d.png" width="2048"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Exhibit 03 · The completion message lists the finished files and confirms the scan check passed.</figcaption></figure>
+</section>
+<section class="step" id="s3"><div class="step-head"><div class="num">03</div><h2>Check that it scans correctly</h2></div>
+<dl class="facts"><div><dt>Purpose</dt><dd>Make sure the standalone QR and the card image both open the same contact details.</dd></div><div><dt>What you do</dt><dd><ol><li>Open <code>qr-assets\verification.json</code>.</li><li>Confirm the overall status is <code>passed</code>.</li><li>Confirm both <code>raw_qr.passed</code> and <code>card_png.passed</code> are true.</li><li>Scan the final business card once with a phone before sharing it.</li></ol></dd></div></dl>
+<div class="prompt-label">Copy and send this</div><div class="prompt">Open qr-assets\verification.json and tell me whether the QR and card image both passed.</div>
+<figure class="shot chat"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="verification.json shows passed for the build, raw QR, and card PNG" class="finch-media-ratio" height="756" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/10ac90a772a29deff68a43faf65ba274e1f16ae495779-10ac90a772a2.png" width="1666"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Exhibit 04 · Both the standalone QR and the card image passed.</figcaption></figure>
+<div aria-label="Scan-check results" class="check-board cols-3" role="img">
+<article class="check-card"><div class="mark">Passed</div><h3>Raw QR</h3><p><code>raw_qr.passed: true</code> with one decoded payload.</p></article>
+<article class="check-card"><div class="mark">Passed</div><h3>Skill card</h3><p><code>card_png.passed: true</code> with one decoded payload.</p></article>
+<article class="check-card"><div class="mark">Offline scan</div><h3>Network</h3><p><code>network_checked: false</code>. Opening the site still needs a connection.</p></article>
+</div>
+<div class="warn"><strong>What gets saved:</strong> Emma's name, title, email, and website. LinkedIn and Instagram are printed on the card, but they are not added as separate contact fields.</div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="The raw QR PNG generated for Emma Wilson" class="finch-media-ratio" height="1752" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/4c6764136c0c07e15731099ad4576443e13cd22bfa519-4c6764136c0c.png" width="1752"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Exhibit 05 · The standalone QR. Use the SVG file for print.</figcaption></figure>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="The square card generated by the Skill build" class="finch-media-ratio" height="1400" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/81f4f2756187b9a38abcbc769d599b9c1335cc611f8fe-81f4f2756187.png" width="1400"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Exhibit 06 · The standard QR card created during the verified build.</figcaption></figure>
+</section>
+<section class="step" id="s4"><div class="step-head"><div class="num">04</div><h2>Find and use the finished files</h2></div>
+<dl class="facts"><div><dt>Purpose</dt><dd>The output folder contains the shareable card, print-ready QR, and the files needed for future edits.</dd></div><div><dt>What you do</dt><dd><ol><li>Open <code>C:\Users\LENOVO\emma-wilson-card\</code>.</li><li>Use <code>business-card.png</code> for sharing or print layout.</li><li>Use <code>qr-assets\qr.svg</code> when you need a lossless standalone QR.</li><li>Keep <code>spec.json</code> and <code>compose_card.py</code> for later edits.</li></ol></dd></div></dl>
+<div class="prompt-label">Copy and send this</div><div class="prompt">Tell me where the files were saved. Point out the finished card, the SVG QR, the verification file, and anything I should keep for later edits.</div>
+<div class="deliver"><div class="eyebrow">Final deliverable</div><div class="big">Your business card is ready</div><div class="path">Output folder: C:\Users\LENOVO\emma-wilson-card\<br/>Final file: business-card.png</div></div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><span class="tag">Final file: business-card.png<br/>Ready to download and use</span><img alt="The final Emma Wilson landscape QR business card" class="finch-media-ratio" height="600" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/9075436bd9ca557c77864023f049babfe2e4adcde204c-9075436bd9ca.png" width="1050"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Exhibit 07 · The finished 1050 × 600 business card.</figcaption></figure>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Close-up of the final card's contact rows" class="finch-media-ratio" height="660" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/4a5745e6614ecbec92a21f975bb0c6958aa70b3bf2b74-4a5745e6614e.png" width="1710"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Exhibit 08 · Contact details at full size.</figcaption></figure>
+<div aria-label="Tutorial deliverable files" class="file-board" role="img">
+<article class="file-card"><div class="mark">Share</div><h3>business-card.png</h3><p>Final landscape card for sharing and print</p></article>
+<article class="file-card"><div class="mark">Preview</div><h3>card-preview-2x.png</h3><p>Larger on-screen preview of the card</p></article>
+<article class="file-card"><div class="mark">Print</div><h3>qr.svg</h3><p>Lossless standalone QR for professional print</p></article>
+<article class="file-card"><div class="mark">Evidence</div><h3>verification.json</h3><p>Round-trip decoding evidence</p></article>
+<article class="file-card"><div class="mark">Spec</div><h3>spec.json</h3><p>Structured vCard and card configuration</p></article>
+<article class="file-card"><div class="mark">Script</div><h3>compose_card.py</h3><p>Reproducible composition script</p></article>
+</div>
+</section>
+<section class="end" id="end"><h2>Final deliverable: <code>emma-wilson-card\business-card.png</code></h2><p>Use this file as the master card. If you change the copy, colors, spacing, or contact details, rebuild it and scan the updated card before sharing.</p>
+<h3>Make a quick edit</h3><ul><li>Tell the Agent exactly which field or visual element to change.</li><li>Keep the QR dark on white with its quiet zone intact; do not place a logo or decoration over it.</li><li>Ask the Agent to write the revision to a new output folder so the verified original remains available.</li></ul>
+<h3>Rerun one part</h3><div class="prompt">Keep Emma Wilson's vCard and QR unchanged. Update only the landscape business-card layout by changing the accent from indigo-violet to dark green. Save the revision in C:\Users\LENOVO\emma-wilson-card-green\. Then inspect the final business-card.png again.</div>
+<h3>Start over</h3><ol><li>Keep the existing <code>emma-wilson-card</code> folder as a backup.</li><li>Start a new Agent conversation and resend the complete brief from Step 01.</li><li>Choose a new output directory; the Skill does not overwrite an existing build directory.</li><li>Recheck the verification evidence and scan the new final card before delivery.</li></ol>
+<div class="deliver"><div class="eyebrow">Your finished file</div><div class="big">Final shareable QR business card</div><div class="path">C:\Users\LENOVO\emma-wilson-card\business-card.png</div></div>
+</section>
+<footer class="foot">Made with Claude Code and QR Life Kit · vCard 3.0<br/>Screenshots are built into this file, so the guide also works offline.</footer>
+</article></main></div></div></body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>Remotion Editing Styles | Style-directed Video Editing Skill</title>
+<style>
+:root{color-scheme:light;--ink:#14110f;--ink2:#3a342f;--muted:#7a7168;--bg:#f3efe8;--paper:#fffcf7;--line:#ddd4c8;--line2:#ebe4da;--green:#1f6b4a;--green-soft:#e7f3ec;--amber:#8a5a12;--amber-soft:#f7efe2;--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}*{box-sizing:border-box}html,.finch-page{margin:0;min-width:0;background:var(--bg);color:var(--ink);font:15.5px/1.7 var(--sans)}.finchip-page{width:100%;max-width:100%;min-width:0;background-color:var(--bg);background-image:radial-gradient(circle at 88% 0%,rgba(31,107,74,.08),transparent 38%),linear-gradient(180deg,#e8e2d8 0%,var(--bg) 26%,var(--bg) 100%);color:var(--ink)}.wrap{width:100%;max-width:860px;margin:0 auto;padding:18px 12px 48px}.sheet{width:100%;max-width:100%;min-width:0;background:var(--paper);border:1px solid var(--line);box-shadow:0 18px 42px rgba(20,17,15,.07);padding:26px 18px 36px}img{display:block;max-width:100%;height:auto}h1,h2,h3,p{margin:0;overflow-wrap:break-word}a{color:var(--green);text-underline-offset:2px}code{font:12.5px/1.4 var(--mono);background:var(--green-soft);border:1px solid #c9e2d4;padding:.08em .32em}.kicker{font:700 11px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--green)}h1{margin-top:10px;font:650 clamp(28px,5vw,40px)/1.18 var(--serif);letter-spacing:-.02em;}.lede{margin-top:14px;font-size:16.5px;line-height:1.75;color:var(--ink2);max-width:42em}.save{margin-top:18px;display:inline-block;padding:10px 14px;background:var(--ink);color:#fff;font:650 14px/1.35 var(--sans)}.fine{margin-top:12px;font-size:12.5px;line-height:1.55;color:var(--muted);max-width:none}.divider{margin:28px 0 0;border:0;border-top:1px solid var(--line)}.block{margin-top:28px;min-width:0}.block h2{font:650 clamp(22px,3.6vw,28px)/1.25 var(--serif);margin-bottom:10px;}.block h3{font:650 16.5px/1.35 var(--sans);color:var(--ink);margin-top:22px;margin-bottom:8px}.block p{color:var(--ink2);max-width:46em}.block p+p{margin-top:10px}.shot{margin:14px 0 0;border:1px solid var(--line);background:#fff;overflow:hidden}.shot img{width:100%}.shot figcaption{padding:10px 12px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line2);background:#faf7f2}.table-wrap{margin-top:14px;border:1px solid var(--line);overflow:hidden;background:#fff}table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{padding:11px 12px;text-align:left;vertical-align:top;border-top:1px solid var(--line2)}th{background:var(--green-soft);color:var(--ink);font-weight:700;border-top:0}td:first-child{font-weight:650;color:var(--ink)}.callout{margin-top:14px;padding:12px 14px;background:var(--amber-soft);border-left:3px solid var(--amber);color:var(--amber);font-size:13.5px;line-height:1.6}.soft{margin-top:14px;padding:12px 14px;background:var(--green-soft);border-left:3px solid var(--green);color:var(--ink2);font-size:13.5px;line-height:1.6}.foot{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.55}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}.grid .shot{display:grid;grid-template-rows:minmax(0,1fr) auto;height:100%}.grid .shot img{width:100%;height:100%;object-fit:contain;background:#fff}.grid+.table-wrap{margin-top:24px}@media(min-width:700px){.sheet{padding:36px 42px 48px}}@media(max-width:520px){.grid{grid-template-columns:1fr}th,td{padding:9px 8px;font-size:12.5px}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* approved monitor frame */
+.shot{width:74%;max-width:620px;margin:22px auto 0;border:0!important;background:transparent!important;overflow:visible!important;box-shadow:none!important;min-width:0}
+.grid .shot,.pair .shot{width:100%;max-width:none;margin-top:0}
+
+.bezel{background:#15181d;border:1px solid #0a0c10;border-radius:20px;padding:0 14px 16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 18px 36px rgba(23,33,43,.2)}
+.bezel-bar{display:flex;align-items:center;gap:7px;position:relative;height:40px;margin:0 -14px 12px;padding:0 14px;background:linear-gradient(180deg,#2a3138,#1b2128);border-bottom:1px solid #3a434c;border-radius:19px 19px 0 0}
+.bezel-bar::after{background:#101418;border:1px solid #39424b;color:#dce4ea}
+.bezel-screen{padding:7px;background:linear-gradient(180deg,#f3f6f8,#e4eaee);border-radius:10px;box-shadow:inset 0 0 0 1px rgba(23,33,43,.08)}
+.bezel-stand::before{background:linear-gradient(180deg,#b4bcc4,#7a838c)}
+.bezel-stand::after{background:linear-gradient(180deg,#eef2f5,#c2cad2);box-shadow:0 4px 10px rgba(23,33,43,.14)}
+
+.bezel-bar i{display:block;width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.bezel-bar i:nth-child(1){background:radial-gradient(circle at 32% 30%,#ff9d98,#ff5f57 68%)}
+.bezel-bar i:nth-child(2){background:radial-gradient(circle at 32% 30%,#ffe08a,#febc2e 68%)}
+.bezel-bar i:nth-child(3){background:radial-gradient(circle at 32% 30%,#7aed8a,#28c840 68%)}
+.bezel-bar::after{content:"remotion · preview";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:46%;max-width:64%;padding:6px 14px;border-radius:999px;font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-align:center;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pair .bezel-bar::after,.grid .bezel-bar::after{content:"preview"}
+.bezel-screen img{width:100%;height:auto!important;display:block;border-radius:5px;object-fit:contain}
+.bezel-stand{height:30px;position:relative;margin-top:4px}
+.bezel-stand::before{content:"";position:absolute;left:50%;top:0;width:16px;height:15px;margin-left:-8px;border-radius:0 0 3px 3px;box-shadow:inset 1px 0 0 rgba(255,255,255,.2)}
+.bezel-stand::after{content:"";position:absolute;left:50%;bottom:0;width:46%;height:9px;margin-left:-23%;border-radius:3px 3px 11px 11px}
+.pair .bezel-stand,.grid .bezel-stand{display:none}
+.shot figcaption{margin-top:8px;padding:0 2px;border:0!important;background:transparent!important;text-align:center}
+.bezel-screen{position:relative}
+.bezel-screen .tag{z-index:2}
+.io-board,.type-board,.file-board,.form-board,.mode-board,.check-board{margin-top:16px;min-width:0}
+.io-board{padding:14px 12px 10px;background:linear-gradient(rgba(200,200,200,.28) 1px,transparent 1px) 0 0/100% 26px,#f6f4ef;border:1px solid var(--line,var(--l,#ddd4c8));border-radius:12px}
+.io-head{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;margin-bottom:10px;font:700 11px/1 var(--sans,sans-serif);letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168))}
+.io-head span:last-child{text-align:right}
+.io-row{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;align-items:stretch;margin-bottom:8px;min-width:0}
+.io-in,.io-out{min-width:0;padding:11px 12px;border-radius:8px;font-size:13.5px;line-height:1.4;color:var(--ink,var(--i,#14110f))}
+.io-in{background:#fff;border:1px solid var(--line,var(--l,#ddd4c8))}
+.io-out{background:var(--green-soft,var(--soft,#e7f3ec));border:1px solid #c9e2d4}
+.io-k{display:none;font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168));margin-bottom:6px}
+.io-arrow{display:flex;align-items:center;justify-content:center;color:var(--green,var(--accent,var(--a,#1f6b4a)));font:700 16px/1 sans-serif}
+.io-arrow::before{content:"→"}
+.type-board,.file-board,.form-board,.check-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.type-board{grid-template-columns:1fr 1fr}.file-board,.form-board,.check-board{grid-template-columns:1fr 1fr}.form-board.cols-3,.check-board.cols-3{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:700px){.type-board{grid-template-columns:1fr 1fr 1fr 1fr}}
+.form-card,.type-card,.file-card,.check-card,.mode-card{min-width:0;background:#fff;border:1px solid var(--line,var(--l,#ddd4c8));padding:13px 12px 12px;border-top:4px solid var(--green,var(--accent,var(--a,#1f6b4a)))}
+.form-card .mark,.type-card .mark,.file-card .mark,.check-card .mark,.mode-tag{font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--green,var(--accent,var(--a,#1f6b4a)));white-space:nowrap;margin-bottom:7px}
+.form-card h3,.type-card h3,.file-card h3,.check-card h3,.mode-card h3{margin:0 0 6px;font:650 16px/1.2 var(--serif,Georgia,serif);color:var(--ink,var(--i,#14110f))}
+.form-card p,.type-card p,.file-card p,.check-card p,.mode-card p{margin:0;font-size:13px;line-height:1.45;color:var(--ink2,var(--i,#3a342f))}
+.mode-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.mode-board{grid-template-columns:1fr 1fr}}
+.mode-card.is-pick{background:var(--green-soft,var(--accent-soft,var(--s,#eef5f7)))}
+.mode-foot{grid-column:1/-1;margin:0;padding:10px 12px;background:#f7f8f9;border:1px solid var(--line,var(--l,#ddd));font-size:13px;line-height:1.5;color:var(--ink2,var(--i,#3a342f))}
+@media(max-width:639px){.io-head{display:none}.io-row,.io-head{grid-template-columns:1fr}.io-arrow{height:18px}.io-arrow::before{content:"↓"}.io-k{display:block}}
+h1,h2,h3,p{overflow-wrap:break-word}
+@media(min-width:700px){.step h2,.head h2{white-space:nowrap}}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;border-left:0;border-right:0;background:transparent;padding:10px 0 2px}
+.meta span,.meta div{display:inline;padding:0;border:0;white-space:nowrap}
+
+
+
+.meta{display:flex!important;flex-wrap:wrap;align-items:baseline;gap:6px 18px;background:transparent}
+.meta span,.meta div{display:inline!important;border:0!important;background:transparent!important;padding:0!important;white-space:nowrap}
+
+
+
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fff;color:#202020;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}
+.finch-page{background-color:var(--bg);color:var(--ink)}
+</style></head>
+<body><div class="finch-page"><div class="finchip-page"><div class="wrap"><article class="sheet">
+<p class="kicker">Remotion Editing Styles · Information</p>
+<h1>Turn your footage into one coherent, styled film</h1>
+<p class="lede">Bring your footage and creative direction to Remotion Editing Styles. It shapes the sequence and pacing, unifies type, colour, and motion, then delivers both a finished video and an editable Remotion project.</p>
+<p class="save">From edit plan to final render, one visual direction runs throughout. The video is ready to use, and the project remains editable.</p>
+<p class="fine">Designed for travel stories, brand content, and lifestyle films. Prepare the footage, define the style, format, and duration, and you are ready to begin.</p>
+<hr class="divider"/>
+<section class="block"><h2>Give scattered footage a clear editorial direction</h2><p>Where should the story begin? Where should captions sit? How should landscape footage adapt to portrait? How can type, transitions, and music feel consistent? These decisions are shaped into a clear edit plan, then carried through to a cohesive final video. You receive both the MP4 and the editable project, so later changes to copy, colour, or footage stay straightforward.</p></section>
+<section class="block"><h2>Step 1: Organise the assets</h2><p>Provide the footage, audio, images, or script, together with the platform, duration, and format. If anything essential is missing, the media is reviewed before the key choices are confirmed with you.</p><div aria-label="How assets are handled" class="io-board" role="img">
+<div class="io-head"><span>You give it</span><span></span><span>It handles</span></div>
+<div class="io-row"><div class="io-in"><span class="io-k">In</span>Video, audio, and images</div><div aria-hidden="true" class="io-arrow"></div><div class="io-out"><span class="io-k">Out</span>Shot choices, reframing, sound, hierarchy</div></div>
+<div class="io-row"><div class="io-in"><span class="io-k">In</span>Script or captions</div><div aria-hidden="true" class="io-arrow"></div><div class="io-out"><span class="io-k">Out</span>Beats, caption splits, emphasis, timing</div></div>
+<div class="io-row"><div class="io-in"><span class="io-k">In</span>Platform, ratio, duration</div><div aria-hidden="true" class="io-arrow"></div><div class="io-out"><span class="io-k">Out</span>Layout, frame rate, length, export</div></div>
+<div class="io-row"><div class="io-in"><span class="io-k">In</span>Goal, audience, style</div><div aria-hidden="true" class="io-arrow"></div><div class="io-out"><span class="io-k">Out</span>Pacing, type, colour, transitions</div></div>
+</div><div class="grid"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Prepared and named Sydney travel footage" class="finch-media-ratio" height="200" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/instruction-en/7a4091b2610cc6a7dce411b16f244d1af1799e611147e-7a4091b2610c.png" width="614"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Sydney travel: coastline, ocean, and zoo make the content and intended order immediately clear.</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Prepared and named Melbourne travel footage" class="finch-media-ratio" height="208" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/instruction-en/5bdf4dc42c854837278d50b5ce312d9d567e54a271b7a-5bdf4dc42c85.png" width="607"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Melbourne travel: dogs, flower shop, and ocean identify each scene and its place in the sequence.</figcaption></figure></div></section>
+<section class="block"><h2>Step 2: Set the style</h2><p>Choose the closest of five presets, and typography, colour, composition, transitions, and footage treatment will follow one consistent direction.</p><div aria-label="Five style presets" class="type-board" role="img">
+<article class="type-card"><div class="mark">Travel</div><h3>Natural Retro</h3><p>Nature, brand documentary, modular editorial</p></article>
+<article class="type-card"><div class="mark">Lifestyle</div><h3>Xiaohongshu</h3><p>Travel diaries, stickers, illustrated posters</p></article>
+<article class="type-card"><div class="mark">Journal</div><h3>Handwritten</h3><p>Urban wandering and casual notes</p></article>
+<article class="type-card"><div class="mark">Retro ad</div><h3>Vintage Block</h3><p>Product promotion and large colour fields</p></article>
+<article class="type-card"><div class="mark">Tech</div><h3>Cyber Brutalism</h3><p>Gaming, HUD, high-contrast demos</p></article>
+</div></section>
+<section class="block"><h2>Step 3: Confirm the plan</h2><p>Before production begins, confirm the shot order, captions, audio, and delivery format. With the direction agreed, the Remotion project can be built with confidence.</p><div class="soft">Timing, copy, colours, and media paths remain editable. Adjust only what needs to change, then render again.</div><div class="grid"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Complete Sydney travel editing request" class="finch-media-ratio" height="836" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/instruction-en/50cb9ea2cee7f10fb6c0371cce860cb7ffb7ff697693f-50cb9ea2cee7.png" width="784"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Sydney travel: one instruction defines the footage, goal, Xiaohongshu Illustrated Poster style, audio treatment, and deliverables.</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Melbourne travel editing request" class="finch-media-ratio" height="798" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/instruction-en/21adffb91cb172e4d6c2dcf8868603cffa641bc49fbfe-21adffb91cb1.png" width="825"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Melbourne travel: the same workflow applies a different lead style while preserving the original footage and audio requirements.</figcaption></figure></div></section>
+<section class="block"><h2>Step 4: Render the film</h2><p>Review real frames from the opening, middle, and ending. Once captions, fonts, media, and subject framing are correct, export the final MP4.</p><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Sydney finished-video preview" class="finch-media-ratio" height="560" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/instruction-en/9d9059232b01e3d40ffaccecbcd290df8c9eaac1206ad-9d9059232b01.png" width="1036"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Sydney result: the ocean, coastline, and zoo scenes share one illustrated travel-diary layout.</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Melbourne finished-video preview" class="finch-media-ratio" height="239" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/instruction-en/1f99d01605d951e1b3f2f7e11de92e1ebf03d6d9b2ede-1f99d01605d9.png" width="1316"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Melbourne result: the flower shop, beach dogs, and coast share one consistent handwritten-poster layout.</figcaption></figure><div class="callout">Preview stills and the final video come from real renders, with project checks clearly separated from finished delivery.</div></section>
+<section class="block"><h2>Step 5: Receive the deliverables</h2><p>You receive a ready-to-play video together with the project files needed for future revisions.</p><div class="grid"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Sydney Remotion project folder contents" class="finch-media-ratio" height="476" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/instruction-en/2b14b7df6120077cb82c590878ae80d7aa40335dc0123-2b14b7df6120.png" width="462"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Sydney project: the editable project keeps <code>src</code>, <code>public</code>, the edit plan, and other project files; rendered media is stored in <code>out</code>.</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Melbourne Remotion project folder contents" class="finch-media-ratio" height="517" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/instruction-en/b0f2b737cee78bc89f83fdb217a6b0994ebe97da19567-b0f2b737cee7.png" width="449"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>Melbourne project: open the <code>out</code> folder in the project root to review the final MP4 and related output files.</figcaption></figure></div><div aria-label="Final deliverables" class="file-board" role="img">
+<article class="file-card"><div class="mark">Plan</div><h3>Edit plan</h3><p>Format, beats, captions, audio, and checks</p></article>
+<article class="file-card"><div class="mark">Editable</div><h3>Remotion project</h3><p>Revise assets, copy, style, then render again</p></article>
+<article class="file-card"><div class="mark">Review</div><h3>Three stills</h3><p>Opening, body, ending layouts and safe areas</p></article>
+<article class="file-card"><div class="mark">Film</div><h3>H.264 MP4</h3><p>Ready for playback, review, or publishing</p></article>
+</div><div class="soft">Well suited to travel stories, nature observation, brand content, and urban lifestyle films that need a coherent visual identity in portrait or landscape.</div></section>
+<footer class="foot"><p>FinChip: <a href="https://finchip.ai/skills/remotion-editing-styles-finchip" rel="noopener" target="_blank">remotion-editing-styles-finchip</a> · Styled editing, an editable Remotion project, and final video rendering.</p></footer>
+</article></div></div></div></body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>Remotion Editing Styles｜风格化视频剪辑 Skill</title>
+<style>
+:root{color-scheme:light;--ink:#14110f;--ink2:#3a342f;--muted:#7a7168;--bg:#f3efe8;--paper:#fffcf7;--line:#ddd4c8;--line2:#ebe4da;--green:#1f6b4a;--green-soft:#e7f3ec;--amber:#8a5a12;--amber-soft:#f7efe2;--serif:"Iowan Old Style","Palatino Linotype",Palatino,"Songti SC","Noto Serif SC",Georgia,serif;--sans:"PingFang SC","Hiragino Sans GB","Helvetica Neue",Helvetica,Arial,"Microsoft YaHei",sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}*{box-sizing:border-box}html,.finch-page{margin:0;min-width:0;background:var(--bg);color:var(--ink);font:15.5px/1.7 var(--sans)}.finchip-page{width:100%;max-width:100%;min-width:0;background-color:var(--bg);background-image:radial-gradient(circle at 88% 0%,rgba(31,107,74,.08),transparent 38%),linear-gradient(180deg,#e8e2d8 0%,var(--bg) 26%,var(--bg) 100%);color:var(--ink)}.wrap{width:100%;max-width:860px;margin:0 auto;padding:18px 12px 48px}.sheet{width:100%;max-width:100%;min-width:0;background:var(--paper);border:1px solid var(--line);box-shadow:0 18px 42px rgba(20,17,15,.07);padding:26px 18px 36px}img{display:block;max-width:100%;height:auto}h1,h2,h3,p{margin:0;overflow-wrap:break-word}a{color:var(--green);text-underline-offset:2px}code{font:12.5px/1.4 var(--mono);background:var(--green-soft);border:1px solid #c9e2d4;padding:.08em .32em}.kicker{font:700 11px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--green)}h1{margin-top:10px;font:650 clamp(28px,5vw,40px)/1.18 var(--serif);letter-spacing:-.02em;}.lede{margin-top:14px;font-size:16.5px;line-height:1.75;color:var(--ink2);max-width:42em}.save{margin-top:18px;display:inline-block;padding:10px 14px;background:var(--ink);color:#fff;font:650 14px/1.35 var(--sans)}.fine{margin-top:12px;font-size:12.5px;line-height:1.55;color:var(--muted);max-width:none}.divider{margin:28px 0 0;border:0;border-top:1px solid var(--line)}.block{margin-top:28px;min-width:0}.block h2{font:650 clamp(22px,3.6vw,28px)/1.25 var(--serif);margin-bottom:10px;}.block h3{font:650 16.5px/1.35 var(--sans);color:var(--ink);margin-top:22px;margin-bottom:8px}.block p{color:var(--ink2);max-width:46em}.block p+p{margin-top:10px}.shot{margin:14px 0 0;border:1px solid var(--line);background:#fff;overflow:hidden}.shot img{width:100%}.shot figcaption{padding:10px 12px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line2);background:#faf7f2}.table-wrap{margin-top:14px;border:1px solid var(--line);overflow:hidden;background:#fff}table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{padding:11px 12px;text-align:left;vertical-align:top;border-top:1px solid var(--line2)}th{background:var(--green-soft);color:var(--ink);font-weight:700;border-top:0}td:first-child{font-weight:650;color:var(--ink)}.callout{margin-top:14px;padding:12px 14px;background:var(--amber-soft);border-left:3px solid var(--amber);color:var(--amber);font-size:13.5px;line-height:1.6}.soft{margin-top:14px;padding:12px 14px;background:var(--green-soft);border-left:3px solid var(--green);color:var(--ink2);font-size:13.5px;line-height:1.6}.foot{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.55}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}.grid .shot{display:grid;grid-template-rows:minmax(0,1fr) auto;height:100%}.grid .shot img{width:100%;height:100%;object-fit:contain;background:#fff}.grid+.table-wrap{margin-top:24px}@media(min-width:700px){.sheet{padding:36px 42px 48px}}@media(max-width:520px){.grid{grid-template-columns:1fr}th,td{padding:9px 8px;font-size:12.5px}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* approved monitor frame */
+.shot{width:74%;max-width:620px;margin:22px auto 0;border:0!important;background:transparent!important;overflow:visible!important;box-shadow:none!important;min-width:0}
+.grid .shot,.pair .shot{width:100%;max-width:none;margin-top:0}
+
+.bezel{background:#15181d;border:1px solid #0a0c10;border-radius:20px;padding:0 14px 16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 18px 36px rgba(23,33,43,.2)}
+.bezel-bar{display:flex;align-items:center;gap:7px;position:relative;height:40px;margin:0 -14px 12px;padding:0 14px;background:linear-gradient(180deg,#2a3138,#1b2128);border-bottom:1px solid #3a434c;border-radius:19px 19px 0 0}
+.bezel-bar::after{background:#101418;border:1px solid #39424b;color:#dce4ea}
+.bezel-screen{padding:7px;background:linear-gradient(180deg,#f3f6f8,#e4eaee);border-radius:10px;box-shadow:inset 0 0 0 1px rgba(23,33,43,.08)}
+.bezel-stand::before{background:linear-gradient(180deg,#b4bcc4,#7a838c)}
+.bezel-stand::after{background:linear-gradient(180deg,#eef2f5,#c2cad2);box-shadow:0 4px 10px rgba(23,33,43,.14)}
+
+.bezel-bar i{display:block;width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.bezel-bar i:nth-child(1){background:radial-gradient(circle at 32% 30%,#ff9d98,#ff5f57 68%)}
+.bezel-bar i:nth-child(2){background:radial-gradient(circle at 32% 30%,#ffe08a,#febc2e 68%)}
+.bezel-bar i:nth-child(3){background:radial-gradient(circle at 32% 30%,#7aed8a,#28c840 68%)}
+.bezel-bar::after{content:"remotion · preview";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:46%;max-width:64%;padding:6px 14px;border-radius:999px;font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-align:center;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pair .bezel-bar::after,.grid .bezel-bar::after{content:"preview"}
+.bezel-screen img{width:100%;height:auto!important;display:block;border-radius:5px;object-fit:contain}
+.bezel-stand{height:30px;position:relative;margin-top:4px}
+.bezel-stand::before{content:"";position:absolute;left:50%;top:0;width:16px;height:15px;margin-left:-8px;border-radius:0 0 3px 3px;box-shadow:inset 1px 0 0 rgba(255,255,255,.2)}
+.bezel-stand::after{content:"";position:absolute;left:50%;bottom:0;width:46%;height:9px;margin-left:-23%;border-radius:3px 3px 11px 11px}
+.pair .bezel-stand,.grid .bezel-stand{display:none}
+.shot figcaption{margin-top:10px;padding:0 4px;border:0!important;background:transparent!important;text-align:center}
+.bezel-screen{position:relative}
+.bezel-screen .tag{z-index:2}
+.io-board,.type-board,.file-board,.form-board,.mode-board,.check-board{margin-top:16px;min-width:0}
+.io-board{padding:14px 12px 10px;background:linear-gradient(rgba(200,200,200,.28) 1px,transparent 1px) 0 0/100% 26px,#f6f4ef;border:1px solid var(--line,var(--l,#ddd4c8));border-radius:12px}
+.io-head{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;margin-bottom:10px;font:700 11px/1 var(--sans,sans-serif);letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168))}
+.io-head span:last-child{text-align:right}
+.io-row{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;align-items:stretch;margin-bottom:8px;min-width:0}
+.io-in,.io-out{min-width:0;padding:11px 12px;border-radius:8px;font-size:13.5px;line-height:1.4;color:var(--ink,var(--i,#14110f))}
+.io-in{background:#fff;border:1px solid var(--line,var(--l,#ddd4c8))}
+.io-out{background:var(--green-soft,var(--soft,#e7f3ec));border:1px solid #c9e2d4}
+.io-k{display:none;font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168));margin-bottom:6px}
+.io-arrow{display:flex;align-items:center;justify-content:center;color:var(--green,var(--accent,var(--a,#1f6b4a)));font:700 16px/1 sans-serif}
+.io-arrow::before{content:"→"}
+.type-board,.file-board,.form-board,.check-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.type-board{grid-template-columns:1fr 1fr}.file-board,.form-board,.check-board{grid-template-columns:1fr 1fr}.form-board.cols-3,.check-board.cols-3{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:700px){.type-board{grid-template-columns:1fr 1fr 1fr 1fr}}
+.form-card,.type-card,.file-card,.check-card,.mode-card{min-width:0;background:#fff;border:1px solid var(--line,var(--l,#ddd4c8));padding:13px 12px 12px;border-top:4px solid var(--green,var(--accent,var(--a,#1f6b4a)))}
+.form-card .mark,.type-card .mark,.file-card .mark,.check-card .mark,.mode-tag{font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--green,var(--accent,var(--a,#1f6b4a)));white-space:nowrap;margin-bottom:7px}
+.form-card h3,.type-card h3,.file-card h3,.check-card h3,.mode-card h3{margin:0 0 6px;font:650 16px/1.2 var(--serif,Georgia,serif);color:var(--ink,var(--i,#14110f))}
+.form-card p,.type-card p,.file-card p,.check-card p,.mode-card p{margin:0;font-size:13px;line-height:1.45;color:var(--ink2,var(--i,#3a342f))}
+.mode-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.mode-board{grid-template-columns:1fr 1fr}}
+.mode-card.is-pick{background:var(--green-soft,var(--accent-soft,var(--s,#eef5f7)))}
+.mode-foot{grid-column:1/-1;margin:0;padding:10px 12px;background:#f7f8f9;border:1px solid var(--line,var(--l,#ddd));font-size:13px;line-height:1.5;color:var(--ink2,var(--i,#3a342f))}
+@media(max-width:639px){.io-head{display:none}.io-row,.io-head{grid-template-columns:1fr}.io-arrow{height:18px}.io-arrow::before{content:"↓"}.io-k{display:block}}
+h1,h2,h3,p{overflow-wrap:break-word}
+@media(min-width:700px){.step h2,.head h2{white-space:nowrap}}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;border-left:0;border-right:0;background:transparent;padding:10px 0 2px}
+.meta span,.meta div{display:inline;padding:0;border:0;white-space:nowrap}
+
+
+
+.meta{display:flex!important;flex-wrap:wrap;align-items:baseline;gap:6px 18px;background:transparent}
+.meta span,.meta div{display:inline!important;border:0!important;background:transparent!important;padding:0!important;white-space:nowrap}
+
+
+
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fff;color:#202020;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}
+.finch-page{background-color:var(--bg);color:var(--ink)}
+</style></head>
+<body><div class="finch-page"><div class="finchip-page"><div class="wrap"><article class="sheet">
+<p class="kicker">Remotion Editing Styles · Information</p>
+<h1>把你的素材，剪成一条风格完整的视频</h1>
+<p class="lede">把素材和想法交给 Remotion Editing Styles：先梳理镜头与节奏，再统一文字、色彩和动效，最后生成可播放的成片与可继续修改的 Remotion 工程。</p>
+<p class="save">从剪辑方案到成片渲染，一套风格贯穿始终；成片可直接使用，工程也能继续修改。</p>
+<p class="fine">适用于模特时尚短片、演唱会宣传、品牌内容与现场活动视频。准备好素材，说明风格、画幅与时长，即可开始。</p>
+<hr class="divider"/>
+<section class="block"><h2>让零散素材，拥有清晰的剪辑方向</h2><p>模特主体如何保持完整？舞台灯光怎样强化冲击力？字幕放在什么位置？转场、字体与音乐怎样保持一致？这些常见的剪辑决策，会先被整理成清晰方案，再落实为风格统一的成片。最终既有 MP4，也有可编辑工程，后续换字、调色或替换镜头都更从容。</p></section>
+<section class="block"><h2>步骤一：整理素材</h2><p>提供视频、音频、图片或脚本，并说明发布平台、时长与画幅。信息不足时，会先检查素材，再请你补充关键选择。</p><div aria-label="素材如何被处理" class="io-board" role="img">
+<div class="io-head"><span>你交给它的</span><span></span><span>它会处理</span></div>
+<div class="io-row"><div class="io-in"><span class="io-k">投入</span>视频、音频、图片</div><div aria-hidden="true" class="io-arrow"></div><div class="io-out"><span class="io-k">产出</span>镜头选择、画幅、声音与视觉层级</div></div>
+<div class="io-row"><div class="io-in"><span class="io-k">投入</span>脚本或字幕</div><div aria-hidden="true" class="io-arrow"></div><div class="io-out"><span class="io-k">产出</span>叙事段落、字幕切分与时间安排</div></div>
+<div class="io-row"><div class="io-in"><span class="io-k">投入</span>平台、比例、时长</div><div aria-hidden="true" class="io-arrow"></div><div class="io-out"><span class="io-k">产出</span>横竖屏构图、帧率与导出规格</div></div>
+<div class="io-row"><div class="io-in"><span class="io-k">投入</span>目标、受众、风格</div><div aria-hidden="true" class="io-arrow"></div><div class="io-out"><span class="io-k">产出</span>节奏、字体、色彩、转场和动效</div></div>
+</div><div class="grid"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="已准备并命名的模特时尚短片视频素材" class="finch-media-ratio" height="195" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/information-zh/2d0de4769fd627d5ebf73ef61731f32359f56e83c509a-2d0de4769fd6.png" width="523"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>模特时尚短片：三个素材依次命名为“户外1”“户外2”和“室内”，便于按内容与顺序剪辑。</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="已准备并命名的演唱会宣传视频素材" class="finch-media-ratio" height="147" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/information-zh/311ffad43642371207403055b0cdfecb47743bdb165f5-311ffad43642.png" width="563"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>演唱会宣传：素材依次命名为“灯光”“歌曲1”“歌曲2”和“谢幕”，便于按镜头顺序使用。</figcaption></figure></div></section>
+<section class="block"><h2>步骤二：选定风格</h2><p>从五套预设中选一个最接近目标的方向，排版、色彩、构图、转场与素材呈现会随之统一。</p><div aria-label="五套风格预设" class="type-board" role="img">
+<article class="type-card"><div class="mark">时尚编辑</div><h3>Natural Retro</h3><p>克制留白、自然质感与几何杂志版式</p></article>
+<article class="type-card"><div class="mark">社媒花絮</div><h3>Xiaohongshu</h3><p>穿搭分享、贴纸与插画海报</p></article>
+<article class="type-card"><div class="mark">幕后记录</div><h3>Handwritten</h3><p>排练花絮、轻松手写注释</p></article>
+<article class="type-card"><div class="mark">复古海报</div><h3>Vintage Block</h3><p>时尚宣传与大色块视觉</p></article>
+<article class="type-card"><div class="mark">演出宣传</div><h3>Cyber Brutalism</h3><p>舞台灯光、HUD 与强对比画面</p></article>
+</div></section>
+<section class="block"><h2>步骤三：确认方案</h2><p>工程生成前，先确认镜头顺序、字幕、声音与交付格式。方向清楚后，再进入 Remotion 制作。</p><div class="soft">时间线、文字、颜色和素材路径都会保留在工程中。后续只改需要调整的部分，再次导出即可。</div><div class="grid"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="模特时尚短片案例的完整剪辑对话指令" class="finch-media-ratio" height="785" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/information-zh/2aee9eb9e0b3387fa4a30d095258691675bf1985c85b1-2aee9eb9e0b3.png" width="744"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>模特时尚短片：在一条指令中说明素材、视频目标、Natural Retro Geometric 风格、声音处理与交付要求。</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="演唱会宣传案例的剪辑需求" class="finch-media-ratio" height="692" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/information-zh/b884647fdeb28e3e0bc95b2e4d93f04cfb99aa0d23baf-b884647fdeb2.png" width="733"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>演唱会宣传：根据素材比例制作 4:3 横屏短片，并明确保留现场原声与画幅要求。</figcaption></figure></div></section>
+<section class="block"><h2>步骤四：渲染成片</h2><p>先查看开头、中段和结尾的真实画面，确认字幕、字体、素材与主体构图无误，再导出最终 MP4。</p><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="模特时尚短片视频成片预览" class="finch-media-ratio" height="598" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/information-zh/6499e9f2e57e32c0ad157144610e9a3251d1ff07cb01a-6499e9f2e57e.png" width="1934"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>模特时尚短片成片：户外与室内镜头以克制留白、模块化排版和少量手写标注统一呈现。</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="演唱会宣传视频成片预览" class="finch-media-ratio" height="346" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/information-zh/f9d0c317010eee67dc5389cefa4a539ac9a903737f68f-f9d0c317010e.png" width="1934"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>演唱会宣传成片：舞台特写、灯光全景、歌手近景与谢幕画面采用高对比 Cyber Brutalism 视觉。</figcaption></figure><div class="callout">预览图与最终视频均来自真实渲染；工程检查与成片交付会清楚区分。</div></section>
+<section class="block"><h2>步骤五：接收交付</h2><p>你会拿到可直接播放的成片，也会保留后续修改所需的工程文件。</p><div class="grid"><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="模特时尚短片 Remotion 项目文件夹内容" class="finch-media-ratio" height="458" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/information-zh/bfa9c1baa713271b957b4b1b6988a6b793a49323c85d8-bfa9c1baa713.png" width="445"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>模特时尚短片项目：工程根目录保留 <code>src</code>、<code>public</code>、edit plan 等内容，渲染完成的视频在 <code>out</code> 中查看。</figcaption></figure><figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="演唱会宣传 Remotion 项目文件夹内容" class="finch-media-ratio" height="466" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/remotion-editing-styles/information-zh/c8d5c6de447a828fdc5b4cb9096f2b23e3b6555751a18-c8d5c6de447a.png" width="464"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>演唱会宣传项目：打开工程根目录中的 <code>out</code> 文件夹，查看最终 MP4 和相关输出文件。</figcaption></figure></div><div aria-label="最终交付物" class="file-board" role="img">
+<article class="file-card"><div class="mark">方案</div><h3>edit plan</h3><p>规格、镜头节奏、字幕、音频与检查项</p></article>
+<article class="file-card"><div class="mark">可改</div><h3>Remotion 项目</h3><p>改素材、文字、样式后重新渲染</p></article>
+<article class="file-card"><div class="mark">抽检</div><h3>预览帧</h3><p>检查开头、中段、结尾与安全区</p></article>
+<article class="file-card"><div class="mark">成片</div><h3>H.264 MP4</h3><p>直接播放、审核或后续发布</p></article>
+</div><div class="soft">适用于模特时尚短片、演唱会宣传、品牌内容与现场活动等需要统一视觉表达的横屏或竖屏视频。</div></section>
+<footer class="foot"><p>FinChip：<a href="https://finchip.ai/skills/remotion-editing-styles-finchip" rel="noopener" target="_blank">remotion-editing-styles-finchip</a> · 风格化剪辑、可编辑工程与成片渲染。</p></footer>
+</article></div></div></div></body></html>

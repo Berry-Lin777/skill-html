@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>QR Life Kit｜制作二维码电子名片</title>
+<style>
+:root{--ink:#14191f;--ink2:#303944;--muted:#68727e;--desk:#e7e9ec;--paper:#fff;--line:#c9cfd6;--line2:#e5e8ec;--accent:#174c5b;--soft:#edf5f6;--warn:#73501d;--warnbg:#faf5ea;--serif:"Iowan Old Style","Palatino Linotype",Palatino,"Songti SC","Noto Serif SC",Georgia,serif;--sans:"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html,.finch-page{margin:0;min-width:0;background:var(--desk);color:var(--ink);font:15px/1.68 var(--sans)}.finch-page{background-image:linear-gradient(180deg,#dfe2e6 0,var(--desk) 260px)}.wrap{width:100%;max-width:900px;margin:auto;padding:20px 12px 56px}.doc{min-width:0;background:var(--paper);border:1px solid var(--line);box-shadow:0 20px 45px rgba(20,25,31,.07);padding:28px 22px 38px}img{display:block;width:100%;max-width:100%;height:auto}h1,h2,h3,p{margin:0;overflow-wrap:break-word}a{color:var(--accent);text-underline-offset:2px}code{font:12.5px/1.45 var(--mono);background:var(--soft);border:1px solid #d5e4e7;padding:.08em .32em;overflow-wrap:break-word}.mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px 18px;padding-bottom:14px;margin-bottom:22px;border-bottom:2px solid var(--ink)}.org{font:700 11px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase}.docname{margin-top:6px;font:500 12.5px/1.35 var(--serif);color:var(--ink2)}.mast-r{text-align:right;font:12px/1.45 var(--mono);color:var(--muted)}h1{font:650 clamp(26px,5vw,36px)/1.18 var(--serif);letter-spacing:-.025em;margin-bottom:12px}.lede{color:var(--ink2);padding-bottom:16px;border-bottom:1px solid var(--line2)}.meta{display:grid;margin-top:16px;border:1px solid var(--line);background:#fbfcfd}.meta span{padding:9px 12px;font-size:12.5px;color:var(--ink2);border-top:1px solid var(--line2)}.meta span:first-child{border-top:0}.note,.warn{margin-top:12px;padding:11px 14px 11px 12px;font-size:13px;border-left:2px solid var(--accent);background:var(--soft);color:var(--ink2)}.warn{border-left-color:var(--warn);background:var(--warnbg);color:var(--warn)}.toc{margin:28px 0 8px;border-top:1px solid var(--ink)}.toc-head{padding:12px 0 10px;border-bottom:1px solid var(--line2);font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase}.toc ol{list-style:none;margin:0;padding:0}.toc li{border-bottom:1px dotted var(--line)}.toc a{display:grid;grid-template-columns:2.2em minmax(0,1fr) auto;gap:8px 10px;align-items:baseline;padding:10px 0;text-decoration:none;color:var(--ink)}.toc .n{font:700 12px var(--mono);color:var(--accent)}.toc .t{font:600 14px/1.35 var(--serif)}.toc .d{font-size:12px;color:var(--muted);text-align:right}.step{padding:30px 0 10px;border-top:1px solid var(--line2)}.step-head{display:grid;grid-template-columns:3rem 1fr;gap:12px;margin-bottom:14px}.num{font:650 28px/1 var(--serif);color:var(--accent)}h2{font:650 clamp(20px,3.4vw,25px)/1.28 var(--serif);letter-spacing:-.015em}.facts{display:grid;margin-bottom:16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fbfcfd}.facts>div{padding:14px 16px}.facts>div+div{border-top:1px solid var(--line2)}dt{margin:0 0 6px;font:700 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}dd{margin:0;color:var(--ink2);font-size:13.5px}dd ol,dd ul{margin:4px 0 0;padding-left:1.15em}.prompt-label{margin-bottom:8px;font:700 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.prompt{margin:0 0 16px;padding:14px 16px;background:#f7f8f9;border:1px solid var(--line);border-left:3px solid var(--ink);font:13px/1.62 var(--mono);white-space:pre-wrap;overflow-wrap:break-word}.shot{position:relative;margin:14px 0 0;border:1px solid var(--line);background:#fff;overflow:hidden}.shot img{object-fit:contain}.chat img{background:#090d13}.shot figcaption{padding:9px 12px;background:#f7f8fa;border-top:1px solid var(--line2);font:11.5px/1.45 var(--mono);color:var(--muted)}.tag{position:absolute;top:12px;right:12px;max-width:70%;padding:7px 10px;background:#fff;border:1px solid var(--ink);box-shadow:3px 3px 0 var(--accent);font:700 12px/1.35 var(--sans)}.compare{margin-bottom:16px;border:1px solid var(--line);overflow: visible}.compare table{width:100%;border-collapse:collapse;font-size:13px}.compare th,.compare td{padding:11px 13px;border-top:1px solid var(--line2);text-align:left;vertical-align:top}.compare tr:first-child th,.compare tr:first-child td{border-top:0}.compare th{width:27%;font-family:var(--serif)}.verify{margin:14px 0 0;padding:16px;background:#101820;color:#dcebf0;border-left:4px solid #39a679;font:12.5px/1.65 var(--mono);white-space:pre-wrap;overflow-wrap:break-word}.passed{color:#75e0aa;font-weight:700}.deliver{margin:18px 0 16px;padding:20px;border:2px solid var(--ink);background:#fbfcfd;text-align:center}.eyebrow{font:700 10px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}.deliver .big{margin:9px 0 7px;font:650 clamp(24px,5vw,34px)/1.2 var(--serif)}.deliver .path{font:700 13px/1.55 var(--mono);overflow-wrap:break-word}.end{margin-top:18px;padding-top:30px;border-top:2px solid var(--ink)}.end h3{margin:18px 0 8px;padding-top:12px;border-top:1px solid var(--line2);font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}.end ul,.end ol{margin:0;padding-left:1.2em;color:var(--ink2);font-size:13.5px}.end li{margin:.4em 0}.foot{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);font:11.5px/1.55 var(--mono);color:var(--muted)}
+@media(min-width:640px){.meta{grid-template-columns:1fr 1fr}.meta span:nth-child(2){border-top:0}.meta span:nth-child(odd){border-right:1px solid var(--line2)}}@media(min-width:700px){.doc{padding:40px 48px 52px}.facts{grid-template-columns:1fr 1fr}.facts>div+div{border-top:0;border-left:1px solid var(--line2)}}@media(max-width:520px){.toc a{grid-template-columns:2em 1fr}.toc .d{grid-column:2;text-align:left}.compare th{width:34%}.tag{position:static;display:block;max-width:none;box-shadow:none;border-width:0 0 1px}}
+
+/* approved monitor frame */
+.shot{width:74%;max-width:620px;margin:22px auto 0;border:0!important;background:transparent!important;overflow:visible!important;box-shadow:none!important;min-width:0}
+.grid .shot,.pair .shot{width:100%;max-width:none;margin-top:0}
+
+.bezel{background:#171d24;border:1px solid #0b0f14;border-radius:20px;padding:0 14px 16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 18px 36px rgba(18,24,32,.2)}
+.bezel-bar{display:flex;align-items:center;gap:7px;position:relative;height:40px;margin:0 -14px 12px;padding:0 14px;background:linear-gradient(180deg,#2d3640,#1e262e);border-bottom:1px solid #3d4854;border-radius:19px 19px 0 0}
+.bezel-bar::after{background:#10151a;border:1px solid #3a4450;color:#e4ebf0}
+.bezel-screen{padding:7px;background:linear-gradient(180deg,#f4f7f9,#e6ebf0);border-radius:10px;box-shadow:inset 0 0 0 1px rgba(18,24,32,.08)}
+.bezel-stand::before{background:linear-gradient(180deg,#b7c0c8,#7d8791)}
+.bezel-stand::after{background:linear-gradient(180deg,#eef2f5,#c5ced6);box-shadow:0 4px 10px rgba(18,24,32,.14)}
+
+.bezel-bar i{display:block;width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.bezel-bar i:nth-child(1){background:radial-gradient(circle at 32% 30%,#ff9d98,#ff5f57 68%)}
+.bezel-bar i:nth-child(2){background:radial-gradient(circle at 32% 30%,#ffe08a,#febc2e 68%)}
+.bezel-bar i:nth-child(3){background:radial-gradient(circle at 32% 30%,#7aed8a,#28c840 68%)}
+.bezel-bar::after{content:"qr-life-kit · walkthrough";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:46%;max-width:64%;padding:6px 14px;border-radius:999px;font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-align:center;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pair .bezel-bar::after,.grid .bezel-bar::after{content:"preview"}
+.bezel-screen img{width:100%;height:auto!important;display:block;border-radius:5px;object-fit:contain}
+.bezel-stand{height:30px;position:relative;margin-top:4px}
+.bezel-stand::before{content:"";position:absolute;left:50%;top:0;width:16px;height:15px;margin-left:-8px;border-radius:0 0 3px 3px;box-shadow:inset 1px 0 0 rgba(255,255,255,.2)}
+.bezel-stand::after{content:"";position:absolute;left:50%;bottom:0;width:46%;height:9px;margin-left:-23%;border-radius:3px 3px 11px 11px}
+.pair .bezel-stand,.grid .bezel-stand{display:none}
+.shot figcaption{margin-top:8px;padding:0 2px;border:0!important;background:transparent!important;text-align:center}
+.bezel-screen{position:relative}
+.bezel-screen .tag{z-index:2}
+.io-board,.type-board,.file-board,.form-board,.mode-board,.check-board{margin-top:16px;min-width:0}
+.io-board{padding:14px 12px 10px;background:linear-gradient(rgba(200,200,200,.28) 1px,transparent 1px) 0 0/100% 26px,#f6f4ef;border:1px solid var(--line,var(--l,#ddd4c8));border-radius:12px}
+.io-head{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;margin-bottom:10px;font:700 11px/1 var(--sans,sans-serif);letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168))}
+.io-head span:last-child{text-align:right}
+.io-row{display:grid;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);gap:8px;align-items:stretch;margin-bottom:8px;min-width:0}
+.io-in,.io-out{min-width:0;padding:11px 12px;border-radius:8px;font-size:13.5px;line-height:1.4;color:var(--ink,var(--i,#14110f))}
+.io-in{background:#fff;border:1px solid var(--line,var(--l,#ddd4c8))}
+.io-out{background:var(--green-soft,var(--soft,#e7f3ec));border:1px solid #c9e2d4}
+.io-k{display:none;font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted,var(--m,#7a7168));margin-bottom:6px}
+.io-arrow{display:flex;align-items:center;justify-content:center;color:var(--green,var(--accent,var(--a,#1f6b4a)));font:700 16px/1 sans-serif}
+.io-arrow::before{content:"→"}
+.type-board,.file-board,.form-board,.check-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.type-board{grid-template-columns:1fr 1fr}.file-board,.form-board,.check-board{grid-template-columns:1fr 1fr}.form-board.cols-3,.check-board.cols-3{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:700px){.type-board{grid-template-columns:1fr 1fr 1fr 1fr}}
+.form-card,.type-card,.file-card,.check-card,.mode-card{min-width:0;background:#fff;border:1px solid var(--line,var(--l,#ddd4c8));padding:13px 12px 12px;border-top:4px solid var(--green,var(--accent,var(--a,#1f6b4a)))}
+.form-card .mark,.type-card .mark,.file-card .mark,.check-card .mark,.mode-tag{font:700 10px/1 sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--green,var(--accent,var(--a,#1f6b4a)));white-space:nowrap;margin-bottom:7px}
+.form-card h3,.type-card h3,.file-card h3,.check-card h3,.mode-card h3{margin:0 0 6px;font:650 16px/1.2 var(--serif,Georgia,serif);color:var(--ink,var(--i,#14110f))}
+.form-card p,.type-card p,.file-card p,.check-card p,.mode-card p{margin:0;font-size:13px;line-height:1.45;color:var(--ink2,var(--i,#3a342f))}
+.mode-board{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.mode-board{grid-template-columns:1fr 1fr}}
+.mode-card.is-pick{background:var(--green-soft,var(--accent-soft,var(--s,#eef5f7)))}
+.mode-foot{grid-column:1/-1;margin:0;padding:10px 12px;background:#f7f8f9;border:1px solid var(--line,var(--l,#ddd));font-size:13px;line-height:1.5;color:var(--ink2,var(--i,#3a342f))}
+@media(max-width:639px){.io-head{display:none}.io-row,.io-head{grid-template-columns:1fr}.io-arrow{height:18px}.io-arrow::before{content:"↓"}.io-k{display:block}}
+h1,h2,h3,p{overflow-wrap:break-word}
+@media(min-width:700px){.step h2,.head h2{white-space:nowrap}}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;border-left:0;border-right:0;background:transparent;padding:10px 0 2px}
+.meta span,.meta div{display:inline;padding:0;border:0;white-space:nowrap}
+
+
+
+
+.meta{display:flex!important;flex-wrap:wrap;align-items:baseline;gap:6px 18px;background:transparent}
+.meta span,.meta div{display:inline!important;border:0!important;background:transparent!important;padding:0!important;white-space:nowrap}
+
+.finchip-page{width:100%;max-width:100%;min-width:0;background-color:var(--desk);background-image:linear-gradient(180deg,#dfe2e6 0,var(--desk) 260px);color:var(--ink)}
+
+
+html,body{margin:0;width:100%;} .finch-page{position:relative;isolation:isolate;width:100%;background-color:#fff;color:#202020;}
+img,video{max-width:100%!important;height:auto!important}.finch-media-ratio{aspect-ratio:auto 16 / 9}pre{white-space:pre-wrap;overflow-wrap:anywhere} .reveal{opacity:1!important;visibility:visible!important;transform:none!important}.finch-page::before,.finch-page::after{position:absolute;pointer-events:none}
+.sheet-track{display:grid!important;grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;height:auto!important;max-height:none!important;transform:none!important}.sheet-slide,.final-carousel .sheet-slide{display:block!important;position:relative!important;opacity:1!important;visibility:visible!important;width:100%!important;height:auto!important;margin-bottom:24px}.case-panel{display:block!important}.tab-buttons,[role="tablist"]{display:none!important}
+.finch-page{background-color:var(--desk);color:var(--ink)}
+</style></head>
+<body><div class="finch-page"><div class="finchip-page"><main class="wrap"><article class="doc">
+<header class="mast"><div><div class="org">QR Life Kit</div><div class="docname">二维码电子名片｜操作指南</div></div><div class="mast-r">Agent · Claude Code<br/>ZH / vCard demo</div></header>
+<section>
+<h1>制作你的第一张二维码电子名片</h1>
+<p class="lede">这里用虚拟人物 Emma Wilson 做示范。跟着四步操作，你会得到一张可以直接分享、也能扫码保存联系人的电子名片。</p>
+<div class="meta"><span>本次使用：Claude Code</span><span>联系人格式：vCard 3.0</span><span>名片样式：midnight · square</span><span>最终目录：emma-wilson-vcard</span></div>
+<div class="note">开始前，先<a href="https://finchip.ai/skills/qr-life-kit-finchip">购买并下载 QR Life Kit</a>。解压后，用你自己的 Agent 打开文件夹即可。整个过程在本地完成，不需要配置 API Key。</div>
+<div class="warn">这是一份自助操作指南，不构成法律意见，也不保证所有手机的扫码表现完全一致。二维码中的联系人信息任何拿到图片的人都能读取，请只放入你愿意公开的内容。</div>
+</section>
+<nav class="toc"><div class="toc-head">你会完成这四步</div><ol>
+<li><a href="#s1"><span class="n">01</span><span class="t">准备信息并发给 Agent</span><span class="d">一次说清人物与用途</span></a></li>
+<li><a href="#s2"><span class="n">02</span><span class="t">让 Agent 构建并验证</span><span class="d">等待真实生成结果</span></a></li>
+<li><a href="#s3"><span class="n">03</span><span class="t">检查验证与信息边界</span><span class="d">确认两项扫码测试</span></a></li>
+<li><a href="#s4"><span class="n">04</span><span class="t">下载最终交付物</span><span class="d">card.png 与 qr.svg</span></a></li>
+<li><a href="#end"><span class="n">—</span><span class="t">后续修改与重跑</span><span class="d">围绕输出目录操作</span></a></li>
+</ol></nav>
+<section class="step" id="s1"><div class="step-head"><div class="num">01</div><h2>先把需求一次说清楚</h2></div>
+<dl class="facts"><div><dt>作用</dt><dd>把人物资料、联系方式和风格放在同一条消息里，后面就不用来回补信息。</dd></div><div><dt>你做什么</dt><dd><ol><li>用 Agent 打开已下载的 Skill 文件夹</li><li>新建对话，粘贴下面的白话需求</li><li>把示例信息换成你自己的信息</li></ol></dd></div></dl>
+<div class="prompt-label">复制这段发给 Agent</div><div class="prompt">创建一张虚拟人物的二维码电子名片。
+
+人物信息：Emma Wilson，产品设计师。Emma 是一名专注于数字体验、用户研究和创意科技领域的产品设计师。
+
+联系方式：
+邮箱：emma.wilson@example.com
+个人网站：https://www.emmawilsondesign.com
+LinkedIn：https://www.linkedin.com/in/emmawilson
+Instagram：@emma.designs
+
+请创建一张二维码名片，包含联系方式和社交媒体链接，使用简洁、现代的视觉风格，适合商务交流和社交活动，并保证二维码清晰易扫。
+
+同时告诉我：最适合的二维码类型、信息布局方案和视觉设计概念。输出到 C:\Users\LENOVO\emma-wilson-vcard\。</div>
+<figure class="shot chat"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="在 Claude Code 中发送 Emma Wilson 电子名片的完整需求" class="finch-media-ratio" height="1597" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/information-zh/9235867130aaea688ed3184dc2d86d211dd6342b5f3e1-9235867130aa.png" width="2048"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>附图 01 · 在 Claude Code 中发送完整需求。</figcaption></figure>
+<figure class="shot chat"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Claude Code 读取 QR Life Kit 并检查 vCard 支持情况" class="finch-media-ratio" height="1347" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-zh/d36e1a372a1b1367e4c7edbe67106558a5965fdfca62b-d36e1a372a1b.png" width="2048"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>附图 02 · Agent 读取 Skill，确认 vCard 支持的字段。</figcaption></figure>
+</section>
+<section class="step" id="s2"><div class="step-head"><div class="num">02</div><h2>让 Agent 生成名片</h2></div>
+<dl class="facts"><div><dt>作用</dt><dd>这一步会生成 vCard 二维码和完整名片，并检查两张图是否都能正常扫码。</dd></div><div><dt>你做什么</dt><dd>让它继续运行即可。如果 Agent 询问保存位置，选择一个新的空文件夹。</dd></div></dl>
+<div class="prompt-label">复制这段发给 Agent</div><div class="prompt">请继续生成。完成后检查二维码和最终名片是否都能正常扫码，并告诉我文件保存在哪里。</div>
+<figure class="shot chat"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Agent 列出输出文件并说明验证通过" class="finch-media-ratio" height="1198" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-zh/bc76e42c277104fd4f14b85db3ae622dbcbaed9cf3111-bc76e42c2771.png" width="2048"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>附图 03 · 完成后，Agent 会列出文件并说明扫码检查结果。</figcaption></figure>
+</section>
+<section class="step" id="s3"><div class="step-head"><div class="num">03</div><h2>确认二维码真的能扫</h2></div>
+<dl class="facts"><div><dt>作用</dt><dd>确认裸二维码和名片上的二维码都能读出同一份联系人信息。</dd></div><div><dt>你做什么</dt><dd><ol><li>打开输出目录里的 <code>verification.json</code></li><li>确认总状态与两项测试均为通过</li><li>用手机再扫一次 <code>card.png</code> 做实际检查</li></ol></dd></div></dl>
+<div class="prompt-label">复制这段发给 Agent</div><div class="prompt">请打开 verification.json，告诉我 raw_qr 和 card_png 是否都通过。</div>
+<figure class="shot chat"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="verification.json 中显示总状态和两项解码验证均通过" class="finch-media-ratio" height="760" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/information-zh/5f8a70e1bc8547a43df67ed3fc2cfe5e32b740b0494c4-5f8a70e1bc85.png" width="1656"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>附图 04 · status、raw_qr 和 card_png 均显示通过。</figcaption></figure>
+<pre class="verify">{
+  "status": <span class="passed">"passed"</span>,
+  "payload_type": "vcard",
+  "raw_qr": { "passed": <span class="passed">true</span>, "decoded_count": 1 },
+  "card_png": { "passed": <span class="passed">true</span>, "decoded_count": 1 },
+  "network_checked": false
+}</pre>
+<div aria-label="扫码检查结果" class="check-board cols-3" role="img">
+<article class="check-card"><div class="mark">通过</div><h3>裸二维码</h3><p><code>raw_qr.passed: true</code>，能正确解码。</p></article>
+<article class="check-card"><div class="mark">通过</div><h3>最终名片</h3><p><code>card_png.passed: true</code>，排版后仍能解码。</p></article>
+<article class="check-card"><div class="mark">离线可扫</div><h3>网络</h3><p><code>network_checked: false</code>。打开网站仍需要网络。</p></article>
+</div>
+<div class="warn"><strong>扫码后会保存什么：</strong>姓名、职位、邮箱和个人网站。LinkedIn 与 Instagram 会显示在名片上，但不会作为单独字段存入手机联系人。</div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Emma Wilson 的裸二维码" class="finch-media-ratio" height="1752" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/instruction-en/4c6764136c0c07e15731099ad4576443e13cd22bfa519-4c6764136c0c.png" width="1752"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>附图 05 · 单独的二维码图片；打印时优先使用 qr.svg。</figcaption></figure>
+</section>
+<section class="step" id="s4"><div class="step-head"><div class="num">04</div><h2>找到并使用成品</h2></div>
+<dl class="facts"><div><dt>作用</dt><dd>从输出文件夹中找到适合分享、打印和后续修改的文件。</dd></div><div><dt>你做什么</dt><dd><ol><li>打开 <code>C:\Users\LENOVO\emma-wilson-vcard\</code></li><li>日常分享使用 <code>card.png</code></li><li>印刷裸二维码使用 <code>qr.svg</code></li><li>浏览器打印整张名片可打开 <code>card.html</code></li></ol></dd></div></dl>
+<div class="prompt-label">复制这段发给 Agent</div><div class="prompt">请打开输出文件夹，告诉我哪份文件适合分享、浏览器打印和无损印刷。</div>
+<figure class="shot chat"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><img alt="Windows 文件资源管理器中的 emma-wilson-vcard 输出目录" class="finch-media-ratio" height="796" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/information-zh/d7fda04aeed580b34de550e4b3490033812488b45a580-d7fda04aeed5.png" width="844"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>附图 06 · emma-wilson-vcard 输出文件夹。</figcaption></figure>
+<div class="deliver"><div class="eyebrow">最终交付物</div><div class="big">电子名片已完成</div><div class="path">C:\Users\LENOVO\emma-wilson-vcard\card.png</div></div>
+<figure class="shot"><div class="bezel"><div class="bezel-bar"><i></i><i></i><i></i></div><div class="bezel-screen"><span class="tag">最终文件：card.png<br/>可直接下载使用</span><img alt="Emma Wilson 最终二维码电子名片" class="finch-media-ratio" height="1400" src="https://pub-3a81bd32d33047139adc3bb6d51a57bf.r2.dev/qr-life-kit/information-zh/70f437da775f2179d281c636b0ceaf2997776e3e534c8-70f437da775f.png" width="1400"/></div><div aria-hidden="true" class="bezel-stand"></div></div><figcaption>附图 07 · 完成后的 card.png。</figcaption></figure>
+<div aria-label="教程交付文件" class="file-board" role="img">
+<article class="file-card"><div class="mark">分享</div><h3>card.png</h3><p>聊天、邮件、社交媒体直接分享的完整名片</p></article>
+<article class="file-card"><div class="mark">预览打印</div><h3>card.html</h3><p>浏览器打开、响应式预览和打印</p></article>
+<article class="file-card"><div class="mark">印刷</div><h3>qr.svg</h3><p>无损放大，适合专业印刷</p></article>
+<article class="file-card"><div class="mark">独立码</div><h3>qr.png</h3><p>高对比度二维码图片</p></article>
+<article class="file-card"><div class="mark">验证</div><h3>verification.json</h3><p>扫码回读验证结果</p></article>
+<article class="file-card"><div class="mark">清单</div><h3>manifest.json</h3><p>文件清单、哈希和构建信息</p></article>
+</div>
+</section>
+<section class="end" id="end"><h2>最终交付物：<code>emma-wilson-vcard\card.png</code></h2>
+<p>把这张 <code>card.png</code> 当作最终版本。之后无论改文案、颜色还是联系方式，都要重新生成并扫码检查修改后的名片。</p>
+<h3>快速修改</h3><ul><li>小改文案或样式：告诉 Agent 要改的具体字段，并要求输出到一个新的目录。</li><li>不要直接在二维码上加 Logo、渐变或装饰覆盖；品牌视觉应放在二维码周围。</li><li>邮箱、联系人和社交信息并未加密，修改前先确认哪些内容可以公开。</li></ul>
+<h3>只重跑改动部分</h3><div class="prompt">请保留 Emma Wilson 的联系人内容，只把名片主题改为 paper，并输出到 C:\Users\LENOVO\emma-wilson-vcard-paper\。完成后重新验证 raw_qr 和 card_png。</div>
+<h3>从头再做一版</h3><ol><li>保留旧的 <code>emma-wilson-vcard</code> 目录作为备份。</li><li>新建 Agent 对话，重新发送步骤 01 的完整需求。</li><li>指定一个全新的输出目录；Skill 不会覆盖已有输出目录。</li><li>重新检查 <code>verification.json</code>，再交付新成品。</li></ol>
+<div class="deliver"><div class="eyebrow">最终文件</div><div class="big">最终可分享电子名片</div><div class="path">C:\Users\LENOVO\emma-wilson-vcard\card.png</div></div>
+</section>
+<footer class="foot">使用 Claude Code 与 QR Life Kit 制作 · vCard 3.0<br/>图片已嵌入文件，离线打开也能正常查看。</footer>
+</article></main></div></div></body></html>
